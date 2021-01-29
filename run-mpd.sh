@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sed -i 's/MPD_AUDIO_DEVICE/hw:X20,0/g' /etc/mpd.conf
+sed -i 's/MPD_AUDIO_DEVICE/'"$MPD_AUDIO_DEVICE"'/g' /etc/mpd.conf
 
 cat /etc/mpd.conf
 
