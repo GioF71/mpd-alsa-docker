@@ -9,14 +9,15 @@ COPY run-mpd.sh /run-mpd.sh
 
 RUN chmod u+x /run-mpd.sh
 
-RUN cat /etc/mpd.conf
-
 RUN mkdir -p /root/.mpd
 
 RUN mkdir -p /db
 RUN mkdir -p /music
 RUN mkdir -p /playlists
 
+ENV MPD_AUDIO_DEVICE default
 ENV ALSA_DEVICE_NAME Alsa Device
+
+VOLUME /db
 
 ENTRYPOINT ["/run-mpd.sh"]
