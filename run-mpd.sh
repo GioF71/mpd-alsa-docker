@@ -27,7 +27,6 @@ sed -i 's/REPLAYGAIN_MISSING_PREAMP/'"$REPLAYGAIN_MISSING_PREAMP"'/g' /etc/mpd.c
 sed -i 's/REPLAYGAIN_LIMIT/'"$REPLAYGAIN_LIMIT"'/g' /etc/mpd.conf
 sed -i 's/VOLUME_NORMALIZATION/'"$VOLUME_NORMALIZATION"'/g' /etc/mpd.conf
 
-
 cat /etc/mpd.conf
 
 /usr/bin/mpd --no-daemon /etc/mpd.conf
