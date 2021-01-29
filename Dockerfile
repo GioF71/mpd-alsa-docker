@@ -20,4 +20,6 @@ ENV ALSA_DEVICE_NAME Alsa Device
 
 VOLUME /db
 
+EXPOSE 6600
+
 ENTRYPOINT ["/run-mpd.sh"]
