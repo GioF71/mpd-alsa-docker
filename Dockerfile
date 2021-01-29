@@ -19,6 +19,8 @@ ENV MPD_AUDIO_DEVICE default
 ENV ALSA_DEVICE_NAME Alsa Device
 
 VOLUME /db
+VOLUME /music
+VOLUME /playlists
 
 EXPOSE 6600
 
