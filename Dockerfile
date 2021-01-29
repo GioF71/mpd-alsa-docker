@@ -17,6 +17,7 @@ RUN mkdir -p /playlists
 
 ENV MPD_AUDIO_DEVICE default
 ENV ALSA_DEVICE_NAME Alsa Device
+ENV MIXER_TYPE hardware
 
 VOLUME /db
 VOLUME /music
