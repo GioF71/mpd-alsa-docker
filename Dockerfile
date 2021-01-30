@@ -43,6 +43,8 @@ ENV REPLAYGAIN_MISSING_PREAMP 0
 ENV REPLAYGAIN_LIMIT yes
 ENV VOLUME_NORMALIZATION no
 
+ENV STARTUP_DELAY_SEC 0
+
 COPY mpd.conf /etc/mpd.conf
 COPY run-mpd.sh /run-mpd.sh
 RUN chmod u+x /run-mpd.sh

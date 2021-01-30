@@ -29,4 +29,7 @@ sed -i 's/VOLUME_NORMALIZATION/'"$VOLUME_NORMALIZATION"'/g' /etc/mpd.conf
 
 cat /etc/mpd.conf
 
+echo "About to sleep for $STARTUP_DELAY_SEC second(s)"
+sleep $STARTUP_DELAY_SEC
+echo "Rise and shine!"
 /usr/bin/mpd --no-daemon /etc/mpd.conf
