@@ -58,8 +58,8 @@ The following tables reports all the currently supported environment variables.
 | ALSA_DEVICE_NAME            | Alsa Device            | Name of the Alsa Device |
 | MIXER_TYPE | hardware           | Mixer type |
 | MIXER_DEVICE    | default        | Mixer device |
-| MIXER_DEVICE    | default        | Mixer device |
 | MIXER_CONTROL        | PCM              | Mixer Control |
+| MIXER_INDEX    | 0 | Mixer Index |
 | DOP      | yes  | Enables Dsd Over Pcm |
 | REPLAYGAIN_MODE | 0 | ReplayGain mode |
 | REPLAYGAIN_PREAMP | 0 | ReplayGain Preamp |
