@@ -34,11 +34,11 @@ As I test the Dockerfile on more platforms, I will update this list.
 
 ## Get the image
 
-Here is the [repository](https://hub.docker.com/repository/docker/giof71/upmpdcli) on DockerHub.
+Here is the [repository](https://hub.docker.com/repository/docker/giof71/mpd-alsa) on DockerHub.
 
 Getting the image from DockerHub is as simple as typing:
 
-`docker pull giof71/upmpdcli:stable`<br />
+`docker pull giof71/mpd-alsa:stable`<br />
 
 You may want to pull the "stable" image as opposed to the "latest".
 
@@ -70,7 +70,7 @@ The following tables reports all the currently supported environment variables.
 
 You can build (or rebuild) the image by opening a terminal from the root of the repository and issuing the following command:
 
-`docker build . -t giof71/upmpdcli`
+`docker build . -t giof71/mpd-alsa`
 
 It will take very little time even on a Raspberry Pi. When it's finished, you can run the container following the previous instructions.<br />
 Just be careful to use the tag you have built.
