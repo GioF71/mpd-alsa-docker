@@ -1,4 +1,4 @@
-# upmpdcli-docker - a Docker image for upmpdcli
+# mpd-alsa-docker - a Docker image for mpd with alsa
 
 ## Reference
 
