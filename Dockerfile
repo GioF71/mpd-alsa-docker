@@ -1,6 +1,4 @@
-FROM debian:bullseye-20220125-slim
-
-RUN apt-get update && apt-get install mpd -y && rm -rf /var/lib/apt/lists/*
+FROM giof71/mpd-base-image:mpd-0.21.20-ubuntu-focal-20220113-2022-02-07
 
 RUN mkdir -p /root/.mpd
 
