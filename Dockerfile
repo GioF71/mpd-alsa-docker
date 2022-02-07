@@ -1,8 +1,6 @@
 FROM debian:bullseye-20220125-slim
 
-RUN apt-get update
-RUN apt-get install mpd -y
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install mpd -y && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /root/.mpd
 
