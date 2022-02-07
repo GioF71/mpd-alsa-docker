@@ -1,4 +1,4 @@
-from debian:stable-slim
+FROM debian:bullseye-20220125-slim
 
 RUN apt-get update
 RUN apt-get install mpd -y
@@ -13,6 +13,10 @@ RUN mkdir -p /playlists
 VOLUME /db
 VOLUME /music
 VOLUME /playlists
+
+RUN mkdir /app
+RUN mkdir /app/bin
+RUN mkdir /app/doc
 
 EXPOSE 6600
 
@@ -48,5 +52,7 @@ ENV STARTUP_DELAY_SEC 0
 COPY mpd.conf /etc/mpd.conf
 COPY run-mpd.sh /run-mpd.sh
 RUN chmod u+x /run-mpd.sh
+
+COPY README.md /app/doc/
 
 ENTRYPOINT ["/run-mpd.sh"]
