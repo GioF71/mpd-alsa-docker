@@ -11,7 +11,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                base: [ 'giof71/mpd-base-image:mpd-0.22.6-bullseye-2022-02-12', 'giof71/mpd-base-image:mpd-0.21.5-buster-2022-02-12', 'giof71/mpd-base-image:mpd-0.21.20-ubuntu-focal-2022-02-12' ]
+                base: [ 'giof71/mpd-base-image:mpd-0.22.6-bullseye-2022-02-12', 'giof71/mpd-base-image:mpd-0.21.5-buster-2022-02-12', 'giof71/mpd-base-image:mpd-0.21.20-focal-2022-02-12' ]
                 
         steps:
         -
@@ -30,8 +30,7 @@ jobs:
                 if [ "${base}" = "buster" ]; then \
                     mpd_version="mpd-0.21.5-"; \
                 fi
-                if [ "${base}" = "ubuntu" ]; then \
-                    base="ubuntu-focal"; \
+                if [ "${base}" = "focal" ]; then \
                     mpd_version="mpd-0.21.20-"; \
                 fi
                 tags="${{secrets.DOCKER_USERNAME}}/mpd-alsa:${mpd_version}${base},${{secrets.DOCKER_USERNAME}}/mpd-alsa:${mpd_version}${base}-${date}"
