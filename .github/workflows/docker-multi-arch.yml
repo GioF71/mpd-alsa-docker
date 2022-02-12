@@ -22,26 +22,28 @@ jobs:
             run: |
                 date=$(date '+%Y-%m-%d')
                 base="$(cut -d ':' -f2 <<< '${{ matrix.base }}')"
+                base="$(cut -d '-' -f2 <<< '${{ matrix.base }}')"
                 base="$(cut -d '-' -f1 <<< ${base})"
                 mpd_version=""
-                distro_id=${base}
                 if [ "${base}" = "bullseye" ]; then \
+                    base="bullseye";
                     mpd_version="mpd-0.22.6-"; \
                 fi
                 if [ "${base}" = "buster" ]; then \
+                    base="buster";
                     mpd_version="mpd-0.21.5-"; \
                 fi
                 if [ "${base}" = "focal" ]; then \
-                    mpd_version="mpd-0.21.20"; \
-                    distro_id="ubuntu-focal-"; \
+                    base="ubuntu-focal"; \
+                    mpd_version="mpd-0.21.20-"; \
                 fi
-                tags="${{secrets.DOCKER_USERNAME}}/mpd-alsa:${mpd_version}${distro_id},${{secrets.DOCKER_USERNAME}}/mpd-alsa:${mpd_version}${distro_id}-${date}"
+                tags="${{secrets.DOCKER_USERNAME}}/mpd-alsa:${mpd_version}${base},${{secrets.DOCKER_USERNAME}}/mpd-alsa:${mpd_version}${base}-${date}"
                 if [ "${base}" = "buster" ]; then \
-                    echo "RELEASE_TAGS=${tags},${{secrets.DOCKER_USERNAME}}/mpd-alsa:${distro_id},${{secrets.DOCKER_USERNAME}}/mpd-alsa:stable"; \
+                    echo "RELEASE_TAGS=${tags},${{secrets.DOCKER_USERNAME}}/mpd-alsa:${base},${{secrets.DOCKER_USERNAME}}/mpd-alsa:stable"; \
                 elif [ "${base}" = "bullseye" ]; then \
-                    echo "RELEASE_TAGS=${tags},${{secrets.DOCKER_USERNAME}}/mpd-alsa:${distro_id},${{secrets.DOCKER_USERNAME}}/mpd-alsa:latest"; \
+                    echo "RELEASE_TAGS=${tags},${{secrets.DOCKER_USERNAME}}/mpd-alsa:${base},${{secrets.DOCKER_USERNAME}}/mpd-alsa:latest"; \
                 elif [ "${base}" = "focal" ]; then \
-                    echo "RELEASE_TAGS=${tags},${{secrets.DOCKER_USERNAME}}/mpd-alsa:${distro_id}"; \
+                    echo "RELEASE_TAGS=${tags},${{secrets.DOCKER_USERNAME}}/mpd-alsa:${base}"; \
                 else \
                     echo "RELEASE_TAGS=${tags}"; \
                 fi \
