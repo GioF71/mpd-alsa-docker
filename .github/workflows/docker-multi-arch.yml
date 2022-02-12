@@ -21,17 +21,16 @@ jobs:
             name: Set Release Tag
             run: |
                 date=$(date '+%Y-%m-%d')
-                base=""
+                base="$(cut -d ':' -f2 <<< '${{ matrix.base }}')"
+                base="$(cut -d '-' -f3 <<< ${base})"
                 mpd_version=""
-                if [ "${{ matrix.base }}" = "giof71/mpd-base-image:mpd-0.22.6-bullseye-2022-02-12" ]; then \
-                    base="bullseye";
+                if [ "${base}" = "bullseye" ]; then \
                     mpd_version="mpd-0.22.6-"; \
                 fi
-                if [ "${{ matrix.base }}" = "giof71/mpd-base-image:mpd-0.21.5-buster-2022-02-12" ]; then \
-                    base="buster";
+                if [ "${base}" = "buster" ]; then \
                     mpd_version="mpd-0.21.5-"; \
                 fi
-                if [ "${{ matrix.base }}" = "giof71/mpd-base-image:mpd-0.21.20-ubuntu-focal-2022-02-12" ]; then \
+                if [ "${base}" = "ubuntu" ]; then \
                     base="ubuntu-focal"; \
                     mpd_version="mpd-0.21.20-"; \
                 fi
