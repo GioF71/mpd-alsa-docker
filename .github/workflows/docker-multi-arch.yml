@@ -23,7 +23,7 @@ jobs:
                 date=$(date '+%Y-%m-%d')
                 base="$(cut -d ':' -f2 <<< '${{ matrix.base }}')"
                 base="$(cut -d '-' -f2 <<< '${base}')"
-                base="$(cut -d '-' -f1 <<< ${base})"
+                base="$(cut -d '-' -f1 <<< '${base}'')"
                 mpd_version=""
                 if [ "${base}" = "bullseye" ]; then \
                     base="bullseye";
