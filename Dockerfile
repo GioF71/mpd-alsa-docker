@@ -1,4 +1,5 @@
-FROM giof71/mpd-base-image:mpd-0.21.20-ubuntu-focal-20220113-2022-02-07
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
 
 RUN mkdir -p /root/.mpd
 
@@ -10,9 +11,9 @@ VOLUME /db
 VOLUME /music
 VOLUME /playlists
 
-RUN mkdir /app
-RUN mkdir /app/bin
-RUN mkdir /app/doc
+RUN mkdir -p /app       # might be created in base image
+RUN mkdir -p /app/bin   # might be created in base image
+RUN mkdir -p /app/doc   # might be created in base image
 
 EXPOSE 6600
 
