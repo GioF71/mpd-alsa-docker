@@ -46,10 +46,12 @@ ENV VOLUME_NORMALIZATION no
 
 ENV STARTUP_DELAY_SEC 0
 
-COPY mpd.conf /etc/mpd.conf
-COPY run-mpd.sh /run-mpd.sh
-RUN chmod u+x /run-mpd.sh
+COPY app/conf/mpd.conf /app/conf/mpd-alsa.conf
+COPY app/bin/run-mpd.sh /app/bin/run-mpd.sh
+RUN chmod u+x /app/bin/run-mpd.sh
 
 COPY README.md /app/doc/
 
-ENTRYPOINT ["/run-mpd.sh"]
+WORKDIR /app/bin
+
+ENTRYPOINT ["/app/bin/run-mpd.sh"]
