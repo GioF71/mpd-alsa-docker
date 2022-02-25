@@ -1,5 +1,11 @@
 # mpd-alsa-docker - a Docker image for mpd with ALSA
 
+## Available Archs on Docker Hub
+
+- linux/amd64
+- linux/arm/v7
+- linux/arm64/v8
+
 ## Reference
 
 First and foremost, the reference to the awesome project:
@@ -111,5 +117,6 @@ Just be careful to use the tag you have built.
 
 Release Date|Major Changes
 ---|---
+2022-02-13|Add README.md synchronization towards Docker Hub.
 2022-02-13|File `/etc/mpd.conf` is not overwritten. Using file `/app/conf/mpd-alsa.conf`. Launcher script moved to `/app/bin` in the container. Repository files reorganized.
-2022-02-11|Automated builds thanks to [Der-Henning](https://github.com/Der-Henning/), Builds for amd64 also thanks to [Der-Henning](https://github.com/Der-Henning/), the README.md you are reading now is copied to the image under path `/app/doc/README.md`. Building from debian bullseye, debian buster and ubuntu focal. Created convenience script for local build.
+2022-02-11|Automated builds thanks to [Der-Henning](https://github.com/Der-Henning/), Builds for arm64 also thanks to [Der-Henning](https://github.com/Der-Henning/), the README.md you are reading now is copied to the image under path `/app/doc/README.md`. Building from debian bullseye, debian buster and ubuntu focal. Created convenience script for local build.
