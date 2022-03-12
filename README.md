@@ -117,6 +117,7 @@ Just be careful to use the tag you have built.
 
 Release Date|Major Changes
 ---|---
+2022-03-12|Rebased to mpd-base-images built on 2022-03-12.
 2022-02-26|Rebased to mpd-base-images built on 2022-02-26.
 2022-02-25|Add README.md synchronization towards Docker Hub.
 2022-02-13|File `/etc/mpd.conf` is not overwritten. Using file `/app/conf/mpd-alsa.conf`. Launcher script moved to `/app/bin` in the container. Repository files reorganized.
