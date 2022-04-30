@@ -117,6 +117,7 @@ Just be careful to use the tag you have built.
 
 Release Date|Major Changes
 ---|---
+2022-04-30|Rebased to mpd-base-images built on 2022-04-30.
 2022-03-12|Rebased to mpd-base-images built on 2022-03-12.
 2022-02-26|Rebased to mpd-base-images built on 2022-02-26.
 2022-02-25|Add README.md synchronization towards Docker Hub.
