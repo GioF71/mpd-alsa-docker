@@ -2,7 +2,7 @@ name: Publish multi-arch Docker images
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "0/5 * * * *"
   push:
     tags:
       - "release/*"
