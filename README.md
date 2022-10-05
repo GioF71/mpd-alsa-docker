@@ -80,16 +80,16 @@ The following tables lists all the currently supported environment variables:
 VARIABLE|DEFAULT|NOTES
 :---|:---:|:---
 MPD_AUDIO_DEVICE|default|The audio device. Common examples: `hw:DAC,0` or `hw:x20,0` or `hw:X20,0` for usb dac based on XMOS
-ALSA_DEVICE_NAME| Alsa Device|Name of the Alsa Device
-MIXER_TYPE| hardware| Mixer type
-MIXER_DEVICE| default| Mixer device
-MIXER_CONTROL| PCM| Mixer Control
-MIXER_INDEX| 0| Mixer Index
-DOP| yes| Enables Dsd-Over-Pcm
-REPLAYGAIN_MODE| 0| ReplayGain Mode
-REPLAYGAIN_PREAMP| 0| ReplayGain Preamp
-REPLAYGAIN_MISSING_PREAMP|0| ReplayGain mising preamp
-REPLAYGAIN_LIMIT| yes| ReplayGain Limit
+ALSA_DEVICE_NAME|Alsa Device|Name of the Alsa Device
+MIXER_TYPE|hardware|Mixer type
+MIXER_DEVICE|default|Mixer device
+MIXER_CONTROL|PCM|Mixer Control
+MIXER_INDEX|0|Mixer Index
+DOP|yes|Enables Dsd-Over-Pcm
+REPLAYGAIN_MODE|0|ReplayGain Mode
+REPLAYGAIN_PREAMP|0|ReplayGain Preamp
+REPLAYGAIN_MISSING_PREAMP|0|ReplayGain mising preamp
+REPLAYGAIN_LIMIT|yes|ReplayGain Limit
 VOLUME_NORMALIZATION|no|Volume normalization
 QOBUZ_PLUGIN_ENABLED|no|Enables the Qobuz plugin
 QOBUZ_APP_ID|ID|Qobuz application id
