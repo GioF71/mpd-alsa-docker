@@ -76,16 +76,16 @@ jobs:
 
             if [ "${tag_type}" = "release" ]; then
               echo "release tag";
-              echo "Building now: ["$building_now"]";
+              echo "Building now: ["$distro_id"]";
               tags="${tags},$image_name:${distro_id}";
               tags="${tags},$image_name:${distro_id}-${mpd_version}"
-              tags="$tags,$image_name:${distro_id}-${mpd_version}-${tag_name}"              building_now="${distro_id}";
-              select_special_tags=${special_tags["${building_now}"]};
+              tags="$tags,$image_name:${distro_id}-${mpd_version}-${tag_name}"              
+              select_special_tags=${special_tags["${distro_id}"]};
               if [[ -n "${select_special_tags}" ]]; then
-                echo "Found special tags for ["${building_now}"]=["${select_special_tags}"]";
+                echo "Found special tags for ["${distro_id}"]=["${select_special_tags}"]";
                 tags="$tags,${select_special_tags}";
               else
-                echo "No special tag found for ["${building_now}"]";
+                echo "No special tag found for ["${distro_id}"]";
               fi
             elif [ "${tag_type}" = "main" ]; then
               echo "main tag";
