@@ -95,7 +95,7 @@ jobs:
               echo "devel tag";
               tags="${image_name}:devel-${tag_name}-${distro_id}-${mpd_version}";
             elif [ "${tag_type}" = "feature" ]; then
-              echo "devel tag";
+              echo "feature tag";
               tags="${image_name}:feature-${tag_name}-${distro_id}-${mpd_version}";
             fi
           fi
