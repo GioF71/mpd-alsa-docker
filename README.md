@@ -45,7 +45,7 @@ Here is the [repository](https://hub.docker.com/repository/docker/giof71/mpd-als
 
 Getting the image from DockerHub is as simple as typing:
 
-`docker pull giof71/mpd-alsa:stable`  
+`docker pull giof71/mpd-alsa:stable`
 
 You may want to pull the "stable" image as opposed to the "latest".
 
@@ -70,7 +70,7 @@ Note that we need to allow the container to access the audio devices through `/d
 The following tables lists the volumes:
 
 VOLUME|DESCRIPTION
----|---
+:---|:---
 /db|Where the mpd database is saved
 /music|Where the music is stored. you might consider to mount your directory in read-only mode (`:ro`)
 /playlists|Where the playlists are stored
@@ -78,25 +78,25 @@ VOLUME|DESCRIPTION
 The following tables lists all the currently supported environment variables:
 
 VARIABLE|DEFAULT|NOTES
----|---|---
+:---|:---:|:---
 MPD_AUDIO_DEVICE|default|The audio device. Common examples: `hw:DAC,0` or `hw:x20,0` or `hw:X20,0` for usb dac based on XMOS
-ALSA_DEVICE_NAME|Alsa Device|Name of the Alsa Device
-MIXER_TYPE|hardware|Mixer type
-MIXER_DEVICE|default|Mixer device
-MIXER_CONTROL|PCM|Mixer Control
-MIXER_INDEX|0|Mixer Index
-DOP|yes|Enables Dsd-Over-Pcm
-REPLAYGAIN_MODE|0|ReplayGain Mode
-REPLAYGAIN_PREAMP|0|ReplayGain Preamp
-REPLAYGAIN_MISSING_PREAMP|0|ReplayGain mising preamp
-REPLAYGAIN_LIMIT|yes|ReplayGain Limit
+ALSA_DEVICE_NAME| Alsa Device|Name of the Alsa Device
+MIXER_TYPE| hardware| Mixer type
+MIXER_DEVICE| default| Mixer device
+MIXER_CONTROL| PCM| Mixer Control
+MIXER_INDEX| 0| Mixer Index
+DOP| yes| Enables Dsd-Over-Pcm
+REPLAYGAIN_MODE| 0| ReplayGain Mode
+REPLAYGAIN_PREAMP| 0| ReplayGain Preamp
+REPLAYGAIN_MISSING_PREAMP|0| ReplayGain mising preamp
+REPLAYGAIN_LIMIT| yes| ReplayGain Limit
 VOLUME_NORMALIZATION|no|Volume normalization
 QOBUZ_PLUGIN_ENABLED|no|Enables the Qobuz plugin
 QOBUZ_APP_ID|ID|Qobuz application id
 QOBUZ_APP_SECRET|SECRET|Your Qobuz application Secret
 QOBUZ_USERNAME|USERNAME|Qobuz account username
 QOBUZ_PASSWORD|PASSWORD|Qobuz account password
-QOBUZ_FORMAT_ID|5|The Qobuz format identifier, i.e. a number which chooses the format and quality to be requested from Qobuz. The default is “5” (320 kbit/s MP3)
+QOBUZ_FORMAT_ID|5|The Qobuz format identifier, i.e. a number which chooses the format and quality to be requested from Qobuz. The default is “5” (320 kbit/s MP3).
 TIDAL_PLUGIN_ENABLED|no|Enables the Tidal Plugin. Note that it seems to be currently defunct: see the mpd official documentation.
 TIDAL_APP_TOKEN|TOKEN|The Tidal application token. Since Tidal is unwilling to assign a token to MPD, this needs to be reverse-engineered from another (approved) Tidal client.
 TIDAL_USERNAME|USERNAME|Tidal Username
@@ -116,10 +116,12 @@ Just be careful to use the tag you have built.
 ## Release History
 
 Release Date|Major Changes
----|---
-2022-04-30|Rebased to mpd-base-images built on 2022-04-30.
-2022-03-12|Rebased to mpd-base-images built on 2022-03-12.
-2022-02-26|Rebased to mpd-base-images built on 2022-02-26.
-2022-02-25|Add README.md synchronization towards Docker Hub.
-2022-02-13|File `/etc/mpd.conf` is not overwritten. Using file `/app/conf/mpd-alsa.conf`. Launcher script moved to `/app/bin` in the container. Repository files reorganized.
+:---|:---
+2022-10-05|Reviewed build process|
+2022-10-05|Add build from debian:bookworm-slim
+2022-04-30|Rebased to mpd-base-images built on 2022-04-30.|
+2022-03-12|Rebased to mpd-base-images built on 2022-03-12.|
+2022-02-26|Rebased to mpd-base-images built on 2022-02-26.|
+2022-02-25|Add README.md synchronization towards Docker Hub.|
+2022-02-13|File `/etc/mpd.conf` is not overwritten. Using file `/app/conf/mpd-alsa.conf`. Launcher script moved to `/app/bin` in the container. Repository files reorganized.|
 2022-02-11|Automated builds thanks to [Der-Henning](https://github.com/Der-Henning/), Builds for arm64 also thanks to [Der-Henning](https://github.com/Der-Henning/), the README.md you are reading now is copied to the image under path `/app/doc/README.md`. Building from debian bullseye, debian buster and ubuntu focal. Created convenience script for local build.
