@@ -1,19 +1,30 @@
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
+ARG USE_APT_PROXY
+
+RUN mkdir -p /app
+RUN mkdir -p /app/bin
+RUN mkdir -p /app/conf
+RUN mkdir -p /app/doc
+RUN mkdir -p /app/assets
+
+COPY app/conf/01-apt-proxy /app/conf/
+
+RUN echo "USE_APT_PROXY=["${USE_APT_PROXY}"]"
+
+RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
+    echo "Builind using apt proxy"; \
+    cp /app/conf/01-apt-proxy /etc/apt/apt.conf.d/01-apt-proxy; \
+    cat /etc/apt/apt.conf.d/01-apt-proxy; \
+    else \
+    echo "Building without apt proxy"; \
+    fi
 
 RUN mkdir -p /root/.mpd
-
-RUN mkdir -p /db
-RUN mkdir -p /music
-RUN mkdir -p /playlists
 
 VOLUME /db
 VOLUME /music
 VOLUME /playlists
-
-RUN mkdir -p /app       # might be created in base image
-RUN mkdir -p /app/bin   # might be created in base image
-RUN mkdir -p /app/doc   # might be created in base image
 
 EXPOSE 6600
 
