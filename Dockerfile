@@ -2,6 +2,9 @@ ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 ARG USE_APT_PROXY
 
+LABEL maintainer="GioF71"
+LABEL source="https://github.com/GioF71/mpd-alsa-docker"
+
 RUN mkdir -p /app
 RUN mkdir -p /app/bin
 RUN mkdir -p /app/conf
@@ -19,6 +22,8 @@ RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
     else \
     echo "Building without apt proxy"; \
     fi
+
+RUN apt-get update && apt-get install --no-install-recommends -y mpd
 
 RUN mkdir -p /root/.mpd
 

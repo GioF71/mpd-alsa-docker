@@ -50,8 +50,7 @@ jobs:
           special_tags[bookworm]="${image_name}:edge"
           special_tags[buster]="${image_name}:legacy"
 
-          select_base_image=${base_image_from_matrix[${{ matrix.base }}]}
-
+          base_image=${base_image_from_matrix[${{ matrix.base }}]}
           mpd_version=${mpd_versions[${{ matrix.base }}]}
 
           tags=""
@@ -101,19 +100,23 @@ jobs:
           fi
           echo "Building tags: ["${tags}"]"
           echo "RELEASE_TAGS=${tags}" >> $GITHUB_ENV
-          echo "BASE_IMAGE=${select_base_image}" >> $GITHUB_ENV
+          echo "BASE_IMAGE=${base_image}" >> $GITHUB_ENV
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
         with:
           platforms: all
+
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
+
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
