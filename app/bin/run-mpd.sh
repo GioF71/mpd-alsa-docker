@@ -34,4 +34,22 @@ cat $MPD_ALSA_CONFIG_FILE
 echo "About to sleep for $STARTUP_DELAY_SEC second(s)"
 sleep $STARTUP_DELAY_SEC
 echo "Ready to start."
+
+if [ [ -n LASTFM_USERNAME ] && [ -n LASTFM_PASSWORD ] || 
+     [ -n LIBREFM_USERNAME ] && [ -n LIBREFM_PASSWORD ] ||
+     [ -n JAMENDO_USERNAME ] && [ -n JAMENDO_PASSWORD ]
+    ]; then
+    echo "At least one scrobbling service requested."
+    SCROBBLE_CONFIG_FILE=/app/conf/scribble.conf
+    touch $SCROBBLE_CONFIG_FILE
+    if [ -n LASTFM_USERNAME ]; then
+        echo "[last.fm]" >> $SCROBBLE_CONFIG_FILE
+        echo "url = https://post.audioscrobbler.com/" >> $SCROBBLE_CONFIG_FILE 
+        echo "username = '${LASTFM_USERNAME}'" >> $SCROBBLE_CONFIG_FILE
+        echo "password = '${LASTFM_PASSWORD}'" >> $SCROBBLE_CONFIG_FILE
+        echo "journal = /app/scribble/lastfm.journal"
+    fi
+    /usr/bin/mpdscribble --conf $SCROBBLE_CONFIG_FILE &
+fi
+
 /usr/bin/mpd --no-daemon $MPD_ALSA_CONFIG_FILE
