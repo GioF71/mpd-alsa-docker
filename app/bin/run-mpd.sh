@@ -35,10 +35,9 @@ echo "About to sleep for $STARTUP_DELAY_SEC second(s)"
 sleep $STARTUP_DELAY_SEC
 echo "Ready to start."
 
-if [ [ -n LASTFM_USERNAME ] && [ -n LASTFM_PASSWORD ] || 
-     [ -n LIBREFM_USERNAME ] && [ -n LIBREFM_PASSWORD ] ||
-     [ -n JAMENDO_USERNAME ] && [ -n JAMENDO_PASSWORD ]
-    ]; then
+if [ [ -n LASTFM_USERNAME ] && [ -n LASTFM_PASSWORD ] ] || 
+   [ [ -n LIBREFM_USERNAME ] && [ -n LIBREFM_PASSWORD ] ] ||
+   [ [ -n JAMENDO_USERNAME ] && [ -n JAMENDO_PASSWORD ] ] then
     echo "At least one scrobbling service requested."
     SCROBBLE_CONFIG_FILE=/app/conf/scribble.conf
     touch $SCROBBLE_CONFIG_FILE
