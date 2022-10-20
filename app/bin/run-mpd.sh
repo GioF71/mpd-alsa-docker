@@ -37,7 +37,7 @@ echo "Ready to start."
 
 if [ [ -n LASTFM_USERNAME ] && [ -n LASTFM_PASSWORD ] ] || 
    [ [ -n LIBREFM_USERNAME ] && [ -n LIBREFM_PASSWORD ] ] ||
-   [ [ -n JAMENDO_USERNAME ] && [ -n JAMENDO_PASSWORD ] ] then
+   [ [ -n JAMENDO_USERNAME ] && [ -n JAMENDO_PASSWORD ] ]; then
     echo "At least one scrobbling service requested."
     SCROBBLE_CONFIG_FILE=/app/conf/scribble.conf
     touch $SCROBBLE_CONFIG_FILE
@@ -48,6 +48,7 @@ if [ [ -n LASTFM_USERNAME ] && [ -n LASTFM_PASSWORD ] ] ||
         echo "password = '${LASTFM_PASSWORD}'" >> $SCROBBLE_CONFIG_FILE
         echo "journal = /app/scribble/lastfm.journal"
     fi
+    echo $SCROBBLE_CONFIG_FILE
     /usr/bin/mpdscribble --conf $SCROBBLE_CONFIG_FILE &
 fi
 
