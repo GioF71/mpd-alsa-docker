@@ -77,7 +77,7 @@ VOLUME|DESCRIPTION
 /db|Where the mpd database is saved
 /music|Where the music is stored. you might consider to mount your directory in read-only mode (`:ro`)
 /playlists|Where the playlists are stored
-/app/scribble|Where `mpdscrible` will write its journals and its log file
+/app/scribble|Where `mpdscribble` will write its journals and its log file
 
 The following tables lists all the currently supported environment variables:
 
