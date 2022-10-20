@@ -21,4 +21,4 @@ jobs:
           pass: ${{ secrets.DOCKER_PASSWORD }}
           slug: ${{ secrets.DOCKER_USERNAME }}/mpd-alsa
           readme: ./README.md
-          description: Easily run mpd with alsa on your devices
+          description: Easily run mpd with alsa output with Docker. Scrobbling support.
