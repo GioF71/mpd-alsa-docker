@@ -1,16 +1,19 @@
 # mpd-alsa-docker - a Docker image for mpd with ALSA
 
+It also includes `mpdscribble`.
+
 ## Available Archs on Docker Hub
 
 - linux/amd64
 - linux/arm/v7
 - linux/arm64/v8
 
-## Reference
+## References
 
-First and foremost, the reference to the awesome project:
+First and foremost, the reference to the awesome projects:
 
 [Music Player Daemon](https://www.musicpd.org/)
+[MPDScribble](https://www.musicpd.org/clients/mpdscribble/)
 
 ## Links
 
@@ -102,7 +105,24 @@ TIDAL_APP_TOKEN|TOKEN|The Tidal application token. Since Tidal is unwilling to a
 TIDAL_USERNAME|USERNAME|Tidal Username
 TIDAL_PASSWORD|PASSWORD|Tidal password
 TIDAL_AUDIOQUALITY|Q|The Tidal “audioquality” parameter. Possible values: HI_RES, LOSSLESS, HIGH, LOW. Default is HIGH.
+LASTFM_USERNAME||Username for Last.fm.
+LASTFM_PASSWORD||Password for Last.fm
+LIBREFM_USERNAME||Username for Libre.fm
+LIBREFM_PASSWORD||Password for Libre.fm
+JAMENDO_USERNAME||Username for Jamendo
+JAMENDO_PASSWORD||Password for Jamendo
+PROXY||Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:3128`
 STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if your container is set up to start automatically, so that you can resolve race conditions with mpd and with squeezelite if all those services run on the same audio device. I experienced issues with my Asus Tinkerboard, while the Raspberry Pi has never really needed this. Your mileage may vary. Feel free to report your personal experience.
+
+## Volumes
+
+Volume|Description
+:---|:---
+/app/scribble|Where `mpdscrible` will write its journals and its log file
+
+## Support for Scrobbling
+
+If at least one set of credentials for `Last.fm`, `Libre.fm` or `Jamendo` are provided through the environment variables, `mpdscribble` will be started and it will scrobble the songs you play.
 
 ## Build
 
@@ -117,7 +137,9 @@ Just be careful to use the tag you have built.
 
 Release Date|Major Changes
 :---|:---
-2022-10-05|Reviewed build process|
+2022-10-10|Included `mpdscribble` for scrobbling support
+2022-10-10|Multi-stage build
+2022-10-05|Reviewed build process
 2022-10-05|Add build from debian:bookworm-slim
 2022-04-30|Rebased to mpd-base-images built on 2022-04-30.|
 2022-03-12|Rebased to mpd-base-images built on 2022-03-12.|
