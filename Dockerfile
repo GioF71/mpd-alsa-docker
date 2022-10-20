@@ -1,10 +1,6 @@
-#ARG BASE_IMAGE
-ARG BASE_IMAGE="${BASE_IMAGE:-debian:bullseye-slim}" AS BASE
-FROM ${BASE_IMAGE}
+ARG BASE_IMAGE="${BASE_IMAGE:-debian:bullseye-slim}"
+FROM ${BASE_IMAGE} AS BASE
 ARG USE_APT_PROXY
-
-LABEL maintainer="GioF71"
-LABEL source="https://github.com/GioF71/mpd-alsa-docker"
 
 RUN mkdir -p /app/conf
 
@@ -27,7 +23,9 @@ RUN rm -rf /var/lib/apt/lists/*
 
 FROM scratch
 COPY --from=BASE / /
-LABEL maintainer="GioF71 <https://github.com/GioF71>"
+
+LABEL maintainer="GioF71"
+LABEL source="https://github.com/GioF71/mpd-alsa-docker"
 
 RUN mkdir -p /app
 RUN mkdir -p /app/bin
