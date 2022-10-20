@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
 
