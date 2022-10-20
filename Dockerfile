@@ -1,16 +1,12 @@
 #ARG BASE_IMAGE
-ARG BASE_IMAGE="${BASE_IMAGE:-debian:bullseye-slim}"
+ARG BASE_IMAGE="${BASE_IMAGE:-debian:bullseye-slim}" AS BASE
 FROM ${BASE_IMAGE}
 ARG USE_APT_PROXY
 
 LABEL maintainer="GioF71"
 LABEL source="https://github.com/GioF71/mpd-alsa-docker"
 
-RUN mkdir -p /app
-RUN mkdir -p /app/bin
 RUN mkdir -p /app/conf
-RUN mkdir -p /app/doc
-RUN mkdir -p /app/assets
 
 COPY app/conf/01-apt-proxy /app/conf/
 
@@ -24,7 +20,20 @@ RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
     echo "Building without apt proxy"; \
     fi
 
-RUN apt-get update && apt-get install --no-install-recommends -y mpd
+RUN apt-get update
+RUN apt-get install --no-install-recommends -y mpd
+RUN apt-get install --no-install-recommends -y mpdscribble
+RUN rm -rf /var/lib/apt/lists/*
+
+FROM scratch
+COPY --from=BASE / /
+LABEL maintainer="GioF71 <https://github.com/GioF71>"
+
+RUN mkdir -p /app
+RUN mkdir -p /app/bin
+RUN mkdir -p /app/conf
+RUN mkdir -p /app/doc
+RUN mkdir -p /app/assets
 
 RUN mkdir -p /root/.mpd
 
