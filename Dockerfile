@@ -1,16 +1,8 @@
-#ARG BASE_IMAGE
 ARG BASE_IMAGE="${BASE_IMAGE:-debian:bullseye-slim}"
-FROM ${BASE_IMAGE}
+FROM ${BASE_IMAGE} AS BASE
 ARG USE_APT_PROXY
 
-LABEL maintainer="GioF71"
-LABEL source="https://github.com/GioF71/mpd-alsa-docker"
-
-RUN mkdir -p /app
-RUN mkdir -p /app/bin
 RUN mkdir -p /app/conf
-RUN mkdir -p /app/doc
-RUN mkdir -p /app/assets
 
 COPY app/conf/01-apt-proxy /app/conf/
 
@@ -24,7 +16,22 @@ RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
     echo "Building without apt proxy"; \
     fi
 
-RUN apt-get update && apt-get install --no-install-recommends -y mpd
+RUN apt-get update
+RUN apt-get install --no-install-recommends -y mpd
+RUN apt-get install --no-install-recommends -y mpdscribble
+RUN rm -rf /var/lib/apt/lists/*
+
+FROM scratch
+COPY --from=BASE / /
+
+LABEL maintainer="GioF71"
+LABEL source="https://github.com/GioF71/mpd-alsa-docker"
+
+RUN mkdir -p /app
+RUN mkdir -p /app/bin
+RUN mkdir -p /app/conf
+RUN mkdir -p /app/doc
+RUN mkdir -p /app/assets
 
 RUN mkdir -p /root/.mpd
 
@@ -60,6 +67,19 @@ ENV REPLAYGAIN_PREAMP 0
 ENV REPLAYGAIN_MISSING_PREAMP 0
 ENV REPLAYGAIN_LIMIT yes
 ENV VOLUME_NORMALIZATION no
+
+ENV LASTFM_USERNAME ""
+ENV LASTFM_PASSWORD ""
+
+ENV LIBREFM_USERNAME ""
+ENV LIBREFM_PASSWORD ""
+
+ENV JAMENDO_USERNAME ""
+ENV JAMENDO_PASSWORD ""
+
+ENV PROXY ""
+
+VOLUME /app/scribble
 
 ENV STARTUP_DELAY_SEC 0
 
