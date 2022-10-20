@@ -12,7 +12,7 @@ It also includes `mpdscribble`.
 
 First and foremost, the reference to the awesome projects:
 
-[Music Player Daemon](https://www.musicpd.org/)
+[Music Player Daemon](https://www.musicpd.org/)  
 [MPDScribble](https://www.musicpd.org/clients/mpdscribble/)
 
 ## Links
