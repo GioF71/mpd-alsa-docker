@@ -40,39 +40,39 @@ if [[ -n LASTFM_USERNAME && -n LASTFM_PASSWORD ]] ||
    [[ -n JAMENDO_USERNAME && -n JAMENDO_PASSWORD ]]; then
     echo "At least one scrobbling service requested."
     MPD_HOSTNAME=$(hostname -I)
-    SCROBBLE_CONFIG_FILE=/app/conf/scribble.conf
-    touch $SCROBBLE_CONFIG_FILE
-    echo "log = /app/scribble/scribble.log" >> $SCROBBLE_CONFIG_FILE
+    SCRIBBLE_CONFIG_FILE=/app/conf/scribble.conf
+    touch $SCRIBBLE_CONFIG_FILE
+    echo "log = /app/scribble/scribble.log" >> $SCRIBBLE_CONFIG_FILE
     if [ -n $SCRIBBLE_VERBOSE ]; then
-        echo "verbose = $SCRIBBLE_VERBOSE" >> $SCROBBLE_CONFIG_FILE
+        echo "verbose = $SCRIBBLE_VERBOSE" >> $SCRIBBLE_CONFIG_FILE
     fi
-    echo "host = $MPD_HOSTNAME" >> $SCROBBLE_CONFIG_FILE
+    echo "host = $MPD_HOSTNAME" >> $SCRIBBLE_CONFIG_FILE
     if [ -n "$LASTFM_USERNAME" ]; then
-        echo "[last.fm]" >> $SCROBBLE_CONFIG_FILE
-        echo "url = https://post.audioscrobbler.com/" >> $SCROBBLE_CONFIG_FILE 
-        echo "username = ${LASTFM_USERNAME}" >> $SCROBBLE_CONFIG_FILE
-        echo "password = ${LASTFM_PASSWORD}" >> $SCROBBLE_CONFIG_FILE
-        echo "journal = /app/scribble/lastfm.journal" >> $SCROBBLE_CONFIG_FILE
+        echo "[last.fm]" >> $SCRIBBLE_CONFIG_FILE
+        echo "url = https://post.audioscrobbler.com/" >> $SCRIBBLE_CONFIG_FILE 
+        echo "username = ${LASTFM_USERNAME}" >> $SCRIBBLE_CONFIG_FILE
+        echo "password = ${LASTFM_PASSWORD}" >> $SCRIBBLE_CONFIG_FILE
+        echo "journal = /app/scribble/lastfm.journal" >> $SCRIBBLE_CONFIG_FILE
     fi
     if [ -n "$LIBREFM_USERNAME" ]; then
-        echo "[libre.fm]" >> $SCROBBLE_CONFIG_FILE
-        echo "url = http://turtle.libre.fm/" >> $SCROBBLE_CONFIG_FILE 
-        echo "username = ${LIBREFM_USERNAME}" >> $SCROBBLE_CONFIG_FILE
-        echo "password = ${LIBREFM_PASSWORD}" >> $SCROBBLE_CONFIG_FILE
-        echo "journal = /app/scribble/librefm.journal" >> $SCROBBLE_CONFIG_FILE
+        echo "[libre.fm]" >> $SCRIBBLE_CONFIG_FILE
+        echo "url = http://turtle.libre.fm/" >> $SCRIBBLE_CONFIG_FILE 
+        echo "username = ${LIBREFM_USERNAME}" >> $SCRIBBLE_CONFIG_FILE
+        echo "password = ${LIBREFM_PASSWORD}" >> $SCRIBBLE_CONFIG_FILE
+        echo "journal = /app/scribble/librefm.journal" >> $SCRIBBLE_CONFIG_FILE
     fi
     if [ -n "$JAMENDO_USERNAME" ]; then
-        echo "[jamendo]" >> $SCROBBLE_CONFIG_FILE
-        echo "url = http://postaudioscrobbler.jamendo.com/" >> $SCROBBLE_CONFIG_FILE 
-        echo "username = ${JAMENDO_USERNAME}" >> $SCROBBLE_CONFIG_FILE
-        echo "password = ${JAMENDO_PASSWORD}" >> $SCROBBLE_CONFIG_FILE
-        echo "journal = /app/scribble/jamendo.journal" >> $SCROBBLE_CONFIG_FILE
+        echo "[jamendo]" >> $SCRIBBLE_CONFIG_FILE
+        echo "url = http://postaudioscrobbler.jamendo.com/" >> $SCRIBBLE_CONFIG_FILE 
+        echo "username = ${JAMENDO_USERNAME}" >> $SCRIBBLE_CONFIG_FILE
+        echo "password = ${JAMENDO_PASSWORD}" >> $SCRIBBLE_CONFIG_FILE
+        echo "journal = /app/scribble/jamendo.journal" >> $SCRIBBLE_CONFIG_FILE
     fi
-    echo "[file]" >> $SCROBBLE_CONFIG_FILE
-    echo "file = /app/scribble/file.log" >> $SCROBBLE_CONFIG_FILE
+    echo "[file]" >> $SCRIBBLE_CONFIG_FILE
+    echo "file = /app/scribble/file.log" >> $SCRIBBLE_CONFIG_FILE
 
-    cat $SCROBBLE_CONFIG_FILE
-    /usr/bin/mpdscribble --conf $SCROBBLE_CONFIG_FILE &
+    cat $SCRIBBLE_CONFIG_FILE
+    /usr/bin/mpdscribble --conf $SCRIBBLE_CONFIG_FILE &
 fi
 
 /usr/bin/mpd --no-daemon $MPD_ALSA_CONFIG_FILE
