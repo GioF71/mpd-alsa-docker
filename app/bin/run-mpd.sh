@@ -35,20 +35,27 @@ echo "About to sleep for $STARTUP_DELAY_SEC second(s)"
 sleep $STARTUP_DELAY_SEC
 echo "Ready to start."
 
-if [ [ -n LASTFM_USERNAME ] && [ -n LASTFM_PASSWORD ] ] || 
-   [ [ -n LIBREFM_USERNAME ] && [ -n LIBREFM_PASSWORD ] ] ||
-   [ [ -n JAMENDO_USERNAME ] && [ -n JAMENDO_PASSWORD ] ]; then
+if [[ -n LASTFM_USERNAME && -n LASTFM_PASSWORD ]] || 
+   [[ -n LIBREFM_USERNAME && -n LIBREFM_PASSWORD ]] ||
+   [[ -n JAMENDO_USERNAME && -n JAMENDO_PASSWORD ]]; then
     echo "At least one scrobbling service requested."
+    MPD_HOSTNAME=$(hostname -I)
     SCROBBLE_CONFIG_FILE=/app/conf/scribble.conf
     touch $SCROBBLE_CONFIG_FILE
+    echo "log = /app/scribble/scribble.log" >> $SCROBBLE_CONFIG_FILE
+    echo "verbose = 3" >> $SCROBBLE_CONFIG_FILE
+    echo "host = $MPD_HOSTNAME" >> $SCROBBLE_CONFIG_FILE
     if [ -n LASTFM_USERNAME ]; then
         echo "[last.fm]" >> $SCROBBLE_CONFIG_FILE
         echo "url = https://post.audioscrobbler.com/" >> $SCROBBLE_CONFIG_FILE 
-        echo "username = '${LASTFM_USERNAME}'" >> $SCROBBLE_CONFIG_FILE
-        echo "password = '${LASTFM_PASSWORD}'" >> $SCROBBLE_CONFIG_FILE
-        echo "journal = /app/scribble/lastfm.journal"
+        echo "username = ${LASTFM_USERNAME}" >> $SCROBBLE_CONFIG_FILE
+        echo "password = ${LASTFM_PASSWORD}" >> $SCROBBLE_CONFIG_FILE
+        echo "journal = /app/scribble/lastfm.journal" >> $SCROBBLE_CONFIG_FILE
     fi
-    echo $SCROBBLE_CONFIG_FILE
+    echo "[file]" >> $SCROBBLE_CONFIG_FILE
+    echo "file = /app/scribble/file.log" >> $SCROBBLE_CONFIG_FILE
+
+    cat $SCROBBLE_CONFIG_FILE
     /usr/bin/mpdscribble --conf $SCROBBLE_CONFIG_FILE &
 fi
 
