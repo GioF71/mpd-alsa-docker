@@ -38,6 +38,7 @@ RUN mkdir -p /root/.mpd
 VOLUME /db
 VOLUME /music
 VOLUME /playlists
+VOLUME /log
 
 EXPOSE 6600
 
@@ -76,6 +77,8 @@ ENV LIBREFM_PASSWORD ""
 
 ENV JAMENDO_USERNAME ""
 ENV JAMENDO_PASSWORD ""
+
+ENV MPD_LOG_LEVEL ""
 
 ENV PROXY ""
 

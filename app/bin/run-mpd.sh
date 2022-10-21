@@ -2,6 +2,11 @@
 
 MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
 
+if [ -n "$LOG_LEVEL" ]; then
+    sed -i 's/#log_level/'log_level'/g' $MPD_ALSA_CONFIG_FILE
+    sed -i 's/MPD_LOG_LEVEL/'"$MPD_LOG_LEVEL"'/g' $MPD_ALSA_CONFIG_FILE
+fi
+
 sed -i 's/MPD_AUDIO_DEVICE/'"$MPD_AUDIO_DEVICE"'/g' $MPD_ALSA_CONFIG_FILE
 sed -i 's/ALSA_DEVICE_NAME/'"$ALSA_DEVICE_NAME"'/g' $MPD_ALSA_CONFIG_FILE
 sed -i 's/MIXER_TYPE/'"$MIXER_TYPE"'/g' $MPD_ALSA_CONFIG_FILE
