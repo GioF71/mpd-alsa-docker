@@ -172,6 +172,7 @@ Just be careful to use the tag you have built.
 
 Release Date|Major Changes
 :---|:---
+2022-10-21|User mode support
 2022-10-21|Add logging support
 2022-10-20|Included `mpdscribble` for scrobbling support
 2022-10-20|Multi-stage build
