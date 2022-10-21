@@ -77,6 +77,7 @@ VOLUME|DESCRIPTION
 /db|Where the mpd database is saved
 /music|Where the music is stored. you might consider to mount your directory in read-only mode (`:ro`)
 /playlists|Where the playlists are stored
+/log|Where `mpd.log` is written
 /app/scribble|Where `mpdscribble` will write its journals and its log file
 
 The following tables lists all the currently supported environment variables:
@@ -113,6 +114,7 @@ LIBREFM_PASSWORD||Password for Libre.fm
 JAMENDO_USERNAME||Username for Jamendo
 JAMENDO_PASSWORD||Password for Jamendo
 PROXY||Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:3128`
+MPD_LOG_LEVEL||Can be `default` or `verbose`
 STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if your container is set up to start automatically, so that you can resolve race conditions with mpd and with squeezelite if all those services run on the same audio device. I experienced issues with my Asus Tinkerboard, while the Raspberry Pi has never really needed this. Your mileage may vary. Feel free to report your personal experience.
 
 ## Support for Scrobbling
@@ -132,8 +134,9 @@ Just be careful to use the tag you have built.
 
 Release Date|Major Changes
 :---|:---
-2022-10-10|Included `mpdscribble` for scrobbling support
-2022-10-10|Multi-stage build
+2022-10-21|Add logging support
+2022-10-20|Included `mpdscribble` for scrobbling support
+2022-10-20|Multi-stage build
 2022-10-05|Reviewed build process
 2022-10-05|Add build from debian:bookworm-slim
 2022-04-30|Rebased to mpd-base-images built on 2022-04-30.|
