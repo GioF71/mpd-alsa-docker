@@ -91,8 +91,8 @@ VARIABLE|DEFAULT|NOTES
 :---|:---:|:---
 PUID||User id. Defaults to `1000`.
 PGID||Group id. Defaults to `1000`.
-AUDIO_GID||`audio` group id from the host machine. Defaults to `995`.
-USER_MODE||Set to `Y` or `YES` for user mode. Case insensitive.
+AUDIO_GID||`audio` group id from the host machine. Defaults to `995`. See [User mode](#user-mode).
+USER_MODE||Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode).
 MPD_AUDIO_DEVICE|default|The audio device. Common examples: `hw:DAC,0` or `hw:x20,0` or `hw:X20,0` for usb dac based on XMOS
 ALSA_DEVICE_NAME|Alsa Device|Name of the Alsa Device
 MIXER_TYPE|hardware|Mixer type
@@ -168,9 +168,9 @@ You can build (or rebuild) the image by opening a terminal from the root of the 
 It will take very little time even on a Raspberry Pi. When it's finished, you can run the container following the previous instructions.  
 Just be careful to use the tag you have built.
 
-## Release History
+## Change History
 
-Release Date|Major Changes
+Date|Major Changes
 :---|:---
 2022-10-21|User mode support
 2022-10-21|Add logging support
