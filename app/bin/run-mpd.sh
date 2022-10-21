@@ -1,6 +1,9 @@
 #!/bin/bash
 
-MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
+SOURCE_MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
+MPD_ALSA_CONFIG_FILE=/app/run/conf/current-mpd-alsa.conf
+
+cp $SOURCE_MPD_ALSA_CONFIG_FILE $MPD_ALSA_CONFIG_FILE
 
 sed -i 's/MPD_AUDIO_DEVICE/'"$MPD_AUDIO_DEVICE"'/g' $MPD_ALSA_CONFIG_FILE
 sed -i 's/ALSA_DEVICE_NAME/'"$ALSA_DEVICE_NAME"'/g' $MPD_ALSA_CONFIG_FILE
