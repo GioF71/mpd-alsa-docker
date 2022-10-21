@@ -31,13 +31,17 @@ RUN mkdir -p /app
 RUN mkdir -p /app/bin
 RUN mkdir -p /app/conf
 RUN mkdir -p /app/doc
+RUN mkdir -p /app/log
+RUN mkdir -p /app/log/mpd
 RUN mkdir -p /app/assets
 
-RUN mkdir -p /root/.mpd
+RUN mkdir -p /app/run/conf
+RUN chmod 777 /app/run/conf
 
 VOLUME /db
 VOLUME /music
 VOLUME /playlists
+VOLUME /app/scribble
 VOLUME /log
 
 EXPOSE 6600
@@ -82,13 +86,16 @@ ENV MPD_LOG_LEVEL ""
 
 ENV PROXY ""
 
-VOLUME /app/scribble
+ENV USER_MODE ""
+ENV PUID ""
+ENV PGID ""
+ENV AUDIO_GID ""
 
 ENV STARTUP_DELAY_SEC 0
 
 COPY app/conf/mpd.conf /app/conf/mpd-alsa.conf
 COPY app/bin/run-mpd.sh /app/bin/run-mpd.sh
-RUN chmod u+x /app/bin/run-mpd.sh
+RUN chmod +x /app/bin/run-mpd.sh
 
 COPY README.md /app/doc/
 

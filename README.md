@@ -1,6 +1,7 @@
 # mpd-alsa-docker - a Docker image for mpd with ALSA
 
-It also includes `mpdscribble`.
+It also includes `mpdscribble`.  
+User mode is now possible.
 
 ## Available Archs on Docker Hub
 
@@ -70,6 +71,8 @@ docker run -d \
 
 Note that we need to allow the container to access the audio devices through `/dev/snd`. We need to give access to port `6600` so we can control the newly created mpd instance with our favourite mpd client.
 
+### Volumes
+
 The following tables lists the volumes:
 
 VOLUME|DESCRIPTION
@@ -80,10 +83,16 @@ VOLUME|DESCRIPTION
 /log|Where `mpd.log` is written
 /app/scribble|Where `mpdscribble` will write its journals and its log file
 
+### Environment Variables
+
 The following tables lists all the currently supported environment variables:
 
 VARIABLE|DEFAULT|NOTES
 :---|:---:|:---
+PUID||User id. Defaults to `1000`.
+PGID||Group id. Defaults to `1000`.
+AUDIO_GID||`audio` group id from the host machine. Defaults to `995`. See [User mode](#user-mode).
+USER_MODE||Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode).
 MPD_AUDIO_DEVICE|default|The audio device. Common examples: `hw:DAC,0` or `hw:x20,0` or `hw:X20,0` for usb dac based on XMOS
 ALSA_DEVICE_NAME|Alsa Device|Name of the Alsa Device
 MIXER_TYPE|hardware|Mixer type
@@ -117,6 +126,35 @@ PROXY||Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:
 MPD_LOG_LEVEL||Can be `default` or `verbose`
 STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if your container is set up to start automatically, so that you can resolve race conditions with mpd and with squeezelite if all those services run on the same audio device. I experienced issues with my Asus Tinkerboard, while the Raspberry Pi has never really needed this. Your mileage may vary. Feel free to report your personal experience.
 
+### User mode
+
+You can enable user-mode by specifying `USER_MODE` to `Y` or `YES`. It it important that the container knows the group id of the host `audio` group. On my system it's `995`, however it is possible to verify using the following command:
+
+```code
+getent group audio
+```
+
+On my system, this commands outputs:
+
+```text
+audio:x:995:brltty,mpd,squeezelite
+```
+
+If your result is different from `995`, make sure to set the variable `AUDIO_GID` accordingly.
+
+Also, if your user/group id are not both `1000`, set `PUID` and `PGID` accordingly.  
+It is possible to verify the uid and gid of the currently logged user using the following command:
+
+```code
+id
+```
+
+On my system this command outputs:
+
+```text
+uid=1000(giovanni) gid=1000(giovanni) groups=1000(giovanni),3(sys),90(network),98(power),957(autologin),965(docker),967(libvirt),991(lp),992(kvm),998(wheel)
+```
+
 ## Support for Scrobbling
 
 If at least one set of credentials for `Last.fm`, `Libre.fm` or `Jamendo` are provided through the environment variables, `mpdscribble` will be started and it will scrobble the songs you play.
@@ -130,10 +168,11 @@ You can build (or rebuild) the image by opening a terminal from the root of the 
 It will take very little time even on a Raspberry Pi. When it's finished, you can run the container following the previous instructions.  
 Just be careful to use the tag you have built.
 
-## Release History
+## Change History
 
-Release Date|Major Changes
+Date|Major Changes
 :---|:---
+2022-10-21|User mode support
 2022-10-21|Add logging support
 2022-10-20|Included `mpdscribble` for scrobbling support
 2022-10-20|Multi-stage build
