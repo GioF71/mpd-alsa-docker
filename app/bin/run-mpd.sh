@@ -1,9 +1,51 @@
 #!/bin/bash
 
-SOURCE_MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
-MPD_ALSA_CONFIG_FILE=/app/run/conf/current-mpd-alsa.conf
+MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
 
-cp $SOURCE_MPD_ALSA_CONFIG_FILE $MPD_ALSA_CONFIG_FILE
+echo "Creating user ...";
+DEFAULT_UID=1000
+DEFAULT_GID=1000
+if [ -z "${PUID}" ]; then
+    PUID=$DEFAULT_UID;
+    echo "Setting default value for PUID: ["$PUID"]"
+fi
+if [ -z "${PGID}" ]; then
+    PGID=$DEFAULT_GID;
+    echo "Setting default value for PGID: ["$PGID"]"
+fi
+USER_NAME=mpd-user
+GROUP_NAME=mpd-user
+HOME_DIR=/home/$USER_NAME
+### create home directory and ancillary directories
+if [ ! -d "$HOME_DIR" ]; then
+echo "Home directory [$HOME_DIR] not found, creating."
+mkdir -p $HOME_DIR
+chown -R $PUID:$PGID $HOME_DIR
+ls -la $HOME_DIR -d
+ls -la $HOME_DIR
+fi
+### create group
+if [ ! $(getent group $GROUP_NAME) ]; then
+    echo "group $GROUP_NAME does not exist, creating..."
+    groupadd -g $PGID $GROUP_NAME
+else
+    echo "group $GROUP_NAME already exists."
+fi
+### create user
+if [ ! $(getent passwd $USER_NAME) ]; then
+    echo "user $USER_NAME does not exist, creating..."
+    useradd -g $PGID -u $PUID -s /bin/bash -M -d $HOME_DIR $USER_NAME
+    id $USER_NAME
+    echo "user $USER_NAME created."
+else
+    echo "user $USER_NAME already exists."
+fi
+usermod -a -G audio $USER_NAME
+echo "Successfully created $USER_NAME (group: $GROUP_NAME)";
+
+chown -R $USER_NAME:$GROUP_NAME /log
+chown -R $USER_NAME:$GROUP_NAME /db
+chown -R $USER_NAME:$GROUP_NAME /playlists
 
 if [ -n "$LOG_LEVEL" ]; then
     sed -i 's/#log_level/'log_level'/g' $MPD_ALSA_CONFIG_FILE
