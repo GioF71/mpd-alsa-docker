@@ -1,5 +1,6 @@
-# mpd-alsa-docker - a Docker image for mpd with ALSA
+# mpd-alsa-docker
 
+A Docker image for mpd with ALSA.  
 It also includes `mpdscribble`.  
 User mode is now possible.
 
