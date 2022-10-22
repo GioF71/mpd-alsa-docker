@@ -109,6 +109,7 @@ jobs:
               tags="${image_name}:feature-${tag_name}-${distro_id}-${mpd_version}";
             elif [ "${tag_type}" = "daily" ]; then
               echo "daily build";
+              tags="${image_name}:daily-${distro_id}";
               tags="${image_name}:daily-${distro_id}-${mpd_version}";
             fi
           fi
