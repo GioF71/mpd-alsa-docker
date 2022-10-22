@@ -10,6 +10,7 @@ if [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" ]]; then
     echo "Creating user ...";
     DEFAULT_UID=1000
     DEFAULT_GID=1000
+    DEFAULT_AUDIO_GID=995
     if [ -z "${PUID}" ]; then
         PUID=$DEFAULT_UID;
         echo "Setting default value for PUID: ["$PUID"]"
@@ -17,6 +18,10 @@ if [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" ]]; then
     if [ -z "${PGID}" ]; then
         PGID=$DEFAULT_GID;
         echo "Setting default value for PGID: ["$PGID"]"
+    fi
+    if [ -z "${AUDIO_GID}" ]; then
+        AUDIO_GID=$DEFAULT_AUDIO_GID;
+        echo "Setting default value for AUDIO_GID: ["$AUDIO_GID"]"
     fi
     USER_NAME=mpd-user
     GROUP_NAME=mpd-user
@@ -45,8 +50,15 @@ if [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" ]]; then
     else
         echo "user $USER_NAME already exists."
     fi
-    groupadd -g $AUDIO_GID mpdaudio
-    AUDIO_GRP=$(getent group $AUDIO_GID | cut -d: -f1) && echo $MY_GRP
+    if [ $(getent group $AUDIO_GID) ]; then
+        echo "Group with gid $AUDIO_GID already exists"
+    else
+        echo "Creating group with gid $AUDIO_GID"
+        groupadd -g $AUDIO_GID mpd-audio
+    fi
+    echo "Adding $USER_NAME to gid $AUDIO_GID"
+    AUDIO_GRP=$(getent group $AUDIO_GID | cut -d: -f1)
+    echo "gid $AUDIO_GID -> group $AUDIO_GRP"
     usermod -a -G $AUDIO_GRP $USER_NAME
     echo "Successfully created $USER_NAME (group: $GROUP_NAME)";
 

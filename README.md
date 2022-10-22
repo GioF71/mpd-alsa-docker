@@ -173,6 +173,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-10-22|Fixed `AUDIO-GID` now effectively defaulting to `995`.
 2022-10-21|User mode support
 2022-10-21|Add logging support
 2022-10-20|Included `mpdscribble` for scrobbling support
