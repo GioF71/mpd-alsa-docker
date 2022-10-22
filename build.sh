@@ -10,6 +10,9 @@ base_images[bookworm]=debian:bookworm-slim
 base_images[buster]=debian:buster-slim
 base_images[bullseye]=debian:bullseye-slim
 base_images[jammy]=ubuntu:jammy
+base_images[kinetic]=ubuntu:kinetic
+base_images[focal]=ubuntu:focal
+base_images[bionic]=ubuntu:bionic
 
 DEFAULT_BASE_IMAGE=bullseye
 DEFAULT_TAG=local

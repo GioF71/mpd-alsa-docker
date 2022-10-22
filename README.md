@@ -173,16 +173,17 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
-2022-10-22|Fixed `AUDIO-GID` now effectively defaulting to `995`.
+2022-10-22|Add builds for ubuntu kinetic as well as for the current lts versions of ubuntu
+2022-10-22|Fixed `AUDIO-GID` now effectively defaulting to `995`
 2022-10-21|User mode support
 2022-10-21|Add logging support
 2022-10-20|Included `mpdscribble` for scrobbling support
 2022-10-20|Multi-stage build
 2022-10-05|Reviewed build process
 2022-10-05|Add build from debian:bookworm-slim
-2022-04-30|Rebased to mpd-base-images built on 2022-04-30.|
-2022-03-12|Rebased to mpd-base-images built on 2022-03-12.|
-2022-02-26|Rebased to mpd-base-images built on 2022-02-26.|
-2022-02-25|Add README.md synchronization towards Docker Hub.|
-2022-02-13|File `/etc/mpd.conf` is not overwritten. Using file `/app/conf/mpd-alsa.conf`. Launcher script moved to `/app/bin` in the container. Repository files reorganized.|
+2022-04-30|Rebased to mpd-base-images built on 2022-04-30
+2022-03-12|Rebased to mpd-base-images built on 2022-03-12
+2022-02-26|Rebased to mpd-base-images built on 2022-02-26
+2022-02-25|Add README.md synchronization towards Docker Hub
+2022-02-13|File `/etc/mpd.conf` is not overwritten. Using file `/app/conf/mpd-alsa.conf`. Launcher script moved to `/app/bin` in the container. Repository files reorganized.
 2022-02-11|Automated builds thanks to [Der-Henning](https://github.com/Der-Henning/), Builds for arm64 also thanks to [Der-Henning](https://github.com/Der-Henning/), the README.md you are reading now is copied to the image under path `/app/doc/README.md`. Building from debian bullseye, debian buster and ubuntu focal. Created convenience script for local build.
