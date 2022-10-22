@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        base: ["bookworm", "bullseye", "buster", "jammy"]
+        base: ["buster", "bullseye", "bookworm", "bionic", "focal", "jammy", "kinetic"]
 
     steps:
       - name: Checkout
@@ -38,17 +38,25 @@ jobs:
           base_image_from_matrix[buster]=debian:buster-slim
           base_image_from_matrix[bullseye]=debian:bullseye-slim
           base_image_from_matrix[jammy]=ubuntu:jammy
+          base_image_from_matrix[kinetic]=ubuntu:kinetic
 
           declare -A mpd_versions
           mpd_versions[buster]=0.21.5
           mpd_versions[bullseye]=0.22.6
           mpd_versions[bookworm]=0.23.9
+          mpd_versions[bionic]=0.20.18
+          mpd_versions[focal]=0.21.20
           mpd_versions[jammy]=0.23.5
+          mpd_versions[kinetic]=0.23.9
 
           declare -A special_tags
           special_tags[bullseye]="${image_name}:stable,${image_name}:latest"
           special_tags[bookworm]="${image_name}:edge"
-          special_tags[buster]="${image_name}:legacy"
+          special_tags[buster]="${image_name}:legacy,${image_name}:old-stable"
+          special_tags[bionic]="${image_name}:ubuntu-old-lts"
+          special_tags[focal]="${image_name}:ubuntu-previous-lts"
+          special_tags[jammy]="${image_name}:ubuntu-current-lts"
+          special_tags[kinetic]="${image_name}:ubuntu-current"
 
           base_image=${base_image_from_matrix[${{ matrix.base }}]}
           mpd_version=${mpd_versions[${{ matrix.base }}]}
