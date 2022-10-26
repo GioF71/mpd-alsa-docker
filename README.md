@@ -211,6 +211,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-10-26|Added support for `soxr` plugin
 2022-10-26|Added support for `alsa` output format (`OUTPUT_FORMAT`)
 2022-10-26|Added support for samplerate_converter
 2022-10-26|Added support for PulseAudio mode
