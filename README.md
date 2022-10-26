@@ -173,6 +173,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-10-26|Build mpd.conf at container runtime
 2022-10-22|Add support for daily builds
 2022-10-22|Add builds for ubuntu kinetic as well as for the current lts versions of ubuntu
 2022-10-22|Fixed `AUDIO-GID` now effectively defaulting to `995`
