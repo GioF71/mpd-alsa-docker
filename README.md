@@ -88,13 +88,22 @@ MIXER_CONTROL|PCM|Mixer Control
 MIXER_INDEX|0|Mixer Index
 DOP|yes|Enables Dsd-Over-Pcm
 ALSA_OUTPUT_FORMAT||Sets `alsa` output format. Example value: `192000:24:2`
-ALSA_ALLOWED_FORMATS||Sets the `alsa` output allowed formats.
+ALSA_ALLOWED_FORMATS||Sets the `alsa` output allowed formats
 REPLAYGAIN_MODE|0|ReplayGain Mode
 REPLAYGAIN_PREAMP|0|ReplayGain Preamp
 REPLAYGAIN_MISSING_PREAMP|0|ReplayGain mising preamp
 REPLAYGAIN_LIMIT|yes|ReplayGain Limit
 VOLUME_NORMALIZATION|no|Volume normalization
-SAMPLERATE_CONVERTER||Configure `samplerate_converter`. Example value: `soxr very high`
+SAMPLERATE_CONVERTER||Configure `samplerate_converter`. Example value: `soxr very high`. Do not use in conjunction when `SOXR_PLUGIN_ENABLE` is set to enabled
+SOXR_PLUGIN_ENABLE||Enable the `soxr` plugin. Do not use in conjunction with variable `SAMPLERATE_CONVERTER`
+SOXR_PLUGIN_THREADS||The number of libsoxr threads. `0` means automatic. The default is `1` which disables multi-threading.
+SOXR_PLUGIN_QUALITY||The quality of `soxr` resampler. Possible values: `very high`, `high` (the default), `medium`, `low`, `quick`, `custom`. When set to `custom`, the additional `soxr` parameters can be set.
+SOXR_PLUGIN_PRECISION||The precision in bits. Valid values 16,20,24,28 and 32 bits.
+SOXR_PLUGIN_PHASE_RESPONSE||Between the 0-100, where `0` is MINIMUM_PHASE and `50` is LINEAR_PHASE
+SOXR_PLUGIN_PASSBAND_END||The % of source bandwidth where to start filtering. Typical between the 90-99.7.
+SOXR_PLUGIN_STOPBAND_BEGIN||The % of the source bandwidth Where the anti aliasing filter start. Value 100+.
+SOXR_PLUGIN_ATTENUATION||Reduction in dB’s to prevent clipping from the resampling process
+SOXR_PLUGIN_FLAGS||Bitmask with additional option see soxr documentation for specific flags
 QOBUZ_PLUGIN_ENABLED|no|Enables the Qobuz plugin
 QOBUZ_APP_ID|ID|Qobuz application id
 QOBUZ_APP_SECRET|SECRET|Your Qobuz application Secret

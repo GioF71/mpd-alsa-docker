@@ -3,6 +3,7 @@
 # error codes
 # 2 Invalid output mode
 # 3 Missing mandatory audio group gid for user mode with alsa
+# 4 Incompatible settings
 
 MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
 
@@ -192,6 +193,10 @@ else
 fi
 
 if [[ "${SOXR_PLUGIN_ENABLE^^}" = "Y" || "${SOXR_PLUGIN_ENABLE^^}" = "YES" ]]; then
+    if [ -n "${SAMPLERATE_CONVERTER}" ]; then
+        echo "Cannot enable both soxr and samplerate_converter";
+        exit 4;
+    fi
     echo "resampler {" >> $MPD_ALSA_CONFIG_FILE
     echo "  plugin          \"soxr\"" >> $MPD_ALSA_CONFIG_FILE
     if [ -n "${SOXR_PLUGIN_QUALITY}" ]; then
