@@ -1,8 +1,8 @@
 # mpd-alsa-docker
 
-A Docker image for mpd with ALSA.  
+A Docker image for mpd with support for both Alsa (`alsa`) and PulseAudio (`pulse`).  
 It also includes `mpdscribble`.  
-User mode is now possible.
+User mode is now possible with `alsa`.
 
 ## Available Archs on Docker Hub
 
