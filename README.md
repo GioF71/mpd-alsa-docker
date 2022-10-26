@@ -50,27 +50,11 @@ Here is the [repository](https://hub.docker.com/repository/docker/giof71/mpd-als
 
 Getting the image from DockerHub is as simple as typing:
 
-`docker pull giof71/mpd-alsa:stable`
+`docker pull giof71/mpd-alsa`
 
-You may want to pull the "stable" image as opposed to the "latest".
+You might want to pull the `stable` image as opposed to the default `latest`.
 
 ## Usage
-
-You can start mpd-alsa by simply typing:
-
-```text
-docker run -d \
-    --name=mpd-alsa \
-    --rm \
-    --device /dev/snd \
-    -p 6600:6600 \
-    -v ${HOME}/Music:/music:ro \
-    -v ${HOME}/.mpd/playlists:/playlists \
-    -v ${HOME}/.mpd/db:/db \
-    giof71/mpd-alsa:stable`
-```
-
-Note that we need to allow the container to access the audio devices through `/dev/snd`. We need to give access to port `6600` so we can control the newly created mpd instance with our favourite mpd client.
 
 ### Volumes
 
@@ -90,10 +74,12 @@ The following tables lists all the currently supported environment variables:
 
 VARIABLE|DEFAULT|NOTES
 :---|:---:|:---
-PUID||User id. Defaults to `1000`.
+OUTPUT_MODE|alsa|Output mode, can be `alsa` or `pulse`. For `pulse` mode, running in `user` mode is required.
+USER_MODE||Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode). Enforced when `OUTPUT_MODE` is set to `pulse`.
+PUID||User id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
+PGID||Group id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
 PGID||Group id. Defaults to `1000`.
-AUDIO_GID||`audio` group id from the host machine. Defaults to `995`. See [User mode](#user-mode).
-USER_MODE||Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode).
+AUDIO_GID||`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](#user-mode).The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
 MPD_AUDIO_DEVICE|default|The audio device. Common examples: `hw:DAC,0` or `hw:x20,0` or `hw:X20,0` for usb dac based on XMOS
 ALSA_DEVICE_NAME|Alsa Device|Name of the Alsa Device
 MIXER_TYPE|hardware|Mixer type
@@ -127,7 +113,47 @@ PROXY||Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:
 MPD_LOG_LEVEL||Can be `default` or `verbose`
 STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if your container is set up to start automatically, so that you can resolve race conditions with mpd and with squeezelite if all those services run on the same audio device. I experienced issues with my Asus Tinkerboard, while the Raspberry Pi has never really needed this. Your mileage may vary. Feel free to report your personal experience.
 
-### User mode
+### Examples
+
+#### Alsa Mode
+
+You can start mpd-alsa in `alsa` mode by simply typing:
+
+```text
+docker run -d \
+    --name=mpd-alsa \
+    --rm \
+    --device /dev/snd \
+    -p 6600:6600 \
+    -v ${HOME}/Music:/music:ro \
+    -v ${HOME}/.mpd/playlists:/playlists \
+    -v ${HOME}/.mpd/db:/db \
+    giof71/mpd-alsa`
+```
+
+Note that we need to allow the container to access the audio devices through `/dev/snd`. We need to give access to port `6600` so we can control the newly created mpd instance with our favourite mpd client.
+
+#### Pulse Mode
+
+You can start mpd-alsa in `alsa` mode by simply typing:
+
+```text
+docker run -d \
+    --name=mpd-alsa \
+    --rm \
+    --device /dev/snd \
+    -p 6600:6600 \
+    -e OUTPUT_MODE=pulse \
+    -v ${HOME}/Music:/music:ro \
+    -v ${HOME}/.mpd/playlists:/playlists \
+    -v ${HOME}/.mpd/db:/db \
+    -v /run/user/1000/pulse:/run/user/1000/pulse \
+    giof71/mpd-alsa`
+```
+
+Note that we need to allow the container to access the pulseaudio by mounting `/run/user/$(id -u)/pulse`, which typically translates to `/run/user/1000/pulse`.  
+
+## User mode
 
 You can enable user-mode by specifying `USER_MODE` to `Y` or `YES`. It it important that the container knows the group id of the host `audio` group. On my system it's `995`, however it is possible to verify using the following command:
 
@@ -141,8 +167,7 @@ On my system, this commands outputs:
 audio:x:995:brltty,mpd,squeezelite
 ```
 
-If your result is different from `995`, make sure to set the variable `AUDIO_GID` accordingly.
-
+In any case, make sure to set the variable `AUDIO_GID` accordingly. The variable is mandatory for user mode with alsa output.  
 Also, if your user/group id are not both `1000`, set `PUID` and `PGID` accordingly.  
 It is possible to verify the uid and gid of the currently logged user using the following command:
 
@@ -173,6 +198,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-10-26|Added support for PulseAudio mode
 2022-10-26|Build mpd.conf at container runtime
 2022-10-22|Add support for daily builds
 2022-10-22|Add builds for ubuntu kinetic as well as for the current lts versions of ubuntu
