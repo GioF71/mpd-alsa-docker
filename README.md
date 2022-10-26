@@ -128,7 +128,7 @@ docker run -d \
     -v ${HOME}/Music:/music:ro \
     -v ${HOME}/.mpd/playlists:/playlists \
     -v ${HOME}/.mpd/db:/db \
-    giof71/mpd-alsa`
+    giof71/mpd-alsa
 ```
 
 Note that we need to allow the container to access the audio devices through `/dev/snd`. We need to give access to port `6600` so we can control the newly created mpd instance with our favourite mpd client.
@@ -148,7 +148,7 @@ docker run -d \
     -v ${HOME}/.mpd/playlists:/playlists \
     -v ${HOME}/.mpd/db:/db \
     -v /run/user/1000/pulse:/run/user/1000/pulse \
-    giof71/mpd-alsa`
+    giof71/mpd-alsa
 ```
 
 Note that we need to allow the container to access the pulseaudio by mounting `/run/user/$(id -u)/pulse`, which typically translates to `/run/user/1000/pulse`.  
