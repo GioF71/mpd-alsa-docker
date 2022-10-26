@@ -191,6 +191,36 @@ else
     exit 2;
 fi
 
+if [[ "${SOXR_PLUGIN_ENABLE^^}" = "Y" || "${SOXR_PLUGIN_ENABLE^^}" = "YES" ]]; then
+    echo "resampler {" >> $MPD_ALSA_CONFIG_FILE
+    echo "  plugin          \"soxr\"" >> $MPD_ALSA_CONFIG_FILE
+    if [ -n "${SOXR_PLUGIN_QUALITY}" ]; then
+        echo "  quality         \"${SOXR_PLUGIN_QUALITY}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${SOXR_PLUGIN_THREADS}" ]; then
+        echo "  threads         \"${SOXR_PLUGIN_THREADS}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${SOXR_PLUGIN_PRECISION}" ]; then
+       echo "  precision       \"${SOXR_PLUGIN_PRECISION}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${SOXR_PLUGIN_PHASE_RESPONSE}" ]; then
+        echo "  phase_response  \"${SOXR_PLUGIN_PHASE_RESPONSE}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${SOXR_PLUGIN_PASSBAND_END}" ]; then
+        echo "  passband_end    \"${SOXR_PLUGIN_PASSBAND_END}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${SOXR_PLUGIN_STOPBAND_BEGIN}" ]; then
+        echo "  stopband_begin  \"${SOXR_PLUGIN_STOPBAND_BEGIN}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${SOXR_PLUGIN_ATTENUATION}" ]; then
+        echo "  attenuation     \"${SOXR_PLUGIN_ATTENUATION}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${SOXR_PLUGIN_FLAGS}" ]; then
+        echo "  flags           \"${SOXR_PLUGIN_FLAGS}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    echo "}" >> $MPD_ALSA_CONFIG_FILE
+fi
+
 if [ -n "${REPLAYGAIN_MODE}" ]; then
     echo "replaygain \"${REPLAYGAIN_MODE}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
