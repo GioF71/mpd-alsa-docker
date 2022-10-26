@@ -2,6 +2,7 @@
 
 # error codes
 # 2 Invalid output mode
+# 3 Missing mandatory audio group gid for user mode with alsa
 
 MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
 
@@ -14,7 +15,6 @@ if [ "${OUTPUT_MODE^^}" == "PULSE" ] ||
     echo "Creating user ...";
     DEFAULT_UID=1000
     DEFAULT_GID=1000
-    DEFAULT_AUDIO_GID=995
     if [ -z "${PUID}" ]; then
         PUID=$DEFAULT_UID;
         echo "Setting default value for PUID: ["$PUID"]"
@@ -22,10 +22,6 @@ if [ "${OUTPUT_MODE^^}" == "PULSE" ] ||
     if [ -z "${PGID}" ]; then
         PGID=$DEFAULT_GID;
         echo "Setting default value for PGID: ["$PGID"]"
-    fi
-    if [ -z "${AUDIO_GID}" ]; then
-        AUDIO_GID=$DEFAULT_AUDIO_GID;
-        echo "Setting default value for AUDIO_GID: ["$AUDIO_GID"]"
     fi
     USER_NAME=mpd-user
     GROUP_NAME=mpd-user
@@ -55,6 +51,10 @@ if [ "${OUTPUT_MODE^^}" == "PULSE" ] ||
         echo "user $USER_NAME already exists."
     fi
     if [ "${OUTPUT_MODE^^}" = "ALSA" ]; then
+        if [ -z "${AUDIO_GID}" ]; then
+            echo "AUDIO_GID is mandatory for user mode and alsa output"
+            exit 3
+        fi
         if [ $(getent group $AUDIO_GID) ]; then
             echo "Alsa Mode - Group with gid $AUDIO_GID already exists"
         else
@@ -105,7 +105,7 @@ echo "bind_to_address       \"0.0.0.0\"" >> $MPD_ALSA_CONFIG_FILE
 echo "log_file              \"/log/mpd.log\"" >> $MPD_ALSA_CONFIG_FILE
 
 if [ -n "${MPD_LOG_LEVEL}" ]; then
-    echo "log_level \"${MPD_LOG_LEVEL}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "log_level             \"${MPD_LOG_LEVEL}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 
 ## add input curl
