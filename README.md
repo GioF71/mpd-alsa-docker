@@ -155,7 +155,8 @@ Note that we need to allow the container to access the pulseaudio by mounting `/
 
 ## User mode
 
-You can enable user-mode by specifying `USER_MODE` to `Y` or `YES`. It it important that the container knows the group id of the host `audio` group. On my system it's `995`, however it is possible to verify using the following command:
+You can enable user-mode by specifying `USER_MODE` to `Y` or `YES`.  
+For `alsa` mode, it is important that the container knows the group id of the host `audio` group. On my system it's `995`, however it is possible to verify using the following command:
 
 ```code
 getent group audio
