@@ -93,8 +93,8 @@ ENV AUDIO_GID ""
 
 ENV STARTUP_DELAY_SEC 0
 
-COPY app/conf/mpd.conf /app/conf/mpd-alsa.conf
-COPY app/bin/run-mpd.sh /app/bin/run-mpd.sh
+COPY app/conf/mpd-sample.conf /app/conf/
+COPY app/bin/run-mpd.sh /app/bin/
 RUN chmod +x /app/bin/run-mpd.sh
 
 COPY README.md /app/doc/

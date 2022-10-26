@@ -70,39 +70,103 @@ else
     echo "User mode disabled"
 fi
 
-if [ -n "$MPD_LOG_LEVEL" ]; then
-    sed -i 's/#log_level/'log_level'/g' $MPD_ALSA_CONFIG_FILE
-    sed -i 's/MPD_LOG_LEVEL/'"$MPD_LOG_LEVEL"'/g' $MPD_ALSA_CONFIG_FILE
+MPD_ALSA_CONFIG_FILE=/app/conf/mpd.conf
+
+## start from scratch
+echo "# mpd configuration file" > $MPD_ALSA_CONFIG_FILE
+
+echo "music_directory       \"/music\"" >> $MPD_ALSA_CONFIG_FILE
+echo "playlist_directory    \"/playlists\"" >> $MPD_ALSA_CONFIG_FILE
+echo "db_file               \"/db/tag_cache\"" >> $MPD_ALSA_CONFIG_FILE
+echo "state_file            \"/db/state\"" >> $MPD_ALSA_CONFIG_FILE
+echo "sticker_file          \"/db/sticker\"" >> $MPD_ALSA_CONFIG_FILE
+echo "bind_to_address       \"0.0.0.0\"" >> $MPD_ALSA_CONFIG_FILE
+
+if [ -n "${MPD_LOG_LEVEL}" ]; then
+    echo "log_level \"${MPD_LOG_LEVEL}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 
-sed -i 's/MPD_AUDIO_DEVICE/'"$MPD_AUDIO_DEVICE"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/ALSA_DEVICE_NAME/'"$ALSA_DEVICE_NAME"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/MIXER_TYPE/'"$MIXER_TYPE"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/MIXER_DEVICE/'"$MIXER_DEVICE"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/MIXER_CONTROL/'"$MIXER_CONTROL"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/MIXER_INDEX/'"$MIXER_INDEX"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/DOP/'"$DOP"'/g' $MPD_ALSA_CONFIG_FILE
+## add input curl
+echo "input {" >> $MPD_ALSA_CONFIG_FILE
+echo "  plugin \"curl\"" >> $MPD_ALSA_CONFIG_FILE
+echo "}" >> $MPD_ALSA_CONFIG_FILE
 
-sed -i 's/QOBUZ_PLUGIN_ENABLED/'"$QOBUZ_PLUGIN_ENABLED"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/QOBUZ_APP_ID/'"$QOBUZ_APP_ID"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/QOBUZ_APP_SECRET/'"$QOBUZ_APP_SECRET"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/QOBUZ_USERNAME/'"$QOBUZ_USERNAME"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/QOBUZ_PASSWORD/'"$QOBUZ_PASSWORD"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/QOBUZ_FORMAT_ID/'"$QOBUZ_FORMAT_ID"'/g' $MPD_ALSA_CONFIG_FILE
+## Add Tidal plugin
+echo "Tidal Plugin Enabled: [$TIDAL_PLUGIN_ENABLED]"
+if [[ "${TIDAL_PLUGIN_ENABLED^^}" = "Y" || "${TIDAL_PLUGIN_ENABLED^^}" = "YES" ]]; then
+    echo "input {" >> $MPD_ALSA_CONFIG_FILE
+    echo "  enabled         \"yes\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  plugin          \"tidal\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  token           \"${TIDAL_APP_TOKEN}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  username        \"${TIDAL_USERNAME}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  password        \"${TIDAL_PASSWORD}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  audioquality    \"${TIDAL_AUDIOQUALITY}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "}" >> $MPD_ALSA_CONFIG_FILE
+fi
 
-sed -i 's/TIDAL_PLUGIN_ENABLED/'"$TIDAL_PLUGIN_ENABLED"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/TIDAL_APP_TOKEN/'"$TIDAL_APP_TOKEN"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/TIDAL_USERNAME/'"$TIDAL_USERNAME"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/TIDAL_PASSWORD/'"$TIDAL_PASSWORD"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/TIDAL_AUDIOQUALITY/'"$TIDAL_AUDIOQUALITY"'/g' $MPD_ALSA_CONFIG_FILE
+## Add Qobuz plugin
+echo "Qobuz Plugin Enabled: [$QOBUZ_PLUGIN_ENABLED]"
+if [[ "${QOBUZ_PLUGIN_ENABLED^^}" = "Y" || "${QOBUZ_PLUGIN_ENABLED^^}" = "YES" ]]; then
+    echo "input {" >> $MPD_ALSA_CONFIG_FILE
+    echo "  enabled         \"yes\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  plugin          \"qobuz\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  app_id          \"${QOBUZ_APP_ID}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  app_secret      \"${QOBUZ_APP_SECRET}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  username        \"${QOBUZ_USERNAME}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  password        \"${QOBUZ_PASSWORD}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  format_id       \"${QOBUZ_FORMAT_ID}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "}" >> $MPD_ALSA_CONFIG_FILE
+fi
 
-sed -i 's/REPLAYGAIN_MODE/'"$REPLAYGAIN_MODE"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/REPLAYGAIN_PREAMP/'"$REPLAYGAIN_PREAMP"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/REPLAYGAIN_MISSING_PREAMP/'"$REPLAYGAIN_MISSING_PREAMP"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/REPLAYGAIN_LIMIT/'"$REPLAYGAIN_LIMIT"'/g' $MPD_ALSA_CONFIG_FILE
-sed -i 's/VOLUME_NORMALIZATION/'"$VOLUME_NORMALIZATION"'/g' $MPD_ALSA_CONFIG_FILE
+## Add Decoder plugin
+echo "decoder {" >> $MPD_ALSA_CONFIG_FILE
+echo "  plugin  \"hybrid_dsd\"" >> $MPD_ALSA_CONFIG_FILE
+echo "  enabled \"no\"" >> $MPD_ALSA_CONFIG_FILE
+echo "}" >> $MPD_ALSA_CONFIG_FILE
 
-cat $MPD_ALSA_CONFIG_FILE
+## Add alsa output
+echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
+    echo "  type            \"alsa\"" >> $MPD_ALSA_CONFIG_FILE
+if [ -n "${ALSA_DEVICE_NAME}" ]; then
+    echo "  name            \"${ALSA_DEVICE_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [ -n "${MPD_AUDIO_DEVICE}" ]; then
+    echo "  device          \"${MPD_AUDIO_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [ -n "${MIXER_TYPE}" ]; then
+    echo "  mixer_type      \"${MIXER_TYPE}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [ -n "${MIXER_DEVICE}" ]; then
+    echo "  mixer_device    \"${MIXER_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [ -n "${MIXER_CONTROL}" ]; then
+    echo "  mixer_control   \"${MIXER_CONTROL}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [ -n "${MIXER_INDEX}" ]; then
+    echo "  mixer_index     \"${MIXER_INDEX}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [ -n "${DOP}" ]; then
+    echo "  dop             \"${DOP}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+echo "}" >> $MPD_ALSA_CONFIG_FILE
+
+if [ -n "${REPLAYGAIN_MODE}" ]; then
+    echo "replaygain \"${REPLAYGAIN_MODE}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [ -n "${REPLAYGAIN_PREAMP}" ]; then
+    echo "replaygain_preamp \"${REPLAYGAIN_PREAMP}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [ -n "${REPLAYGAIN_MISSING_PREAMP}" ]; then
+    echo "replaygain_missing_preamp \"${REPLAYGAIN_MISSING_PREAMP}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [ -n "${REPLAYGAIN_LIMIT}" ]; then
+    echo "replaygain_limit \"${REPLAYGAIN_LIMIT}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [ -n "${VOLUME_NORMALIZATION}" ]; then
+    echo "volume_normalization \"${VOLUME_NORMALIZATION}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+
+echo "filesystem_charset \"UTF-8\"" >> $MPD_ALSA_CONFIG_FILE
 
 echo "About to sleep for $STARTUP_DELAY_SEC second(s)"
 sleep $STARTUP_DELAY_SEC
@@ -155,6 +219,8 @@ if [[ -n "$LASTFM_USERNAME" && -n "$LASTFM_PASSWORD" ]] ||
         eval "$CMD_LINE"
     fi
 fi
+
+cat $MPD_ALSA_CONFIG_FILE
 
 CMD_LINE="/usr/bin/mpd --no-daemon $MPD_ALSA_CONFIG_FILE"
 if [ $USE_USER_MODE == "Y" ]; then
