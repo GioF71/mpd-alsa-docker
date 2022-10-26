@@ -135,7 +135,7 @@ Note that we need to allow the container to access the audio devices through `/d
 
 #### Pulse Mode
 
-You can start mpd-alsa in `alsa` mode by simply typing:
+You can start mpd-alsa in `pulse` mode by simply typing:
 
 ```text
 docker run -d \
