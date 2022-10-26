@@ -79,7 +79,7 @@ USER_MODE||Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](
 PUID||User id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
 PGID||Group id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
 PGID||Group id. Defaults to `1000`.
-AUDIO_GID||`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](#user-mode).The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
+AUDIO_GID||`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](#user-mode).
 MPD_AUDIO_DEVICE|default|The audio device. Common examples: `hw:DAC,0` or `hw:x20,0` or `hw:X20,0` for usb dac based on XMOS
 ALSA_DEVICE_NAME|Alsa Device|Name of the Alsa Device
 MIXER_TYPE|hardware|Mixer type
