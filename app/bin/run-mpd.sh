@@ -3,6 +3,7 @@
 # error codes
 # 2 Invalid output mode
 # 3 Missing mandatory audio group gid for user mode with alsa
+# 4 Incompatible settings
 
 MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
 
@@ -168,6 +169,12 @@ if [ "${OUTPUT_MODE^^}" = "ALSA" ]; then
     if [ -n "${MIXER_INDEX}" ]; then
         echo "  mixer_index     \"${MIXER_INDEX}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
+    if [ -n "${ALSA_OUTPUT_FORMAT}" ]; then
+        echo "  format          \"${ALSA_OUTPUT_FORMAT}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${ALSA_ALLOWED_FORMATS}" ]; then
+        echo "  allowed_formats \"${ALSA_ALLOWED_FORMATS}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
     if [ -n "${DOP}" ]; then
         echo "  dop             \"${DOP}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
@@ -185,6 +192,40 @@ else
     exit 2;
 fi
 
+if [[ "${SOXR_PLUGIN_ENABLE^^}" = "Y" || "${SOXR_PLUGIN_ENABLE^^}" = "YES" ]]; then
+    if [ -n "${SAMPLERATE_CONVERTER}" ]; then
+        echo "Cannot enable both soxr and samplerate_converter";
+        exit 4;
+    fi
+    echo "resampler {" >> $MPD_ALSA_CONFIG_FILE
+    echo "  plugin          \"soxr\"" >> $MPD_ALSA_CONFIG_FILE
+    if [ -n "${SOXR_PLUGIN_QUALITY}" ]; then
+        echo "  quality         \"${SOXR_PLUGIN_QUALITY}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${SOXR_PLUGIN_THREADS}" ]; then
+        echo "  threads         \"${SOXR_PLUGIN_THREADS}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${SOXR_PLUGIN_PRECISION}" ]; then
+       echo "  precision       \"${SOXR_PLUGIN_PRECISION}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${SOXR_PLUGIN_PHASE_RESPONSE}" ]; then
+        echo "  phase_response  \"${SOXR_PLUGIN_PHASE_RESPONSE}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${SOXR_PLUGIN_PASSBAND_END}" ]; then
+        echo "  passband_end    \"${SOXR_PLUGIN_PASSBAND_END}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${SOXR_PLUGIN_STOPBAND_BEGIN}" ]; then
+        echo "  stopband_begin  \"${SOXR_PLUGIN_STOPBAND_BEGIN}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${SOXR_PLUGIN_ATTENUATION}" ]; then
+        echo "  attenuation     \"${SOXR_PLUGIN_ATTENUATION}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${SOXR_PLUGIN_FLAGS}" ]; then
+        echo "  flags           \"${SOXR_PLUGIN_FLAGS}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    echo "}" >> $MPD_ALSA_CONFIG_FILE
+fi
+
 if [ -n "${REPLAYGAIN_MODE}" ]; then
     echo "replaygain \"${REPLAYGAIN_MODE}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
@@ -199,6 +240,9 @@ if [ -n "${REPLAYGAIN_LIMIT}" ]; then
 fi
 if [ -n "${VOLUME_NORMALIZATION}" ]; then
     echo "volume_normalization \"${VOLUME_NORMALIZATION}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [ -n "${SAMPLERATE_CONVERTER}" ]; then
+    echo "samplerate_converter \"${SAMPLERATE_CONVERTER}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 
 echo "filesystem_charset \"UTF-8\"" >> $MPD_ALSA_CONFIG_FILE
