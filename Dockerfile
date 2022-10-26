@@ -16,9 +16,12 @@ RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
     echo "Building without apt proxy"; \
     fi
 
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
-RUN apt-get install --no-install-recommends -y mpd
-RUN apt-get install --no-install-recommends -y mpdscribble
+RUN apt-get upgrade -y
+RUN apt-get install -y --no-install-recommends mpd
+RUN apt-get install -y --no-install-recommends mpdscribble
+RUN apt-get install -y --no-install-recommends pulseaudio-utils
 RUN rm -rf /var/lib/apt/lists/*
 
 FROM scratch
@@ -28,6 +31,7 @@ LABEL maintainer="GioF71"
 LABEL source="https://github.com/GioF71/mpd-alsa-docker"
 
 RUN mkdir -p /app
+RUN mkdir -p /app/assets
 RUN mkdir -p /app/bin
 RUN mkdir -p /app/conf
 RUN mkdir -p /app/doc
@@ -53,6 +57,9 @@ ENV MIXER_DEVICE default
 ENV MIXER_CONTROL PCM
 ENV MIXER_INDEX 0
 ENV DOP yes
+
+ENV OUTPUT_MODE alsa
+ENV PULSEAUDIO_OUTPUT_NAME ""
 
 ENV QOBUZ_PLUGIN_ENABLED no
 ENV QOBUZ_APP_ID ID
@@ -93,6 +100,7 @@ ENV AUDIO_GID ""
 
 ENV STARTUP_DELAY_SEC 0
 
+COPY app/assets/pulse-client-template.conf /app/assets/pulse-client-template.conf
 COPY app/conf/mpd-sample.conf /app/conf/
 COPY app/bin/run-mpd.sh /app/bin/
 RUN chmod +x /app/bin/run-mpd.sh

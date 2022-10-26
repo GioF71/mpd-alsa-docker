@@ -1,16 +1,20 @@
 #!/bin/bash
 
+# error codes
+# 2 Invalid output mode
+# 3 Missing mandatory audio group gid for user mode with alsa
+
 MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
 
 USE_USER_MODE="N"
 
-if [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" ]]; then
+if [ "${OUTPUT_MODE^^}" == "PULSE" ] || 
+   [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" == "Y" ]]; then
     USE_USER_MODE="Y"
     echo "User mode enabled"
     echo "Creating user ...";
     DEFAULT_UID=1000
     DEFAULT_GID=1000
-    DEFAULT_AUDIO_GID=995
     if [ -z "${PUID}" ]; then
         PUID=$DEFAULT_UID;
         echo "Setting default value for PUID: ["$PUID"]"
@@ -18,10 +22,6 @@ if [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" ]]; then
     if [ -z "${PGID}" ]; then
         PGID=$DEFAULT_GID;
         echo "Setting default value for PGID: ["$PGID"]"
-    fi
-    if [ -z "${AUDIO_GID}" ]; then
-        AUDIO_GID=$DEFAULT_AUDIO_GID;
-        echo "Setting default value for AUDIO_GID: ["$AUDIO_GID"]"
     fi
     USER_NAME=mpd-user
     GROUP_NAME=mpd-user
@@ -50,22 +50,43 @@ if [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" ]]; then
     else
         echo "user $USER_NAME already exists."
     fi
-    if [ $(getent group $AUDIO_GID) ]; then
-        echo "Group with gid $AUDIO_GID already exists"
+    if [ "${OUTPUT_MODE^^}" = "ALSA" ]; then
+        if [ -z "${AUDIO_GID}" ]; then
+            echo "AUDIO_GID is mandatory for user mode and alsa output"
+            exit 3
+        fi
+        if [ $(getent group $AUDIO_GID) ]; then
+            echo "Alsa Mode - Group with gid $AUDIO_GID already exists"
+        else
+            echo "Alsa Mode - Creating group with gid $AUDIO_GID"
+            groupadd -g $AUDIO_GID mpd-audio
+        fi
+        echo "Alsa Mode - Adding $USER_NAME to gid $AUDIO_GID"
+        AUDIO_GRP=$(getent group $AUDIO_GID | cut -d: -f1)
+        echo "gid $AUDIO_GID -> group $AUDIO_GRP"
+        usermod -a -G $AUDIO_GRP $USER_NAME
+        echo "Alsa Mode - Successfully created $USER_NAME (group: $GROUP_NAME)";
+    elif [ "${OUTPUT_MODE^^}" = "PULSE" ]; then
+        echo "Pulse Mode - Adding $USER_NAME to group audio"
+        usermod -a -G audio $USER_NAME
+        echo "Pulse Mode - Successfully added $USER_NAME to group audio"
     else
-        echo "Creating group with gid $AUDIO_GID"
-        groupadd -g $AUDIO_GID mpd-audio
+        echo "Invalid output mode [${OUTPUT_MODE}]";
+        exit 2;
     fi
-    echo "Adding $USER_NAME to gid $AUDIO_GID"
-    AUDIO_GRP=$(getent group $AUDIO_GID | cut -d: -f1)
-    echo "gid $AUDIO_GID -> group $AUDIO_GRP"
-    usermod -a -G $AUDIO_GRP $USER_NAME
-    echo "Successfully created $USER_NAME (group: $GROUP_NAME)";
-
     chown -R $USER_NAME:$GROUP_NAME /log
     chown -R $USER_NAME:$GROUP_NAME /db
     chown -R $USER_NAME:$GROUP_NAME /playlists
     chown -R $USER_NAME:$GROUP_NAME /app/scribble
+
+    ## PulseAudio
+    if [ "${OUTPUT_MODE^^}" = "PULSE" ]; then
+        PULSE_CLIENT_CONF="/etc/pulse/client.conf"
+        echo "Creating pulseaudio configuration file $PULSE_CLIENT_CONF..."
+        cp /app/assets/pulse-client-template.conf $PULSE_CLIENT_CONF
+        sed -i 's/PUID/'"$PUID"'/g' $PULSE_CLIENT_CONF
+        cat $PULSE_CLIENT_CONF
+    fi
 else 
     echo "User mode disabled"
 fi
@@ -81,9 +102,10 @@ echo "db_file               \"/db/tag_cache\"" >> $MPD_ALSA_CONFIG_FILE
 echo "state_file            \"/db/state\"" >> $MPD_ALSA_CONFIG_FILE
 echo "sticker_file          \"/db/sticker\"" >> $MPD_ALSA_CONFIG_FILE
 echo "bind_to_address       \"0.0.0.0\"" >> $MPD_ALSA_CONFIG_FILE
+echo "log_file              \"/log/mpd.log\"" >> $MPD_ALSA_CONFIG_FILE
 
 if [ -n "${MPD_LOG_LEVEL}" ]; then
-    echo "log_level \"${MPD_LOG_LEVEL}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "log_level             \"${MPD_LOG_LEVEL}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 
 ## add input curl
@@ -124,31 +146,44 @@ echo "  plugin  \"hybrid_dsd\"" >> $MPD_ALSA_CONFIG_FILE
 echo "  enabled \"no\"" >> $MPD_ALSA_CONFIG_FILE
 echo "}" >> $MPD_ALSA_CONFIG_FILE
 
-## Add alsa output
-echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
-    echo "  type            \"alsa\"" >> $MPD_ALSA_CONFIG_FILE
-if [ -n "${ALSA_DEVICE_NAME}" ]; then
-    echo "  name            \"${ALSA_DEVICE_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
+if [ "${OUTPUT_MODE^^}" = "ALSA" ]; then
+    ## Add alsa output
+    echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
+        echo "  type            \"alsa\"" >> $MPD_ALSA_CONFIG_FILE
+    if [ -n "${ALSA_DEVICE_NAME}" ]; then
+        echo "  name            \"${ALSA_DEVICE_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${MPD_AUDIO_DEVICE}" ]; then
+        echo "  device          \"${MPD_AUDIO_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${MIXER_TYPE}" ]; then
+        echo "  mixer_type      \"${MIXER_TYPE}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${MIXER_DEVICE}" ]; then
+        echo "  mixer_device    \"${MIXER_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${MIXER_CONTROL}" ]; then
+        echo "  mixer_control   \"${MIXER_CONTROL}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${MIXER_INDEX}" ]; then
+        echo "  mixer_index     \"${MIXER_INDEX}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${DOP}" ]; then
+        echo "  dop             \"${DOP}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    echo "}" >> $MPD_ALSA_CONFIG_FILE
+elif [ "${OUTPUT_MODE^^}" = "PULSE" ]; then
+    echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
+    echo "  type \"pulse\"" >> $MPD_ALSA_CONFIG_FILE
+    if [ -z "${PULSEAUDIO_OUTPUT_NAME}" ]; then
+        PULSEAUDIO_OUTPUT_NAME="PulseAudio"
+    fi
+    echo "  name \"${PULSEAUDIO_OUTPUT_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "}" >> $MPD_ALSA_CONFIG_FILE
+else
+    echo "Invalid output mode [${OUTPUT_MODE}]";
+    exit 2;
 fi
-if [ -n "${MPD_AUDIO_DEVICE}" ]; then
-    echo "  device          \"${MPD_AUDIO_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
-fi
-if [ -n "${MIXER_TYPE}" ]; then
-    echo "  mixer_type      \"${MIXER_TYPE}\"" >> $MPD_ALSA_CONFIG_FILE
-fi
-if [ -n "${MIXER_DEVICE}" ]; then
-    echo "  mixer_device    \"${MIXER_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
-fi
-if [ -n "${MIXER_CONTROL}" ]; then
-    echo "  mixer_control   \"${MIXER_CONTROL}\"" >> $MPD_ALSA_CONFIG_FILE
-fi
-if [ -n "${MIXER_INDEX}" ]; then
-    echo "  mixer_index     \"${MIXER_INDEX}\"" >> $MPD_ALSA_CONFIG_FILE
-fi
-if [ -n "${DOP}" ]; then
-    echo "  dop             \"${DOP}\"" >> $MPD_ALSA_CONFIG_FILE
-fi
-echo "}" >> $MPD_ALSA_CONFIG_FILE
 
 if [ -n "${REPLAYGAIN_MODE}" ]; then
     echo "replaygain \"${REPLAYGAIN_MODE}\"" >> $MPD_ALSA_CONFIG_FILE
