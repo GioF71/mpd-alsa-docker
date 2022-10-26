@@ -7,7 +7,8 @@ MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
 
 USE_USER_MODE="N"
 
-if [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" ]]; then
+if [ "${OUTPUT_MODE^^}" == "PULSE" ] || 
+   [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" == "Y" ]]; then
     USE_USER_MODE="Y"
     echo "User mode enabled"
     echo "Creating user ...";
