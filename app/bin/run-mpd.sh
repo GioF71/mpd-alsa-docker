@@ -168,6 +168,12 @@ if [ "${OUTPUT_MODE^^}" = "ALSA" ]; then
     if [ -n "${MIXER_INDEX}" ]; then
         echo "  mixer_index     \"${MIXER_INDEX}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
+    if [ -n "${ALSA_OUTPUT_FORMAT}" ]; then
+        echo "  format          \"${ALSA_OUTPUT_FORMAT}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${ALSA_ALLOWED_FORMATS}" ]; then
+        echo "  allowed_formats \"${ALSA_ALLOWED_FORMATS}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
     if [ -n "${DOP}" ]; then
         echo "  dop             \"${DOP}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
@@ -199,6 +205,9 @@ if [ -n "${REPLAYGAIN_LIMIT}" ]; then
 fi
 if [ -n "${VOLUME_NORMALIZATION}" ]; then
     echo "volume_normalization \"${VOLUME_NORMALIZATION}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [ -n "${SAMPLERATE_CONVERTER}" ]; then
+    echo "samplerate_converter \"${SAMPLERATE_CONVERTER}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 
 echo "filesystem_charset \"UTF-8\"" >> $MPD_ALSA_CONFIG_FILE

@@ -87,11 +87,14 @@ MIXER_DEVICE|default|Mixer device
 MIXER_CONTROL|PCM|Mixer Control
 MIXER_INDEX|0|Mixer Index
 DOP|yes|Enables Dsd-Over-Pcm
+ALSA_OUTPUT_FORMAT||Sets `alsa` output format. Example value: `192000:24:2`
+ALSA_ALLOWED_FORMATS||Sets the `alsa` output allowed formats.
 REPLAYGAIN_MODE|0|ReplayGain Mode
 REPLAYGAIN_PREAMP|0|ReplayGain Preamp
 REPLAYGAIN_MISSING_PREAMP|0|ReplayGain mising preamp
 REPLAYGAIN_LIMIT|yes|ReplayGain Limit
 VOLUME_NORMALIZATION|no|Volume normalization
+SAMPLERATE_CONVERTER||Configure `samplerate_converter`. Example value: `soxr very high`
 QOBUZ_PLUGIN_ENABLED|no|Enables the Qobuz plugin
 QOBUZ_APP_ID|ID|Qobuz application id
 QOBUZ_APP_SECRET|SECRET|Your Qobuz application Secret
@@ -199,6 +202,8 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-10-26|Added support for `alsa` output format (`OUTPUT_FORMAT`)
+2022-10-26|Added support for samplerate_converter
 2022-10-26|Added support for PulseAudio mode
 2022-10-26|Build mpd.conf at container runtime
 2022-10-22|Add support for daily builds
