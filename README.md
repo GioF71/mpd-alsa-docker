@@ -198,6 +198,22 @@ uid=1000(giovanni) gid=1000(giovanni) groups=1000(giovanni),3(sys),90(network),9
 
 If at least one set of credentials for `Last.fm`, `Libre.fm` or `Jamendo` are provided through the environment variables, `mpdscribble` will be started and it will scrobble the songs you play.
 
+## Run as a user-level systemd
+
+When using a desktop system with PulseAudio, running a docker-compose with a `restart=unless-stopped` is likely to cause issues to the entire PulseAudio. At least that is what is systematically happening to me on my desktop systems.  
+You might want to create a user-level systemd unit. In order to do that, move to the `pulse` directory of this repo, then run the following to install the service:
+
+```code
+./install.sh
+```
+
+After that, the service can be controlled using `./start.sh`, `./stop.sh`, `./restart.sh`.  
+You can completely uninstall the service by running:
+
+```code
+./uninstall.sh`
+```
+
 ## Build
 
 You can build (or rebuild) the image by opening a terminal from the root of the repository and issuing the following command:
@@ -211,6 +227,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-10-29|PulseAudio user-level systemd service introduced
 2022-10-26|Added support for `soxr` plugin
 2022-10-26|Added support for `alsa` output format (`OUTPUT_FORMAT`)
 2022-10-26|Added support for samplerate_converter
