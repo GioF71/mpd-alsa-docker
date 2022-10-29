@@ -1,0 +1,34 @@
+[Unit]
+Description=MPD Pulse
+After=network.target network-online.target sound.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStartPre=-/usr/bin/docker stop mpd-pulse
+ExecStartPre=-/usr/bin/docker rm mpd-pulse
+ExecStartPre=-/usr/bin/docker network create mpd-pulse
+ExecStartPre=-/usr/bin/docker pull giof71/mpd-alsa:latest
+
+ExecStart=/usr/bin/docker run -i \
+            --network=mpd-pulse \
+            -e PUID=%U \
+            -e PGID=%G \
+            -e OUTPUT_MODE=pulse \
+            -v /run/user/%U/pulse:/run/user/%U/pulse \
+            -v %h/Music:/music:ro \
+            -v %h/.config/mpd-pulse/db:/db \
+            -v %h/.config/mpd-pulse/playlists:/playlists \
+            -v %h/.config/mpd-pulse/log:/log \
+            -p 6600:6600 \
+            --name mpd-pulse \
+            --label com.centurylinklabs.watchtower.enable=false \
+            giof71/mpd-alsa:latest
+
+ExecStop=-/usr/bin/docker stop mpd-pulse
+ExecStop=-/usr/bin/docker rm mpd-pulse
+ExecStop=-/usr/bin/docker network rm mpd-pulse
+
+[Install]
+WantedBy=default.target
+
