@@ -11,13 +11,6 @@ if [ -f $env_file_toremove ]; then
     rm $env_file_toremove
 fi
 
-srv_file_toremove=$SERVICE_DIRECTORY/$SERVICE_ENV_FILE
-
-if [ -f $srv_file_toremove ]; then
-    echo "removing $srv_file_toremove"
-    rm $srv_file_toremove
-fi
-
 systemctl --user reset-failed
 systemctl --user daemon-reload
 
