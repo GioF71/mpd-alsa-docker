@@ -5,10 +5,10 @@ Wants=network-online.target
 
 [Service]
 Type=simple
+ExecStartPre=-/usr/bin/docker pull giof71/mpd-alsa:latest
 ExecStartPre=-/usr/bin/docker stop mpd-pulse
 ExecStartPre=-/usr/bin/docker rm mpd-pulse
 ExecStartPre=-/usr/bin/docker network create mpd-pulse
-ExecStartPre=-/usr/bin/docker pull giof71/mpd-alsa:latest
 
 ExecStart=/usr/bin/docker run -i \
             --network=mpd-pulse \
