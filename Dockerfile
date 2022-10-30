@@ -19,7 +19,7 @@ RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y --no-install-recommends mpd
+RUN apt-get install -y mpd
 RUN apt-get install -y --no-install-recommends mpdscribble
 RUN apt-get install -y --no-install-recommends pulseaudio-utils
 RUN rm -rf /var/lib/apt/lists/*
