@@ -5,7 +5,6 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-ExecStartPre=-/usr/bin/docker pull giof71/mpd-alsa:latest
 ExecStartPre=-/usr/bin/docker stop mpd-pulse
 ExecStartPre=-/usr/bin/docker rm mpd-pulse
 ExecStartPre=-/usr/bin/docker network create mpd-pulse
@@ -23,6 +22,7 @@ ExecStart=/usr/bin/docker run -i \
             -p 6600:6600 \
             --name mpd-pulse \
             --label com.centurylinklabs.watchtower.enable=false \
+            --pull=always \
             giof71/mpd-alsa:latest
 
 ExecStop=-/usr/bin/docker stop mpd-pulse

@@ -227,6 +227,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-10-31|Added `--pull=always` to docker run command for systemd pulse service
 2022-10-30|Docker pull before container stop for systemd pulse service
 2022-10-30|Avoid `--no-install-recommends` for `mpd` installation
 2022-10-29|PulseAudio user-level systemd service introduced
