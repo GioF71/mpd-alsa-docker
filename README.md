@@ -197,8 +197,9 @@ uid=1000(giovanni) gid=1000(giovanni) groups=1000(giovanni),3(sys),90(network),9
 
 ## Support for Scrobbling
 
-If at least one set of credentials for `Last.fm`, `Libre.fm` or `Jamendo` are provided through the environment variables, `mpdscribble` will be started and it will scrobble the songs you play.
-You can also provide credentials in the volume `/user/config`, in the following files:
+If at least one set of credentials for `Last.fm`, `Libre.fm` or `Jamendo` are provided, `mpdscribble` will be started and it will scrobble the songs you play.  
+You can provide credential using the environment variables or using credential files stored in the volume `/user/config`.  
+The relevant files are:
 
 - lastfm.txt
 - librefm.txt
