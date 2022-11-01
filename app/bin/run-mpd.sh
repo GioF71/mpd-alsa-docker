@@ -5,6 +5,33 @@
 # 3 Missing mandatory audio group gid for user mode with alsa
 # 4 Incompatible settings
 
+declare -A file_dict
+
+source read-file.sh
+source get-value.sh
+
+LASTFM_CREDENTIALS_FILE=/user/config/lastfm.txt
+LIBREFM_CREDENTIALS_FILE=/user/config/librefm.txt
+JAMENDO_CREDENTIALS_FILE=/user/config/librefm.txt
+
+if [ -f "$LASTFM_CREDENTIALS_FILE" ]; then
+    read_file $LASTFM_CREDENTIALS_FILE
+    LASTFM_USERNAME=$(get_value "LASTFM_USERNAME" $PARAMETER_PRIORITY)
+    LASTFM_PASSWORD=$(get_value "LASTFM_PASSWORD" $PARAMETER_PRIORITY)
+fi
+
+if [ -f "$LIBREFM_CREDENTIALS_FILE" ]; then
+    read_file $LIBREFM_CREDENTIALS_FILE
+    LIBREFM_USERNAME=$(get_value "LIBREFM_USERNAME" $PARAMETER_PRIORITY)
+    LIBREFM_PASSWORD=$(get_value "LIBREFM_PASSWORD" $PARAMETER_PRIORITY)
+fi
+
+if [ -f "$JAMENDO_CREDENTIALS_FILE" ]; then
+    read_file $JAMENDO_CREDENTIALS_FILE
+    JAMENDO_USERNAME=$(get_value "JAMENDO_USERNAME" $PARAMETER_PRIORITY)
+    JAMENDO_PASSWORD=$(get_value "JAMENDO_PASSWORD" $PARAMETER_PRIORITY)
+fi
+
 MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
 
 USE_USER_MODE="N"
@@ -261,7 +288,7 @@ if [[ -n "$LASTFM_USERNAME" && -n "$LASTFM_PASSWORD" ]] ||
     if [ -n "$PROXY" ]; then
         echo "proxy = $PROXY" >> $SCRIBBLE_CONFIG_FILE
     fi
-    echo "log = /app/scribble/scribble.log" >> $SCRIBBLE_CONFIG_FILE
+    echo "log = /log/scrobbler.log" >> $SCRIBBLE_CONFIG_FILE
     if [ -n "$SCRIBBLE_VERBOSE" ]; then
         echo "verbose = $SCRIBBLE_VERBOSE" >> $SCRIBBLE_CONFIG_FILE
     fi
@@ -271,24 +298,24 @@ if [[ -n "$LASTFM_USERNAME" && -n "$LASTFM_PASSWORD" ]] ||
         echo "url = https://post.audioscrobbler.com/" >> $SCRIBBLE_CONFIG_FILE 
         echo "username = ${LASTFM_USERNAME}" >> $SCRIBBLE_CONFIG_FILE
         echo "password = ${LASTFM_PASSWORD}" >> $SCRIBBLE_CONFIG_FILE
-        echo "journal = /app/scribble/lastfm.journal" >> $SCRIBBLE_CONFIG_FILE
+        echo "journal = /log/mpdscribble-lastfm.journal" >> $SCRIBBLE_CONFIG_FILE
     fi
     if [ -n "$LIBREFM_USERNAME" ]; then
         echo "[libre.fm]" >> $SCRIBBLE_CONFIG_FILE
         echo "url = http://turtle.libre.fm/" >> $SCRIBBLE_CONFIG_FILE 
         echo "username = ${LIBREFM_USERNAME}" >> $SCRIBBLE_CONFIG_FILE
         echo "password = ${LIBREFM_PASSWORD}" >> $SCRIBBLE_CONFIG_FILE
-        echo "journal = /app/scribble/librefm.journal" >> $SCRIBBLE_CONFIG_FILE
+        echo "journal = /log/mpdscribble-librefm.journal" >> $SCRIBBLE_CONFIG_FILE
     fi
     if [ -n "$JAMENDO_USERNAME" ]; then
         echo "[jamendo]" >> $SCRIBBLE_CONFIG_FILE
         echo "url = http://postaudioscrobbler.jamendo.com/" >> $SCRIBBLE_CONFIG_FILE 
         echo "username = ${JAMENDO_USERNAME}" >> $SCRIBBLE_CONFIG_FILE
         echo "password = ${JAMENDO_PASSWORD}" >> $SCRIBBLE_CONFIG_FILE
-        echo "journal = /app/scribble/jamendo.journal" >> $SCRIBBLE_CONFIG_FILE
+        echo "journal = /log/mpdscribble-jamendo.journal" >> $SCRIBBLE_CONFIG_FILE
     fi
     echo "[file]" >> $SCRIBBLE_CONFIG_FILE
-    echo "file = /app/scribble/file.log" >> $SCRIBBLE_CONFIG_FILE
+    echo "file = /log/mpdscribble-file.log" >> $SCRIBBLE_CONFIG_FILE
 
     cat $SCRIBBLE_CONFIG_FILE
     CMD_LINE="/usr/bin/mpdscribble --conf $SCRIBBLE_CONFIG_FILE &"

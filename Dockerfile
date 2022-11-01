@@ -47,6 +47,7 @@ VOLUME /music
 VOLUME /playlists
 VOLUME /app/scribble
 VOLUME /log
+VOLUME /user/config
 
 EXPOSE 6600
 
@@ -103,6 +104,7 @@ ENV JAMENDO_USERNAME ""
 ENV JAMENDO_PASSWORD ""
 
 ENV MPD_LOG_LEVEL ""
+ENV SCRIBBLE_VERBOSE ""
 
 ENV PROXY ""
 
@@ -116,7 +118,9 @@ ENV STARTUP_DELAY_SEC 0
 COPY app/assets/pulse-client-template.conf /app/assets/pulse-client-template.conf
 COPY app/conf/mpd-sample.conf /app/conf/
 COPY app/bin/run-mpd.sh /app/bin/
-RUN chmod +x /app/bin/run-mpd.sh
+COPY app/bin/get-value.sh /app/bin/
+COPY app/bin/read-file.sh /app/bin/
+RUN chmod +x /app/bin/*.sh
 
 COPY README.md /app/doc/
 

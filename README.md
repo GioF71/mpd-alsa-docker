@@ -65,8 +65,8 @@ VOLUME|DESCRIPTION
 /db|Where the mpd database is saved
 /music|Where the music is stored. you might consider to mount your directory in read-only mode (`:ro`)
 /playlists|Where the playlists are stored
-/log|Where `mpd.log` is written
-/app/scribble|Where `mpdscribble` will write its journals and its log file
+/log|Where all logs are written (e.g. `mpd.log`, `scrobbler.log` etc)
+/user/config|Where user configuration files must be located. Currently supported `lastfm.txt`, `librefm.txt`, `jamendo.txt` for `mpdscribble` credentials.
 
 ### Environment Variables
 
@@ -121,6 +121,7 @@ LIBREFM_USERNAME||Username for Libre.fm
 LIBREFM_PASSWORD||Password for Libre.fm
 JAMENDO_USERNAME||Username for Jamendo
 JAMENDO_PASSWORD||Password for Jamendo
+SCRIBBLE_VERBOSE||How verbose `mpdscribble`'s logging should be. Default is 1.
 PROXY||Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:3128`
 MPD_LOG_LEVEL||Can be `default` or `verbose`
 STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if your container is set up to start automatically, so that you can resolve race conditions with mpd and with squeezelite if all those services run on the same audio device. I experienced issues with my Asus Tinkerboard, while the Raspberry Pi has never really needed this. Your mileage may vary. Feel free to report your personal experience.
@@ -197,6 +198,11 @@ uid=1000(giovanni) gid=1000(giovanni) groups=1000(giovanni),3(sys),90(network),9
 ## Support for Scrobbling
 
 If at least one set of credentials for `Last.fm`, `Libre.fm` or `Jamendo` are provided through the environment variables, `mpdscribble` will be started and it will scrobble the songs you play.
+You can also provide credentials in the volume `/user/config`, in the following files:
+
+- lastfm.txt
+- librefm.txt
+- jamendo.txt
 
 ## Run as a user-level systemd
 
@@ -227,6 +233,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-01|Support for scrobbling service credentials in discrete files
 2022-10-31|Added `--pull=always` to docker run command for systemd pulse service
 2022-10-30|Docker pull before container stop for systemd pulse service
 2022-10-30|Avoid `--no-install-recommends` for `mpd` installation
