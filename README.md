@@ -218,7 +218,7 @@ After that, the service can be controlled using `./start.sh`, `./stop.sh`, `./re
 You can completely uninstall the service by running:
 
 ```code
-./uninstall.sh`
+./uninstall.sh
 ```
 
 ## Build
