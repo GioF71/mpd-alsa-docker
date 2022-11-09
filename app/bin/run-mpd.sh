@@ -328,7 +328,7 @@ fi
 
 cat $MPD_ALSA_CONFIG_FILE
 
-CMD_LINE="/usr/bin/mpd --no-daemon $MPD_ALSA_CONFIG_FILE"
+CMD_LINE="/app/bin/mpd --no-daemon $MPD_ALSA_CONFIG_FILE"
 if [ $USE_USER_MODE == "Y" ]; then
     su - $USER_NAME -c "$CMD_LINE"
 else
