@@ -1,5 +1,8 @@
-ARG BASE_IMAGE="${BASE_IMAGE:-debian:bullseye-slim}"
-FROM ${BASE_IMAGE} AS BASE
+ARG BASE_IMAGE_TAG="${BASE_IMAGE_TAG:-bullseye-slim}"
+FROM giof71/mpd-compiler:${BASE_IMAGE_TAG} AS BASE
+
+#ARG BASE_IMAGE="${BASE_IMAGE:-debian:bullseye-slim}"
+#FROM ${BASE_IMAGE} AS BASE
 ARG USE_APT_PROXY
 
 RUN mkdir -p /app/conf
@@ -20,8 +23,14 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get install -y mpd
-RUN apt-get install -y --no-install-recommends mpdscribble
+RUN apt-get install -y --no-install-recommends alsa-utils 
 RUN apt-get install -y --no-install-recommends pulseaudio-utils
+RUN apt-get install -y --no-install-recommends mpdscribble
+RUN apt-get install -y --no-install-recommends libfmt7
+RUN apt-get install -y --no-install-recommends libsidplay2
+RUN apt-get install -y --no-install-recommends libsidutils0
+RUN apt-get install -y --no-install-recommends libresid-builder-dev
+
 RUN rm -rf /var/lib/apt/lists/*
 
 FROM scratch
@@ -60,6 +69,7 @@ ENV MIXER_INDEX 0
 ENV DOP yes
 ENV ALSA_ALLOWED_FORMATS ""
 ENV ALSA_OUTPUT_FORMAT ""
+ENV INTEGER_UPSAMPLING ""
 
 ENV OUTPUT_MODE alsa
 ENV PULSEAUDIO_OUTPUT_NAME ""
@@ -125,5 +135,7 @@ RUN chmod +x /app/bin/*.sh
 COPY README.md /app/doc/
 
 WORKDIR /app/bin
+
+RUN /app/bin/compiled/mpd-ups --version
 
 ENTRYPOINT ["/app/bin/run-mpd.sh"]

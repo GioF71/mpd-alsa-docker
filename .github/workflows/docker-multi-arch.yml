@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        base: ["buster", "bullseye", "bookworm", "bionic", "focal", "jammy", "kinetic"]
+        base: ["bullseye", "jammy"]
 
     steps:
       - name: Checkout
@@ -62,7 +62,9 @@ jobs:
           special_tags[kinetic]="${image_name}:ubuntu-current"
 
           base_image=${base_image_from_matrix[${{ matrix.base }}]}
-          mpd_version=${mpd_versions[${{ matrix.base }}]}
+          #mpd_version=${mpd_versions[${{ matrix.base }}]}
+          # compiled version is 0.23.10
+          mpd_version=0.23.10
 
           tags=""
           if [ "${ref_type}" = "branch" ]; then

@@ -22,6 +22,16 @@ First and foremost, the reference to the awesome projects:
 Source: [GitHub](https://github.com/giof71/mpd-alsa-docker)  
 Images: [DockerHub](https://hub.docker.com/r/giof71/mpd-alsa)
 
+## MPD Source code
+
+The source code is in this GitHub [repo](https://github.com/GioF71/MPD).  
+The `v0.23.x` branch is kept in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD).  
+The `v0.23.x-ups` branch contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
+Two binaries are available in the container image:
+
+- /app/bin/compiled/mpd (stable version)
+- /app/bin/compiled/mpd-ups (patched version)
+
 ## Why
 
 I prepared this Dockerfile because I wanted to be able to install mpd easily on any machine (provided the architecture is amd64 or arm). Also I wanted to be able to configure and govern the parameters easily, with particular and exclusive reference to the configuration of a single ALSA output. Configuring the container is easy through a webapp like Portainer.
@@ -89,6 +99,7 @@ MIXER_INDEX|0|Mixer Index
 DOP|yes|Enables Dsd-Over-Pcm
 ALSA_OUTPUT_FORMAT||Sets `alsa` output format. Example value: `192000:24:2`
 ALSA_ALLOWED_FORMATS||Sets the `alsa` output allowed formats
+INTEGER_UPSAMPLING||If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.
 REPLAYGAIN_MODE|0|ReplayGain Mode
 REPLAYGAIN_PREAMP|0|ReplayGain Preamp
 REPLAYGAIN_MISSING_PREAMP|0|ReplayGain mising preamp
@@ -130,6 +141,8 @@ STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if
 
 #### Alsa Mode
 
+##### Simple Alsa Config
+
 You can start mpd-alsa in `alsa` mode by simply typing:
 
 ```text
@@ -143,6 +156,53 @@ docker run -d \
     -v ${HOME}/.mpd/db:/db \
     giof71/mpd-alsa
 ```
+
+##### Upsampling mode
+
+An example with upsampling:
+
+```text
+---
+version: '3.3'
+
+services:
+  mpd-s6-goldilocks:
+    image: giof71/mpd-alsa:latest
+    container_name: mpd-s6-goldilocks
+    devices:
+      - /dev/snd:/dev/snd
+    ports:
+      - 6603:6600/tcp
+    environment:
+      - USER_MODE=Y
+      - PUID=1000
+      - PGID=1000
+      - AUDIO_GID=29
+      - ALSA_DEVICE_NAME=aune-s6
+      - MPD_AUDIO_DEVICE=hw:DAC
+      - MIXER_CONTROL=S6 USB DAC Output
+      - MIXER_DEVICE=hw:DAC
+      - MIXER_TYPE=hardware
+      - INTEGER_UPSAMPLING=yes
+      - ALSA_ALLOWED_FORMATS=384000:*:* 352800:*:* *:dsd:*
+      - SOXR_PLUGIN_ENABLE=Y
+      - SOXR_PLUGIN_QUALITY=custom
+      - SOXR_PLUGIN_PRECISION=28
+      - SOXR_PLUGIN_PHASE_RESPONSE=45
+      - SOXR_PLUGIN_PASSBAND_END=95
+      - SOXR_PLUGIN_STOPBAND_BEGIN=105
+      - SOXR_PLUGIN_ATTENUATION=4
+    volumes:
+      - ./lastfm.txt:/user/config/lastfm.txt:ro
+      - ./librefm.txt:/user/config/librefm.txt:ro
+    restart: unless-stopped
+```
+
+This configuration uses a custom soxr resampling configuration, inspired from this article: [Archimago - MUSINGS: More fun with digital filters!](https://archimago.blogspot.com/2018/01/musings-more-fun-with-digital-filters.html).  
+This particular configuration will upsample 44.1kHz, 88.2kHz, 176.4kHz streams to 352.8kHz and 48kHz, 96kHz, 192kHz to 384kHz, leaving dsd streams as they are.  
+AUDIO_GID here is 29, but you will need to find the gid of the `audio` group on your specific installation as described in [user mode](#user-mode).
+
+#### Additional considerations
 
 Note that we need to allow the container to access the audio devices through `/dev/snd`. We need to give access to port `6600` so we can control the newly created mpd instance with our favourite mpd client.
 
@@ -234,6 +294,9 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-12|Building mpd in docker images takes a long time, so only bullseye and jammy images are built. But you can build your own variants!
+2022-11-12|Patched version available, with support for upsampling
+2022-11-12|MPD built from source
 2022-11-01|Support for scrobbling service credentials in discrete files
 2022-10-31|Added `--pull=always` to docker run command for systemd pulse service
 2022-10-30|Docker pull before container stop for systemd pulse service

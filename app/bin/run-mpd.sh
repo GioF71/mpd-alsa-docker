@@ -5,6 +5,12 @@
 # 3 Missing mandatory audio group gid for user mode with alsa
 # 4 Incompatible settings
 
+STABLE_MPD_BINARY=/app/bin/compiled/mpd
+UPSAMPLING_MPD_BINARY=/app/bin/compiled/mpd-ups
+REPO_MPD_BINARY=/usr/bin/mpd
+
+mpd_binary=$STABLE_MPD_BINARY
+
 declare -A file_dict
 
 source read-file.sh
@@ -177,33 +183,37 @@ echo "}" >> $MPD_ALSA_CONFIG_FILE
 if [ "${OUTPUT_MODE^^}" = "ALSA" ]; then
     ## Add alsa output
     echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
-        echo "  type            \"alsa\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  type               \"alsa\"" >> $MPD_ALSA_CONFIG_FILE
     if [ -n "${ALSA_DEVICE_NAME}" ]; then
-        echo "  name            \"${ALSA_DEVICE_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  name               \"${ALSA_DEVICE_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${MPD_AUDIO_DEVICE}" ]; then
-        echo "  device          \"${MPD_AUDIO_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  device             \"${MPD_AUDIO_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${MIXER_TYPE}" ]; then
-        echo "  mixer_type      \"${MIXER_TYPE}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  mixer_type         \"${MIXER_TYPE}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${MIXER_DEVICE}" ]; then
-        echo "  mixer_device    \"${MIXER_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  mixer_device       \"${MIXER_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${MIXER_CONTROL}" ]; then
-        echo "  mixer_control   \"${MIXER_CONTROL}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  mixer_control      \"${MIXER_CONTROL}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${MIXER_INDEX}" ]; then
-        echo "  mixer_index     \"${MIXER_INDEX}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  mixer_index        \"${MIXER_INDEX}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${ALSA_OUTPUT_FORMAT}" ]; then
-        echo "  format          \"${ALSA_OUTPUT_FORMAT}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  format             \"${ALSA_OUTPUT_FORMAT}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${ALSA_ALLOWED_FORMATS}" ]; then
-        echo "  allowed_formats \"${ALSA_ALLOWED_FORMATS}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  allowed_formats    \"${ALSA_ALLOWED_FORMATS}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${INTEGER_UPSAMPLING}" ]; then
+        echo "  integer_upsampling \"${INTEGER_UPSAMPLING}\"" >> $MPD_ALSA_CONFIG_FILE
+        mpd_binary=$UPSAMPLING_MPD_BINARY
     fi
     if [ -n "${DOP}" ]; then
-        echo "  dop             \"${DOP}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  dop                \"${DOP}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 elif [ "${OUTPUT_MODE^^}" = "PULSE" ]; then
@@ -328,7 +338,8 @@ fi
 
 cat $MPD_ALSA_CONFIG_FILE
 
-CMD_LINE="/usr/bin/mpd --no-daemon $MPD_ALSA_CONFIG_FILE"
+CMD_LINE="$mpd_binary --no-daemon $MPD_ALSA_CONFIG_FILE"
+echo "CMD_LINE=[$CMD_LINE]"
 if [ $USE_USER_MODE == "Y" ]; then
     su - $USER_NAME -c "$CMD_LINE"
 else
