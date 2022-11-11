@@ -89,6 +89,7 @@ MIXER_INDEX|0|Mixer Index
 DOP|yes|Enables Dsd-Over-Pcm
 ALSA_OUTPUT_FORMAT||Sets `alsa` output format. Example value: `192000:24:2`
 ALSA_ALLOWED_FORMATS||Sets the `alsa` output allowed formats
+INTEGER_UPSAMPLING||If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first.
 REPLAYGAIN_MODE|0|ReplayGain Mode
 REPLAYGAIN_PREAMP|0|ReplayGain Preamp
 REPLAYGAIN_MISSING_PREAMP|0|ReplayGain mising preamp
