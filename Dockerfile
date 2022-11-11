@@ -26,6 +26,10 @@ RUN apt-get install -y mpd
 RUN apt-get install -y --no-install-recommends alsa-utils 
 RUN apt-get install -y --no-install-recommends pulseaudio-utils
 RUN apt-get install -y --no-install-recommends mpdscribble
+RUN apt-get install -y --no-install-recommends libfmt7
+RUN apt-get install -y --no-install-recommends libsidplay2
+RUN apt-get install -y --no-install-recommends libsidutils0
+RUN apt-get install -y --no-install-recommends libresid-builder-dev
 
 RUN rm -rf /var/lib/apt/lists/*
 
@@ -131,10 +135,6 @@ RUN chmod +x /app/bin/*.sh
 COPY README.md /app/doc/
 
 WORKDIR /app/bin
-
-RUN apt-get update && \
-    apt-get install -y libfmt7 libsidplay2 libsidutils0 libresid-builder-dev && \
-    rm -rf /var/lib/apt/lists/* 
 
 RUN /app/bin/compiled/mpd-ups --version
 
