@@ -22,6 +22,16 @@ First and foremost, the reference to the awesome projects:
 Source: [GitHub](https://github.com/giof71/mpd-alsa-docker)  
 Images: [DockerHub](https://hub.docker.com/r/giof71/mpd-alsa)
 
+## MPD Source code
+
+The source code is in this GitHub [repo](https://github.com/GioF71/MPD).  
+The `v0.23.x` branch is kept in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD).  
+The `v0.23.x-ups` branch contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
+Two binaries are available in the container image:
+
+- /app/bin/compiled/mpd (stable version)
+- /app/bin/compiled/mpd-ups (patched version)
+
 ## Why
 
 I prepared this Dockerfile because I wanted to be able to install mpd easily on any machine (provided the architecture is amd64 or arm). Also I wanted to be able to configure and govern the parameters easily, with particular and exclusive reference to the configuration of a single ALSA output. Configuring the container is easy through a webapp like Portainer.
@@ -89,7 +99,7 @@ MIXER_INDEX|0|Mixer Index
 DOP|yes|Enables Dsd-Over-Pcm
 ALSA_OUTPUT_FORMAT||Sets `alsa` output format. Example value: `192000:24:2`
 ALSA_ALLOWED_FORMATS||Sets the `alsa` output allowed formats
-INTEGER_UPSAMPLING||If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first.
+INTEGER_UPSAMPLING||If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.
 REPLAYGAIN_MODE|0|ReplayGain Mode
 REPLAYGAIN_PREAMP|0|ReplayGain Preamp
 REPLAYGAIN_MISSING_PREAMP|0|ReplayGain mising preamp
