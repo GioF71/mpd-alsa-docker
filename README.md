@@ -294,6 +294,9 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-12|Building mpd in docker images takes a long time, so only bullseye and jammy images are built. But you can build your own variants!
+2022-11-12|Patched version available, with support for upsampling
+2022-11-12|MPD built from source
 2022-11-01|Support for scrobbling service credentials in discrete files
 2022-10-31|Added `--pull=always` to docker run command for systemd pulse service
 2022-10-30|Docker pull before container stop for systemd pulse service
