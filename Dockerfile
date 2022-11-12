@@ -1,8 +1,6 @@
 ARG BASE_IMAGE_TAG="${BASE_IMAGE_TAG:-bullseye-slim}"
 FROM giof71/mpd-compiler:${BASE_IMAGE_TAG} AS BASE
 
-#ARG BASE_IMAGE="${BASE_IMAGE:-debian:bullseye-slim}"
-#FROM ${BASE_IMAGE} AS BASE
 ARG USE_APT_PROXY
 
 RUN mkdir -p /app/conf
@@ -138,7 +136,5 @@ RUN chmod +x /app/bin/*.sh
 COPY README.md /app/doc/
 
 WORKDIR /app/bin
-
-RUN /app/bin/compiled/mpd-ups --version
 
 ENTRYPOINT ["/app/bin/run-mpd.sh"]
