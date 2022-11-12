@@ -108,6 +108,7 @@ REPLAYGAIN_LIMIT|yes|ReplayGain Limit
 VOLUME_NORMALIZATION|no|Volume normalization
 SAMPLERATE_CONVERTER||Configure `samplerate_converter`. Example value: `soxr very high`. Do not use in conjunction when `SOXR_PLUGIN_ENABLE` is set to enabled
 SOXR_PLUGIN_ENABLE||Enable the `soxr` plugin. Do not use in conjunction with variable `SAMPLERATE_CONVERTER`
+SOXR_PLUGIN_PRESET||Presets for SOXR_PLUGIN configuration. Available presets: `goldilocks` and `extremus`
 SOXR_PLUGIN_THREADS||The number of libsoxr threads. `0` means automatic. The default is `1` which disables multi-threading.
 SOXR_PLUGIN_QUALITY||The quality of `soxr` resampler. Possible values: `very high`, `high` (the default), `medium`, `low`, `quick`, `custom`. When set to `custom`, the additional `soxr` parameters can be set.
 SOXR_PLUGIN_PRECISION||The precision in bits. Valid values 16,20,24,28 and 32 bits.
@@ -173,7 +174,7 @@ services:
     devices:
       - /dev/snd:/dev/snd
     ports:
-      - 6603:6600/tcp
+      - 6600:6600/tcp
     environment:
       - USER_MODE=Y
       - PUID=1000
@@ -193,6 +194,40 @@ services:
       - SOXR_PLUGIN_PASSBAND_END=95
       - SOXR_PLUGIN_STOPBAND_BEGIN=105
       - SOXR_PLUGIN_ATTENUATION=4
+    volumes:
+      - ./lastfm.txt:/user/config/lastfm.txt:ro
+      - ./librefm.txt:/user/config/librefm.txt:ro
+    restart: unless-stopped
+```
+
+or, same configuration, using presets:
+
+```text
+---
+version: '3.3'
+
+services:
+  mpd-s6-goldilocks:
+    image: giof71/mpd-alsa:latest
+    container_name: mpd-s6-goldilocks
+    devices:
+      - /dev/snd:/dev/snd
+    ports:
+      - 6600:6600/tcp
+    environment:
+      - USER_MODE=Y
+      - PUID=1000
+      - PGID=1000
+      - AUDIO_GID=29
+      - ALSA_DEVICE_NAME=aune-s6
+      - MPD_AUDIO_DEVICE=hw:DAC
+      - MIXER_CONTROL=S6 USB DAC Output
+      - MIXER_DEVICE=hw:DAC
+      - MIXER_TYPE=hardware
+      - INTEGER_UPSAMPLING=yes
+      - ALSA_ALLOWED_FORMATS=384000:*:* 352800:*:* *:dsd:*
+      - SOXR_PLUGIN_ENABLE=Y
+      - SOXR_PRESET=goldilocks
     volumes:
       - ./lastfm.txt:/user/config/lastfm.txt:ro
       - ./librefm.txt:/user/config/librefm.txt:ro
@@ -295,6 +330,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-12|Presets for SOXR_PLUGIN
 2022-11-12|Building mpd in docker images takes a long time, so only bullseye and jammy images are built. But you can build your own variants!
 2022-11-12|Patched version available, with support for upsampling
 2022-11-12|MPD built from source
