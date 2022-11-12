@@ -104,6 +104,8 @@ ENV SOXR_PLUGIN_STOPBAND_BEGIN ""
 ENV SOXR_PLUGIN_ATTENUATION ""
 ENV SOXR_PLUGIN_FLAGS ""
 
+ENV SOXR_PLUGIN_PRESET ""
+
 ENV LASTFM_USERNAME ""
 ENV LASTFM_PASSWORD ""
 
@@ -130,6 +132,7 @@ COPY app/conf/mpd-sample.conf /app/conf/
 COPY app/bin/run-mpd.sh /app/bin/
 COPY app/bin/get-value.sh /app/bin/
 COPY app/bin/read-file.sh /app/bin/
+COPY app/bin/build-soxr-presets.sh /app/bin/
 RUN chmod +x /app/bin/*.sh
 
 COPY README.md /app/doc/
