@@ -14,6 +14,7 @@ mpd_binary=$STABLE_MPD_BINARY
 declare -A file_dict
 
 source build-soxr-presets.sh
+source build-allowed-formats-presets.sh
 source read-file.sh
 source get-value.sh
 
@@ -205,6 +206,12 @@ if [ "${OUTPUT_MODE^^}" = "ALSA" ]; then
     fi
     if [ -n "${ALSA_OUTPUT_FORMAT}" ]; then
         echo "  format             \"${ALSA_OUTPUT_FORMAT}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${ALSA_ALLOWED_FORMATS_PRESET}" ]; then
+        af_value="${allowed_formats_presets[${ALSA_ALLOWED_FORMATS_PRESET}]}"
+        if [[ -v af_value ]]; then
+            ALSA_ALLOWED_FORMATS=$af_value
+        fi
     fi
     if [ -n "${ALSA_ALLOWED_FORMATS}" ]; then
         echo "  allowed_formats    \"${ALSA_ALLOWED_FORMATS}\"" >> $MPD_ALSA_CONFIG_FILE

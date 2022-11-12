@@ -100,6 +100,7 @@ MIXER_INDEX|0|Mixer Index
 DOP|yes|Enables Dsd-Over-Pcm
 ALSA_OUTPUT_FORMAT||Sets `alsa` output format. Example value: `192000:24:2`
 ALSA_ALLOWED_FORMATS||Sets the `alsa` output allowed formats
+ALSA_ALLOWED_FORMATS_PRESET||Alternative to `ALSA_ALLOWED_FORMATS`. Possible values: `8x`, `4x`, `2x`, `8x-nodsd`, `4x-nodsd`, `2x-nodsd`
 INTEGER_UPSAMPLING||If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.
 REPLAYGAIN_MODE|0|ReplayGain Mode
 REPLAYGAIN_PREAMP|0|ReplayGain Preamp
@@ -225,7 +226,7 @@ services:
       - MIXER_DEVICE=hw:DAC
       - MIXER_TYPE=hardware
       - INTEGER_UPSAMPLING=yes
-      - ALSA_ALLOWED_FORMATS=384000:*:* 352800:*:* *:dsd:*
+      - ALSA_ALLOWED_FORMATS_PRESET=8x
       - SOXR_PLUGIN_ENABLE=Y
       - SOXR_PRESET=goldilocks
     volumes:
@@ -330,6 +331,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-12|Presets for ALSA_ALLOWED_FORMATS (ALSA_ALLOWED_FORMATS_PRESET)
 2022-11-12|Presets for SOXR_PLUGIN
 2022-11-12|Building mpd in docker images takes a long time, so only bullseye and jammy images are built. But you can build your own variants!
 2022-11-12|Patched version available, with support for upsampling

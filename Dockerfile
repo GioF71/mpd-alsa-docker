@@ -66,6 +66,7 @@ ENV MIXER_CONTROL PCM
 ENV MIXER_INDEX 0
 ENV DOP yes
 ENV ALSA_ALLOWED_FORMATS ""
+ENV ALSA_ALLOWED_FORMATS_PRESET ""
 ENV ALSA_OUTPUT_FORMAT ""
 ENV INTEGER_UPSAMPLING ""
 
@@ -131,6 +132,7 @@ COPY app/bin/run-mpd.sh /app/bin/
 COPY app/bin/get-value.sh /app/bin/
 COPY app/bin/read-file.sh /app/bin/
 COPY app/bin/build-soxr-presets.sh /app/bin/
+COPY app/bin/build-allowed-formats-presets.sh /app/bin/
 RUN chmod +x /app/bin/*.sh
 
 COPY README.md /app/doc/
