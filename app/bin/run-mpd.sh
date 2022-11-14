@@ -387,6 +387,9 @@ echo "About to sleep for $STARTUP_DELAY_SEC second(s)"
 sleep $STARTUP_DELAY_SEC
 echo "Ready to start."
 
+## start from scratch
+echo "# mpscribble configuration file" > $SCRIBBLE_CONFIG_FILE
+
 if [[ -n "$LASTFM_USERNAME" && -n "$LASTFM_PASSWORD" ]] || 
    [[ -n "$LIBREFM_USERNAME" && -n "$LIBREFM_PASSWORD" ]] ||
    [[ -n "$JAMENDO_USERNAME" && -n "$JAMENDO_PASSWORD" ]]; then
