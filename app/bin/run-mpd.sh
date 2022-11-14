@@ -346,7 +346,14 @@ if [[ -n "$LASTFM_USERNAME" && -n "$LASTFM_PASSWORD" ]] ||
    [[ -n "$LIBREFM_USERNAME" && -n "$LIBREFM_PASSWORD" ]] ||
    [[ -n "$JAMENDO_USERNAME" && -n "$JAMENDO_PASSWORD" ]]; then
     echo "At least one scrobbling service requested."
-    MPD_HOSTNAME=$(hostname -I)
+    MPD_HOSTNAME=localhost
+    MPD_PORT=6600
+    if [ -n "$SCROBBLER_MPD_HOSTNAME" ]; then
+        MPD_HOSTNAME="${SCROBBLER_MPD_HOSTNAME}"
+    fi
+    if [ -n "$SCROBBLER_MPD_PORT" ]; then
+        MPD_PORT="${SCROBBLER_MPD_PORT}"
+    fi
     SCRIBBLE_CONFIG_FILE=/app/conf/scribble.conf
     touch $SCRIBBLE_CONFIG_FILE
     if [ -n "$PROXY" ]; then
@@ -357,6 +364,7 @@ if [[ -n "$LASTFM_USERNAME" && -n "$LASTFM_PASSWORD" ]] ||
         echo "verbose = $SCRIBBLE_VERBOSE" >> $SCRIBBLE_CONFIG_FILE
     fi
     echo "host = $MPD_HOSTNAME" >> $SCRIBBLE_CONFIG_FILE
+    echo "port = $MPD_PORT" >> $SCRIBBLE_CONFIG_FILE
     if [ -n "$LASTFM_USERNAME" ]; then
         echo "[last.fm]" >> $SCRIBBLE_CONFIG_FILE
         echo "url = https://post.audioscrobbler.com/" >> $SCRIBBLE_CONFIG_FILE 
