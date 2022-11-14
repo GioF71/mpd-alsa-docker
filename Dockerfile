@@ -124,6 +124,10 @@ ENV PUID ""
 ENV PGID ""
 ENV AUDIO_GID ""
 
+ENV SCROBBLER_MPD_HOST ""
+ENV SCROBBLER_MPD_PORT ""
+
+
 ENV STARTUP_DELAY_SEC 0
 
 COPY app/assets/pulse-client-template.conf /app/assets/pulse-client-template.conf

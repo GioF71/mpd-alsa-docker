@@ -136,6 +136,8 @@ LIBREFM_PASSWORD||Password for Libre.fm
 JAMENDO_USERNAME||Username for Jamendo
 JAMENDO_PASSWORD||Password for Jamendo
 SCRIBBLE_VERBOSE||How verbose `mpdscribble`'s logging should be. Default is 1.
+SCROBBLER_MPD_HOSTNAME||Set when using host mode, defaults to `localhost`
+SCROBBLER_MPD_PORT||Set when using host mode, defaults to `6600`
 PROXY||Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:3128`
 MPD_LOG_LEVEL||Can be `default` or `verbose`
 STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if your container is set up to start automatically, so that you can resolve race conditions with mpd and with squeezelite if all those services run on the same audio device. I experienced issues with my Asus Tinkerboard, while the Raspberry Pi has never really needed this. Your mileage may vary. Feel free to report your personal experience.
@@ -331,6 +333,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-14|Fix connection to mpd from the scrobbler. Add optional variables for forcing host and port in case of host mode (`SCROBBLER_MPD_HOST` and `SCROBBLER_MPD_PORT`)
 2022-11-12|Presets for ALSA_ALLOWED_FORMATS (ALSA_ALLOWED_FORMATS_PRESET)
 2022-11-12|Presets for SOXR_PLUGIN
 2022-11-12|Building mpd in docker images takes a long time, so only bullseye and jammy images are built. But you can build your own variants!
