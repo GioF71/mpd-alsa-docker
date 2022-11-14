@@ -17,6 +17,7 @@ source build-soxr-presets.sh
 source build-allowed-formats-presets.sh
 source read-file.sh
 source get-value.sh
+source load-alsa-presets.sh
 
 LASTFM_CREDENTIALS_FILE=/user/config/lastfm.txt
 LIBREFM_CREDENTIALS_FILE=/user/config/librefm.txt
@@ -183,6 +184,46 @@ echo "  enabled \"no\"" >> $MPD_ALSA_CONFIG_FILE
 echo "}" >> $MPD_ALSA_CONFIG_FILE
 
 if [ "${OUTPUT_MODE^^}" = "ALSA" ]; then
+    # see if user is using a preset
+    if [ -n "${ALSA_PRESET}" ]; then
+        echo "Using alsa preset ${ALSA_PRESET}"
+        # NAME
+        alsa_preset_key="${ALSA_PRESET}.name"
+        alsa_preset_value="${alsa_presets[${alsa_preset_key}]}"
+        if [[ -v alsa_preset_value ]]; then
+            ALSA_DEVICE_NAME=${alsa_preset_value}
+        fi
+        # DEVICE
+        alsa_preset_key="${ALSA_PRESET}.device"
+        alsa_preset_value="${alsa_presets[${alsa_preset_key}]}"
+        if [[ -v alsa_preset_value ]]; then
+            MPD_AUDIO_DEVICE=$alsa_preset_value
+        fi
+        # MIXER TYPE
+        alsa_preset_key="${ALSA_PRESET}.mixer-type"
+        alsa_preset_value="${alsa_presets[${alsa_preset_key}]}"
+        if [[ -v alsa_preset_value ]]; then
+            MIXER_TYPE=$alsa_preset_value
+        fi
+        # MIXER DEVICE
+        alsa_preset_key="${ALSA_PRESET}.mixer-device"
+        alsa_preset_value="${alsa_presets[${alsa_preset_key}]}"
+        if [[ -v alsa_preset_value ]]; then
+            MIXER_DEVICE=$alsa_preset_value
+        fi
+        # MIXER CONTROL
+        alsa_preset_key="${ALSA_PRESET}.mixer-control"
+        alsa_preset_value="${alsa_presets[${alsa_preset_key}]}"
+        if [[ -v alsa_preset_value ]]; then
+            MIXER_CONTROL=$alsa_preset_value
+        fi
+        # MIXER INDEX
+        alsa_preset_key="${ALSA_PRESET}.mixer-index"
+        alsa_preset_value="${alsa_presets[${alsa_preset_key}]}"
+        if [[ -v alsa_preset_value ]]; then
+            MIXER_INDEX=$alsa_preset_value
+        fi
+    fi
     ## Add alsa output
     echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
         echo "  type               \"alsa\"" >> $MPD_ALSA_CONFIG_FILE

@@ -77,7 +77,7 @@ VOLUME|DESCRIPTION
 /music|Where the music is stored. you might consider to mount your directory in read-only mode (`:ro`)
 /playlists|Where the playlists are stored
 /log|Where all logs are written (e.g. `mpd.log`, `scrobbler.log` etc)
-/user/config|Where user configuration files must be located. Currently supported `lastfm.txt`, `librefm.txt`, `jamendo.txt` for `mpdscribble` credentials.
+/user/config|Where user configuration files must be located. Currently supported files: `lastfm.txt`, `librefm.txt`, `jamendo.txt` for `mpdscribble` credentials, `additional-alsa-presets.conf` additional alsa presets.
 
 ### Environment Variables
 
@@ -91,6 +91,7 @@ PUID||User id. Defaults to `1000`. The user/group will be created for `pulse` mo
 PGID||Group id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
 PGID||Group id. Defaults to `1000`.
 AUDIO_GID||`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](#user-mode).
+ALSA_PRESET||Use an alsa preset. See file `app/assets/alsa-presets.conf` to check the existing presets. Additional presets can be passed to the container through the file `/user/config/additional-alsa-presets.conf`
 MPD_AUDIO_DEVICE|default|The audio device. Common examples: `hw:DAC,0` or `hw:x20,0` or `hw:X20,0` for usb dac based on XMOS
 ALSA_DEVICE_NAME|Alsa Device|Name of the Alsa Device
 MIXER_TYPE|hardware|Mixer type
@@ -333,6 +334,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-14|Support for alsa presets `ALSA_PRESET`.
 2022-11-14|Using `SOXR_PLUGIN_PRESET` instead of now deprecated `SOXR_PRESET`
 2022-11-14|DOP empty by default
 2022-11-14|Fix connection to mpd from the scrobbler. Add optional variables for forcing host and port in case of host mode (`SCROBBLER_MPD_HOST` and `SCROBBLER_MPD_PORT`)

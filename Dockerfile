@@ -58,8 +58,9 @@ VOLUME /user/config
 
 EXPOSE 6600
 
-ENV MPD_AUDIO_DEVICE default
 ENV ALSA_DEVICE_NAME Alsa Device
+ENV ALSA_PRESET ""
+ENV MPD_AUDIO_DEVICE "default"
 ENV MIXER_TYPE hardware
 ENV MIXER_DEVICE default
 ENV MIXER_CONTROL PCM
@@ -131,12 +132,14 @@ ENV SCROBBLER_MPD_PORT ""
 ENV STARTUP_DELAY_SEC 0
 
 COPY app/assets/pulse-client-template.conf /app/assets/pulse-client-template.conf
+COPY app/assets/alsa-presets.conf /app/assets/alsa-presets.conf
 COPY app/conf/mpd-sample.conf /app/conf/
 COPY app/bin/run-mpd.sh /app/bin/
 COPY app/bin/get-value.sh /app/bin/
 COPY app/bin/read-file.sh /app/bin/
 COPY app/bin/build-soxr-presets.sh /app/bin/
 COPY app/bin/build-allowed-formats-presets.sh /app/bin/
+COPY app/bin/load-alsa-presets.sh /app/bin/
 RUN chmod +x /app/bin/*.sh
 
 COPY README.md /app/doc/
