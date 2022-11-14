@@ -388,6 +388,7 @@ sleep $STARTUP_DELAY_SEC
 echo "Ready to start."
 
 ## start from scratch
+SCRIBBLE_CONFIG_FILE=/app/conf/scribble.conf
 echo "# mpscribble configuration file" > $SCRIBBLE_CONFIG_FILE
 
 if [[ -n "$LASTFM_USERNAME" && -n "$LASTFM_PASSWORD" ]] || 
@@ -402,8 +403,6 @@ if [[ -n "$LASTFM_USERNAME" && -n "$LASTFM_PASSWORD" ]] ||
     if [ -n "$SCROBBLER_MPD_PORT" ]; then
         MPD_PORT="${SCROBBLER_MPD_PORT}"
     fi
-    SCRIBBLE_CONFIG_FILE=/app/conf/scribble.conf
-    touch $SCRIBBLE_CONFIG_FILE
     if [ -n "$PROXY" ]; then
         echo "proxy = $PROXY" >> $SCRIBBLE_CONFIG_FILE
     fi
