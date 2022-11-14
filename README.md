@@ -97,7 +97,7 @@ MIXER_TYPE|hardware|Mixer type
 MIXER_DEVICE|default|Mixer device
 MIXER_CONTROL|PCM|Mixer Control
 MIXER_INDEX|0|Mixer Index
-DOP|yes|Enables Dsd-Over-Pcm
+DOP||Enables Dsd-Over-Pcm. Possible values: `yes` or `no`. Empty by default: this it lets mpd handle dop setting.
 ALSA_OUTPUT_FORMAT||Sets `alsa` output format. Example value: `192000:24:2`
 ALSA_ALLOWED_FORMATS||Sets the `alsa` output allowed formats
 ALSA_ALLOWED_FORMATS_PRESET||Alternative to `ALSA_ALLOWED_FORMATS`. Possible values: `8x`, `4x`, `2x`, `8x-nodsd`, `4x-nodsd`, `2x-nodsd`
@@ -333,6 +333,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-14|DOP empty by default
 2022-11-14|Fix connection to mpd from the scrobbler. Add optional variables for forcing host and port in case of host mode (`SCROBBLER_MPD_HOST` and `SCROBBLER_MPD_PORT`)
 2022-11-12|Presets for ALSA_ALLOWED_FORMATS (ALSA_ALLOWED_FORMATS_PRESET)
 2022-11-12|Presets for SOXR_PLUGIN
