@@ -230,7 +230,7 @@ services:
       - INTEGER_UPSAMPLING=yes
       - ALSA_ALLOWED_FORMATS_PRESET=8x
       - SOXR_PLUGIN_ENABLE=Y
-      - SOXR_PRESET=goldilocks
+      - SOXR_PLUGIN_PRESET=goldilocks
     volumes:
       - ./lastfm.txt:/user/config/lastfm.txt:ro
       - ./librefm.txt:/user/config/librefm.txt:ro
@@ -333,6 +333,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-14|Using `SOXR_PLUGIN_PRESET` instead of now deprecated `SOXR_PRESET`
 2022-11-14|DOP empty by default
 2022-11-14|Fix connection to mpd from the scrobbler. Add optional variables for forcing host and port in case of host mode (`SCROBBLER_MPD_HOST` and `SCROBBLER_MPD_PORT`)
 2022-11-12|Presets for ALSA_ALLOWED_FORMATS (ALSA_ALLOWED_FORMATS_PRESET)

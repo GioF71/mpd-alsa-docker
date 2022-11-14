@@ -242,46 +242,50 @@ if [[ "${SOXR_PLUGIN_ENABLE^^}" = "Y" || "${SOXR_PLUGIN_ENABLE^^}" = "YES" ]]; t
         echo "Cannot enable both soxr and samplerate_converter";
         exit 4;
     fi
-    
-    if [ -n "${SOXR_PRESET}" ]; then
-        echo "Using soxr_preset: [${SOXR_PRESET}]"
-        sox_key="${SOXR_PRESET}.${SOXR_PRESET_KEY_QUALITY}"
-        sox_value="${soxr_presets[${sox_key}]}"
+    # SOXR_PRESET compatibility
+    if [[ -n "${SOXR_PRESET}" && -z "${SOXR_PLUGIN_PRESET}" ]]; then
+        echo "Using deprected SOXR_PRESET=[${SOXR_PRESET}], switch to SOXR_PLUGIN_PRESET asap. Support for SOXR_PRESET will be removed."
+        SOXR_PLUGIN_PRESET=${SOXR_PRESET}
+    fi
+    if [ -n "${SOXR_PLUGIN_PRESET}" ]; then
+        echo "Using soxr_preset: [${SOXR_PLUGIN_PRESET}]"
+        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_QUALITY}"
+        sox_value="${soxr_plugin_presets[${sox_key}]}"
         if [[ -v sox_value ]]; then
             SOXR_PLUGIN_QUALITY=$sox_value
         fi
-        sox_key="${SOXR_PRESET}.${SOXR_PRESET_KEY_PRECISION}"
-        sox_value="${soxr_presets[${sox_key}]}"
+        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_PRECISION}"
+        sox_value="${soxr_plugin_presets[${sox_key}]}"
         if [[ -v sox_value ]]; then
             SOXR_PLUGIN_PRECISION=$sox_value
         fi
-        sox_key="${SOXR_PRESET}.${SOXR_PRESET_KEY_PHASE_RESPONSE}"
-        sox_value="${soxr_presets[${sox_key}]}"
+        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_PHASE_RESPONSE}"
+        sox_value="${soxr_plugin_presets[${sox_key}]}"
         if [[ -v sox_value ]]; then
             SOXR_PLUGIN_PHASE_RESPONSE=$sox_value
         fi
-        sox_key="${SOXR_PRESET}.${SOXR_PRESET_KEY_PASSBAND_END}"
-        sox_value="${soxr_presets[${sox_key}]}"
+        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_PASSBAND_END}"
+        sox_value="${soxr_plugin_presets[${sox_key}]}"
         if [[ -v sox_value ]]; then
             SOXR_PLUGIN_PASSBAND_END=$sox_value
         fi
-        sox_key="${SOXR_PRESET}.${SOXR_PRESET_KEY_STOPBAND_BEGIN}"
-        sox_value="${soxr_presets[${sox_key}]}"
+        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_STOPBAND_BEGIN}"
+        sox_value="${soxr_plugin_presets[${sox_key}]}"
         if [[ -v sox_value ]]; then
             SOXR_PLUGIN_STOPBAND_BEGIN=$sox_value
         fi
-        sox_key="${SOXR_PRESET}.${SOXR_PRESET_KEY_ATTENUATION}"
-        sox_value="${soxr_presets[${sox_key}]}"
+        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_ATTENUATION}"
+        sox_value="${soxr_plugin_presets[${sox_key}]}"
         if [[ -v sox_value ]]; then
             SOXR_PLUGIN_ATTENUATION=$sox_value
         fi
-        sox_key="${SOXR_PRESET}.${SOXR_PRESET_KEY_FLAGS}"
-        sox_value="${soxr_presets[${sox_key}]}"
+        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_FLAGS}"
+        sox_value="${soxr_plugin_presets[${sox_key}]}"
         if [[ -v sox_value ]]; then
             SOXR_PLUGIN_FLAGS=$sox_value
         fi
-        sox_key="${SOXR_PRESET}.${SOXR_PRESET_KEY_THREADS}"
-        sox_value="${soxr_presets[${sox_key}]}"
+        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_THREADS}"
+        sox_value="${soxr_plugin_presets[${sox_key}]}"
         if [[ -v sox_value ]]; then
             SOXR_PLUGIN_THREADS=$sox_value
         fi
