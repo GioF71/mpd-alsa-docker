@@ -77,7 +77,7 @@ VOLUME|DESCRIPTION
 /music|Where the music is stored. you might consider to mount your directory in read-only mode (`:ro`)
 /playlists|Where the playlists are stored
 /log|Where all logs are written (e.g. `mpd.log`, `scrobbler.log` etc)
-/user/config|Where user configuration files must be located. Currently supported files: `lastfm.txt`, `librefm.txt`, `jamendo.txt` for `mpdscribble` credentials, `additional-alsa-presets.conf` additional alsa presets.
+/user/config|Where user configuration files must be located. Currently supported files: `lastfm.txt`, `librefm.txt`, `jamendo.txt` for `mpdscribble` credentials, `additional-alsa-presets.conf` for user-defined alsa presets.
 
 ### Environment Variables
 
@@ -92,7 +92,8 @@ PGID||Group id. Defaults to `1000`. The user/group will be created for `pulse` m
 PGID||Group id. Defaults to `1000`.
 AUDIO_GID||`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](#user-mode).
 ALSA_PRESET||Use an alsa preset. See file `app/assets/alsa-presets.conf` to check the existing presets. Additional presets can be passed to the container through the file `/user/config/additional-alsa-presets.conf`
-MPD_AUDIO_DEVICE|default|The audio device. Common examples: `hw:DAC,0` or `hw:x20,0` or `hw:X20,0` for usb dac based on XMOS
+ALSA_AUTO_FIND_MIXER|no|If `ALSA_AUTO_FIND_MIXER` is set to `yes` and `MIXER_DEVICE` is still empty, the run script will try to find the hardware mixer using `amixer`. This is not guaranteed to work for every dac. Some experiments will be needed. Sharing the results will be **very** helpful.
+MPD_AUDIO_DEVICE|default|The audio device. Common examples: `hw:DAC` or `hw:x20` or `hw:X20` for usb dac based on XMOS chips
 ALSA_DEVICE_NAME|Alsa Device|Name of the Alsa Device
 MIXER_TYPE|hardware|Mixer type
 MIXER_DEVICE|default|Mixer device
@@ -334,6 +335,9 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-15|Add variable `ALSA_AUTO_FIND_MIXER` to enable automatic mixer search (experimental feature)
+2022-11-15|Alsa mixer settings are empty by default
+2022-11-15|Falling back to `software` when `MIXER_TYPE` is left empty
 2022-11-14|Support for alsa presets `ALSA_PRESET`.
 2022-11-14|Using `SOXR_PLUGIN_PRESET` instead of now deprecated `SOXR_PRESET`
 2022-11-14|DOP empty by default
