@@ -223,6 +223,30 @@ if [ "${OUTPUT_MODE^^}" = "ALSA" ]; then
         if [[ -v alsa_preset_value ]]; then
             MIXER_INDEX=$alsa_preset_value
         fi
+    else
+        echo "Alsa preset has not been specified"
+    fi
+    # if allowed, try to find the mixer
+    echo "ALSA_AUTO_FIND_MIXER=[${ALSA_AUTO_FIND_MIXER}]"
+    if [ "${ALSA_AUTO_FIND_MIXER^^}" == "YES" ]; then
+        if [ -z "${MIXER_CONTROL}" ]; then
+            echo "Trying to find mixer ..."
+            MIXER_TYPE="hardware"
+            RAW_MIXER_DEVICE="$(amixer -D ${MPD_AUDIO_DEVICE} scontrols | head -n 1)"
+            echo "RAW_MIXER_DEVICE = [$RAW_MIXER_DEVICE]"
+            mixer=$(echo ${RAW_MIXER_DEVICE} | cut -d "'" -f 2)
+            echo "Mixer=[$mixer]"
+            MIXER_CONTROL=$mixer
+            # assuming mixer device to be same as audio device
+            MIXER_DEVICE=$MPD_AUDIO_DEVICE
+        else    
+            echo "MIXER_CONTROL already set to [${MIXER_CONTROL}]"
+        fi
+    fi
+    # fallback to software mixer if MIXER_TYPE is still empty
+    if [ -z "${MIXER_TYPE}" ]; then
+        MIXER_TYPE="software"
+        echo "Falling back to MIXER_TYPE=[$MIXER_TYPE]"
     fi
     ## Add alsa output
     echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
