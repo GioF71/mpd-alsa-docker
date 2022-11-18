@@ -335,6 +335,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-18|Preset names added
 2022-11-18|Preset for Topping E30
 2022-11-15|Add variable `ALSA_AUTO_FIND_MIXER` to enable automatic mixer search (experimental feature)
 2022-11-15|Alsa mixer settings are empty by default
