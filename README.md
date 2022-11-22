@@ -109,7 +109,7 @@ REPLAYGAIN_PREAMP|0|ReplayGain Preamp
 REPLAYGAIN_MISSING_PREAMP|0|ReplayGain mising preamp
 REPLAYGAIN_LIMIT|yes|ReplayGain Limit
 VOLUME_NORMALIZATION|no|Volume normalization
-SAMPLERATE_CONVERTER||Configure `samplerate_converter`. Example value: `soxr very high`. Do not use in conjunction when `SOXR_PLUGIN_ENABLE` is set to enabled
+SAMPLERATE_CONVERTER||Configure `samplerate_converter`. Example value: `soxr very high`. Note that this configuration cannot be used when `SOXR_PLUGIN_ENABLE` is set to enabled
 SOXR_PLUGIN_ENABLE||Enable the `soxr` plugin. Do not use in conjunction with variable `SAMPLERATE_CONVERTER`
 SOXR_PLUGIN_PRESET||Presets for SOXR_PLUGIN configuration. Available presets: `goldilocks` and `extremus`
 SOXR_PLUGIN_THREADS||The number of libsoxr threads. `0` means automatic. The default is `1` which disables multi-threading.
