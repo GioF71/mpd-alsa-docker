@@ -141,6 +141,18 @@ echo "sticker_file          \"/db/sticker\"" >> $MPD_ALSA_CONFIG_FILE
 echo "bind_to_address       \"0.0.0.0\"" >> $MPD_ALSA_CONFIG_FILE
 echo "log_file              \"/log/mpd.log\"" >> $MPD_ALSA_CONFIG_FILE
 
+if [ "${ZEROCONF_ENABLED^^}" == "YES" ]; then
+    ZEROCONF_ENABLED=yes
+else
+    ZEROCONF_ENABLED=no
+    ZEROCONF_NAME=""
+fi
+
+echo "zeroconf_enabled      \"${ZEROCONF_ENABLED}\"" >> $MPD_ALSA_CONFIG_FILE
+if [ -n "${ZEROCONF_NAME}" ]; then
+    echo "zeroconf_name        \"${ZEROCONF_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+
 if [ -n "${MPD_LOG_LEVEL}" ]; then
     echo "log_level             \"${MPD_LOG_LEVEL}\"" >> $MPD_ALSA_CONFIG_FILE
 fi

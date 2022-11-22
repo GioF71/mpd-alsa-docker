@@ -142,6 +142,8 @@ SCROBBLER_MPD_HOSTNAME||Set when using host mode, defaults to `localhost`
 SCROBBLER_MPD_PORT||Set when using host mode, defaults to `6600`
 PROXY||Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:3128`
 MPD_LOG_LEVEL||Can be `default` or `verbose`
+ZEROCONF_ENABLED||Set to `yes` to enable. Disabled by default.
+ZEROCONF_NAME||Set zeroconf name. Used only if `ZEROCONF_ENABLED` is set to `yes`.
 STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if your container is set up to start automatically, so that you can resolve race conditions with mpd and with squeezelite if all those services run on the same audio device. I experienced issues with my Asus Tinkerboard, while the Raspberry Pi has never really needed this. Your mileage may vary. Feel free to report your personal experience.
 
 ### Examples
@@ -335,6 +337,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-22|Support for zeroconf configurations via `ZEROCONF_ENABLED` and `ZEROCONF_NAME`. Zeroconf is disabled by default.
 2022-11-18|Preset names added
 2022-11-18|Preset for Topping E30
 2022-11-15|Add variable `ALSA_AUTO_FIND_MIXER` to enable automatic mixer search (experimental feature)
