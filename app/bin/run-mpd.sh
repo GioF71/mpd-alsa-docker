@@ -133,7 +133,7 @@ MPD_ALSA_CONFIG_FILE=/app/conf/mpd.conf
 ## start from scratch
 echo "# mpd configuration file" > $MPD_ALSA_CONFIG_FILE
 
-DEFAULT_MPD_BIND_ADDRESS=any
+DEFAULT_MPD_BIND_ADDRESS=0.0.0.0
 if [ -z "${MPD_BIND_ADDRESS}" ]; then
     MPD_BIND_ADDRESS=${DEFAULT_MPD_BIND_ADDRESS}
 fi
