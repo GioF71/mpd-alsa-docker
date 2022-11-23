@@ -133,12 +133,23 @@ MPD_ALSA_CONFIG_FILE=/app/conf/mpd.conf
 ## start from scratch
 echo "# mpd configuration file" > $MPD_ALSA_CONFIG_FILE
 
+DEFAULT_MPD_BIND_ADDRESS=any
+if [ -z "${MPD_BIND_ADDRESS}" ]; then
+    MPD_BIND_ADDRESS=${DEFAULT_MPD_BIND_ADDRESS}
+fi
+
+DEFAULT_MPD_PORT=6600
+if [ -z "${MPD_PORT}" ]; then
+    MPD_PORT=${DEFAULT_MPD_PORT}
+fi
+
 echo "music_directory       \"/music\"" >> $MPD_ALSA_CONFIG_FILE
 echo "playlist_directory    \"/playlists\"" >> $MPD_ALSA_CONFIG_FILE
 echo "db_file               \"/db/tag_cache\"" >> $MPD_ALSA_CONFIG_FILE
 echo "state_file            \"/db/state\"" >> $MPD_ALSA_CONFIG_FILE
 echo "sticker_file          \"/db/sticker\"" >> $MPD_ALSA_CONFIG_FILE
-echo "bind_to_address       \"0.0.0.0\"" >> $MPD_ALSA_CONFIG_FILE
+echo "bind_to_address       \"${MPD_BIND_ADDRESS}\"" >> $MPD_ALSA_CONFIG_FILE
+echo "port                  \"${MPD_PORT}\"" >> $MPD_ALSA_CONFIG_FILE
 echo "log_file              \"/log/mpd.log\"" >> $MPD_ALSA_CONFIG_FILE
 
 if [ "${ZEROCONF_ENABLED^^}" == "YES" ]; then
@@ -431,13 +442,15 @@ if [[ -n "$LASTFM_USERNAME" && -n "$LASTFM_PASSWORD" ]] ||
    [[ -n "$LIBREFM_USERNAME" && -n "$LIBREFM_PASSWORD" ]] ||
    [[ -n "$JAMENDO_USERNAME" && -n "$JAMENDO_PASSWORD" ]]; then
     echo "At least one scrobbling service requested."
-    MPD_HOSTNAME=localhost
-    MPD_PORT=6600
+    SCR_MPD_HOSTNAME=localhost
+    # set scrobbler mpd port to mpd port by default
+    # use MPD_PORT as the initial value
+    SCR_MPD_PORT=$MPD_PORT
     if [ -n "$SCROBBLER_MPD_HOSTNAME" ]; then
-        MPD_HOSTNAME="${SCROBBLER_MPD_HOSTNAME}"
+        SCR_MPD_HOSTNAME="${SCROBBLER_MPD_HOSTNAME}"
     fi
     if [ -n "$SCROBBLER_MPD_PORT" ]; then
-        MPD_PORT="${SCROBBLER_MPD_PORT}"
+        SCR_MPD_PORT="${SCROBBLER_MPD_PORT}"
     fi
     if [ -n "$PROXY" ]; then
         echo "proxy = $PROXY" >> $SCRIBBLE_CONFIG_FILE
@@ -446,8 +459,8 @@ if [[ -n "$LASTFM_USERNAME" && -n "$LASTFM_PASSWORD" ]] ||
     if [ -n "$SCRIBBLE_VERBOSE" ]; then
         echo "verbose = $SCRIBBLE_VERBOSE" >> $SCRIBBLE_CONFIG_FILE
     fi
-    echo "host = $MPD_HOSTNAME" >> $SCRIBBLE_CONFIG_FILE
-    echo "port = $MPD_PORT" >> $SCRIBBLE_CONFIG_FILE
+    echo "host = $SCR_MPD_HOSTNAME" >> $SCRIBBLE_CONFIG_FILE
+    echo "port = $SCR_MPD_PORT" >> $SCRIBBLE_CONFIG_FILE
     if [ -n "$LASTFM_USERNAME" ]; then
         echo "[last.fm]" >> $SCRIBBLE_CONFIG_FILE
         echo "url = https://post.audioscrobbler.com/" >> $SCRIBBLE_CONFIG_FILE 
