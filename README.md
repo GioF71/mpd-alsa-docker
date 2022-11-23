@@ -86,7 +86,7 @@ The following tables lists all the currently supported environment variables:
 VARIABLE|DEFAULT|NOTES
 :---|:---:|:---
 OUTPUT_MODE|alsa|Output mode, can be `alsa` or `pulse`. For `pulse` mode, running in `user` mode is required.
-MPD_BIND_ADDRESS||The MPD listen address, defaults to `any`
+MPD_BIND_ADDRESS||The MPD listen address, defaults to `0.0.0.0`
 MPD_PORT||The MPD port, defaults to `6600`
 USER_MODE||Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode). Enforced when `OUTPUT_MODE` is set to `pulse`.
 PUID||User id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
@@ -339,6 +339,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-23|`MPD_BIND_ADDRESS` defaults to `0.0.0.0`
 2022-11-23|Disabled `wildmidi` decoder plugin
 2022-11-23|Support for `bind_address` (`MPD_BIND_ADDRESS`) and for `port` (`MPD_PORT`)
 2022-11-22|Support for zeroconf configurations via `ZEROCONF_ENABLED` and `ZEROCONF_NAME`. Zeroconf is disabled by default.
