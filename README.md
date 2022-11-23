@@ -339,8 +339,8 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
-2022-11-22|Disabled `wildmidi` decoder plugin
-2022-11-22|Support for `bind_address` (`MPD_BIND_ADDRESS`) and for `port` (`MPD_PORT`)
+2022-11-23|Disabled `wildmidi` decoder plugin
+2022-11-23|Support for `bind_address` (`MPD_BIND_ADDRESS`) and for `port` (`MPD_PORT`)
 2022-11-22|Support for zeroconf configurations via `ZEROCONF_ENABLED` and `ZEROCONF_NAME`. Zeroconf is disabled by default.
 2022-11-18|Preset names added
 2022-11-18|Preset for Topping E30
