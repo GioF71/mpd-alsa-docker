@@ -86,6 +86,8 @@ The following tables lists all the currently supported environment variables:
 VARIABLE|DEFAULT|NOTES
 :---|:---:|:---
 OUTPUT_MODE|alsa|Output mode, can be `alsa` or `pulse`. For `pulse` mode, running in `user` mode is required.
+MPD_BIND_ADDRESS||The MPD listen address, defaults to `any`
+MPD_PORT||The MPD port, defaults to `6600`
 USER_MODE||Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode). Enforced when `OUTPUT_MODE` is set to `pulse`.
 PUID||User id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
 PGID||Group id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
