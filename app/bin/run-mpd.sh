@@ -168,6 +168,12 @@ if [ -n "${MPD_LOG_LEVEL}" ]; then
     echo "log_level             \"${MPD_LOG_LEVEL}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 
+## disable wildmidi decoder
+echo "decoder {" >> $MPD_ALSA_CONFIG_FILE
+echo "  plugin          \"wildmidi\"" >> $MPD_ALSA_CONFIG_FILE
+echo "  enabled         \"no\"" >> $MPD_ALSA_CONFIG_FILE
+echo "}" >> $MPD_ALSA_CONFIG_FILE
+
 ## add input curl
 echo "input {" >> $MPD_ALSA_CONFIG_FILE
 echo "  plugin \"curl\"" >> $MPD_ALSA_CONFIG_FILE
