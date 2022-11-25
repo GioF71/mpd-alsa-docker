@@ -339,6 +339,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-24|Add `-sw` preset variants for presets which provide hardware volume support
 2022-11-23|`MPD_BIND_ADDRESS` defaults to `0.0.0.0`
 2022-11-23|Disabled `wildmidi` decoder plugin
 2022-11-23|Support for `bind_address` (`MPD_BIND_ADDRESS`) and for `port` (`MPD_PORT`)
