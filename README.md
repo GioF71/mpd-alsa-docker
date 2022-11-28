@@ -108,7 +108,7 @@ ALSA_ALLOWED_FORMATS_PRESET||Alternative to `ALSA_ALLOWED_FORMATS`. Possible val
 INTEGER_UPSAMPLING||If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.
 REPLAYGAIN_MODE|0|ReplayGain Mode
 REPLAYGAIN_PREAMP|0|ReplayGain Preamp
-REPLAYGAIN_MISSING_PREAMP|0|ReplayGain mising preamp
+REPLAYGAIN_MISSING_PREAMP|0|ReplayGain missing preamp
 REPLAYGAIN_LIMIT|yes|ReplayGain Limit
 VOLUME_NORMALIZATION|no|Volume normalization
 SAMPLERATE_CONVERTER||Configure `samplerate_converter`. Example value: `soxr very high`. Note that this configuration cannot be used when `SOXR_PLUGIN_ENABLE` is set to enabled
