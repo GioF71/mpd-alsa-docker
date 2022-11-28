@@ -106,6 +106,7 @@ ALSA_OUTPUT_FORMAT||Sets `alsa` output format. Example value: `192000:24:2`
 ALSA_ALLOWED_FORMATS||Sets the `alsa` output allowed formats
 ALSA_ALLOWED_FORMATS_PRESET||Alternative to `ALSA_ALLOWED_FORMATS`. Possible values: `8x`, `4x`, `2x`, `8x-nodsd`, `4x-nodsd`, `2x-nodsd`
 INTEGER_UPSAMPLING||If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.
+INPUT_CACHE_SIZE||Set the input cache size. Example value: `1 GB`
 REPLAYGAIN_MODE|0|ReplayGain Mode
 REPLAYGAIN_PREAMP|0|ReplayGain Preamp
 REPLAYGAIN_MISSING_PREAMP|0|ReplayGain missing preamp
@@ -339,6 +340,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-28|Add support for `INPUT_CACHE_SIZE`
 2022-11-24|Add `-sw` preset variants for presets which provide hardware volume support
 2022-11-23|`MPD_BIND_ADDRESS` defaults to `0.0.0.0`
 2022-11-23|Disabled `wildmidi` decoder plugin
