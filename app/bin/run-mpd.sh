@@ -206,6 +206,12 @@ if [[ "${QOBUZ_PLUGIN_ENABLED^^}" = "Y" || "${QOBUZ_PLUGIN_ENABLED^^}" = "YES" ]
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 fi
 
+if [ -n "${INPUT_CACHE_SIZE}" ]; then
+    echo "input_cache {" >> $MPD_ALSA_CONFIG_FILE
+    echo "  size \"${INPUT_CACHE_SIZE}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "}" >> $MPD_ALSA_CONFIG_FILE
+fi
+
 ## Add Decoder plugin
 echo "decoder {" >> $MPD_ALSA_CONFIG_FILE
 echo "  plugin  \"hybrid_dsd\"" >> $MPD_ALSA_CONFIG_FILE
