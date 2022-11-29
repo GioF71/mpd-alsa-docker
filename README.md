@@ -85,7 +85,7 @@ The following tables lists all the currently supported environment variables:
 
 VARIABLE|DEFAULT|NOTES
 :---|:---:|:---
-OUTPUT_MODE|alsa|Output mode, can be `alsa` or `pulse`. For `pulse` mode, running in `user` mode is required.
+OUTPUT_MODE|alsa|Output mode, can be `alsa`, `pulse` o `null`. For `pulse` mode, running in `user` mode is required.
 MPD_BIND_ADDRESS||The MPD listen address, defaults to `0.0.0.0`
 MPD_PORT||The MPD port, defaults to `6600`
 USER_MODE||Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode). Enforced when `OUTPUT_MODE` is set to `pulse`.
@@ -107,6 +107,8 @@ ALSA_ALLOWED_FORMATS||Sets the `alsa` output allowed formats
 ALSA_ALLOWED_FORMATS_PRESET||Alternative to `ALSA_ALLOWED_FORMATS`. Possible values: `8x`, `4x`, `2x`, `8x-nodsd`, `4x-nodsd`, `2x-nodsd`
 INTEGER_UPSAMPLING||If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.
 INPUT_CACHE_SIZE||Sets the input cache size. Example value: `1 GB`
+NULL_OUTPUT_NAME||Name of the `null` output
+NULL_OUTPUT_SYNC||Sync mode for the `null` output, can be `yes` (default) or `no`
 REPLAYGAIN_MODE|0|ReplayGain Mode
 REPLAYGAIN_PREAMP|0|ReplayGain Preamp
 REPLAYGAIN_MISSING_PREAMP|0|ReplayGain missing preamp
@@ -341,6 +343,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-30|Add support for output mode `null`
 2022-11-29|Add support for `MAX_OUTPUT_BUFFER_SIZE`
 2022-11-28|Add support for `INPUT_CACHE_SIZE`
 2022-11-24|Add `-sw` preset variants for presets which provide hardware volume support
