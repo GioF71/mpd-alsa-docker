@@ -137,6 +137,8 @@ ENV SCROBBLER_MPD_PORT ""
 ENV ZEROCONF_ENABLED ""
 ENV ZEROCONF_NAME ""
 
+ENV MAX_OUTPUT_BUFFER_SIZE ""
+
 ENV STARTUP_DELAY_SEC 0
 
 COPY app/assets/pulse-client-template.conf /app/assets/pulse-client-template.conf
