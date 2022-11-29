@@ -391,7 +391,6 @@ if [[ "${SOXR_PLUGIN_ENABLE^^}" = "Y" || "${SOXR_PLUGIN_ENABLE^^}" = "YES" ]]; t
         fi
     fi
 
-
     echo "resampler {" >> $MPD_ALSA_CONFIG_FILE
     echo "  plugin          \"soxr\"" >> $MPD_ALSA_CONFIG_FILE
     if [ -n "${SOXR_PLUGIN_QUALITY}" ]; then
@@ -439,7 +438,9 @@ fi
 if [ -n "${SAMPLERATE_CONVERTER}" ]; then
     echo "samplerate_converter \"${SAMPLERATE_CONVERTER}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
-
+if [ -n "${MAX_OUTPUT_BUFFER_SIZE}" ]; then
+    echo "max_output_buffer_size \"${MAX_OUTPUT_BUFFER_SIZE}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
 echo "filesystem_charset \"UTF-8\"" >> $MPD_ALSA_CONFIG_FILE
 
 echo "About to sleep for $STARTUP_DELAY_SEC second(s)"

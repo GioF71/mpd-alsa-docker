@@ -147,6 +147,7 @@ PROXY||Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:
 MPD_LOG_LEVEL||Can be `default` or `verbose`
 ZEROCONF_ENABLED||Set to `yes` to enable. Disabled by default.
 ZEROCONF_NAME||Set zeroconf name. Used only if `ZEROCONF_ENABLED` is set to `yes`.
+MAX_OUTPUT_BUFFER_SIZE||The maximum size of the output buffer to a client (maximum response size). Default is 8192 (8 MiB). Value in KBytes.
 STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if your container is set up to start automatically, so that you can resolve race conditions with mpd and with squeezelite if all those services run on the same audio device. I experienced issues with my Asus Tinkerboard, while the Raspberry Pi has never really needed this. Your mileage may vary. Feel free to report your personal experience.
 
 ### Examples
@@ -340,6 +341,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-29|Add support for `MAX_OUTPUT_BUFFER_SIZE`
 2022-11-28|Add support for `INPUT_CACHE_SIZE`
 2022-11-24|Add `-sw` preset variants for presets which provide hardware volume support
 2022-11-23|`MPD_BIND_ADDRESS` defaults to `0.0.0.0`
