@@ -63,8 +63,8 @@ jobs:
 
           base_image=${base_image_from_matrix[${{ matrix.base }}]}
           #mpd_version=${mpd_versions[${{ matrix.base }}]}
-          # compiled version is 0.23.10
-          mpd_version=0.23.10
+          # compiled version is 0.23.11
+          mpd_version=0.23.11
 
           tags=""
           if [ "${ref_type}" = "branch" ]; then
