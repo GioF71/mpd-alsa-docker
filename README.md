@@ -85,6 +85,10 @@ The following tables lists all the currently supported environment variables:
 
 VARIABLE|DEFAULT|NOTES
 :---|:---:|:---
+DATABASE_MODE||Can be `simple` (default) or `proxy`
+DATABASE_PROXY_HOST||MPD server hostname, only used when `DATABASE_MODE` is set to `proxy`
+DATABASE_PROXY_PORT||MPD server port, only used when `DATABASE_MODE` is set to `proxy`
+MUSIC_DIRECTORY||Location of music files, defaults to `/music`
 OUTPUT_MODE|alsa|Output mode, can be `alsa`, `pulse` o `null`. For `pulse` mode, running in `user` mode is required.
 MPD_BIND_ADDRESS||The MPD listen address, defaults to `0.0.0.0`
 MPD_PORT||The MPD port, defaults to `6600`
@@ -343,6 +347,8 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-30|Support for `DATABASE_MODE` with possible values `simple` and `proxy`
+2022-11-30|Support for tuning of `MUSIC_DIRECTORY`
 2022-11-30|Bump to mpd version `v0.23.11`
 2022-11-30|Add support for output mode `null`
 2022-11-29|Add support for `MAX_OUTPUT_BUFFER_SIZE`
