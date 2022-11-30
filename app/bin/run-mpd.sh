@@ -3,7 +3,8 @@
 # error codes
 # 2 Invalid output mode
 # 3 Missing mandatory audio group gid for user mode with alsa
-# 4 Incompatible settings
+# 4 Incompatible sample rate conversion settings
+# 5 Incompatible database mode
 
 STABLE_MPD_BINARY=/app/bin/compiled/mpd
 UPSAMPLING_MPD_BINARY=/app/bin/compiled/mpd-ups
@@ -145,9 +146,34 @@ if [ -z "${MPD_PORT}" ]; then
     MPD_PORT=${DEFAULT_MPD_PORT}
 fi
 
-echo "music_directory       \"/music\"" >> $MPD_ALSA_CONFIG_FILE
+DEFAULT_DATABASE_MODE="simple"
+
+if [ -z "${DATABASE_MODE}" ]; then
+    DATABASE_MODE=${DEFAULT_DATABASE_MODE}
+fi
+
+## add database
+echo "database {" >> $MPD_ALSA_CONFIG_FILE
+echo "  plugin \"${DATABASE_MODE}\"" >> $MPD_ALSA_CONFIG_FILE
+if [ "${DATABASE_MODE}" == "simple" ]; then
+    echo "  path \"/db/tag_cache\"" >> $MPD_ALSA_CONFIG_FILE
+elif [ "${DATABASE_MODE}" == "proxy" ]; then
+    echo "  host \"${DATABASE_PROXY_HOST}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  port \"${DATABASE_PROXY_PORT}\"" >> $MPD_ALSA_CONFIG_FILE
+else
+    echo "Invalid database mode [${DATABASE_MODE}]";
+    exit 5;
+fi
+echo "}" >> $MPD_ALSA_CONFIG_FILE
+
+DEFAULT_MUSIC_DIRECTORY="/music"
+
+if [ -z "${MUSIC_DIRECTORY}" ]; then
+    MUSIC_DIRECTORY=${DEFAULT_MUSIC_DIRECTORY}
+fi
+
+echo "music_directory       \"${MUSIC_DIRECTORY}\"" >> $MPD_ALSA_CONFIG_FILE
 echo "playlist_directory    \"/playlists\"" >> $MPD_ALSA_CONFIG_FILE
-echo "db_file               \"/db/tag_cache\"" >> $MPD_ALSA_CONFIG_FILE
 echo "state_file            \"/db/state\"" >> $MPD_ALSA_CONFIG_FILE
 echo "sticker_file          \"/db/sticker\"" >> $MPD_ALSA_CONFIG_FILE
 echo "bind_to_address       \"${MPD_BIND_ADDRESS}\"" >> $MPD_ALSA_CONFIG_FILE
