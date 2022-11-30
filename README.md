@@ -343,6 +343,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-11-30|Bump to mpd version `v0.23.11`
 2022-11-30|Add support for output mode `null`
 2022-11-29|Add support for `MAX_OUTPUT_BUFFER_SIZE`
 2022-11-28|Add support for `INPUT_CACHE_SIZE`
