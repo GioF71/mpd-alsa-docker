@@ -33,6 +33,8 @@ Two binaries are available in the container image:
 - /app/bin/compiled/mpd (stable version)
 - /app/bin/compiled/mpd-ups (patched version)
 
+The current mpd version is `v0.23.11`.
+
 ## Why
 
 I prepared this Dockerfile because I wanted to be able to install mpd easily on any machine (provided the architecture is amd64 or arm). Also I wanted to be able to configure and govern the parameters easily, with particular and exclusive reference to the configuration of a single ALSA output. Configuring the container is easy through a webapp like Portainer.
