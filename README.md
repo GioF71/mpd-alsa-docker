@@ -79,7 +79,7 @@ VOLUME|DESCRIPTION
 /music|Where the music is stored. you might consider to mount your directory in read-only mode (`:ro`)
 /playlists|Where the playlists are stored
 /log|Where all logs are written (e.g. `mpd.log`, `scrobbler.log` etc)
-/user/config|Where user configuration files must be located. Currently supported files: `lastfm.txt`, `librefm.txt`, `jamendo.txt` for `mpdscribble` credentials, `additional-alsa-presets.conf` for user-defined alsa presets.
+/user/config|Where user configuration files must be located. Currently supported files: `lastfm.txt`, `librefm.txt`, `jamendo.txt` for `mpdscribble` credentials, `additional-alsa-presets.conf` for user-defined alsa presets. Also, the user can create a file named `additional-outputs.txt` including additional outputs, which will be added to the configuration file during the container startup phase.
 
 ### Environment Variables
 
@@ -349,6 +349,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-12-02|Add support for `additional-outputs.txt` where it is possible to add custom outputs
 2022-11-30|Support for `DATABASE_MODE` with possible values `simple` and `proxy`
 2022-11-30|Support for tuning of `MUSIC_DIRECTORY`
 2022-11-30|Bump to mpd version `v0.23.11`
