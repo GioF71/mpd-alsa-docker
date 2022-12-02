@@ -379,6 +379,17 @@ else
     exit 2;
 fi
 
+## additional outputs
+ADDITIONAL_OUTPUTS_FILE=/user/config/additional-outputs.txt
+if [ -f "$ADDITIONAL_OUTPUTS_FILE" ]; then
+    echo "Additional outputs provided"
+    echo "# Additional outputs BEGIN" >> $MPD_ALSA_CONFIG_FILE
+    cat $ADDITIONAL_OUTPUTS_FILE >> $MPD_ALSA_CONFIG_FILE
+    echo "# Additional outputs END" >> $MPD_ALSA_CONFIG_FILE
+else
+    echo "No additional outputs provided"
+fi
+
 if [[ "${SOXR_PLUGIN_ENABLE^^}" = "Y" || "${SOXR_PLUGIN_ENABLE^^}" = "YES" ]]; then
     if [ -n "${SAMPLERATE_CONVERTER}" ]; then
         echo "Cannot enable both soxr and samplerate_converter";
