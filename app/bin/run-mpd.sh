@@ -220,20 +220,6 @@ if [[ "${TIDAL_PLUGIN_ENABLED^^}" = "Y" || "${TIDAL_PLUGIN_ENABLED^^}" = "YES" ]
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 fi
 
-## Add Qobuz plugin
-echo "Qobuz Plugin Enabled: [$QOBUZ_PLUGIN_ENABLED]"
-if [[ "${QOBUZ_PLUGIN_ENABLED^^}" = "Y" || "${QOBUZ_PLUGIN_ENABLED^^}" = "YES" ]]; then
-    echo "input {" >> $MPD_ALSA_CONFIG_FILE
-    echo "  enabled         \"yes\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  plugin          \"qobuz\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  app_id          \"${QOBUZ_APP_ID}\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  app_secret      \"${QOBUZ_APP_SECRET}\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  username        \"${QOBUZ_USERNAME}\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  password        \"${QOBUZ_PASSWORD}\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  format_id       \"${QOBUZ_FORMAT_ID}\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "}" >> $MPD_ALSA_CONFIG_FILE
-fi
-
 if [ -n "${INPUT_CACHE_SIZE}" ]; then
     echo "input_cache {" >> $MPD_ALSA_CONFIG_FILE
     echo "  size \"${INPUT_CACHE_SIZE}\"" >> $MPD_ALSA_CONFIG_FILE
