@@ -150,7 +150,7 @@ PROXY||Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:
 MPD_LOG_LEVEL||Can be `default` or `verbose`
 ZEROCONF_ENABLED||Set to `yes` to enable. Disabled by default.
 ZEROCONF_NAME||Set zeroconf name, used only if `ZEROCONF_ENABLED` is set to `yes`
-HYBRID_DSD_ENABLED||Hybrid dsd is enabled by default, set to `no` to disable
+HYBRID_DSD_ENABLED||Hybrid dsd is enabled by default, set to `no` to disable. Disabled when using Pulse mode.
 MAX_OUTPUT_BUFFER_SIZE||The maximum size of the output buffer to a client (maximum response size). Default is 8192 (8 MiB). Value in KBytes.
 STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if your container is set up to start automatically, so that you can resolve race conditions with mpd and with squeezelite if all those services run on the same audio device. I experienced issues with my Asus Tinkerboard, while the Raspberry Pi has never really needed this. Your mileage may vary. Feel free to report your personal experience.
 
