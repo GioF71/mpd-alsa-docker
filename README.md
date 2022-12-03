@@ -137,11 +137,6 @@ QOBUZ_APP_SECRET|SECRET|Your Qobuz application Secret
 QOBUZ_USERNAME|USERNAME|Qobuz account username
 QOBUZ_PASSWORD|PASSWORD|Qobuz account password
 QOBUZ_FORMAT_ID|5|The Qobuz format identifier, i.e. a number which chooses the format and quality to be requested from Qobuz. The default is “5” (320 kbit/s MP3).
-TIDAL_PLUGIN_ENABLED|no|Enables the Tidal Plugin. Note that it seems to be currently defunct: see the mpd official documentation.
-TIDAL_APP_TOKEN|TOKEN|The Tidal application token. Since Tidal is unwilling to assign a token to MPD, this needs to be reverse-engineered from another (approved) Tidal client.
-TIDAL_USERNAME|USERNAME|Tidal Username
-TIDAL_PASSWORD|PASSWORD|Tidal password
-TIDAL_AUDIOQUALITY|Q|The Tidal “audioquality” parameter. Possible values: HI_RES, LOSSLESS, HIGH, LOW. Default is HIGH.
 LASTFM_USERNAME||Username for Last.fm.
 LASTFM_PASSWORD||Password for Last.fm
 LIBREFM_USERNAME||Username for Libre.fm
@@ -349,7 +344,8 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
-2022-12-02|Add support for `additional-outputs.txt` where it is possible to add custom outputs
+2022-12-03|Removed support for defunct Tidal plugin
+2022-12-02|Support for `additional-outputs.txt` where it is possible to add custom outputs
 2022-11-30|Support for `DATABASE_MODE` with possible values `simple` and `proxy`
 2022-11-30|Support for tuning of `MUSIC_DIRECTORY`
 2022-11-30|Bump to mpd version `v0.23.11`
