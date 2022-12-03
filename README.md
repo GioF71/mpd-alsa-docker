@@ -149,7 +149,8 @@ SCROBBLER_MPD_PORT||Set when using host mode, defaults to `6600`
 PROXY||Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:3128`
 MPD_LOG_LEVEL||Can be `default` or `verbose`
 ZEROCONF_ENABLED||Set to `yes` to enable. Disabled by default.
-ZEROCONF_NAME||Set zeroconf name. Used only if `ZEROCONF_ENABLED` is set to `yes`.
+ZEROCONF_NAME||Set zeroconf name, used only if `ZEROCONF_ENABLED` is set to `yes`
+HYBRID_DSD_ENABLED||Hybrid dsd is enabled by default, set to `no` to disable
 MAX_OUTPUT_BUFFER_SIZE||The maximum size of the output buffer to a client (maximum response size). Default is 8192 (8 MiB). Value in KBytes.
 STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if your container is set up to start automatically, so that you can resolve race conditions with mpd and with squeezelite if all those services run on the same audio device. I experienced issues with my Asus Tinkerboard, while the Raspberry Pi has never really needed this. Your mileage may vary. Feel free to report your personal experience.
 
@@ -344,6 +345,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-12-03|HYBRID_DSD_ENABLED added (enabled by default)
 2022-12-03|Removed support for defunct Tidal plugin
 2022-12-02|Support for `additional-outputs.txt` where it is possible to add custom outputs
 2022-11-30|Support for `DATABASE_MODE` with possible values `simple` and `proxy`

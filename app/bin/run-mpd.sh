@@ -207,30 +207,19 @@ echo "input {" >> $MPD_ALSA_CONFIG_FILE
 echo "  plugin \"curl\"" >> $MPD_ALSA_CONFIG_FILE
 echo "}" >> $MPD_ALSA_CONFIG_FILE
 
-## Add Tidal plugin
-echo "Tidal Plugin Enabled: [$TIDAL_PLUGIN_ENABLED]"
-if [[ "${TIDAL_PLUGIN_ENABLED^^}" = "Y" || "${TIDAL_PLUGIN_ENABLED^^}" = "YES" ]]; then
-    echo "input {" >> $MPD_ALSA_CONFIG_FILE
-    echo "  enabled         \"yes\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  plugin          \"tidal\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  token           \"${TIDAL_APP_TOKEN}\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  username        \"${TIDAL_USERNAME}\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  password        \"${TIDAL_PASSWORD}\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  audioquality    \"${TIDAL_AUDIOQUALITY}\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "}" >> $MPD_ALSA_CONFIG_FILE
-fi
-
 if [ -n "${INPUT_CACHE_SIZE}" ]; then
     echo "input_cache {" >> $MPD_ALSA_CONFIG_FILE
     echo "  size \"${INPUT_CACHE_SIZE}\"" >> $MPD_ALSA_CONFIG_FILE
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 fi
 
-## Add Decoder plugin
-echo "decoder {" >> $MPD_ALSA_CONFIG_FILE
-echo "  plugin  \"hybrid_dsd\"" >> $MPD_ALSA_CONFIG_FILE
-echo "  enabled \"no\"" >> $MPD_ALSA_CONFIG_FILE
-echo "}" >> $MPD_ALSA_CONFIG_FILE
+## Hybrid dsd plugin disabled when requested
+if [[ "${HYBRID_DSD_ENABLED^^}" == "NO" || "${OUTPUT_MODE^^}" == "PULSE" ]]; then
+    echo "decoder {" >> $MPD_ALSA_CONFIG_FILE
+    echo "  plugin  \"hybrid_dsd\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  enabled \"no\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "}" >> $MPD_ALSA_CONFIG_FILE
+fi
 
 if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
     # see if user is using a preset
