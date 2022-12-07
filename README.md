@@ -347,6 +347,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-12-07|Minor cleanup tasks
 2022-12-07|Support for `thesycon_dsd_workaround`
 2022-12-07|Support for `auto_resample`
 2022-12-03|HYBRID_DSD_ENABLED added (enabled by default)

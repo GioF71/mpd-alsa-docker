@@ -174,13 +174,13 @@ if [ -z "${MUSIC_DIRECTORY}" ]; then
     MUSIC_DIRECTORY=${DEFAULT_MUSIC_DIRECTORY}
 fi
 
-echo "music_directory       \"${MUSIC_DIRECTORY}\"" >> $MPD_ALSA_CONFIG_FILE
-echo "playlist_directory    \"/playlists\"" >> $MPD_ALSA_CONFIG_FILE
-echo "state_file            \"/db/state\"" >> $MPD_ALSA_CONFIG_FILE
-echo "sticker_file          \"/db/sticker\"" >> $MPD_ALSA_CONFIG_FILE
-echo "bind_to_address       \"${MPD_BIND_ADDRESS}\"" >> $MPD_ALSA_CONFIG_FILE
-echo "port                  \"${MPD_PORT}\"" >> $MPD_ALSA_CONFIG_FILE
-echo "log_file              \"/log/mpd.log\"" >> $MPD_ALSA_CONFIG_FILE
+echo "music_directory \"${MUSIC_DIRECTORY}\"" >> $MPD_ALSA_CONFIG_FILE
+echo "playlist_directory \"/playlists\"" >> $MPD_ALSA_CONFIG_FILE
+echo "state_file \"/db/state\"" >> $MPD_ALSA_CONFIG_FILE
+echo "sticker_file \"/db/sticker\"" >> $MPD_ALSA_CONFIG_FILE
+echo "bind_to_address \"${MPD_BIND_ADDRESS}\"" >> $MPD_ALSA_CONFIG_FILE
+echo "port \"${MPD_PORT}\"" >> $MPD_ALSA_CONFIG_FILE
+echo "log_file \"/log/mpd.log\"" >> $MPD_ALSA_CONFIG_FILE
 
 if [ "${ZEROCONF_ENABLED^^}" == "YES" ]; then
     ZEROCONF_ENABLED=yes
@@ -189,19 +189,19 @@ else
     ZEROCONF_NAME=""
 fi
 
-echo "zeroconf_enabled      \"${ZEROCONF_ENABLED}\"" >> $MPD_ALSA_CONFIG_FILE
+echo "zeroconf_enabled \"${ZEROCONF_ENABLED}\"" >> $MPD_ALSA_CONFIG_FILE
 if [ -n "${ZEROCONF_NAME}" ]; then
-    echo "zeroconf_name        \"${ZEROCONF_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "zeroconf_name \"${ZEROCONF_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 
 if [ -n "${MPD_LOG_LEVEL}" ]; then
-    echo "log_level             \"${MPD_LOG_LEVEL}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "log_level \"${MPD_LOG_LEVEL}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 
 ## disable wildmidi decoder
 echo "decoder {" >> $MPD_ALSA_CONFIG_FILE
-echo "  plugin          \"wildmidi\"" >> $MPD_ALSA_CONFIG_FILE
-echo "  enabled         \"no\"" >> $MPD_ALSA_CONFIG_FILE
+echo "  plugin \"wildmidi\"" >> $MPD_ALSA_CONFIG_FILE
+echo "  enabled \"no\"" >> $MPD_ALSA_CONFIG_FILE
 echo "}" >> $MPD_ALSA_CONFIG_FILE
 
 ## add input curl
@@ -218,7 +218,7 @@ fi
 ## Hybrid dsd plugin disabled when requested
 if [[ "${HYBRID_DSD_ENABLED^^}" == "NO" || "${OUTPUT_MODE^^}" == "PULSE" ]]; then
     echo "decoder {" >> $MPD_ALSA_CONFIG_FILE
-    echo "  plugin  \"hybrid_dsd\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  plugin \"hybrid_dsd\"" >> $MPD_ALSA_CONFIG_FILE
     echo "  enabled \"no\"" >> $MPD_ALSA_CONFIG_FILE
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 fi
@@ -290,12 +290,12 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
     fi
     ## Add alsa output
     echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
-        echo "  type               \"alsa\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  type \"alsa\"" >> $MPD_ALSA_CONFIG_FILE
     if [ -n "${ALSA_DEVICE_NAME}" ]; then
-        echo "  name               \"${ALSA_DEVICE_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  name \"${ALSA_DEVICE_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${MPD_AUDIO_DEVICE}" ]; then
-        echo "  device             \"${MPD_AUDIO_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  device \"${MPD_AUDIO_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${AUTO_RESAMPLE}" ]; then
         if [ "${AUTO_RESAMPLE^^}" == "YES" ]; then
@@ -306,7 +306,7 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
             echo "Invalid configuration for AUTO_RESAMPLE [${AUTO_RESAMPLE}]"
             exit 6
         fi
-        echo "  auto_resample      \"${AUTO_RESAMPLE}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  auto_resample \"${AUTO_RESAMPLE}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${THESYCON_DSD_WORKAROUND}" ]; then
         if [ "${THESYCON_DSD_WORKAROUND^^}" == "YES" ]; then
@@ -320,19 +320,19 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
         echo "  thesycon_dsd_workaround \"${THESYCON_DSD_WORKAROUND}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${MIXER_TYPE}" ]; then
-        echo "  mixer_type         \"${MIXER_TYPE}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  mixer_type \"${MIXER_TYPE}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${MIXER_DEVICE}" ]; then
-        echo "  mixer_device       \"${MIXER_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  mixer_device \"${MIXER_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${MIXER_CONTROL}" ]; then
-        echo "  mixer_control      \"${MIXER_CONTROL}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  mixer_control \"${MIXER_CONTROL}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${MIXER_INDEX}" ]; then
-        echo "  mixer_index        \"${MIXER_INDEX}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  mixer_index \"${MIXER_INDEX}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${ALSA_OUTPUT_FORMAT}" ]; then
-        echo "  format             \"${ALSA_OUTPUT_FORMAT}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  format \"${ALSA_OUTPUT_FORMAT}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${ALSA_ALLOWED_FORMATS_PRESET}" ]; then
         af_value="${allowed_formats_presets[${ALSA_ALLOWED_FORMATS_PRESET}]}"
@@ -341,14 +341,14 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
         fi
     fi
     if [ -n "${ALSA_ALLOWED_FORMATS}" ]; then
-        echo "  allowed_formats    \"${ALSA_ALLOWED_FORMATS}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  allowed_formats \"${ALSA_ALLOWED_FORMATS}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${INTEGER_UPSAMPLING}" ]; then
         echo "  integer_upsampling \"${INTEGER_UPSAMPLING}\"" >> $MPD_ALSA_CONFIG_FILE
         mpd_binary=$UPSAMPLING_MPD_BINARY
     fi
     if [ -n "${DOP}" ]; then
-        echo "  dop                \"${DOP}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  dop \"${DOP}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 elif [ "${OUTPUT_MODE^^}" == "PULSE" ]; then
@@ -444,30 +444,30 @@ if [[ "${SOXR_PLUGIN_ENABLE^^}" = "Y" || "${SOXR_PLUGIN_ENABLE^^}" = "YES" ]]; t
     fi
 
     echo "resampler {" >> $MPD_ALSA_CONFIG_FILE
-    echo "  plugin          \"soxr\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  plugin \"soxr\"" >> $MPD_ALSA_CONFIG_FILE
     if [ -n "${SOXR_PLUGIN_QUALITY}" ]; then
-        echo "  quality         \"${SOXR_PLUGIN_QUALITY}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  quality \"${SOXR_PLUGIN_QUALITY}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${SOXR_PLUGIN_THREADS}" ]; then
-        echo "  threads         \"${SOXR_PLUGIN_THREADS}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  threads \"${SOXR_PLUGIN_THREADS}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${SOXR_PLUGIN_PRECISION}" ]; then
-       echo "  precision       \"${SOXR_PLUGIN_PRECISION}\"" >> $MPD_ALSA_CONFIG_FILE
+       echo "  precision \"${SOXR_PLUGIN_PRECISION}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${SOXR_PLUGIN_PHASE_RESPONSE}" ]; then
-        echo "  phase_response  \"${SOXR_PLUGIN_PHASE_RESPONSE}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  phase_response \"${SOXR_PLUGIN_PHASE_RESPONSE}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${SOXR_PLUGIN_PASSBAND_END}" ]; then
-        echo "  passband_end    \"${SOXR_PLUGIN_PASSBAND_END}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  passband_end \"${SOXR_PLUGIN_PASSBAND_END}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${SOXR_PLUGIN_STOPBAND_BEGIN}" ]; then
-        echo "  stopband_begin  \"${SOXR_PLUGIN_STOPBAND_BEGIN}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  stopband_begin \"${SOXR_PLUGIN_STOPBAND_BEGIN}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${SOXR_PLUGIN_ATTENUATION}" ]; then
-        echo "  attenuation     \"${SOXR_PLUGIN_ATTENUATION}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  attenuation \"${SOXR_PLUGIN_ATTENUATION}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${SOXR_PLUGIN_FLAGS}" ]; then
-        echo "  flags           \"${SOXR_PLUGIN_FLAGS}\"" >> $MPD_ALSA_CONFIG_FILE
+        echo "  flags \"${SOXR_PLUGIN_FLAGS}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 fi
