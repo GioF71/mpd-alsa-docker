@@ -5,6 +5,7 @@
 # 3 Missing mandatory audio group gid for user mode with alsa
 # 4 Incompatible sample rate conversion settings
 # 5 Incompatible database mode
+# 6 Invalid auto_resample mode
 
 STABLE_MPD_BINARY=/app/bin/compiled/mpd
 UPSAMPLING_MPD_BINARY=/app/bin/compiled/mpd-ups
@@ -294,6 +295,17 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
     fi
     if [ -n "${MPD_AUDIO_DEVICE}" ]; then
         echo "  device             \"${MPD_AUDIO_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${AUTO_RESAMPLE}" ]; then
+        if [ "${AUTO_RESAMPLE^^}" == "YES" ]; then
+            AUTO_RESAMPLE=yes
+        elif [ "${AUTO_RESAMPLE^^}" == "NO" ]; then
+            AUTO_RESAMPLE=no
+        else
+            echo "Invalid configuration for AUTO_RESAMPLE [${AUTO_RESAMPLE}]"
+            exit 6
+        fi
+        echo "  auto_resample      \"${AUTO_RESAMPLE}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${MIXER_TYPE}" ]; then
         echo "  mixer_type         \"${MIXER_TYPE}\"" >> $MPD_ALSA_CONFIG_FILE
