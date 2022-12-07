@@ -6,6 +6,7 @@
 # 4 Incompatible sample rate conversion settings
 # 5 Incompatible database mode
 # 6 Invalid auto_resample mode
+# 7 Invalid thesycon_dsd_workaround mode
 
 STABLE_MPD_BINARY=/app/bin/compiled/mpd
 UPSAMPLING_MPD_BINARY=/app/bin/compiled/mpd-ups
@@ -306,6 +307,17 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
             exit 6
         fi
         echo "  auto_resample      \"${AUTO_RESAMPLE}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${THESYCON_DSD_WORKAROUND}" ]; then
+        if [ "${THESYCON_DSD_WORKAROUND^^}" == "YES" ]; then
+            THESYCON_DSD_WORKAROUND=yes
+        elif [ "${THESYCON_DSD_WORKAROUND^^}" == "NO" ]; then
+            THESYCON_DSD_WORKAROUND=no
+        else
+            echo "Invalid configuration for THESYCON_DSD_WORKAROUND [${THESYCON_DSD_WORKAROUND}]"
+            exit 7
+        fi
+        echo "  thesycon_dsd_workaround \"${THESYCON_DSD_WORKAROUND}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${MIXER_TYPE}" ]; then
         echo "  mixer_type         \"${MIXER_TYPE}\"" >> $MPD_ALSA_CONFIG_FILE
