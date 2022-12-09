@@ -174,7 +174,7 @@ HTTPD_OUTPUT_ALWAYS_ON|yes|If set to `yes`, then MPD attempts to keep this audio
 HTTPS_OUTPUT_TAGS|yes|If set to no, then MPD will not send tags to this output. This is only useful for output plugins that can receive tags, for example the httpd output plugin. Defaults to `yes`
 HTTPD_OUTPUT_FORMAT|yes|The output format, defaults to `44100:16:2`
 
-Note that you can add up to 5 httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
+Note that you can add up to 5 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
 The port number default is calculated for each index, as well as the default output name which is appended with `_1`, `_2`, ... (so it becomes `httpd_1`, `httpd_2`, ...).  
 When using multiple httpd outputs, remember to open *all* the relevant ports, not only `8000`, otherwise only the first output will work.
 
