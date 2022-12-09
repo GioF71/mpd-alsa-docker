@@ -156,6 +156,27 @@ HYBRID_DSD_ENABLED||Hybrid dsd is enabled by default, set to `no` to disable. Di
 MAX_OUTPUT_BUFFER_SIZE||The maximum size of the output buffer to a client (maximum response size). Default is 8192 (8 MiB). Value in KBytes.
 STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if your container is set up to start automatically, so that you can resolve race conditions with mpd and with squeezelite if all those services run on the same audio device. I experienced issues with my Asus Tinkerboard, while the Raspberry Pi has never really needed this. Your mileage may vary. Feel free to report your personal experience.
 
+#### HTTPD additional outputs
+
+Additional httpd outputs can be configured using the following variables:
+
+VARIABLE|OPTIONAL|DESCRIPTION
+:---|:---:|:---
+HTTPD_OUTPUT_CREATE|yes|Set to `yes` if you want to create and additional httpd output
+HTTPD_OUTPUT_ENABLED|yes|Sets the output as enabled if set to `yes`, which is the default
+HTTPD_OUTPUT_NAME|yes|The name of the httpd output, defaults to `httpd`
+HTTPD_OUTPUT_PORT|yes|The port for the httpd output stream, defaults to `8000` if not specified
+HTTPD_OUTPUT_BIND_TO_ADDRESS|yes|Allows to specify the bind address
+HTTPD_OUTPUT_ENCODER|yes|The encoder defaults to `wave`, see [here](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins) for other options
+HTTPD_OUTPUT_MAX_CLIENTS|yes|Sets a limit, number of concurrent clients. When set to 0 no limit will apply. Defaults to `0`
+HTTPD_OUTPUT_ALWAYS_ON|yes|If set to `yes`, then MPD attempts to keep this audio output always open. This may be useful for streaming servers, when you don’t want to disconnect all listeners even when playback is accidentally stopped. Defaults to `yes`
+HTTPS_OUTPUT_TAGS|yes|If set to no, then MPD will not send tags to this output. This is only useful for output plugins that can receive tags, for example the httpd output plugin. Defaults to `yes`
+HTTPD_OUTPUT_FORMAT|yes|The output format, defaults to `44100:16:2`
+
+Note that you can add up to 5 httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
+The port number default is calculated for each index, as well as the default output name which is appended with `_1`, `_2`, ... (so it becomes `httpd_1`, `httpd_2`, ...).  
+When using multiple httpd outputs, remember to open *all* the relevant ports, not only `8000`, otherwise only the first output will work.
+
 ### Examples
 
 #### Alsa Mode
@@ -347,6 +368,8 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-12-09|Support for additional httpd outputs
+2022-12-09|Add env variable for max number of outputs by type (`MAX_ADDITIONAL_OUTPUTS_BY_TYPE`)
 2022-12-07|Minor cleanup tasks
 2022-12-07|Support for `thesycon_dsd_workaround`
 2022-12-07|Support for `auto_resample`

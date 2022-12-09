@@ -12,6 +12,15 @@ STABLE_MPD_BINARY=/app/bin/compiled/mpd
 UPSAMPLING_MPD_BINARY=/app/bin/compiled/mpd-ups
 REPO_MPD_BINARY=/usr/bin/mpd
 
+DEFAULT_MAX_OUTPUTS_BY_TYPE=5
+
+if [ -n "${MAX_ADDITIONAL_OUTPUTS_BY_TYPE}" ]; then
+    max_outputs_by_type=$MAX_ADDITIONAL_OUTPUTS_BY_TYPE
+else
+    max_outputs_by_type=$DEFAULT_MAX_OUTPUTS_BY_TYPE
+fi
+echo "MAX_OUTPUTS=[$max_outputs_by_type]"
+
 mpd_binary=$STABLE_MPD_BINARY
 
 declare -A file_dict
@@ -350,6 +359,7 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
     if [ -n "${DOP}" ]; then
         echo "  dop \"${DOP}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
+    echo "  enabled \"yes\"" >> $MPD_ALSA_CONFIG_FILE
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 elif [ "${OUTPUT_MODE^^}" == "PULSE" ]; then
     echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
@@ -358,9 +368,11 @@ elif [ "${OUTPUT_MODE^^}" == "PULSE" ]; then
         PULSEAUDIO_OUTPUT_NAME="PulseAudio"
     fi
     echo "  name \"${PULSEAUDIO_OUTPUT_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  enabled \"yes\"" >> $MPD_ALSA_CONFIG_FILE
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 elif [ "${OUTPUT_MODE^^}" == "NULL" ]; then
     echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
+    echo "  enabled \"yes\"" >> $MPD_ALSA_CONFIG_FILE
     echo "  type \"null\"" >> $MPD_ALSA_CONFIG_FILE
     OUTPUT_NAME="Null Output"
     if [ -n "${NULL_OUTPUT_NAME}" ]; then
@@ -377,6 +389,95 @@ else
     echo "Invalid output mode [${OUTPUT_MODE}]";
     exit 2;
 fi
+
+## HTTPD output
+limit=$((${max_outputs_by_type}-1))
+for i in $( eval echo {0..$limit} )
+do
+    ENV_NAME="HTTPD_OUTPUT_CREATE"
+    create=$(get_named_env $ENV_NAME $i)
+    if [ "${create^^}" == "YES" ]; then
+        echo "Creating HTTPD output for output [$i]"
+        # open
+        echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
+        # type
+        echo "  type \"httpd\"" >> $MPD_ALSA_CONFIG_FILE
+        # name
+        echo "HTTPD Default name=[$HTTPD_OUTPUT_NAME]"
+        var=$(get_named_env "HTTPD_OUTPUT_NAME" $i)
+        echo "HTTPD custom name=[$var]"
+        if [ -n "${var}" ]; then
+            HTTPD_OUTPUT_NAME=${var}
+        else
+            HTTPD_OUTPUT_NAME=$(get_indexed_default httpd $i)
+        fi
+        echo "HTTPD final name=[$HTTPD_OUTPUT_NAME]"
+        echo "  name \"${HTTPD_OUTPUT_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
+        # enabled
+        var=$(get_named_env "HTTPD_OUTPUT_ENABLED" $i)
+        if [ -n "${var}" ]; then
+            HTTPD_OUTPUT_ENABLED=${var}
+        else
+            HTTPD_OUTPUT_ENABLED=yes
+        fi
+        echo "  enabled \"${HTTPD_OUTPUT_ENABLED}\"" >> $MPD_ALSA_CONFIG_FILE
+        # bind to address
+        var=$(get_named_env "HTTPD_OUTPUT_BIND_TO_ADDRESS" $i)
+        if [ -n "${var}" ]; then
+            echo "  bind_to_address \"${var}\"" >> $MPD_ALSA_CONFIG_FILE
+        fi
+        # port
+        BASE_HTTPD_OUTPUT_PORT=8000
+        var=$(get_named_env "HTTPD_OUTPUT_PORT" $i)
+        if [ -n "${var}" ]; then
+            HTTPD_OUTPUT_PORT=${var}
+        else
+            HTTPD_OUTPUT_PORT=$(get_indexed_default_num $BASE_HTTPD_OUTPUT_PORT $i)
+        fi
+        echo "  port \"${HTTPD_OUTPUT_PORT}\"" >> $MPD_ALSA_CONFIG_FILE
+        # encoder
+        var=$(get_named_env "HTTPD_OUTPUT_ENCODER" $i)
+        if [ -n "${var}" ]; then
+            HTTPD_OUTPUT_ENCODER=${var}
+        else
+            HTTPD_OUTPUT_ENCODER=wave
+        fi
+        echo "  encoder \"${HTTPD_OUTPUT_ENCODER}\"" >> $MPD_ALSA_CONFIG_FILE
+        # max clients
+        HTTPD_OUTPUT_MAX_CLIENTS=0
+        var=$(get_named_env "HTTPD_OUTPUT_MAX_CLIENTS" $i)
+        if [ -n "${var}" ]; then
+            HTTPD_OUTPUT_MAX_CLIENTS=${var}
+        fi
+        echo "  max_clients \"${HTTPD_OUTPUT_MAX_CLIENTS}\"" >> $MPD_ALSA_CONFIG_FILE
+        # always on
+        var=$(get_named_env "HTTPD_OUTPUT_ALWAYS_ON" $i)
+        if [ -n "${var}" ]; then
+            HTTPD_OUTPUT_ALWAYS_ON=${var}
+        else
+            HTTPD_OUTPUT_ALWAYS_ON=yes
+        fi
+        echo "  always_on \"${HTTPD_OUTPUT_ALWAYS_ON}\"" >> $MPD_ALSA_CONFIG_FILE
+        # tags
+        var=$(get_named_env "HTTPS_OUTPUT_TAGS" $i)
+        if [ -n "${var}" ]; then
+            httpd_tags=${var}
+        else
+            httpd_tags=yes
+        fi
+        echo "  tags \"${httpd_tags}\"" >> $MPD_ALSA_CONFIG_FILE
+        # format
+        var=$(get_named_env "HTTPD_OUTPUT_FORMAT" $i)
+        if [ -n "${var}" ]; then
+            HTTPD_OUTPUT_FORMAT=${var}
+        else
+            HTTPD_OUTPUT_FORMAT=44100:16:2
+        fi
+        echo "  format \"${HTTPD_OUTPUT_FORMAT}\"" >> $MPD_ALSA_CONFIG_FILE
+        # close
+        echo "}" >> $MPD_ALSA_CONFIG_FILE
+    fi
+done
 
 ## additional outputs
 ADDITIONAL_OUTPUTS_FILE=/user/config/additional-outputs.txt
