@@ -127,7 +127,7 @@ SOXR_PLUGIN_ENABLE||Enable the `soxr` plugin. Do not use in conjunction with var
 SOXR_PLUGIN_PRESET||Presets for SOXR_PLUGIN configuration. Available presets: `goldilocks` and `extremus`
 SOXR_PLUGIN_THREADS||The number of libsoxr threads. `0` means automatic. The default is `1` which disables multi-threading.
 SOXR_PLUGIN_QUALITY||The quality of `soxr` resampler. Possible values: `very high`, `high` (the default), `medium`, `low`, `quick`, `custom`. When set to `custom`, the additional `soxr` parameters can be set.
-SOXR_PLUGIN_PRECISION||The precision in bits. Valid values 16,20,24,28 and 32 bits.
+SOXR_PLUGIN_PRECISION||The precision in bits. Valid values `16`,`20`,`24`,`28` and `32` bits.
 SOXR_PLUGIN_PHASE_RESPONSE||Between the 0-100, where `0` is MINIMUM_PHASE and `50` is LINEAR_PHASE
 SOXR_PLUGIN_PASSBAND_END||The % of source bandwidth where to start filtering. Typical between the 90-99.7.
 SOXR_PLUGIN_STOPBAND_BEGIN||The % of the source bandwidth Where the anti aliasing filter start. Value 100+.
