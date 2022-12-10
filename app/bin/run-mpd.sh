@@ -33,6 +33,13 @@ source get-value.sh
 source load-alsa-presets.sh
 source build-additional.sh
 
+declare -A samplerate_converters
+samplerate_converters[very_high]="soxr very high"
+samplerate_converters[high]="soxr high"
+samplerate_converters[medium]="soxr medium"
+samplerate_converters[low]="soxr low"
+samplerate_converters[quick]="soxr quick"
+
 LASTFM_CREDENTIALS_FILE=/user/config/lastfm.txt
 LIBREFM_CREDENTIALS_FILE=/user/config/librefm.txt
 JAMENDO_CREDENTIALS_FILE=/user/config/librefm.txt
@@ -510,6 +517,11 @@ if [ -n "${VOLUME_NORMALIZATION}" ]; then
     echo "volume_normalization \"${VOLUME_NORMALIZATION}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 if [ -n "${SAMPLERATE_CONVERTER}" ]; then
+    # try lookup xxx
+    sr_lookup="${samplerate_converters[${SAMPLERATE_CONVERTER}]}"
+    if [[ -v sr_lookup ]]; then
+        SAMPLERATE_CONVERTER=${sr_lookup}
+    fi
     echo "samplerate_converter \"${SAMPLERATE_CONVERTER}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 if [ -n "${MAX_OUTPUT_BUFFER_SIZE}" ]; then
