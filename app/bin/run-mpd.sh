@@ -517,7 +517,7 @@ if [ -n "${VOLUME_NORMALIZATION}" ]; then
     echo "volume_normalization \"${VOLUME_NORMALIZATION}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 if [ -n "${SAMPLERATE_CONVERTER}" ]; then
-    # try lookup xxx
+    # try lookup
     sr_lookup="${samplerate_converters[${SAMPLERATE_CONVERTER}]}"
     if [[ -v sr_lookup ]]; then
         SAMPLERATE_CONVERTER=${sr_lookup}
