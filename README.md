@@ -173,6 +173,7 @@ HTTPD_OUTPUT_MAX_CLIENTS|yes|Sets a limit, number of concurrent clients. When se
 HTTPD_OUTPUT_ALWAYS_ON|yes|If set to `yes`, then MPD attempts to keep this audio output always open. This may be useful for streaming servers, when you don’t want to disconnect all listeners even when playback is accidentally stopped. Defaults to `yes`
 HTTPS_OUTPUT_TAGS|yes|If set to no, then MPD will not send tags to this output. This is only useful for output plugins that can receive tags, for example the httpd output plugin. Defaults to `yes`
 HTTPD_OUTPUT_FORMAT|yes|The output format, defaults to `44100:16:2`
+HTTPD_MIXER_TYPE|yes|Set to `software` if you want to be able to change the volume of the output stream
 
 Note that you can add up to 5 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
 The port number default is calculated for each index, as well as the default output name which is appended with `_1`, `_2`, ... (so it becomes `httpd_1`, `httpd_2`, ...).  
@@ -369,6 +370,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-12-12|Support for `MIXER_TYPE` in httpd outputs
 2022-12-12|Lookup table for more convenient `SAMPLERATE_CONVERTER` values
 2022-12-09|Support for additional httpd outputs
 2022-12-09|Add env variable for max number of outputs by type (`MAX_ADDITIONAL_OUTPUTS_BY_TYPE`)
