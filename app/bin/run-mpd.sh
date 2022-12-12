@@ -8,6 +8,7 @@
 # 6 Invalid auto_resample mode
 # 7 Invalid thesycon_dsd_workaround mode
 # 8 Invalid default type
+# 9 Invalid parameter
 
 STABLE_MPD_BINARY=/app/bin/compiled/mpd
 UPSAMPLING_MPD_BINARY=/app/bin/compiled/mpd-ups
@@ -195,6 +196,18 @@ fi
 echo "music_directory \"${MUSIC_DIRECTORY}\"" >> $MPD_ALSA_CONFIG_FILE
 echo "playlist_directory \"/playlists\"" >> $MPD_ALSA_CONFIG_FILE
 echo "state_file \"/db/state\"" >> $MPD_ALSA_CONFIG_FILE
+
+if [ -n "${RESTORE_PAUSED}" ]; then
+    if [ "${RESTORE_PAUSED^^}" == "YES" ]; then
+        echo "restore_paused \"yes\"" >> $MPD_ALSA_CONFIG_FILE
+    elif [ "${RESTORE_PAUSED^^}" == "NO" ]; then
+        echo "restore_paused \"no\"" >> $MPD_ALSA_CONFIG_FILE
+    else
+        echo "Invalid parameter RESTORE_PAUSED=[${RESTORE_PAUSED}]"
+        exit 9
+    fi
+fi
+
 echo "sticker_file \"/db/sticker\"" >> $MPD_ALSA_CONFIG_FILE
 echo "bind_to_address \"${MPD_BIND_ADDRESS}\"" >> $MPD_ALSA_CONFIG_FILE
 echo "port \"${MPD_PORT}\"" >> $MPD_ALSA_CONFIG_FILE
