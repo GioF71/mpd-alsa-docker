@@ -64,11 +64,40 @@ build_httpd() {
         add_output_parameter $out_file $idx HTTPD_OUTPUT_BIND_TO_ADDRESS bind_to_address "" none
         add_output_parameter $out_file $idx HTTPD_OUTPUT_PORT port 8000 num
         add_output_parameter $out_file $idx HTTPD_OUTPUT_ENCODER encoder wave constant
+        add_output_parameter $out_file $idx HTTPD_OUTPUT_ENCODER_BITRATE bitrate "" none
+        add_output_parameter $out_file $idx HTTPD_OUTPUT_ENCODER_QUALITY quality "" none
         add_output_parameter $out_file $idx HTTPD_OUTPUT_MAX_CLIENTS max_clients 0 constant
         add_output_parameter $out_file $idx HTTPD_OUTPUT_ALWAYS_ON always_on yes constant
         add_output_parameter $out_file $idx HTTPS_OUTPUT_TAGS tags yes constant
         add_output_parameter $out_file $idx HTTPD_OUTPUT_FORMAT format 44100:16:2 constant
         add_output_parameter $out_file $idx HTTPD_OUTPUT_MIXER_TYPE mixer_type "" none
+        close_output $out_file
+    fi
+}
+
+build_shout() {
+    out_file=$1
+    idx=$2
+    create=$(get_named_env "SHOUT_OUTPUT_CREATE" $idx)
+    if [ "${create^^}" == "YES" ]; then
+        echo "Creating ShoutCast output for output [$idx]"
+        open_output $out_file
+        set_output_type $out_file shout
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_NAME name shout str
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_ENABLED enabled yes constant
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_FORMAT format 44100:16:2 constant
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_PROTOCOL protocol icecast2 constant
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_TLS tls disabled constant
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_ENCODER encoder vorbis constant
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_ENCODER_BITRATE bitrate "" none
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_ENCODER_QUALITY quality "" none
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_MIXER_TYPE mixer_type "" none
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_HOST host icecast constant
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_PORT port 8000 constant
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_MOUNT mount /mpd constant
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_USER user "" none
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_PASSWORD password hackme constant
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_PUBLIC public no constant
         close_output $out_file
     fi
 }

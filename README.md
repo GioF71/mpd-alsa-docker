@@ -170,6 +170,8 @@ HTTPD_OUTPUT_NAME|yes|The name of the httpd output, defaults to `httpd`
 HTTPD_OUTPUT_PORT|yes|The port for the httpd output stream, defaults to `8000` if not specified
 HTTPD_OUTPUT_BIND_TO_ADDRESS|yes|Allows to specify the bind address
 HTTPD_OUTPUT_ENCODER|yes|The encoder defaults to `wave`, see [here](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins) for other options
+HTTPD_OUTPUT_ENCODER_BITRATE|yes|Encoder bitrate. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
+HTTPD_OUTPUT_ENCODER_QUALITY|yes|Encoder quality. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
 HTTPD_OUTPUT_MAX_CLIENTS|yes|Sets a limit, number of concurrent clients. When set to 0 no limit will apply. Defaults to `0`
 HTTPD_OUTPUT_ALWAYS_ON|yes|If set to `yes`, then MPD attempts to keep this audio output always open. This may be useful for streaming servers, when you don’t want to disconnect all listeners even when playback is accidentally stopped. Defaults to `yes`
 HTTPS_OUTPUT_TAGS|yes|If set to no, then MPD will not send tags to this output. This is only useful for output plugins that can receive tags, for example the httpd output plugin. Defaults to `yes`
@@ -179,6 +181,30 @@ HTTPD_MIXER_TYPE|yes|Set to `software` if you want to be able to change the volu
 Note that you can add up to 5 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
 The port number default is calculated for each index, as well as the default output name which is appended with `_1`, `_2`, ... (so it becomes `httpd_1`, `httpd_2`, ...).  
 When using multiple httpd outputs, remember to open *all* the relevant ports, not only `8000`, otherwise only the first output will work.
+
+#### Shout additional outputs
+
+VARIABLE|OPTIONAL|DESCRIPTION
+:---|:---:|:---
+SHOUT_OUTPUT_CREATE|yes|Set to `yes` if you want to create and additional httpd output
+SHOUT_OUTPUT_ENABLED|yes|Sets the output as enabled if set to `yes`, which is the default
+SHOUT_OUTPUT_NAME|yes|The name of the httpd output, defaults to `shout`
+SHOUT_OUTPUT_PROTOCOL|yes|Specifies the protocol that wil be used to connect to the server, can be `icecast2` (default), `icecast1`, `shoutcast`
+SHOUT_OUTPUT_TLS|yes|Specifies what kind of TLS to use, can be `disabled` (default), `auto`, `auto_no_plain`, `rfc2818`, `rfc2817`
+SHOUT_OUTPUT_FORMAT|yes|The output format, defaults to `44100:16:2`
+SHOUT_OUTPUT_ENCODER|yes|The encoder defaults to `vorbis`, see [here](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins) for other options. BITRATE and QUALITY are typically alternative, so do not specify both of them.
+SHOUT_OUTPUT_ENCODER_BITRATE|yes|Encoder bitrate. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
+SHOUT_OUTPUT_ENCODER_QUALITY|yes|Encoder quality. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
+SHOUT_OUTPUT_HOST|no|Sets the host name of the ShoutCast / IceCast server, defaults to `icecast`, this seems a sensible default in a docker environment
+SHOUT_OUTPUT_PORT|no|Connect to this port number on the specified host, defaults to `8000`
+SHOUT_OUTPUT_MOUNT|no|Mounts the MPD stream in the specified URI
+SHOUT_OUTPUT_USER|no|Sets the user name for submitting the stream to the server, defaults to `source`
+SHOUT_OUTPUT_PASSWORD|no|Sets the password for submitting the stream to the server, defaults to `hackme`
+SHOUT_OUTPUT_PUBLIC|yes|Specifies whether the stream should be "public", defaults to `no`
+SHOUT_MIXER_TYPE|yes|Set to `software` if you want to be able to change the volume of the output stream
+
+Note that you can add up to 5 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
+The port number default is calculated for each index, as well as the default output name which is appended with `_1`, `_2`, ... (so it becomes `shout_1`, `shout_2`, ...).  
 
 ### Examples
 
@@ -223,10 +249,11 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-12-12|Support for optional `shout` outputs
 2022-12-12|Support for `restore_paused` (`RESTORE_PAUSED`)
 2022-12-10|Support for `MIXER_TYPE` in httpd outputs
 2022-12-10|Lookup table for more convenient `SAMPLERATE_CONVERTER` values
-2022-12-09|Support for additional httpd outputs
+2022-12-09|Support for additional `httpd` outputs
 2022-12-09|Add env variable for max number of outputs by type (`MAX_ADDITIONAL_OUTPUTS_BY_TYPE`)
 2022-12-07|Minor cleanup tasks
 2022-12-07|Support for `thesycon_dsd_workaround`
