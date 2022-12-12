@@ -420,6 +420,12 @@ do
     build_httpd $MPD_ALSA_CONFIG_FILE $i
 done
 
+## SHOUTCAST output
+for i in $( eval echo {0..$output_by_type_limit} )
+do
+    build_shout $MPD_ALSA_CONFIG_FILE $i
+done
+
 ## additional outputs
 ADDITIONAL_OUTPUTS_FILE=/user/config/additional-outputs.txt
 if [ -f "$ADDITIONAL_OUTPUTS_FILE" ]; then
