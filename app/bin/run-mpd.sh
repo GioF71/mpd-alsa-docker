@@ -208,6 +208,12 @@ if [ -n "${RESTORE_PAUSED}" ]; then
     fi
 fi
 
+state_file_interval=10
+if [ -n "${STATE_FILE_INTERVAL}" ]; then
+    state_file_interval=${STATE_FILE_INTERVAL}
+fi
+echo "state_file_interval \"${state_file_interval}\"" >> $MPD_ALSA_CONFIG_FILE
+
 echo "sticker_file \"/db/sticker\"" >> $MPD_ALSA_CONFIG_FILE
 echo "bind_to_address \"${MPD_BIND_ADDRESS}\"" >> $MPD_ALSA_CONFIG_FILE
 echo "port \"${MPD_PORT}\"" >> $MPD_ALSA_CONFIG_FILE
