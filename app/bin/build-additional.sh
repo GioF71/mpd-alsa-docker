@@ -60,7 +60,7 @@ build_httpd() {
         open_output $out_file
         set_output_type $out_file httpd
         add_output_parameter $out_file $idx HTTPD_OUTPUT_NAME name httpd str
-        add_output_parameter $out_file $idx HTTPD_OUTPUT_ENABLED enabled yes constant
+        add_output_parameter $out_file $idx HTTPD_OUTPUT_ENABLED enabled "" none
         add_output_parameter $out_file $idx HTTPD_OUTPUT_BIND_TO_ADDRESS bind_to_address "" none
         add_output_parameter $out_file $idx HTTPD_OUTPUT_PORT port 8000 num
         add_output_parameter $out_file $idx HTTPD_OUTPUT_ENCODER encoder wave constant
@@ -84,7 +84,7 @@ build_shout() {
         open_output $out_file
         set_output_type $out_file shout
         add_output_parameter $out_file $idx SHOUT_OUTPUT_NAME name shout str
-        add_output_parameter $out_file $idx SHOUT_OUTPUT_ENABLED enabled yes constant
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_ENABLED enabled "" none
         add_output_parameter $out_file $idx SHOUT_OUTPUT_FORMAT format 44100:16:2 constant
         add_output_parameter $out_file $idx SHOUT_OUTPUT_PROTOCOL protocol icecast2 constant
         add_output_parameter $out_file $idx SHOUT_OUTPUT_TLS tls disabled constant

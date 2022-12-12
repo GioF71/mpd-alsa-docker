@@ -249,6 +249,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-12-12|Do not force enabled by default for additional outputs
 2022-12-12|Support for optional `shout` outputs
 2022-12-12|Support for `restore_paused` (`RESTORE_PAUSED`)
 2022-12-10|Support for `MIXER_TYPE` in httpd outputs
