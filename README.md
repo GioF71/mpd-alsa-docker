@@ -195,11 +195,11 @@ SHOUT_OUTPUT_FORMAT|yes|The output format, defaults to `44100:16:2`
 SHOUT_OUTPUT_ENCODER|yes|The encoder defaults to `vorbis`, see [here](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins) for other options. BITRATE and QUALITY are typically alternative, so do not specify both of them.
 SHOUT_OUTPUT_ENCODER_BITRATE|yes|Encoder bitrate. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
 SHOUT_OUTPUT_ENCODER_QUALITY|yes|Encoder quality. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
-SHOUT_OUTPUT_HOST|no|Sets the host name of the ShoutCast / IceCast server, defaults to `icecast`, this seems a sensible default in a docker environment
-SHOUT_OUTPUT_PORT|no|Connect to this port number on the specified host, defaults to `8000`
-SHOUT_OUTPUT_MOUNT|no|Mounts the MPD stream in the specified URI
-SHOUT_OUTPUT_USER|no|Sets the user name for submitting the stream to the server, defaults to `source`
-SHOUT_OUTPUT_PASSWORD|no|Sets the password for submitting the stream to the server, defaults to `hackme`
+SHOUT_OUTPUT_HOST|yes|Sets the host name of the ShoutCast / IceCast server, defaults to `icecast`, this seems a sensible default in a docker environment
+SHOUT_OUTPUT_PORT|yes|Connect to this port number on the specified host, defaults to `8000`
+SHOUT_OUTPUT_MOUNT|yes|Mounts the MPD stream in the specified URI
+SHOUT_OUTPUT_USER|yes|Sets the user name for submitting the stream to the server, defaults to `source`
+SHOUT_OUTPUT_PASSWORD|yes|Sets the password for submitting the stream to the server, defaults to `hackme`
 SHOUT_OUTPUT_PUBLIC|yes|Specifies whether the stream should be "public", defaults to `no`
 SHOUT_MIXER_TYPE|yes|Set to `software` if you want to be able to change the volume of the output stream
 
@@ -249,6 +249,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-12-12|Mount for `shout` has an index-aware default now
 2022-12-12|Do not force enabled by default for additional outputs
 2022-12-12|Support for optional `shout` outputs
 2022-12-12|Support for `restore_paused` (`RESTORE_PAUSED`)

@@ -94,7 +94,7 @@ build_shout() {
         add_output_parameter $out_file $idx SHOUT_OUTPUT_MIXER_TYPE mixer_type "" none
         add_output_parameter $out_file $idx SHOUT_OUTPUT_HOST host icecast constant
         add_output_parameter $out_file $idx SHOUT_OUTPUT_PORT port 8000 constant
-        add_output_parameter $out_file $idx SHOUT_OUTPUT_MOUNT mount /mpd constant
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_MOUNT mount /mpd str
         add_output_parameter $out_file $idx SHOUT_OUTPUT_USER user "" none
         add_output_parameter $out_file $idx SHOUT_OUTPUT_PASSWORD password hackme constant
         add_output_parameter $out_file $idx SHOUT_OUTPUT_PUBLIC public no constant
