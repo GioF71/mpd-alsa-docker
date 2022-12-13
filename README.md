@@ -100,7 +100,7 @@ PGID||Group id. Defaults to `1000`. The user/group will be created for `pulse` m
 PGID||Group id. Defaults to `1000`.
 AUDIO_GID||`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](#user-mode).
 ALSA_PRESET||Use an alsa preset. See file [alsa-presets.conf](https://github.com/GioF71/mpd-alsa-docker/blob/main/app/assets/alsa-presets.conf) for the existing presets. Additional presets can be passed to the container through the file `/user/config/additional-alsa-presets.conf`
-ALSA_AUTO_FIND_MIXER|no|If `ALSA_AUTO_FIND_MIXER` is set to `yes` and `MIXER_DEVICE` is still empty, the run script will try to find the hardware mixer using `amixer`. This is not guaranteed to work for every dac. Some experiments will be needed. Sharing the results will be **very** helpful.
+ALSA_AUTO_FIND_MIXER||If set to `yes` and `MIXER_DEVICE` is still empty, the run script will try to find the hardware mixer using `amixer`. This is not guaranteed to work for every dac. Some experiments will be needed. Sharing the results will be **very** helpful. Defaults to `no`
 MPD_AUDIO_DEVICE|default|The audio device. Common examples: `hw:DAC` or `hw:x20` or `hw:X20` for usb dac based on XMOS chips
 ALSA_DEVICE_NAME|Alsa Device|Name of the Alsa Device
 MIXER_TYPE|hardware|Mixer type
