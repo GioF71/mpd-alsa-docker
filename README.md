@@ -91,7 +91,7 @@ DATABASE_MODE||Can be `simple` (default) or `proxy`
 DATABASE_PROXY_HOST||MPD server hostname, only used when `DATABASE_MODE` is set to `proxy`
 DATABASE_PROXY_PORT||MPD server port, only used when `DATABASE_MODE` is set to `proxy`
 MUSIC_DIRECTORY||Location of music files, defaults to `/music`
-OUTPUT_MODE|alsa|Output mode, can be `alsa`, `pulse` o `null`. For `pulse` mode, running in `user` mode is required.
+OUTPUT_MODE||Output mode, can be `alsa` (default), `pulse` o `null`. For `pulse` mode, running in `user` mode is required.
 MPD_BIND_ADDRESS||The MPD listen address, defaults to `0.0.0.0`
 MPD_PORT||The MPD port, defaults to `6600`
 USER_MODE||Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode). Enforced when `OUTPUT_MODE` is set to `pulse`.
