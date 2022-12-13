@@ -324,6 +324,11 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
         else    
             echo "MIXER_CONTROL already set to [${MIXER_CONTROL}]"
         fi
+    elif [ -z "${ALSA_AUTO_FIND_MIXER}" ]; then
+        echo "ALSA_AUTO_FIND_MIXER not allowed"
+    elif [[ "${ALSA_AUTO_FIND_MIXER^^}" != "NO" && "${ALSA_AUTO_FIND_MIXER^^}" != "N" ]]; then
+        echo "Invalid ALSA_AUTO_FIND_MIXER=[${ALSA_AUTO_FIND_MIXER}]"
+        exit 9
     fi
     # fallback to software mixer if MIXER_TYPE is still empty
     if [ -z "${MIXER_TYPE}" ]; then
