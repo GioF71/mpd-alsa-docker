@@ -113,6 +113,11 @@ ALSA_ALLOWED_FORMATS||Sets the `alsa` output allowed formats
 AUTO_RESAMPLE||If set to no, then libasound will not attempt to resample. In this case, the user is responsible for ensuring that the requested sample rate can be produced natively by the device, otherwise an error will occur.
 THESYCON_DSD_WORKAROUND||If enabled, enables a workaround for a bug in Thesycon USB audio receivers. On these devices, playing DSD512 or PCM causes all subsequent attempts to play other DSD rates to fail, which can be fixed by briefly playing PCM at 44.1 kHz.
 ALSA_ALLOWED_FORMATS_PRESET||Alternative to `ALSA_ALLOWED_FORMATS`. Possible values: `8x`, `4x`, `2x`, `8x-nodsd`, `4x-nodsd`, `2x-nodsd`
+PULSEAUDIO_OUTPUT_NAME||PulseAudio output name, defaults to `PulseAudio`
+PULSEAUDIO_OUTPUT_ENABLED||Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
+PULSEAUDIO_OUTPUT_SINK||Specifies the name of the PulseAudio sink MPD should play on
+PULSEAUDIO_OUTPUT_MEDIA_ROLE||Specifies a custom media role that MPD reports to PulseAudio, defaults to `music`
+PULSEAUDIO_OUTPUT_SCALE_FACTOR||Specifies a linear scaling coefficient (ranging from `0.5` to `5.0`) to apply when adjusting volume through MPD. For example, chosing a factor equal to `0.7` means that setting the volume to 100 in MPD will set the PulseAudio volume to 70%, and a factor equal to `3.5` means that volume 100 in MPD corresponds to a 350% PulseAudio volume.
 INTEGER_UPSAMPLING||If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.
 INPUT_CACHE_SIZE||Sets the input cache size. Example value: `1 GB`
 NULL_OUTPUT_NAME||Name of the `null` output
@@ -166,7 +171,7 @@ Additional httpd outputs can be configured using the following variables:
 VARIABLE|OPTIONAL|DESCRIPTION
 :---|:---:|:---
 HTTPD_OUTPUT_CREATE|yes|Set to `yes` if you want to create and additional httpd output
-HTTPD_OUTPUT_ENABLED|yes|Sets the output as enabled if set to `yes`, which is the default
+HTTPD_OUTPUT_ENABLED|yes|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
 HTTPD_OUTPUT_NAME|yes|The name of the httpd output, defaults to `httpd`
 HTTPD_OUTPUT_PORT|yes|The port for the httpd output stream, defaults to `8000` if not specified
 HTTPD_OUTPUT_BIND_TO_ADDRESS|yes|Allows to specify the bind address
@@ -188,7 +193,7 @@ When using multiple httpd outputs, remember to open *all* the relevant ports, no
 VARIABLE|OPTIONAL|DESCRIPTION
 :---|:---:|:---
 SHOUT_OUTPUT_CREATE|yes|Set to `yes` if you want to create and additional httpd output
-SHOUT_OUTPUT_ENABLED|yes|Sets the output as enabled if set to `yes`, which is the default
+SHOUT_OUTPUT_ENABLED|yes|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
 SHOUT_OUTPUT_NAME|yes|The name of the httpd output, defaults to `shout`
 SHOUT_OUTPUT_PROTOCOL|yes|Specifies the protocol that wil be used to connect to the server, can be `icecast2` (default), `icecast1`, `shoutcast`
 SHOUT_OUTPUT_TLS|yes|Specifies what kind of TLS to use, can be `disabled` (default), `auto`, `auto_no_plain`, `rfc2818`, `rfc2817`
@@ -250,27 +255,28 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
-2022-12-12|Support for `state_file_interval` (`STATE_FILE_INTERVAL`)
+2022-12-13|Completed support for PulseAudio `sink` and `media_role`, `scale_factor`
+2022-12-12|Support for `state_file_interval`
 2022-12-12|Mount for `shout` has an index-aware default now
-2022-12-12|Do not force enabled by default for additional outputs
+2022-12-12|Do not force `enabled` by default for additional outputs
 2022-12-12|Support for optional `shout` outputs
-2022-12-12|Support for `restore_paused` (`RESTORE_PAUSED`)
-2022-12-10|Support for `MIXER_TYPE` in httpd outputs
-2022-12-10|Lookup table for more convenient `SAMPLERATE_CONVERTER` values
+2022-12-12|Support for `restore_paused`
+2022-12-10|Support for `mixer_type` in httpd outputs
+2022-12-10|Lookup table for more convenient `samplerate_converter` values
 2022-12-09|Support for additional `httpd` outputs
-2022-12-09|Add env variable for max number of outputs by type (`MAX_ADDITIONAL_OUTPUTS_BY_TYPE`)
+2022-12-09|Max number of outputs by type (`MAX_ADDITIONAL_OUTPUTS_BY_TYPE`)
 2022-12-07|Minor cleanup tasks
 2022-12-07|Support for `thesycon_dsd_workaround`
 2022-12-07|Support for `auto_resample`
-2022-12-03|HYBRID_DSD_ENABLED added (enabled by default)
+2022-12-03|`HYBRID_DSD_ENABLED` added (enabled by default)
 2022-12-03|Removed support for defunct Tidal plugin
 2022-12-02|Support for `additional-outputs.txt` where it is possible to add custom outputs
-2022-11-30|Support for `DATABASE_MODE` with possible values `simple` and `proxy`
-2022-11-30|Support for tuning of `MUSIC_DIRECTORY`
+2022-11-30|Support for `database_mode` with possible values `simple` and `proxy`
+2022-11-30|Support for tuning of `music_directory`
 2022-11-30|Bump to mpd version `v0.23.11`
 2022-11-30|Add support for output mode `null`
-2022-11-29|Add support for `MAX_OUTPUT_BUFFER_SIZE`
-2022-11-28|Add support for `INPUT_CACHE_SIZE`
+2022-11-29|Add support for `max_output_buffer_size`
+2022-11-28|Add support for `input_cache_size`
 2022-11-24|Add `-sw` preset variants for presets which provide hardware volume support
 2022-11-23|`MPD_BIND_ADDRESS` defaults to `0.0.0.0`
 2022-11-23|Disabled `wildmidi` decoder plugin

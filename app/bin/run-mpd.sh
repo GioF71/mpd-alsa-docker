@@ -396,7 +396,30 @@ elif [ "${OUTPUT_MODE^^}" == "PULSE" ]; then
         PULSEAUDIO_OUTPUT_NAME="PulseAudio"
     fi
     echo "  name \"${PULSEAUDIO_OUTPUT_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  enabled \"yes\"" >> $MPD_ALSA_CONFIG_FILE
+    pulse_enabled=""
+    if [ -n "${PULSEAUDIO_OUTPUT_ENABLED}" ]; then
+        if [ "${PULSEAUDIO_OUTPUT_ENABLED^^}" == "YES" ]; then
+            pulse_enabled=yes
+        elif [ "${PULSEAUDIO_OUTPUT_ENABLED^^}" == "NO" ]; then
+            pulse_enabled=no
+        else
+            echo "Invalid PULSEAUDIO_OUTPUT_ENABLED=[${PULSEAUDIO_OUTPUT_ENABLED}]"
+            exit 9
+        fi        
+    fi
+    if [ -n "${pulse_enabled}" ]; then
+        echo "  enabled \"${pulse_enabled}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    unset pulse_enabled
+    if [ -n "${PULSEAUDIO_OUTPUT_MEDIA_ROLE}" ]; then
+        echo "  media_role \"${PULSEAUDIO_OUTPUT_MEDIA_ROLE}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${PULSEAUDIO_OUTPUT_SINK}" ]; then
+        echo "  sink \"${PULSEAUDIO_OUTPUT_SINK}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    if [ -n "${PULSEAUDIO_OUTPUT_SCALE_FACTOR}" ]; then
+        echo "  scale_factor \"${PULSEAUDIO_OUTPUT_SCALE_FACTOR}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 elif [ "${OUTPUT_MODE^^}" == "NULL" ]; then
     echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
