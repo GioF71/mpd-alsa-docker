@@ -181,9 +181,9 @@ fi
 ## add database
 echo "database {" >> $MPD_ALSA_CONFIG_FILE
 echo "  plugin \"${DATABASE_MODE}\"" >> $MPD_ALSA_CONFIG_FILE
-if [ "${DATABASE_MODE}" == "simple" ]; then
+if [ "${DATABASE_MODE^^}" == "SIMPLE" ]; then
     echo "  path \"/db/tag_cache\"" >> $MPD_ALSA_CONFIG_FILE
-elif [ "${DATABASE_MODE}" == "proxy" ]; then
+elif [ "${DATABASE_MODE^^}" == "PROXY" ]; then
     echo "  host \"${DATABASE_PROXY_HOST}\"" >> $MPD_ALSA_CONFIG_FILE
     echo "  port \"${DATABASE_PROXY_PORT}\"" >> $MPD_ALSA_CONFIG_FILE
 else
