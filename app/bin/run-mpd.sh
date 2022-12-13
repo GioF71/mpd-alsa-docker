@@ -15,6 +15,11 @@ UPSAMPLING_MPD_BINARY=/app/bin/compiled/mpd-ups
 REPO_MPD_BINARY=/usr/bin/mpd
 
 DEFAULT_MAX_OUTPUTS_BY_TYPE=5
+DEFAULT_OUTPUT_MODE=alsa
+
+if [ -z "${OUTPUT_MODE}" ]; then
+    OUTPUT_MODE=${DEFAULT_OUTPUT_MODE}
+fi
 
 if [ -n "${MAX_ADDITIONAL_OUTPUTS_BY_TYPE}" ]; then
     max_outputs_by_type=$MAX_ADDITIONAL_OUTPUTS_BY_TYPE
