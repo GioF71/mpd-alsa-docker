@@ -203,9 +203,9 @@ echo "playlist_directory \"/playlists\"" >> $MPD_ALSA_CONFIG_FILE
 echo "state_file \"/db/state\"" >> $MPD_ALSA_CONFIG_FILE
 
 if [ -n "${RESTORE_PAUSED}" ]; then
-    if [ "${RESTORE_PAUSED^^}" == "YES" ]; then
+    if [[ "${RESTORE_PAUSED^^}" == "YES" || "${RESTORE_PAUSED^^}" == "Y" ]]; then
         echo "restore_paused \"yes\"" >> $MPD_ALSA_CONFIG_FILE
-    elif [ "${RESTORE_PAUSED^^}" == "NO" ]; then
+    elif [[ "${RESTORE_PAUSED^^}" == "NO" || "${RESTORE_PAUSED^^}" == "N" ]]; then
         echo "restore_paused \"no\"" >> $MPD_ALSA_CONFIG_FILE
     else
         echo "Invalid parameter RESTORE_PAUSED=[${RESTORE_PAUSED}]"
@@ -224,7 +224,7 @@ echo "bind_to_address \"${MPD_BIND_ADDRESS}\"" >> $MPD_ALSA_CONFIG_FILE
 echo "port \"${MPD_PORT}\"" >> $MPD_ALSA_CONFIG_FILE
 echo "log_file \"/log/mpd.log\"" >> $MPD_ALSA_CONFIG_FILE
 
-if [ "${ZEROCONF_ENABLED^^}" == "YES" ]; then
+if [[ "${ZEROCONF_ENABLED^^}" == "YES" || "${ZEROCONF_ENABLED^^}" == "Y" ]]; then
     ZEROCONF_ENABLED=yes
 else
     ZEROCONF_ENABLED=no
@@ -310,7 +310,7 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
     fi
     # if allowed, try to find the mixer
     echo "ALSA_AUTO_FIND_MIXER=[${ALSA_AUTO_FIND_MIXER}]"
-    if [ "${ALSA_AUTO_FIND_MIXER^^}" == "YES" ]; then
+    if [[ "${ALSA_AUTO_FIND_MIXER^^}" == "YES" || "${ALSA_AUTO_FIND_MIXER^^}" == "Y" ]]; then
         if [ -z "${MIXER_CONTROL}" ]; then
             echo "Trying to find mixer ..."
             MIXER_TYPE="hardware"
@@ -340,9 +340,9 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
         echo "  device \"${MPD_AUDIO_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${AUTO_RESAMPLE}" ]; then
-        if [ "${AUTO_RESAMPLE^^}" == "YES" ]; then
+        if [[ "${AUTO_RESAMPLE^^}" == "YES" || "${AUTO_RESAMPLE^^}" == "Y" ]]; then
             AUTO_RESAMPLE=yes
-        elif [ "${AUTO_RESAMPLE^^}" == "NO" ]; then
+        elif [[ "${AUTO_RESAMPLE^^}" == "NO" || "${AUTO_RESAMPLE^^}" == "N" ]]; then
             AUTO_RESAMPLE=no
         else
             echo "Invalid configuration for AUTO_RESAMPLE [${AUTO_RESAMPLE}]"
@@ -351,9 +351,9 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
         echo "  auto_resample \"${AUTO_RESAMPLE}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     if [ -n "${THESYCON_DSD_WORKAROUND}" ]; then
-        if [ "${THESYCON_DSD_WORKAROUND^^}" == "YES" ]; then
+        if [[ "${THESYCON_DSD_WORKAROUND^^}" == "YES" || "${THESYCON_DSD_WORKAROUND^^}" == "Y" ]]; then
             THESYCON_DSD_WORKAROUND=yes
-        elif [ "${THESYCON_DSD_WORKAROUND^^}" == "NO" ]; then
+        elif [[ "${THESYCON_DSD_WORKAROUND^^}" == "NO" || "${THESYCON_DSD_WORKAROUND^^}" == "N" ]]; then
             THESYCON_DSD_WORKAROUND=no
         else
             echo "Invalid configuration for THESYCON_DSD_WORKAROUND [${THESYCON_DSD_WORKAROUND}]"
@@ -403,9 +403,9 @@ elif [ "${OUTPUT_MODE^^}" == "PULSE" ]; then
     echo "  name \"${PULSEAUDIO_OUTPUT_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
     pulse_enabled=""
     if [ -n "${PULSEAUDIO_OUTPUT_ENABLED}" ]; then
-        if [ "${PULSEAUDIO_OUTPUT_ENABLED^^}" == "YES" ]; then
+        if [[ "${PULSEAUDIO_OUTPUT_ENABLED^^}" == "YES" || "${PULSEAUDIO_OUTPUT_ENABLED^^}" == "Y" ]]; then
             pulse_enabled=yes
-        elif [ "${PULSEAUDIO_OUTPUT_ENABLED^^}" == "NO" ]; then
+        elif [[ "${PULSEAUDIO_OUTPUT_ENABLED^^}" == "NO" || "${PULSEAUDIO_OUTPUT_ENABLED^^}" == "N" ]]; then
             pulse_enabled=no
         else
             echo "Invalid PULSEAUDIO_OUTPUT_ENABLED=[${PULSEAUDIO_OUTPUT_ENABLED}]"
@@ -471,7 +471,7 @@ else
     echo "No additional outputs provided"
 fi
 
-if [[ "${SOXR_PLUGIN_ENABLE^^}" = "Y" || "${SOXR_PLUGIN_ENABLE^^}" = "YES" ]]; then
+if [[ "${SOXR_PLUGIN_ENABLE^^}" = "YES" || "${SOXR_PLUGIN_ENABLE^^}" = "Y" ]]; then
     if [ -n "${SAMPLERATE_CONVERTER}" ]; then
         echo "Cannot enable both soxr and samplerate_converter";
         exit 4;
