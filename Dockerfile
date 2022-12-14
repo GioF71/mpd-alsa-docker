@@ -178,6 +178,7 @@ COPY app/bin/build-soxr-presets.sh /app/bin/
 COPY app/bin/build-allowed-formats-presets.sh /app/bin/
 COPY app/bin/load-alsa-presets.sh /app/bin/
 COPY app/bin/build-additional.sh /app/bin/
+COPY app/bin/user-management.sh /app/bin/
 RUN chmod +x /app/bin/*.sh
 
 COPY README.md /app/doc/

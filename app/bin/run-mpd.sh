@@ -38,6 +38,7 @@ source read-file.sh
 source get-value.sh
 source load-alsa-presets.sh
 source build-additional.sh
+source user-management.sh
 
 declare -A samplerate_converters
 samplerate_converters[very_high]="soxr very high"
@@ -131,9 +132,9 @@ if [ "${OUTPUT_MODE^^}" == "PULSE" ] ||
         usermod -a -G $AUDIO_GRP $USER_NAME
         echo "Alsa Mode - Successfully created $USER_NAME (group: $GROUP_NAME)";
     elif [ "${OUTPUT_MODE^^}" = "PULSE" ]; then
-        echo "Pulse Mode - Adding $USER_NAME to group audio"
-        usermod -a -G audio $USER_NAME
-        echo "Pulse Mode - Successfully added $USER_NAME to group audio"
+        if [ -n "${AUDIO_GID}" ]; then
+            create_audio_gid
+        fi
     elif [ "${OUTPUT_MODE^^}" = "NULL" ]; then
         echo "Null Mode - No actions"
     else
