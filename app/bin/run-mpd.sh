@@ -119,18 +119,9 @@ if [ "${OUTPUT_MODE^^}" == "PULSE" ] ||
         if [ -z "${AUDIO_GID}" ]; then
             echo "AUDIO_GID is mandatory for user mode and alsa output"
             exit 3
-        fi
-        if [ $(getent group $AUDIO_GID) ]; then
-            echo "Alsa Mode - Group with gid $AUDIO_GID already exists"
         else
-            echo "Alsa Mode - Creating group with gid $AUDIO_GID"
-            groupadd -g $AUDIO_GID mpd-audio
+            create_audio_gid
         fi
-        echo "Alsa Mode - Adding $USER_NAME to gid $AUDIO_GID"
-        AUDIO_GRP=$(getent group $AUDIO_GID | cut -d: -f1)
-        echo "gid $AUDIO_GID -> group $AUDIO_GRP"
-        usermod -a -G $AUDIO_GRP $USER_NAME
-        echo "Alsa Mode - Successfully created $USER_NAME (group: $GROUP_NAME)";
     elif [ "${OUTPUT_MODE^^}" = "PULSE" ]; then
         if [ -n "${AUDIO_GID}" ]; then
             create_audio_gid

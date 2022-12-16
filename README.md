@@ -255,6 +255,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-12-15|Code cleanup
 2022-12-14|Creation of `audio` group also for `pulse` mode if `AUDIO_GID` is specified
 2022-12-13|Minor cleanup tasks
 2022-12-13|Completed support for PulseAudio `sink` and `media_role`, `scale_factor`
