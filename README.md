@@ -183,6 +183,7 @@ SCRIBBLE_VERBOSE||How verbose `mpdscribble`'s logging should be. Default is 1.
 SCROBBLER_MPD_HOSTNAME||Set when using host mode, defaults to `localhost`
 SCROBBLER_MPD_PORT||Set when using host mode, defaults to `6600`
 PROXY||Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:3128`
+MPD_ENABLE_LOGGING||Defaults to `yes`, set to `no` to disable
 MPD_LOG_LEVEL||Can be `default` or `verbose`
 ZEROCONF_ENABLED||Set to `yes` to enable. Disabled by default.
 ZEROCONF_NAME||Set zeroconf name, used only if `ZEROCONF_ENABLED` is set to `yes`
@@ -284,6 +285,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-12-17|Add `MPD_ENABLE_LOGGING`
 2022-12-16|Preset `fiio-e18` now includes mixer
 2022-12-16|Code cleanup
 2022-12-14|Creation of `audio` group also for `pulse` mode if `AUDIO_GID` is specified
