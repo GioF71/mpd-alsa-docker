@@ -214,7 +214,27 @@ echo "state_file_interval \"${state_file_interval}\"" >> $MPD_ALSA_CONFIG_FILE
 echo "sticker_file \"/db/sticker\"" >> $MPD_ALSA_CONFIG_FILE
 echo "bind_to_address \"${MPD_BIND_ADDRESS}\"" >> $MPD_ALSA_CONFIG_FILE
 echo "port \"${MPD_PORT}\"" >> $MPD_ALSA_CONFIG_FILE
-echo "log_file \"/log/mpd.log\"" >> $MPD_ALSA_CONFIG_FILE
+
+logging_enabled=1
+if [ -n "${MPD_ENABLE_LOGGING}" ]; then
+    if [[ "${MPD_ENABLE_LOGGING^^}" == "NO" || 
+          "${MPD_ENABLE_LOGGING^^}" == "N" ]]; then
+        logging_enabled=0
+    elif [[ "${MPD_ENABLE_LOGGING^^}" != "YES" && 
+            "${MPD_ENABLE_LOGGING^^}" != "Y" ]]; then
+        echo "Invalid MPD_ENABLE_LOGGING=[${MPD_ENABLE_LOGGING}]"
+        exit 9
+    fi
+fi
+
+if [ $logging_enabled -eq 1 ]; then
+    echo "log_file \"/log/mpd.log\"" >> $MPD_ALSA_CONFIG_FILE
+    if [ -n "${MPD_LOG_LEVEL}" ]; then
+        echo "log_level \"${MPD_LOG_LEVEL}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+else
+    echo "Logging is disabled because MPD_ENABLE_LOGGING is set to [${MPD_ENABLE_LOGGING}]"
+fi
 
 if [[ "${ZEROCONF_ENABLED^^}" == "YES" || "${ZEROCONF_ENABLED^^}" == "Y" ]]; then
     ZEROCONF_ENABLED=yes
@@ -228,9 +248,6 @@ if [ -n "${ZEROCONF_NAME}" ]; then
     echo "zeroconf_name \"${ZEROCONF_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 
-if [ -n "${MPD_LOG_LEVEL}" ]; then
-    echo "log_level \"${MPD_LOG_LEVEL}\"" >> $MPD_ALSA_CONFIG_FILE
-fi
 
 ## disable wildmidi decoder
 echo "decoder {" >> $MPD_ALSA_CONFIG_FILE
