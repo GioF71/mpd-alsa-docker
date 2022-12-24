@@ -189,7 +189,7 @@ ZEROCONF_ENABLED||Set to `yes` to enable. Disabled by default.
 ZEROCONF_NAME||Set zeroconf name, used only if `ZEROCONF_ENABLED` is set to `yes`
 HYBRID_DSD_ENABLED||Hybrid dsd is enabled by default, set to `no` to disable. Disabled when using Pulse mode.
 MAX_OUTPUT_BUFFER_SIZE||The maximum size of the output buffer to a client (maximum response size). Default is 8192 (8 MiB). Value in KBytes.
-MAX_ADDITIONAL_OUTPUTS_BY_TYPE||The maximum number of outputs by type, defaults to `5`
+MAX_ADDITIONAL_OUTPUTS_BY_TYPE||The maximum number of outputs by type, defaults to `20`
 RESTORE_PAUSED||If set to `yes`, then MPD is put into pause mode instead of starting playback after startup. Default is `no`.
 STATE_FILE_INTERVAL||Auto-save the state file this number of seconds after each state change, defaults to `10` seconds
 STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if your container is set up to start automatically, so that you can resolve race conditions with mpd and with squeezelite if all those services run on the same audio device. I experienced issues with my Asus Tinkerboard, while the Raspberry Pi has never really needed this. Your mileage may vary. Feel free to report your personal experience.
@@ -214,7 +214,7 @@ HTTPS_OUTPUT_TAGS|yes|If set to no, then MPD will not send tags to this output. 
 HTTPD_OUTPUT_FORMAT|yes|The output format, defaults to `44100:16:2`
 HTTPD_MIXER_TYPE|yes|Set to `software` if you want to be able to change the volume of the output stream
 
-Note that you can add up to 5 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
+Note that you can add up to 20 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
 The port number default is calculated for each index, as well as the default output name which is appended with `_1`, `_2`, ... (so it becomes `httpd_1`, `httpd_2`, ...).  
 When using multiple httpd outputs, remember to open *all* the relevant ports, not only `8000`, otherwise only the first output will work.
 
@@ -239,7 +239,7 @@ SHOUT_OUTPUT_PASSWORD|yes|Sets the password for submitting the stream to the ser
 SHOUT_OUTPUT_PUBLIC|yes|Specifies whether the stream should be "public", defaults to `no`
 SHOUT_MIXER_TYPE|yes|Set to `software` if you want to be able to change the volume of the output stream
 
-Note that you can add up to 5 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
+Note that you can add up to 20 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
 The port number default is calculated for each index, as well as the default output name which is appended with `_1`, `_2`, ... (so it becomes `shout_1`, `shout_2`, ...).  
 
 ### Examples
@@ -285,6 +285,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-12-24|`MAX_ADDITIONAL_OUTPUTS_BY_TYPE` now defaults to `20`
 2022-12-17|Add `MPD_ENABLE_LOGGING`
 2022-12-16|Preset `fiio-e18` now includes mixer
 2022-12-16|Code cleanup
