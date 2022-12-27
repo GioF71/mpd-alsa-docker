@@ -65,38 +65,11 @@ Getting the image from DockerHub is as simple as typing:
 
 `docker pull giof71/mpd-alsa`
 
-You might want to pull the `stable` image as opposed to the default `latest`.
-
 ## Usage
 
 ### User mode
 
-You can enable user-mode by specifying `USER_MODE` to `Y` or `YES`.  
-For `alsa` mode, it is important that the container knows the group id of the host `audio` group. On my system it's `995`, however it is possible to verify using the following command:
-
-```code
-getent group audio
-```
-
-On my system, this commands outputs:
-
-```text
-audio:x:995:brltty,mpd,squeezelite
-```
-
-In any case, make sure to set the variable `AUDIO_GID` accordingly. The variable is mandatory for user mode with alsa output.  
-Also, if your user/group id are not both `1000`, set `PUID` and `PGID` accordingly.  
-It is possible to verify the uid and gid of the currently logged user using the following command:
-
-```code
-id
-```
-
-On my system this command outputs:
-
-```text
-uid=1000(giovanni) gid=1000(giovanni) groups=1000(giovanni),3(sys),90(network),98(power),957(autologin),965(docker),967(libvirt),991(lp),992(kvm),998(wheel)
-```
+See [this](doc/user-mode.md) page.
 
 ### Volumes
 
@@ -142,12 +115,12 @@ ALSA_ALLOWED_FORMATS||Sets the `alsa` output allowed formats
 AUTO_RESAMPLE||If set to no, then libasound will not attempt to resample. In this case, the user is responsible for ensuring that the requested sample rate can be produced natively by the device, otherwise an error will occur.
 THESYCON_DSD_WORKAROUND||If enabled, enables a workaround for a bug in Thesycon USB audio receivers. On these devices, playing DSD512 or PCM causes all subsequent attempts to play other DSD rates to fail, which can be fixed by briefly playing PCM at 44.1 kHz.
 ALSA_ALLOWED_FORMATS_PRESET||Alternative to `ALSA_ALLOWED_FORMATS`. Possible values: `8x`, `4x`, `2x`, `8x-nodsd`, `4x-nodsd`, `2x-nodsd`
+INTEGER_UPSAMPLING||If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.
 PULSEAUDIO_OUTPUT_NAME||PulseAudio output name, defaults to `PulseAudio`
 PULSEAUDIO_OUTPUT_ENABLED||Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
 PULSEAUDIO_OUTPUT_SINK||Specifies the name of the PulseAudio sink MPD should play on
 PULSEAUDIO_OUTPUT_MEDIA_ROLE||Specifies a custom media role that MPD reports to PulseAudio, defaults to `music`
 PULSEAUDIO_OUTPUT_SCALE_FACTOR||Specifies a linear scaling coefficient (ranging from `0.5` to `5.0`) to apply when adjusting volume through MPD. For example, chosing a factor equal to `0.7` means that setting the volume to 100 in MPD will set the PulseAudio volume to 70%, and a factor equal to `3.5` means that volume 100 in MPD corresponds to a 350% PulseAudio volume.
-INTEGER_UPSAMPLING||If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.
 INPUT_CACHE_SIZE||Sets the input cache size. Example value: `1 GB`
 NULL_OUTPUT_NAME||Name of the `null` output
 NULL_OUTPUT_SYNC||Sync mode for the `null` output, can be `yes` (default) or `no`
@@ -193,6 +166,32 @@ MAX_ADDITIONAL_OUTPUTS_BY_TYPE||The maximum number of outputs by type, defaults 
 RESTORE_PAUSED||If set to `yes`, then MPD is put into pause mode instead of starting playback after startup. Default is `no`.
 STATE_FILE_INTERVAL||Auto-save the state file this number of seconds after each state change, defaults to `10` seconds
 STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if your container is set up to start automatically, so that you can resolve race conditions with mpd and with squeezelite if all those services run on the same audio device. I experienced issues with my Asus Tinkerboard, while the Raspberry Pi has never really needed this. Your mileage may vary. Feel free to report your personal experience.
+
+#### ALSA additional outputs
+
+Additional alsa outputs can be configured using the following variables:
+
+VARIABLE|OPTIONAL|DESCRIPTION
+:---|:---:|:---
+ALSA_OUTPUT_CREATE|yes|Set to `yes` if you want to create and additional httpd output
+ALSA_OUTPUT_ENABLED|yes|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
+ALSA_OUTPUT_PRESET|yes|Use an Alsa preset for easier configuration
+ALSA_OUTPUT_DEVICE|yes|Sets alsa device
+ALSA_OUTPUT_AUTO_FIND_MIXER|yes|Allows to auto-select the mixer for easy hardware volume configuration
+ALSA_OUTPUT_MIXER_TYPE|yes|Mixer type
+ALSA_OUTPUT_MIXER_DEVICE|yes|Mixer device
+ALSA_OUTPUT_MIXER_CONTROL|yes|Mixer Control
+ALSA_OUTPUT_MIXER_INDEX|yes|Mixer Index
+ALSA_OUTPUT_ALLOWED_FORMATS_PRESET|yes|Sets allowed formats using a preset
+ALSA_OUTPUT_ALLOWED_FORMATS|yes|Sets allowed formats
+ALSA_OUTPUT_OUTPUT_FORMAT|yes|Sets output format
+ALSA_OUTPUT_AUTO_RESAMPLE|yes|Sets auto resample
+ALSA_OUTPUT_THESYCON_DSD_WORKAROUND|yes|Enables workaround
+ALSA_OUTPUT_INTEGER_UPSAMPLING|yes|Enables integer upsampling
+ALSA_OUTPUT_DOP|yes|Enables Dsd-Over-Pcm. Possible values: `yes` or `no`. Empty by default: this it lets mpd handle dop setting.
+
+For the meaning, refer to the corresponding values in the first list of environment variables.  
+Note that you can add up to 5 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
 
 #### HTTPD additional outputs
 
@@ -285,6 +284,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-12-27|Support for additional `alsa` outputs
 2022-12-24|`MAX_ADDITIONAL_OUTPUTS_BY_TYPE` now defaults to `20`
 2022-12-17|Add `MPD_ENABLE_LOGGING`
 2022-12-16|Preset `fiio-e18` now includes mixer
@@ -295,7 +295,7 @@ Date|Major Changes
 2022-12-12|Support for `state_file_interval`
 2022-12-12|Mount for `shout` has an index-aware default now
 2022-12-12|Do not force `enabled` by default for additional outputs
-2022-12-12|Support for optional `shout` outputs
+2022-12-12|Support for additional `shout` outputs
 2022-12-12|Support for `restore_paused`
 2022-12-10|Support for `mixer_type` in httpd outputs
 2022-12-10|Lookup table for more convenient `samplerate_converter` values
