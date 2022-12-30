@@ -22,7 +22,6 @@ ExecStart=/usr/bin/docker run -i \
             -p 6600:6600 \
             --name mpd-pulse \
             --label com.centurylinklabs.watchtower.enable=false \
-            --pull=always \
             giof71/mpd-alsa:latest
 
 ExecStop=-/usr/bin/docker stop mpd-pulse
