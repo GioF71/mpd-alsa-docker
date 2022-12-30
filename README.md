@@ -284,6 +284,7 @@ Just be careful to use the tag you have built.
 
 Date|Major Changes
 :---|:---
+2022-12-30|Initial support for equalization (add package `libasound2-plugin-equal`)
 2022-12-27|Support for additional `alsa` outputs
 2022-12-24|`MAX_ADDITIONAL_OUTPUTS_BY_TYPE` now defaults to `20`
 2022-12-17|Add `MPD_ENABLE_LOGGING`
