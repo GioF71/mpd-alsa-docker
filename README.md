@@ -99,7 +99,6 @@ MPD_PORT||The MPD port, defaults to `6600`
 USER_MODE||Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode). Enforced when `OUTPUT_MODE` is set to `pulse`.
 PUID||User id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
 PGID||Group id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
-PGID||Group id. Defaults to `1000`.
 AUDIO_GID||`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](#user-mode).
 ALSA_PRESET||Use an alsa preset. See file [alsa-presets.conf](https://github.com/GioF71/mpd-alsa-docker/blob/main/app/assets/alsa-presets.conf) for the existing presets. Additional presets can be passed to the container through the file `/user/config/additional-alsa-presets.conf`
 ALSA_AUTO_FIND_MIXER||If set to `yes` and `MIXER_DEVICE` is still empty, the run script will try to find the hardware mixer using `amixer`. This is not guaranteed to work for every dac. Some experiments will be needed. Sharing the results will be **very** helpful. Defaults to `no`
