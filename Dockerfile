@@ -21,7 +21,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get install -y mpd
-RUN apt-get install -y --no-install-recommends alsa-utils 
+RUN apt-get install -y --no-install-recommends alsa-utils
+RUN apt-get install -y --no-install-recommends libasound2-plugin-equal
 RUN apt-get install -y --no-install-recommends pulseaudio-utils
 RUN apt-get install -y --no-install-recommends mpdscribble
 RUN apt-get install -y --no-install-recommends libfmt7
