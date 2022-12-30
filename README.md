@@ -78,7 +78,7 @@ The following tables lists the volumes:
 VOLUME|DESCRIPTION
 :---|:---
 /db|Where the mpd database is saved
-/music|Where the music is stored. you might consider to mount your directory in read-only mode (`:ro`)
+/music|Where the music is stored. You might consider to mount your directory in read-only mode (`:ro`)
 /playlists|Where the playlists are stored
 /log|Where all logs are written (e.g. `mpd.log`, `scrobbler.log` etc)
 /user/config|Where user configuration files must be located. Currently supported files: `lastfm.txt`, `librefm.txt`, `jamendo.txt` for `mpdscribble` credentials, `additional-alsa-presets.conf` for user-defined alsa presets. Also, the user can create a file named `additional-outputs.txt` including additional outputs, which will be added to the configuration file during the container startup phase.
@@ -139,7 +139,7 @@ SOXR_PLUGIN_PHASE_RESPONSE||Between the 0-100, where `0` is MINIMUM_PHASE and `5
 SOXR_PLUGIN_PASSBAND_END||The % of source bandwidth where to start filtering. Typical between the 90-99.7.
 SOXR_PLUGIN_STOPBAND_BEGIN||The % of the source bandwidth Where the anti aliasing filter start. Value 100+.
 SOXR_PLUGIN_ATTENUATION||Reduction in dB’s to prevent clipping from the resampling process
-SOXR_PLUGIN_FLAGS||Bitmask with additional option see soxr documentation for specific flags
+SOXR_PLUGIN_FLAGS||Bitmask with additional options, see soxr documentation for specific flags
 QOBUZ_PLUGIN_ENABLED|no|Enables the Qobuz plugin
 QOBUZ_APP_ID|ID|Qobuz application id
 QOBUZ_APP_SECRET|SECRET|Your Qobuz application Secret
