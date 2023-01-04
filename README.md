@@ -174,6 +174,7 @@ VARIABLE|OPTIONAL|DESCRIPTION
 :---|:---:|:---
 ALSA_OUTPUT_CREATE|yes|Set to `yes` if you want to create and additional httpd output
 ALSA_OUTPUT_ENABLED|yes|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
+ALSA_OUTPUT_NAME|yes|The name of the httpd output, defaults to `alsa`
 ALSA_OUTPUT_PRESET|yes|Use an Alsa preset for easier configuration
 ALSA_OUTPUT_DEVICE|yes|Sets alsa device
 ALSA_OUTPUT_AUTO_FIND_MIXER|yes|Allows to auto-select the mixer for easy hardware volume configuration
