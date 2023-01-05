@@ -16,6 +16,7 @@ REPO_MPD_BINARY=/usr/bin/mpd
 
 DEFAULT_MAX_OUTPUTS_BY_TYPE=20
 DEFAULT_OUTPUT_MODE=alsa
+DEFAULT_ALSA_DEVICE_NAME="Alsa-Device"
 
 if [ -z "${OUTPUT_MODE}" ]; then
     OUTPUT_MODE=${DEFAULT_OUTPUT_MODE}
@@ -282,7 +283,9 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
         alsa_preset_key="${ALSA_PRESET}.name"
         alsa_preset_value="${alsa_presets[${alsa_preset_key}]}"
         if [[ -v alsa_preset_value ]]; then
-            ALSA_DEVICE_NAME=${alsa_preset_value}
+            if [ -z ${ALSA_DEVICE_NAME} ]; then
+                ALSA_DEVICE_NAME=${alsa_preset_value}
+            fi
         fi
         # DEVICE
         alsa_preset_key="${ALSA_PRESET}.device"
@@ -346,10 +349,11 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
     fi
     ## Add alsa output
     echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
-        echo "  type \"alsa\"" >> $MPD_ALSA_CONFIG_FILE
-    if [ -n "${ALSA_DEVICE_NAME}" ]; then
-        echo "  name \"${ALSA_DEVICE_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  type \"alsa\"" >> $MPD_ALSA_CONFIG_FILE
+    if [ -z "${ALSA_DEVICE_NAME}" ]; then
+        ALSA_DEVICE_NAME=$DEFAULT_ALSA_DEVICE_NAME
     fi
+    echo "  name \"${ALSA_DEVICE_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
     if [ -n "${MPD_AUDIO_DEVICE}" ]; then
         echo "  device \"${MPD_AUDIO_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
