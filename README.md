@@ -116,7 +116,7 @@ AUDIO_GID||`audio` group id from the host machine. Mandatory for `alsa` output i
 ALSA_PRESET||Use an alsa preset. See file [alsa-presets.conf](https://github.com/GioF71/mpd-alsa-docker/blob/main/app/assets/alsa-presets.conf) for the existing presets. Additional presets can be passed to the container through the file `/user/config/additional-alsa-presets.conf`
 ALSA_AUTO_FIND_MIXER||If set to `yes` and `MIXER_DEVICE` is still empty, the run script will try to find the hardware mixer using `amixer`. This is not guaranteed to work for every dac. Some experiments will be needed. Sharing the results will be **very** helpful. Defaults to `no`
 MPD_AUDIO_DEVICE|default|The audio device. Common examples: `hw:DAC` or `hw:x20` or `hw:X20` for usb dac based on XMOS chips
-ALSA_DEVICE_NAME|Alsa Device|Name of the Alsa Device
+ALSA_DEVICE_NAME||Name of the Alsa Device, defaults to `Alsa Device`. The name if unfortunately misleading: this variable refers to the mpd output name.
 MIXER_TYPE|hardware|Mixer type
 MIXER_DEVICE|default|Mixer device
 MIXER_CONTROL|PCM|Mixer Control
@@ -292,6 +292,7 @@ See [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/build.md) doc
 
 Date|Major Changes
 :---|:---
+2023-01-05|Improved use of `ALSA_DEVICE_NAME`
 2023-01-05|Allowing `.asoundrc`
 2022-12-30|Remove `pull=always` from suggested systemd service
 2022-12-30|Initial support for equalization (add package `libasound2-plugin-equal`)
