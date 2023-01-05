@@ -671,7 +671,16 @@ cat $MPD_ALSA_CONFIG_FILE
 CMD_LINE="$mpd_binary --no-daemon $MPD_ALSA_CONFIG_FILE"
 echo "CMD_LINE=[$CMD_LINE]"
 if [ $USE_USER_MODE == "Y" ]; then
+    if [ -f "/user/config/asoundrc.txt" ]; then
+        cp /user/config/asoundrc.txt /home/$USER_NAME/.asoundrc
+        chown $USER_NAME:$GROUP_NAME /home/$USER_NAME/.asoundrc
+        chmod 600 /home/$USER_NAME/.asoundrc
+    fi
     su - $USER_NAME -c "$CMD_LINE"
 else
+    if [ -f "/user/config/asoundrc.txt" ]; then
+        cp /user/config/asoundrc.txt /root/.asoundrc
+        chmod 644 /root/.asoundrc
+    fi
     eval "$CMD_LINE"
 fi

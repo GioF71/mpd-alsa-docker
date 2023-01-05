@@ -81,7 +81,20 @@ VOLUME|DESCRIPTION
 /music|Where the music is stored. You might consider to mount your directory in read-only mode (`:ro`)
 /playlists|Where the playlists are stored
 /log|Where all logs are written (e.g. `mpd.log`, `scrobbler.log` etc)
-/user/config|Where user configuration files must be located. Currently supported files: `lastfm.txt`, `librefm.txt`, `jamendo.txt` for `mpdscribble` credentials, `additional-alsa-presets.conf` for user-defined alsa presets. Also, the user can create a file named `additional-outputs.txt` including additional outputs, which will be added to the configuration file during the container startup phase.
+/user/config|Additional user-provided configuration files, see [this](#user-configuration-volume) paragraph for the details
+
+#### User Configuration volume
+
+Several files can be located in the user configuration (`/user/config`) volume. Here is a table of those files.
+
+FILE|OPTIONAL|DESCRIPTION
+:---|:---:|:---
+lastfm.txt|yes|LastFM Credentials
+librefm.txt|yes|LibreFM Credentials
+jamendo.txt|yes|Jamendo Credentials
+additional-alsa-presets.conf|yes|Additional alsa presets
+additional-outputs.txt|yes|Additional outputs, which will be added to the configuration file during the container startup phase
+asoundrc.txt|yes|Alsa configuration file: this will be copied to `/home/mpd-user/.asoundrc` or to `/root/.asoundrc`, depending on user mode to be enabled or not
 
 ### Environment Variables
 
@@ -273,17 +286,13 @@ You can completely uninstall the service by running:
 
 ## Build
 
-You can build (or rebuild) the image by opening a terminal from the root of the repository and issuing the following command:
-
-`docker build . -t giof71/mpd-alsa`
-
-It will take very little time even on a Raspberry Pi. When it's finished, you can run the container following the previous instructions.  
-Just be careful to use the tag you have built.
+See [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/build.md) document.
 
 ## Change History
 
 Date|Major Changes
 :---|:---
+2023-01-05|Allowing `.asoundrc`
 2022-12-30|Remove `pull=always` from suggested systemd service
 2022-12-30|Initial support for equalization (add package `libasound2-plugin-equal`)
 2022-12-27|Support for additional `alsa` outputs
@@ -308,7 +317,7 @@ Date|Major Changes
 2022-12-07|Support for `auto_resample`
 2022-12-03|`HYBRID_DSD_ENABLED` added (enabled by default)
 2022-12-03|Removed support for defunct Tidal plugin
-2022-12-02|Support for `additional-outputs.txt` where it is possible to add custom outputs
+2022-12-02|Support for `additional-outputs.txt`
 2022-11-30|Support for `database_mode` with possible values `simple` and `proxy`
 2022-11-30|Support for tuning of `music_directory`
 2022-11-30|Bump to mpd version `v0.23.11`
@@ -342,10 +351,10 @@ Date|Major Changes
 2022-10-26|Added support for `soxr` plugin
 2022-10-26|Added support for `alsa` output format (`OUTPUT_FORMAT`)
 2022-10-26|Added support for samplerate_converter
-2022-10-26|Added support for PulseAudio mode
+2022-10-26|Added support for PulseAudio
 2022-10-26|Build mpd.conf at container runtime
-2022-10-22|Add support for daily builds
-2022-10-22|Add builds for ubuntu kinetic as well as for the current lts versions of ubuntu
+2022-10-22|Support for daily builds
+2022-10-22|Add builds for kinetic along with the current lts versions of ubuntu
 2022-10-22|Fixed `AUDIO-GID` now effectively defaulting to `995`
 2022-10-21|User mode support
 2022-10-21|Add logging support
