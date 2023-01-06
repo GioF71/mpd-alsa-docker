@@ -51,7 +51,7 @@ pcm.equal {
 }
 ```
 
-Now create a separate output by adding this your `additional-outputs.txt:
+Now create a separate output by adding this your `additional-outputs.txt`:
 
 ```
 audio_output {
