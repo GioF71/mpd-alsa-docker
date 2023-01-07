@@ -283,7 +283,7 @@ See [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/build.md) doc
 
 Date|Major Changes
 :---|:---
-2023-01-07|Added [contributed](https://github.com/XxAcielxX) documentation about equalization support
+2023-01-07|Added [contributed](https://github.com/GioF71/mpd-alsa-docker/pull/172) documentation about equalization support
 2023-01-05|Improved use of `ALSA_DEVICE_NAME`
 2023-01-05|Allowing `.asoundrc`
 2022-12-30|Remove `pull=always` from suggested systemd service
