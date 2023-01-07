@@ -71,7 +71,7 @@ The ALSA EQ cli can be accessed by running the following command:
 docker exec -it mpd alsamixer -D equal
 ```
 
-![ALSA EQ cli](https://i.imgur.com/Wa3Uoau.jpeg)
+![ALSA EQ cli](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/alsa-eq.md)
 
 ## EQ Presets
 
