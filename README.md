@@ -4,6 +4,7 @@ A Docker image for mpd with support for both Alsa (`alsa`) and PulseAudio (`puls
 It also includes `mpdscribble`. In alternative, you can use [mpd-scrobbler-docker](https://github.com/GioF71/mpd-scrobbler-docker) as the scrobbler for this image.  
 User mode is now possible with `alsa` mode, and of course it is mandatory (enforced) for `pulse` mode.  
 Upsampling (even in integer mode) is now available via a patched version of MPD (upstream version available as well).  
+Also, thanks to a [feature request](https://github.com/GioF71/mpd-alsa-docker/issues/158) by user [XxAcielxX](https://github.com/XxAcielxX), who also contributed with the necessary documentation, we have a certain degree of support for equalization.  
 
 ## Available Archs on Docker Hub
 
@@ -37,25 +38,11 @@ The current mpd version is `v0.23.11`.
 
 ## Why
 
-I prepared this Dockerfile because I wanted to be able to install mpd easily on any machine (provided the architecture is amd64 or arm). Also I wanted to be able to configure and govern the parameters easily, with particular and exclusive reference to the configuration of a single ALSA output. Configuring the container is easy through a webapp like Portainer.
+I prepared this Dockerfile because I wanted to be able to install mpd easily on any machine (provided the architecture is amd64 or arm). Also I wanted to be able to configure and govern the parameters easily, allowing multiple output, also of different types.
 
 ## Prerequisites
 
-You need to have Docker up and running on a Linux machine, and the current user must be allowed to run containers (this usually means that the current user belongs to the "docker" group).
-
-You can verify whether your user belongs to the "docker" group with the following command:
-
-`getent group | grep docker`
-
-This command will output one line if the current user does belong to the "docker" group, otherwise there will be no output.
-
-The Dockerfile and the included scripts have been tested on the following distros:
-
-- Manjaro Linux with Gnome (amd64)
-- Asus Tinkerboard
-- Raspberry Pi 3 and 4, both 32bit and 64bit
-
-As I test the Dockerfile on more platforms, I will update this list.
+See [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/prerequisites.md) page.
 
 ## Get the image
 
@@ -69,7 +56,7 @@ Getting the image from DockerHub is as simple as typing:
 
 ### User mode
 
-See [this](doc/user-mode.md) page.
+See [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/user-mode.md) page.
 
 ### Volumes
 
@@ -284,6 +271,10 @@ You can completely uninstall the service by running:
 ./uninstall.sh
 ```
 
+## Equalization support
+
+Please find documentation [here](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/alsa-eq.md).
+
 ## Build
 
 See [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/build.md) document.
@@ -292,6 +283,7 @@ See [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/build.md) doc
 
 Date|Major Changes
 :---|:---
+2023-01-07|Added [contributed](https://github.com/XxAcielxX) documentation about equalization support
 2023-01-05|Improved use of `ALSA_DEVICE_NAME`
 2023-01-05|Allowing `.asoundrc`
 2022-12-30|Remove `pull=always` from suggested systemd service

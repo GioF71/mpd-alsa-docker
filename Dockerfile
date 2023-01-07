@@ -184,6 +184,7 @@ COPY app/bin/user-management.sh /app/bin/
 RUN chmod +x /app/bin/*.sh
 
 COPY README.md /app/doc/
+COPY DOC/* /app/doc/
 
 WORKDIR /app/bin
 
