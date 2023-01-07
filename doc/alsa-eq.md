@@ -12,11 +12,11 @@ First create `asoundrc.txt` file and mount it to `/user/config/asoundrc.txt`. Th
 
 ```bash
 pcm.!default {
-type plug
-slave.pcm plugequal;
+  type plug
+  slave.pcm plugequal;
 }
 ctl.!default {
-type hw card 0
+  type hw card 0
 }
 ctl.equal {
   type equal;
@@ -37,7 +37,7 @@ This method will apply the equalisation to a separate output created when runnin
 
 First create `asoundrc.txt` file and mount it to `/user/config/asoundrc.txt`. This file should contain the following:
 
-```bash
+```text
 ctl.equal {
   type equal;
 }
@@ -53,30 +53,35 @@ pcm.equal {
 
 Now create a separate output by adding this your `additional-outputs.txt`:
 
-```
+```text
 audio_output {
   type "alsa"
   name "ALSA EQ" # You can name it as you like
   device "plug:plugequal"
 }
 ```
+
 Playing audio through this output will have the equalisation applied.
 
 ## ALSA EQ CLI
 
 The ALSA EQ cli can be accessed by running the following command:
-```bash
+
+```text
 docker exec -it mpd alsamixer -D equal
 ```
+
 ![ALSA EQ cli](https://i.imgur.com/Wa3Uoau.jpeg)
 
 ## EQ Presets
+
 ALSA EQ Presets can be created in the form of bash scripts which then later can be ran to apply different EQ Preset of choice.
 
 ### EQ Preset (example script)
 
 Here 66 = base value of each frequency. Value ranges from 0 to 100. Below 66 is negative value and above 66 is positive value.
-```bash
+
+```text
 default.sh
 ...
 #!/bin/bash
