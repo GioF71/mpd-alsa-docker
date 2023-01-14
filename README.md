@@ -107,7 +107,7 @@ ALSA_DEVICE_NAME||Name of the Alsa Device, defaults to `Alsa Device`. The name i
 MIXER_TYPE||Mixer type, defaults to `hardware`
 MIXER_DEVICE||Mixer device, defaults to `default`
 MIXER_CONTROL||Mixer Control, defaults to `PCM`
-MIXER_INDEX|0|Mixer Index, defaults to `0`
+MIXER_INDEX||Mixer Index, defaults to `0`
 DOP||Enables Dsd-Over-Pcm. Possible values: `yes` or `no`. Empty by default: this it lets mpd handle dop setting.
 ALSA_OUTPUT_FORMAT||Sets `alsa` output format. Example value: `192000:24:2`
 ALSA_ALLOWED_FORMATS||Sets the `alsa` output allowed formats
