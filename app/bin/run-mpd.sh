@@ -9,6 +9,7 @@
 # 7 Invalid thesycon_dsd_workaround mode
 # 8 Invalid default type
 # 9 Invalid parameter
+# 10 Missing mandatory parameter
 
 STABLE_MPD_BINARY=/app/bin/compiled/mpd
 UPSAMPLING_MPD_BINARY=/app/bin/compiled/mpd-ups
@@ -273,6 +274,40 @@ if [[ "${HYBRID_DSD_ENABLED^^}" == "NO" || "${OUTPUT_MODE^^}" == "PULSE" ]]; the
     echo "decoder {" >> $MPD_ALSA_CONFIG_FILE
     echo "  plugin \"hybrid_dsd\"" >> $MPD_ALSA_CONFIG_FILE
     echo "  enabled \"no\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "}" >> $MPD_ALSA_CONFIG_FILE
+fi
+
+## Add Qobuz plugin
+echo "Qobuz Plugin Enabled: [$QOBUZ_PLUGIN_ENABLED]"
+if [[ "${QOBUZ_PLUGIN_ENABLED^^}" = "Y" || "${QOBUZ_PLUGIN_ENABLED^^}" = "YES" ]]; then
+    if [[ -z "$QOBUZ_APP_ID" ]]; then
+        echo "Missing mandatory QOBUZ_APP_ID"
+        exit 10
+    fi
+    if [[ -z "$QOBUZ_APP_SECRET" ]]; then
+        echo "Missing mandatory QOBUZ_APP_SECRET"
+        exit 10
+    fi
+    if [[ -z "$QOBUZ_USERNAME" ]]; then
+        echo "Missing mandatory QOBUZ_USERNAME"
+        exit 10
+    fi
+    if [[ -z "$QOBUZ_PASSWORD" ]]; then
+        echo "Missing mandatory QOBUZ_PASSWORD"
+        exit 10
+    fi
+    if [[ -z "$QOBUZ_FORMAT_ID" ]]; then
+        QOBUZ_FORMAT_ID=5
+        echo "QOBUZ_FORMAT set to [$QOBUZ_FORMAT_ID]"
+    fi
+    echo "input {" >> $MPD_ALSA_CONFIG_FILE
+    echo "  enabled         \"yes\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  plugin          \"qobuz\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  app_id          \"${QOBUZ_APP_ID}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  app_secret      \"${QOBUZ_APP_SECRET}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  username        \"${QOBUZ_USERNAME}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  password        \"${QOBUZ_PASSWORD}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  format_id       \"${QOBUZ_FORMAT_ID}\"" >> $MPD_ALSA_CONFIG_FILE
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 fi
 

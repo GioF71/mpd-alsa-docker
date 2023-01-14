@@ -139,12 +139,12 @@ SOXR_PLUGIN_PASSBAND_END||The % of source bandwidth where to start filtering. Ty
 SOXR_PLUGIN_STOPBAND_BEGIN||The % of the source bandwidth Where the anti aliasing filter start. Value 100+.
 SOXR_PLUGIN_ATTENUATION||Reduction in dB’s to prevent clipping from the resampling process
 SOXR_PLUGIN_FLAGS||Bitmask with additional options, see soxr documentation for specific flags
-QOBUZ_PLUGIN_ENABLED|no|Enables the Qobuz plugin
-QOBUZ_APP_ID|ID|Qobuz application id
-QOBUZ_APP_SECRET|SECRET|Your Qobuz application Secret
-QOBUZ_USERNAME|USERNAME|Qobuz account username
-QOBUZ_PASSWORD|PASSWORD|Qobuz account password
-QOBUZ_FORMAT_ID|5|The Qobuz format identifier, i.e. a number which chooses the format and quality to be requested from Qobuz. The default is “5” (320 kbit/s MP3).
+QOBUZ_PLUGIN_ENABLED||Enables the Qobuz plugin, defaults to `no`
+QOBUZ_APP_ID||Qobuz application id
+QOBUZ_APP_SECRET||Your Qobuz application Secret
+QOBUZ_USERNAME||Qobuz account username
+QOBUZ_PASSWORD||Qobuz account password
+QOBUZ_FORMAT_ID||The Qobuz format identifier, i.e. a number which chooses the format and quality to be requested from Qobuz. The default is `5` (320 kbit/s MP3).
 LASTFM_USERNAME||Username for Last.fm.
 LASTFM_PASSWORD||Password for Last.fm
 LIBREFM_USERNAME||Username for Libre.fm
@@ -283,6 +283,7 @@ See [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/build.md) doc
 
 Date|Major Changes
 :---|:---
+2023-01-14|Remove Qobuz default from Dockerfile
 2023-01-14|Corrected some defaults from Dockerfile
 2023-01-14|Remove default for `MPD_AUDIO_DEVICE` in Dockerfile
 2023-01-07|Added [contributed](https://github.com/GioF71/mpd-alsa-docker/pull/172) documentation about equalization support
