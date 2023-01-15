@@ -42,7 +42,7 @@ source get-value.sh
 source load-alsa-presets.sh
 source build-additional.sh
 source user-management.sh
-source pulse.sh
+source any-of.sh
 
 declare -A samplerate_converters
 samplerate_converters[very_high]="soxr very high"
@@ -78,7 +78,10 @@ MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
 USE_USER_MODE="N"
 
 ANY_PULSE=$(any_pulse)
+ANY_ALSA=$(any_alsa)
+
 echo "ANY_PULSE=[$ANY_PULSE]"
+echo "ANY_ALSA=[$ANY_ALSA]"
 
 if [[ "${ANY_PULSE}" -eq 1 ]] || 
    [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" == "Y" ]]; then
@@ -122,7 +125,7 @@ if [[ "${ANY_PULSE}" -eq 1 ]] ||
     else
         echo "user $USER_NAME already exists."
     fi
-    if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
+    if [ "${ANY_ALSA}" -eq 1 ]; then
         if [ -z "${AUDIO_GID}" ]; then
             echo "AUDIO_GID is mandatory for user mode and alsa output"
             exit 3
@@ -316,6 +319,8 @@ if [[ "${QOBUZ_PLUGIN_ENABLED^^}" == "Y" || "${QOBUZ_PLUGIN_ENABLED^^}" == "YES"
 fi
 
 if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
+    echo "OUTPUT_MODE [$OUTPUT_MODE] is deprecated and will be removed in the future"
+    echo "You should use ALSA_OUTPUT_CREATE=yes instead"
     # see if user is using a preset
     if [ -n "${ALSA_PRESET}" ]; then
         echo "Using alsa preset ${ALSA_PRESET}"

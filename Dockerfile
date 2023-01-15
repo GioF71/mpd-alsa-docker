@@ -223,7 +223,7 @@ COPY app/bin/build-allowed-formats-presets.sh /app/bin/
 COPY app/bin/load-alsa-presets.sh /app/bin/
 COPY app/bin/build-additional.sh /app/bin/
 COPY app/bin/user-management.sh /app/bin/
-COPY app/bin/pulse.sh /app/bin/
+COPY app/bin/any-of.sh /app/bin/
 RUN chmod +x /app/bin/*.sh
 
 COPY README.md /app/doc/
