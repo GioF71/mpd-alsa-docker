@@ -125,11 +125,11 @@ if [ "${OUTPUT_MODE^^}" == "PULSE" ] ||
         else
             create_audio_gid
         fi
-    elif [ "${OUTPUT_MODE^^}" = "PULSE" ]; then
+    elif [ "${OUTPUT_MODE^^}" == "PULSE" ]; then
         if [ -n "${AUDIO_GID}" ]; then
             create_audio_gid
         fi
-    elif [ "${OUTPUT_MODE^^}" = "NULL" ]; then
+    elif [ "${OUTPUT_MODE^^}" == "NULL" ]; then
         echo "Null Mode - No actions"
     else
         echo "Invalid output mode [${OUTPUT_MODE}]";
@@ -141,7 +141,7 @@ if [ "${OUTPUT_MODE^^}" == "PULSE" ] ||
     chown -R $USER_NAME:$GROUP_NAME /app/scribble
 
     ## PulseAudio
-    if [ "${OUTPUT_MODE^^}" = "PULSE" ]; then
+    if [ "${OUTPUT_MODE^^}" == "PULSE" ]; then
         PULSE_CLIENT_CONF="/etc/pulse/client.conf"
         echo "Creating pulseaudio configuration file $PULSE_CLIENT_CONF..."
         cp /app/assets/pulse-client-template.conf $PULSE_CLIENT_CONF
@@ -279,7 +279,7 @@ fi
 
 ## Add Qobuz plugin
 echo "Qobuz Plugin Enabled: [$QOBUZ_PLUGIN_ENABLED]"
-if [[ "${QOBUZ_PLUGIN_ENABLED^^}" = "Y" || "${QOBUZ_PLUGIN_ENABLED^^}" = "YES" ]]; then
+if [[ "${QOBUZ_PLUGIN_ENABLED^^}" == "Y" || "${QOBUZ_PLUGIN_ENABLED^^}" == "YES" ]]; then
     if [[ -z "$QOBUZ_APP_ID" ]]; then
         echo "Missing mandatory QOBUZ_APP_ID"
         exit 10
@@ -534,7 +534,7 @@ else
     echo "No additional outputs provided"
 fi
 
-if [[ "${SOXR_PLUGIN_ENABLE^^}" = "YES" || "${SOXR_PLUGIN_ENABLE^^}" = "Y" ]]; then
+if [[ "${SOXR_PLUGIN_ENABLE^^}" == "YES" || "${SOXR_PLUGIN_ENABLE^^}" == "Y" ]]; then
     if [ -n "${SAMPLERATE_CONVERTER}" ]; then
         echo "Cannot enable both soxr and samplerate_converter";
         exit 4;
