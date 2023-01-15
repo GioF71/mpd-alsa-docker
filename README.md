@@ -87,84 +87,84 @@ asoundrc.txt|yes|Alsa configuration file: this will be copied to `/home/mpd-user
 
 The following tables lists all the currently supported environment variables:
 
-VARIABLE|DEFAULT|NOTES
-:---|:---:|:---
-DATABASE_MODE||Can be `simple` (default) or `proxy`
-DATABASE_PROXY_HOST||MPD server hostname, only used when `DATABASE_MODE` is set to `proxy`
-DATABASE_PROXY_PORT||MPD server port, only used when `DATABASE_MODE` is set to `proxy`
-MUSIC_DIRECTORY||Location of music files, defaults to `/music`
-OUTPUT_MODE||Output mode, can be `alsa` (default), `pulse` o `null`. For `pulse` mode, running in `user` mode is required.
-MPD_BIND_ADDRESS||The MPD listen address, defaults to `0.0.0.0`
-MPD_PORT||The MPD port, defaults to `6600`
-USER_MODE||Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode). Enforced when `OUTPUT_MODE` is set to `pulse`.
-PUID||User id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
-PGID||Group id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
-AUDIO_GID||`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](#user-mode).
-ALSA_PRESET||Use an alsa preset. See file [alsa-presets.conf](https://github.com/GioF71/mpd-alsa-docker/blob/main/app/assets/alsa-presets.conf) for the existing presets. Additional presets can be passed to the container through the file `/user/config/additional-alsa-presets.conf`
-ALSA_AUTO_FIND_MIXER||If set to `yes` and `MIXER_DEVICE` is still empty, the run script will try to find the hardware mixer using `amixer`. This is not guaranteed to work for every dac. Some experiments will be needed. Sharing the results will be **very** helpful. Defaults to `no`
-MPD_AUDIO_DEVICE||The audio device. Common examples: `hw:DAC` or `hw:x20` or `hw:X20` for usb dac based on XMOS chips. Defaults to `default`
-ALSA_DEVICE_NAME||Name of the Alsa Device, defaults to `Alsa Device`. The name if unfortunately misleading: this variable refers to the mpd output name.
-MIXER_TYPE||Mixer type, defaults to `hardware`
-MIXER_DEVICE||Mixer device, defaults to `default`
-MIXER_CONTROL||Mixer Control, defaults to `PCM`
-MIXER_INDEX||Mixer Index, defaults to `0`
-DOP||Enables Dsd-Over-Pcm. Possible values: `yes` or `no`. Empty by default: this it lets mpd handle dop setting.
-ALSA_OUTPUT_FORMAT||Sets `alsa` output format. Example value: `192000:24:2`
-ALSA_ALLOWED_FORMATS||Sets the `alsa` output allowed formats
-AUTO_RESAMPLE||If set to no, then libasound will not attempt to resample. In this case, the user is responsible for ensuring that the requested sample rate can be produced natively by the device, otherwise an error will occur.
-THESYCON_DSD_WORKAROUND||If enabled, enables a workaround for a bug in Thesycon USB audio receivers. On these devices, playing DSD512 or PCM causes all subsequent attempts to play other DSD rates to fail, which can be fixed by briefly playing PCM at 44.1 kHz.
-ALSA_ALLOWED_FORMATS_PRESET||Alternative to `ALSA_ALLOWED_FORMATS`. Possible values: `8x`, `4x`, `2x`, `8x-nodsd`, `4x-nodsd`, `2x-nodsd`
-INTEGER_UPSAMPLING||If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.
-PULSEAUDIO_OUTPUT_NAME||PulseAudio output name, defaults to `PulseAudio`
-PULSEAUDIO_OUTPUT_ENABLED||Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
-PULSEAUDIO_OUTPUT_SINK||Specifies the name of the PulseAudio sink MPD should play on
-PULSEAUDIO_OUTPUT_MEDIA_ROLE||Specifies a custom media role that MPD reports to PulseAudio, defaults to `music`
-PULSEAUDIO_OUTPUT_SCALE_FACTOR||Specifies a linear scaling coefficient (ranging from `0.5` to `5.0`) to apply when adjusting volume through MPD. For example, chosing a factor equal to `0.7` means that setting the volume to 100 in MPD will set the PulseAudio volume to 70%, and a factor equal to `3.5` means that volume 100 in MPD corresponds to a 350% PulseAudio volume.
-INPUT_CACHE_SIZE||Sets the input cache size. Example value: `1 GB`
-NULL_OUTPUT_NAME||Name of the `null` output
-NULL_OUTPUT_SYNC||Sync mode for the `null` output, can be `yes` (default) or `no`
-REPLAYGAIN_MODE||ReplayGain Mode, defaults to `off`
-REPLAYGAIN_PREAMP||ReplayGain Preamp, defaults to `0`
-REPLAYGAIN_MISSING_PREAMP||ReplayGain missing preamp, defaults to `0`
-REPLAYGAIN_LIMIT||ReplayGain Limit, defaults to `yes`
-VOLUME_NORMALIZATION||Volume normalization, defaults to `no`
-SAMPLERATE_CONVERTER||Configure `samplerate_converter`. Example value: `soxr very high`. Note that this configuration cannot be used when `SOXR_PLUGIN_ENABLE` is set to enabled. There are some preset values for sox: `very_high` and `very-high` map to `soxr very high`, `high` maps to `soxr high`, `medium` maps to `soxr medium`, `low` maps to `soxr low` and `quick` maps to `soxr quick`. Refer to [this](https://mpd.readthedocs.io/en/stable/plugins.html#soxr) page for details.
-SOXR_PLUGIN_ENABLE||Enable the `soxr` plugin. Do not use in conjunction with variable `SAMPLERATE_CONVERTER`
-SOXR_PLUGIN_PRESET||Presets for SOXR_PLUGIN configuration. Available presets: `goldilocks` and `extremus`
-SOXR_PLUGIN_THREADS||The number of libsoxr threads. `0` means automatic. The default is `1` which disables multi-threading.
-SOXR_PLUGIN_QUALITY||The quality of `soxr` resampler. Possible values: `very high`, `high` (the default), `medium`, `low`, `quick`, `custom`. When set to `custom`, the additional `soxr` parameters can be set.
-SOXR_PLUGIN_PRECISION||The precision in bits. Valid values `16`,`20`,`24`,`28` and `32` bits.
-SOXR_PLUGIN_PHASE_RESPONSE||Between the 0-100, where `0` is MINIMUM_PHASE and `50` is LINEAR_PHASE
-SOXR_PLUGIN_PASSBAND_END||The % of source bandwidth where to start filtering. Typical between the 90-99.7.
-SOXR_PLUGIN_STOPBAND_BEGIN||The % of the source bandwidth Where the anti aliasing filter start. Value 100+.
-SOXR_PLUGIN_ATTENUATION||Reduction in dB’s to prevent clipping from the resampling process
-SOXR_PLUGIN_FLAGS||Bitmask with additional options, see soxr documentation for specific flags
-QOBUZ_PLUGIN_ENABLED||Enables the Qobuz plugin, defaults to `no`
-QOBUZ_APP_ID||Qobuz application id
-QOBUZ_APP_SECRET||Your Qobuz application Secret
-QOBUZ_USERNAME||Qobuz account username
-QOBUZ_PASSWORD||Qobuz account password
-QOBUZ_FORMAT_ID||The Qobuz format identifier, i.e. a number which chooses the format and quality to be requested from Qobuz. The default is `5` (320 kbit/s MP3).
-LASTFM_USERNAME||Username for Last.fm.
-LASTFM_PASSWORD||Password for Last.fm
-LIBREFM_USERNAME||Username for Libre.fm
-LIBREFM_PASSWORD||Password for Libre.fm
-JAMENDO_USERNAME||Username for Jamendo
-JAMENDO_PASSWORD||Password for Jamendo
-SCRIBBLE_VERBOSE||How verbose `mpdscribble`'s logging should be. Default is 1.
-SCROBBLER_MPD_HOSTNAME||Set when using host mode, defaults to `localhost`
-SCROBBLER_MPD_PORT||Set when using host mode, defaults to `6600`
-PROXY||Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:3128`
-MPD_ENABLE_LOGGING||Defaults to `yes`, set to `no` to disable
-MPD_LOG_LEVEL||Can be `default` or `verbose`
-ZEROCONF_ENABLED||Set to `yes` to enable. Disabled by default.
-ZEROCONF_NAME||Set zeroconf name, used only if `ZEROCONF_ENABLED` is set to `yes`
-HYBRID_DSD_ENABLED||Hybrid dsd is enabled by default, set to `no` to disable. Disabled when using Pulse mode.
-MAX_OUTPUT_BUFFER_SIZE||The maximum size of the output buffer to a client (maximum response size). Default is 8192 (8 MiB). Value in KBytes.
-MAX_ADDITIONAL_OUTPUTS_BY_TYPE||The maximum number of outputs by type, defaults to `20`
-RESTORE_PAUSED||If set to `yes`, then MPD is put into pause mode instead of starting playback after startup. Default is `no`.
-STATE_FILE_INTERVAL||Auto-save the state file this number of seconds after each state change, defaults to `10` seconds
-STARTUP_DELAY_SEC||Delay before starting the application in seconds, defaults to `0`.
+VARIABLE|DESCRIPTION
+:---|:---
+DATABASE_MODE|Can be `simple` (default) or `proxy`
+DATABASE_PROXY_HOST|MPD server hostname, only used when `DATABASE_MODE` is set to `proxy`
+DATABASE_PROXY_PORT|MPD server port, only used when `DATABASE_MODE` is set to `proxy`
+MUSIC_DIRECTORY|Location of music files, defaults to `/music`
+OUTPUT_MODE|Output mode, can be `alsa` (default), `pulse` o `null`. For `pulse` mode, running in `user` mode is required.
+MPD_BIND_ADDRESS|The MPD listen address, defaults to `0.0.0.0`
+MPD_PORT|The MPD port, defaults to `6600`
+USER_MODE|Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode). Enforced when `OUTPUT_MODE` is set to `pulse`.
+PUID|User id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
+PGID|Group id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
+AUDIO_GID|`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](#user-mode).
+ALSA_PRESET|Use an alsa preset. See file [alsa-presets.conf](https://github.com/GioF71/mpd-alsa-docker/blob/main/app/assets/alsa-presets.conf) for the existing presets. Additional presets can be passed to the container through the file `/user/config/additional-alsa-presets.conf`
+ALSA_AUTO_FIND_MIXER|If set to `yes` and `MIXER_DEVICE` is still empty, the run script will try to find the hardware mixer using `amixer`. This is not guaranteed to work for every dac. Some experiments will be needed. Sharing the results will be **very** helpful. Defaults to `no`
+MPD_AUDIO_DEVICE|The audio device. Common examples: `hw:DAC` or `hw:x20` or `hw:X20` for usb dac based on XMOS chips. Defaults to `default`
+ALSA_DEVICE_NAME|Name of the Alsa Device, defaults to `Alsa Device`. The name if unfortunately misleading: this variable refers to the mpd output name.
+MIXER_TYPE|Mixer type, defaults to `hardware`
+MIXER_DEVICE|Mixer device, defaults to `default`
+MIXER_CONTROL|Mixer Control, defaults to `PCM`
+MIXER_INDEX|Mixer Index, defaults to `0`
+DOP|Enables Dsd-Over-Pcm. Possible values: `yes` or `no`. Empty by default: this it lets mpd handle dop setting.
+ALSA_OUTPUT_FORMAT|Sets `alsa` output format. Example value: `192000:24:2`
+ALSA_ALLOWED_FORMATS|Sets the `alsa` output allowed formats
+AUTO_RESAMPLE|If set to no, then libasound will not attempt to resample. In this case, the user is responsible for ensuring that the requested sample rate can be produced natively by the device, otherwise an error will occur.
+THESYCON_DSD_WORKAROUND|If enabled, enables a workaround for a bug in Thesycon USB audio receivers. On these devices, playing DSD512 or PCM causes all subsequent attempts to play other DSD rates to fail, which can be fixed by briefly playing PCM at 44.1 kHz.
+ALSA_ALLOWED_FORMATS_PRESET|Alternative to `ALSA_ALLOWED_FORMATS`. Possible values: `8x`, `4x`, `2x`, `8x-nodsd`, `4x-nodsd`, `2x-nodsd`
+INTEGER_UPSAMPLING|If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.
+PULSEAUDIO_OUTPUT_NAME|PulseAudio output name, defaults to `PulseAudio`
+PULSEAUDIO_OUTPUT_ENABLED|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
+PULSEAUDIO_OUTPUT_SINK|Specifies the name of the PulseAudio sink MPD should play on
+PULSEAUDIO_OUTPUT_MEDIA_ROLE|Specifies a custom media role that MPD reports to PulseAudio, defaults to `music`
+PULSEAUDIO_OUTPUT_SCALE_FACTOR|Specifies a linear scaling coefficient (ranging from `0.5` to `5.0`) to apply when adjusting volume through MPD. For example, chosing a factor equal to `0.7` means that setting the volume to 100 in MPD will set the PulseAudio volume to 70%, and a factor equal to `3.5` means that volume 100 in MPD corresponds to a 350% PulseAudio volume.
+INPUT_CACHE_SIZE|Sets the input cache size. Example value: `1 GB`
+NULL_OUTPUT_NAME|Name of the `null` output
+NULL_OUTPUT_SYNC|Sync mode for the `null` output, can be `yes` (default) or `no`
+REPLAYGAIN_MODE|ReplayGain Mode, defaults to `off`
+REPLAYGAIN_PREAMP|ReplayGain Preamp, defaults to `0`
+REPLAYGAIN_MISSING_PREAMP|ReplayGain missing preamp, defaults to `0`
+REPLAYGAIN_LIMIT|ReplayGain Limit, defaults to `yes`
+VOLUME_NORMALIZATION|Volume normalization, defaults to `no`
+SAMPLERATE_CONVERTER|Configure `samplerate_converter`. Example value: `soxr very high`. Note that this configuration cannot be used when `SOXR_PLUGIN_ENABLE` is set to enabled. There are some preset values for sox: `very_high` and `very-high` map to `soxr very high`, `high` maps to `soxr high`, `medium` maps to `soxr medium`, `low` maps to `soxr low` and `quick` maps to `soxr quick`. Refer to [this](https://mpd.readthedocs.io/en/stable/plugins.html#soxr) page for details.
+SOXR_PLUGIN_ENABLE|Enable the `soxr` plugin. Do not use in conjunction with variable `SAMPLERATE_CONVERTER`
+SOXR_PLUGIN_PRESET|Presets for SOXR_PLUGIN configuration. Available presets: `goldilocks` and `extremus`
+SOXR_PLUGIN_THREADS|The number of libsoxr threads. `0` means automatic. The default is `1` which disables multi-threading.
+SOXR_PLUGIN_QUALITY|The quality of `soxr` resampler. Possible values: `very high`, `high` (the default), `medium`, `low`, `quick`, `custom`. When set to `custom`, the additional `soxr` parameters can be set.
+SOXR_PLUGIN_PRECISION|The precision in bits. Valid values `16`,`20`,`24`,`28` and `32` bits.
+SOXR_PLUGIN_PHASE_RESPONSE|Between the 0-100, where `0` is MINIMUM_PHASE and `50` is LINEAR_PHASE
+SOXR_PLUGIN_PASSBAND_END|The % of source bandwidth where to start filtering. Typical between the 90-99.7.
+SOXR_PLUGIN_STOPBAND_BEGIN|The % of the source bandwidth Where the anti aliasing filter start. Value 100+.
+SOXR_PLUGIN_ATTENUATION|Reduction in dB’s to prevent clipping from the resampling process
+SOXR_PLUGIN_FLAGS|Bitmask with additional options, see soxr documentation for specific flags
+QOBUZ_PLUGIN_ENABLED|Enables the Qobuz plugin, defaults to `no`
+QOBUZ_APP_ID|Qobuz application id
+QOBUZ_APP_SECRET|Your Qobuz application Secret
+QOBUZ_USERNAME|Qobuz account username
+QOBUZ_PASSWORD|Qobuz account password
+QOBUZ_FORMAT_ID|The Qobuz format identifier, i.e. a number which chooses the format and quality to be requested from Qobuz. The default is `5` (320 kbit/s MP3).
+LASTFM_USERNAME|Username for Last.fm.
+LASTFM_PASSWORD|Password for Last.fm
+LIBREFM_USERNAME|Username for Libre.fm
+LIBREFM_PASSWORD|Password for Libre.fm
+JAMENDO_USERNAME|Username for Jamendo
+JAMENDO_PASSWORD|Password for Jamendo
+SCRIBBLE_VERBOSE|How verbose `mpdscribble`'s logging should be. Default is 1.
+SCROBBLER_MPD_HOSTNAME|Set when using host mode, defaults to `localhost`
+SCROBBLER_MPD_PORT|Set when using host mode, defaults to `6600`
+PROXY|Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:3128`
+MPD_ENABLE_LOGGING|Defaults to `yes`, set to `no` to disable
+MPD_LOG_LEVEL|Can be `default` or `verbose`
+ZEROCONF_ENABLED|Set to `yes` to enable. Disabled by default.
+ZEROCONF_NAME|Set zeroconf name, used only if `ZEROCONF_ENABLED` is set to `yes`
+HYBRID_DSD_ENABLED|Hybrid dsd is enabled by default, set to `no` to disable. Disabled when using Pulse mode.
+MAX_OUTPUT_BUFFER_SIZE|The maximum size of the output buffer to a client (maximum response size). Default is 8192 (8 MiB). Value in KBytes.
+MAX_ADDITIONAL_OUTPUTS_BY_TYPE|The maximum number of outputs by type, defaults to `20`
+RESTORE_PAUSED|If set to `yes`, then MPD is put into pause mode instead of starting playback after startup. Default is `no`.
+STATE_FILE_INTERVAL|Auto-save the state file this number of seconds after each state change, defaults to `10` seconds
+STARTUP_DELAY_SEC|Delay before starting the application in seconds, defaults to `0`.
 
 #### ALSA additional outputs
 
