@@ -617,21 +617,27 @@ if [[ "${SOXR_PLUGIN_ENABLE^^}" = "YES" || "${SOXR_PLUGIN_ENABLE^^}" = "Y" ]]; t
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 fi
 
-if [ -n "${REPLAYGAIN_MODE}" ]; then
-    echo "replaygain \"${REPLAYGAIN_MODE}\"" >> $MPD_ALSA_CONFIG_FILE
+if [ -z "${REPLAYGAIN_MODE}" ]; then
+    REPLAYGAIN_MODE="off"
 fi
-if [ -n "${REPLAYGAIN_PREAMP}" ]; then
-    echo "replaygain_preamp \"${REPLAYGAIN_PREAMP}\"" >> $MPD_ALSA_CONFIG_FILE
+if [ -z "${REPLAYGAIN_PREAMP}" ]; then
+    REPLAYGAIN_PREAMP="0"
 fi
-if [ -n "${REPLAYGAIN_MISSING_PREAMP}" ]; then
-    echo "replaygain_missing_preamp \"${REPLAYGAIN_MISSING_PREAMP}\"" >> $MPD_ALSA_CONFIG_FILE
+if [ -z "${REPLAYGAIN_MISSING_PREAMP}" ]; then
+    REPLAYGAIN_MISSING_PREAMP="0"
 fi
-if [ -n "${REPLAYGAIN_LIMIT}" ]; then
-    echo "replaygain_limit \"${REPLAYGAIN_LIMIT}\"" >> $MPD_ALSA_CONFIG_FILE
+if [ -z "${REPLAYGAIN_LIMIT}" ]; then
+    REPLAYGAIN_LIMIT="yes"
 fi
-if [ -n "${VOLUME_NORMALIZATION}" ]; then
-    echo "volume_normalization \"${VOLUME_NORMALIZATION}\"" >> $MPD_ALSA_CONFIG_FILE
+if [ -z "${VOLUME_NORMALIZATION}" ]; then
+    VOLUME_NORMALIZATION="no"
 fi
+echo "replaygain \"${REPLAYGAIN_MODE}\"" >> $MPD_ALSA_CONFIG_FILE
+echo "replaygain_preamp \"${REPLAYGAIN_PREAMP}\"" >> $MPD_ALSA_CONFIG_FILE
+echo "replaygain_missing_preamp \"${REPLAYGAIN_MISSING_PREAMP}\"" >> $MPD_ALSA_CONFIG_FILE
+echo "replaygain_limit \"${REPLAYGAIN_LIMIT}\"" >> $MPD_ALSA_CONFIG_FILE
+echo "volume_normalization \"${VOLUME_NORMALIZATION}\"" >> $MPD_ALSA_CONFIG_FILE
+
 if [ -n "${SAMPLERATE_CONVERTER}" ]; then
     # try lookup
     sr_lookup="${samplerate_converters[${SAMPLERATE_CONVERTER}]}"
