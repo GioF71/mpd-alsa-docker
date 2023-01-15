@@ -164,7 +164,7 @@ MAX_OUTPUT_BUFFER_SIZE||The maximum size of the output buffer to a client (maxim
 MAX_ADDITIONAL_OUTPUTS_BY_TYPE||The maximum number of outputs by type, defaults to `20`
 RESTORE_PAUSED||If set to `yes`, then MPD is put into pause mode instead of starting playback after startup. Default is `no`.
 STATE_FILE_INTERVAL||Auto-save the state file this number of seconds after each state change, defaults to `10` seconds
-STARTUP_DELAY_SEC|0|Delay before starting the application. This can be useful if your container is set up to start automatically, so that you can resolve race conditions with mpd and with squeezelite if all those services run on the same audio device. I experienced issues with my Asus Tinkerboard, while the Raspberry Pi has never really needed this. Your mileage may vary. Feel free to report your personal experience.
+STARTUP_DELAY_SEC||Delay before starting the application in seconds, defaults to `0`.
 
 #### ALSA additional outputs
 
@@ -283,6 +283,7 @@ See [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/build.md) doc
 
 Date|Major Changes
 :---|:---
+2023-01-15|Remove default for `STARTUP_DELAY` in Dockerfile
 2023-01-14|Remove Qobuz default from Dockerfile
 2023-01-14|Corrected some defaults from Dockerfile
 2023-01-14|Remove default for `MPD_AUDIO_DEVICE` in Dockerfile
