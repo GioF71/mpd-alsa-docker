@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-01-15|OUTPUT_MODE: `pulse` and `alsa` are deprecated
 2023-01-15|Moved change history to separate document
 2023-01-15|Add support for additional PulseAudio outputs
 2023-01-15|Add support for `none` as OUTPUT_MODE
