@@ -232,6 +232,22 @@ build_alsa() {
     fi
 }
 
+build_pulse() {
+    out_file=$1
+    idx=$2
+    create=$(get_named_env "PULSE_AUDIO_OUTPUT_CREATE" $idx)
+    if [[ "${create^^}" == "YES" || "${create^^}" == "Y" ]]; then
+        echo "Creating PULSE_AUDIO output for output [$idx]"
+        open_output $out_file
+        set_output_type $out_file pulse
+        add_output_parameter $out_file $idx PULSE_AUDIO_OUTPUT_NAME name PulseAudio str
+        add_output_parameter $out_file $idx PULSE_AUDIO_OUTPUT_ENABLED enabled "" none
+        add_output_parameter $out_file $idx PULSEAUDIO_OUTPUT_MEDIA_ROLE media_role "" none
+        add_output_parameter $out_file $idx PULSEAUDIO_OUTPUT_SCALE_FACTOR scale_factor "" none
+        close_output $out_file
+    fi
+}
+
 build_httpd() {
     out_file=$1
     idx=$2

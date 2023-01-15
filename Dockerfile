@@ -96,6 +96,12 @@ ENV PULSEAUDIO_OUTPUT_SCALE_FACTOR ""
 ENV NULL_OUTPUT_NAME ""
 ENV NULL_OUTPUT_SYNC ""
 
+ENV PULSE_AUDIO_OUTPUT_CREATE ""
+ENV PULSE_AUDIO_OUTPUT_ENABLED ""
+ENV PULSE_AUDIO_OUTPUT_NAME ""
+ENV PULSE_AUDIO_OUTPUT_MEDIA_ROLE ""
+ENV PULSE_AUDIO_OUTPUT_SCALE_FACTOR ""
+
 ENV HTTPD_OUTPUT_CREATE ""
 ENV HTTPD_OUTPUT_ENABLED ""
 ENV HTTPD_OUTPUT_NAME ""
@@ -182,6 +188,7 @@ COPY app/bin/build-allowed-formats-presets.sh /app/bin/
 COPY app/bin/load-alsa-presets.sh /app/bin/
 COPY app/bin/build-additional.sh /app/bin/
 COPY app/bin/user-management.sh /app/bin/
+COPY app/bin/pulse.sh /app/bin/
 RUN chmod +x /app/bin/*.sh
 
 COPY README.md /app/doc/
