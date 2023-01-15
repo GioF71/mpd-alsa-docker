@@ -125,7 +125,7 @@ NULL_OUTPUT_NAME||Name of the `null` output
 NULL_OUTPUT_SYNC||Sync mode for the `null` output, can be `yes` (default) or `no`
 REPLAYGAIN_MODE||ReplayGain Mode, defaults to `off`
 REPLAYGAIN_PREAMP||ReplayGain Preamp, defaults to `0`
-REPLAYGAIN_MISSING_PREAMP|0|ReplayGain missing preamp, defaults to `0`
+REPLAYGAIN_MISSING_PREAMP||ReplayGain missing preamp, defaults to `0`
 REPLAYGAIN_LIMIT||ReplayGain Limit, defaults to `yes`
 VOLUME_NORMALIZATION||Volume normalization, defaults to `no`
 SAMPLERATE_CONVERTER||Configure `samplerate_converter`. Example value: `soxr very high`. Note that this configuration cannot be used when `SOXR_PLUGIN_ENABLE` is set to enabled. There are some preset values for sox: `very_high` and `very-high` map to `soxr very high`, `high` maps to `soxr high`, `medium` maps to `soxr medium`, `low` maps to `soxr low` and `quick` maps to `soxr quick`. Refer to [this](https://mpd.readthedocs.io/en/stable/plugins.html#soxr) page for details.
