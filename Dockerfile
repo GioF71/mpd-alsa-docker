@@ -168,7 +168,7 @@ ENV MAX_OUTPUT_BUFFER_SIZE ""
 
 ENV MAX_ADDITIONAL_OUTPUTS_BY_TYPE ""
 
-ENV STARTUP_DELAY_SEC 0
+ENV STARTUP_DELAY_SEC ""
 
 COPY app/assets/pulse-client-template.conf /app/assets/pulse-client-template.conf
 COPY app/assets/alsa-presets.conf /app/assets/alsa-presets.conf

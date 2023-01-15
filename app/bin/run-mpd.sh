@@ -645,9 +645,18 @@ if [ -n "${MAX_OUTPUT_BUFFER_SIZE}" ]; then
 fi
 echo "filesystem_charset \"UTF-8\"" >> $MPD_ALSA_CONFIG_FILE
 
-echo "About to sleep for $STARTUP_DELAY_SEC second(s)"
-sleep $STARTUP_DELAY_SEC
-echo "Ready to start."
+number_re="^[0-9]+$"
+if [[ -n "$STARTUP_DELAY_SEC" ]]; then
+    if ! [[ $STARTUP_DELAY_SEC =~ $number_re ]]; then
+        echo "Invalid parameter STARTUP_DELAY_SEC"
+        exit 9
+    fi
+    if [[ $STARTUP_DELAY_SEC -gt 0 ]]; then
+        echo "About to sleep for $STARTUP_DELAY_SEC second(s)"
+        sleep $STARTUP_DELAY_SEC
+        echo "Ready to start."
+    fi
+fi
 
 ## start from scratch
 SCRIBBLE_CONFIG_FILE=/app/conf/scribble.conf
