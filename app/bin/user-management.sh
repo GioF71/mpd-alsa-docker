@@ -15,6 +15,6 @@ create_audio_gid() {
         echo "Mode [${OUTPUT_MODE}] User $USER_NAME already belongs to group audio (GID ${AUDIO_GID})"
     else
         usermod -a -G $AUDIO_GRP $USER_NAME
-        echo "Mode [${OUTPUT_MODE}] - Successfully added $USER_NAME to group audio (GID ${AUDIO_GID})"
+        echo "Mode [${OUTPUT_MODE}] AnyPulse [$ANY_PULSE] - Successfully added $USER_NAME to group audio (GID ${AUDIO_GID})"
     fi
 }

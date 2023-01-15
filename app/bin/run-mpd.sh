@@ -42,6 +42,7 @@ source get-value.sh
 source load-alsa-presets.sh
 source build-additional.sh
 source user-management.sh
+source pulse.sh
 
 declare -A samplerate_converters
 samplerate_converters[very_high]="soxr very high"
@@ -76,7 +77,10 @@ MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
 
 USE_USER_MODE="N"
 
-if [ "${OUTPUT_MODE^^}" == "PULSE" ] || 
+ANY_PULSE=$(any_pulse)
+echo "ANY_PULSE=[$ANY_PULSE]"
+
+if [[ "${ANY_PULSE}" -eq 1 ]] || 
    [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" == "Y" ]]; then
     USE_USER_MODE="Y"
     echo "User mode enabled"
@@ -125,7 +129,7 @@ if [ "${OUTPUT_MODE^^}" == "PULSE" ] ||
         else
             create_audio_gid
         fi
-    elif [ "${OUTPUT_MODE^^}" == "PULSE" ]; then
+    elif [ "${ANY_PULSE}" -eq 1 ]; then
         if [ -n "${AUDIO_GID}" ]; then
             create_audio_gid
         fi
@@ -141,7 +145,7 @@ if [ "${OUTPUT_MODE^^}" == "PULSE" ] ||
     chown -R $USER_NAME:$GROUP_NAME /app/scribble
 
     ## PulseAudio
-    if [ "${OUTPUT_MODE^^}" == "PULSE" ]; then
+    if [ "${ANY_PULSE}" -eq 1 ]; then
         PULSE_CLIENT_CONF="/etc/pulse/client.conf"
         echo "Creating pulseaudio configuration file $PULSE_CLIENT_CONF..."
         cp /app/assets/pulse-client-template.conf $PULSE_CLIENT_CONF
@@ -270,7 +274,7 @@ if [ -n "${INPUT_CACHE_SIZE}" ]; then
 fi
 
 ## Hybrid dsd plugin disabled when requested
-if [[ "${HYBRID_DSD_ENABLED^^}" == "NO" || "${OUTPUT_MODE^^}" == "PULSE" ]]; then
+if [[ "${HYBRID_DSD_ENABLED^^}" == "NO" || "${ANY_PULSE}" -eq 1 ]]; then
     echo "decoder {" >> $MPD_ALSA_CONFIG_FILE
     echo "  plugin \"hybrid_dsd\"" >> $MPD_ALSA_CONFIG_FILE
     echo "  enabled \"no\"" >> $MPD_ALSA_CONFIG_FILE
@@ -452,6 +456,8 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
     echo "  enabled \"yes\"" >> $MPD_ALSA_CONFIG_FILE
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 elif [ "${OUTPUT_MODE^^}" == "PULSE" ]; then
+    echo "OUTPUT_MODE [$OUTPUT_MODE] is deprecated and will be removed in the future"
+    echo "You should use PULSE_AUDIO_OUTPUT_CREATE=yes instead"
     echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
     echo "  type \"pulse\"" >> $MPD_ALSA_CONFIG_FILE
     if [ -z "${PULSEAUDIO_OUTPUT_NAME}" ]; then
@@ -498,12 +504,26 @@ elif [ "${OUTPUT_MODE^^}" == "NULL" ]; then
     echo "  name \"${OUTPUT_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
     echo "  sync \"${OUTPUT_SYNC}\"" >> $MPD_ALSA_CONFIG_FILE
     echo "}" >> $MPD_ALSA_CONFIG_FILE
+elif [ "${OUTPUT_MODE^^}" == "NONE" ]; then
+    echo "OUTPUT_MODE is ${OUTPUT_MODE}, so master output is not created"
 else
     echo "Invalid output mode [${OUTPUT_MODE}]";
     exit 2;
 fi
 
 output_by_type_limit=$((${max_outputs_by_type}-1))
+
+## ALSA output
+for i in $( eval echo {0..$output_by_type_limit} )
+do
+    build_alsa $MPD_ALSA_CONFIG_FILE $i
+done
+
+## PULSE output
+for i in $( eval echo {0..$output_by_type_limit} )
+do
+    build_pulse $MPD_ALSA_CONFIG_FILE $i
+done
 
 ## HTTPD output
 for i in $( eval echo {0..$output_by_type_limit} )
@@ -515,12 +535,6 @@ done
 for i in $( eval echo {0..$output_by_type_limit} )
 do
     build_shout $MPD_ALSA_CONFIG_FILE $i
-done
-
-## ALSA output
-for i in $( eval echo {0..$output_by_type_limit} )
-do
-    build_alsa $MPD_ALSA_CONFIG_FILE $i
 done
 
 ## additional outputs
