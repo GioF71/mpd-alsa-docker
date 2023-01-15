@@ -283,6 +283,7 @@ See [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/build.md) doc
 
 Date|Major Changes
 :---|:---
+2023-01-15|Minor housekeeping tasks
 2023-01-15|Removed defaults for `REPLAYGAIN_*` in Dockerfile
 2023-01-15|Remove default for `STARTUP_DELAY` in Dockerfile
 2023-01-14|Removed Qobuz default from Dockerfile
