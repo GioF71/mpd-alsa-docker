@@ -111,7 +111,8 @@ docker run -d \
     --rm \
     --device /dev/snd \
     -p 6600:6600 \
-    -e OUTPUT_MODE=pulse \
+    -e OUTPUT_MODE=none \
+    -e PULSE_AUDIO_OUTPUT_CREATE=yes \
     -v ${HOME}/Music:/music:ro \
     -v ${HOME}/.mpd/playlists:/playlists \
     -v ${HOME}/.mpd/db:/db \
