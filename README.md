@@ -123,11 +123,11 @@ PULSEAUDIO_OUTPUT_SCALE_FACTOR||Specifies a linear scaling coefficient (ranging 
 INPUT_CACHE_SIZE||Sets the input cache size. Example value: `1 GB`
 NULL_OUTPUT_NAME||Name of the `null` output
 NULL_OUTPUT_SYNC||Sync mode for the `null` output, can be `yes` (default) or `no`
-REPLAYGAIN_MODE|0|ReplayGain Mode
-REPLAYGAIN_PREAMP|0|ReplayGain Preamp
-REPLAYGAIN_MISSING_PREAMP|0|ReplayGain missing preamp
-REPLAYGAIN_LIMIT|yes|ReplayGain Limit
-VOLUME_NORMALIZATION|no|Volume normalization
+REPLAYGAIN_MODE||ReplayGain Mode, defaults to `off`
+REPLAYGAIN_PREAMP||ReplayGain Preamp, defaults to `0`
+REPLAYGAIN_MISSING_PREAMP|0|ReplayGain missing preamp, defaults to `0`
+REPLAYGAIN_LIMIT||ReplayGain Limit, defaults to `yes`
+VOLUME_NORMALIZATION||Volume normalization, defaults to `no`
 SAMPLERATE_CONVERTER||Configure `samplerate_converter`. Example value: `soxr very high`. Note that this configuration cannot be used when `SOXR_PLUGIN_ENABLE` is set to enabled. There are some preset values for sox: `very_high` and `very-high` map to `soxr very high`, `high` maps to `soxr high`, `medium` maps to `soxr medium`, `low` maps to `soxr low` and `quick` maps to `soxr quick`. Refer to [this](https://mpd.readthedocs.io/en/stable/plugins.html#soxr) page for details.
 SOXR_PLUGIN_ENABLE||Enable the `soxr` plugin. Do not use in conjunction with variable `SAMPLERATE_CONVERTER`
 SOXR_PLUGIN_PRESET||Presets for SOXR_PLUGIN configuration. Available presets: `goldilocks` and `extremus`
@@ -283,14 +283,15 @@ See [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/build.md) doc
 
 Date|Major Changes
 :---|:---
+2023-01-15|Removed defaults for `REPLAYGAIN_*` in Dockerfile
 2023-01-15|Remove default for `STARTUP_DELAY` in Dockerfile
-2023-01-14|Remove Qobuz default from Dockerfile
+2023-01-14|Removed Qobuz default from Dockerfile
 2023-01-14|Corrected some defaults from Dockerfile
-2023-01-14|Remove default for `MPD_AUDIO_DEVICE` in Dockerfile
+2023-01-14|Removed default for `MPD_AUDIO_DEVICE` in Dockerfile
 2023-01-07|Added [contributed](https://github.com/GioF71/mpd-alsa-docker/pull/172) documentation about equalization support
 2023-01-05|Improved use of `ALSA_DEVICE_NAME`
 2023-01-05|Allowing `.asoundrc`
-2022-12-30|Remove `pull=always` from suggested systemd service
+2022-12-30|Removed `pull=always` from suggested systemd service
 2022-12-30|Initial support for equalization (add package `libasound2-plugin-equal`)
 2022-12-27|Support for additional `alsa` outputs
 2022-12-24|`MAX_ADDITIONAL_OUTPUTS_BY_TYPE` now defaults to `20`
