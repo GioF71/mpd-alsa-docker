@@ -266,7 +266,7 @@ build_httpd() {
         add_output_parameter $out_file $idx HTTPD_OUTPUT_ENCODER_QUALITY quality "" none
         add_output_parameter $out_file $idx HTTPD_OUTPUT_MAX_CLIENTS max_clients 0 constant
         add_output_parameter $out_file $idx HTTPD_OUTPUT_ALWAYS_ON always_on yes constant
-        add_output_parameter $out_file $idx HTTPS_OUTPUT_TAGS tags yes constant
+        add_output_parameter $out_file $idx HTTPD_OUTPUT_TAGS tags yes constant
         add_output_parameter $out_file $idx HTTPD_OUTPUT_FORMAT format 44100:16:2 constant
         add_output_parameter $out_file $idx HTTPD_OUTPUT_MIXER_TYPE mixer_type "" none
         close_output $out_file
