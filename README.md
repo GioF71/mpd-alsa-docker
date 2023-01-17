@@ -202,6 +202,7 @@ VARIABLE|OPTIONAL|DESCRIPTION
 PULSE_AUDIO_OUTPUT_CREATE|yes|Set to `yes` if you want to create and additional httpd output
 PULSE_AUDIO_OUTPUT_ENABLED|yes|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
 PULSE_AUDIO_OUTPUT_NAME|yes|The name of the httpd output, defaults to `httpd`
+PULSE_AUDIO_OUTPUT_SINK|yes|Specifies the name of the PulseAudio sink MPD should play on
 PULSE_AUDIO_OUTPUT_MEDIA_ROLE|yes|Media role for the PulseAudio output
 PULSE_AUDIO_OUTPUT_SCALING_FACTOR|yes|Scaling factor for the PulseAudio output
 
