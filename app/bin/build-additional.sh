@@ -242,6 +242,7 @@ build_pulse() {
         set_output_type $out_file pulse
         add_output_parameter $out_file $idx PULSE_AUDIO_OUTPUT_NAME name PulseAudio str
         add_output_parameter $out_file $idx PULSE_AUDIO_OUTPUT_ENABLED enabled "" none
+        add_output_parameter $out_file $idx PULSE_AUDIO_OUTPUT_SINK sink "" none
         add_output_parameter $out_file $idx PULSEAUDIO_OUTPUT_MEDIA_ROLE media_role "" none
         add_output_parameter $out_file $idx PULSEAUDIO_OUTPUT_SCALE_FACTOR scale_factor "" none
         close_output $out_file
