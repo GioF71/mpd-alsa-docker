@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-01-17|`HTTPD_OUTPUT_TAGS` had typo in name
 2023-01-17|Add `PULSE_AUDIO_OUTPUT_SINK` to PulseAudio output
 2023-01-15|OUTPUT_MODE: `pulse` and `alsa` are deprecated
 2023-01-15|Moved change history to separate document

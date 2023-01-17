@@ -226,7 +226,7 @@ HTTPD_OUTPUT_ENCODER_BITRATE|yes|Encoder bitrate. Refer to the encoder [document
 HTTPD_OUTPUT_ENCODER_QUALITY|yes|Encoder quality. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
 HTTPD_OUTPUT_MAX_CLIENTS|yes|Sets a limit, number of concurrent clients. When set to 0 no limit will apply. Defaults to `0`
 HTTPD_OUTPUT_ALWAYS_ON|yes|If set to `yes`, then MPD attempts to keep this audio output always open. This may be useful for streaming servers, when you don’t want to disconnect all listeners even when playback is accidentally stopped. Defaults to `yes`
-HTTPS_OUTPUT_TAGS|yes|If set to no, then MPD will not send tags to this output. This is only useful for output plugins that can receive tags, for example the httpd output plugin. Defaults to `yes`
+HTTPD_OUTPUT_TAGS|yes|If set to no, then MPD will not send tags to this output. This is only useful for output plugins that can receive tags, for example the httpd output plugin. Defaults to `yes`
 HTTPD_OUTPUT_FORMAT|yes|The output format, defaults to `44100:16:2`
 HTTPD_MIXER_TYPE|yes|Set to `software` if you want to be able to change the volume of the output stream
 
