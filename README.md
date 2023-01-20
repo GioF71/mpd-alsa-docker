@@ -164,6 +164,7 @@ MAX_OUTPUT_BUFFER_SIZE|The maximum size of the output buffer to a client (maximu
 MAX_ADDITIONAL_OUTPUTS_BY_TYPE|The maximum number of outputs by type, defaults to `20`
 RESTORE_PAUSED|If set to `yes`, then MPD is put into pause mode instead of starting playback after startup. Default is `no`.
 STATE_FILE_INTERVAL|Auto-save the state file this number of seconds after each state change, defaults to `10` seconds
+ENFORCE_PLAYER_STATE|If set to `yes`, it will remove player state information from the state file, so the player state will only depend on the environment variables. Defaults to `yes`
 STARTUP_DELAY_SEC|Delay before starting the application in seconds, defaults to `0`.
 
 #### ALSA additional outputs
