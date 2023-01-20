@@ -745,6 +745,19 @@ fi
 
 cat $MPD_ALSA_CONFIG_FILE
 
+if [[ -z "${ENFORCE_PLAYER_STATE}" || "${ENFORCE_PLAYER_STATE^^}" == "YES" || "${ENFORCE_PLAYER_STATE^^}" == "Y" ]]; then
+    STATE_FILE=/db/state
+    # remove player states
+    if [ -f $STATE_FILE ]; then
+        echo "Removing player state information from state file [$STATE_FILE]"
+        # remove lines which contain audio_device_state
+        sed -i '/audio_device_state/d' $STATE_FILE
+    fi
+elif [[ "${ENFORCE_PLAYER_STATE^^}" != "NO" && "${ENFORCE_PLAYER_STATE^^}" != "N" ]]; then
+    echo "Invalid ENFORCE_PLAYER_STATE=[$ENFORCE_PLAYER_STATE]"
+    exit 9
+fi
+
 CMD_LINE="$mpd_binary --no-daemon $MPD_ALSA_CONFIG_FILE"
 echo "CMD_LINE=[$CMD_LINE]"
 if [ $USE_USER_MODE == "Y" ]; then
