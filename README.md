@@ -242,7 +242,7 @@ ALSA_OUTPUT_MIXER_TYPE|yes|Mixer type
 ALSA_OUTPUT_MIXER_DEVICE|yes|Mixer device
 ALSA_OUTPUT_MIXER_CONTROL|yes|Mixer Control
 ALSA_OUTPUT_MIXER_INDEX|yes|Mixer Index
-ALSA_OUTPUT_ALLOWED_FORMATS_PRESET|yes|Sets allowed formats using a preset
+ALSA_OUTPUT_ALLOWED_FORMATS_PRESET|yes|Alternative to `ALSA_OUTPUT_ALLOWED_FORMATS`. Possible values: 8x, 4x, 2x, 8x-nodsd, 4x-nodsd, 2x-nodsd
 ALSA_OUTPUT_ALLOWED_FORMATS|yes|Sets allowed formats
 ALSA_OUTPUT_OUTPUT_FORMAT|yes|Sets output format
 ALSA_OUTPUT_AUTO_RESAMPLE|yes|Sets auto resample
