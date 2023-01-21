@@ -85,7 +85,7 @@ VOLUME|DESCRIPTION
 Several files can be located in the user configuration (`/user/config`) volume. Here is a table of those files.
 
 FILE|DESCRIPTION
-:---|:---:|:---
+:---|:---
 lastfm.txt|LastFM Credentials.
 librefm.txt|LibreFM Credentials
 jamendo.txt|Jamendo Credentials
