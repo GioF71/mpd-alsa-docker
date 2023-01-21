@@ -1,0 +1,3 @@
+
+JAMENDO_USERNAME=jamendo_username
+JAMENDO_PASSWORD=jamendo_password

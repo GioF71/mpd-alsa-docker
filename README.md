@@ -54,6 +54,16 @@ Getting the image from DockerHub is as simple as typing:
 
 ## Usage
 
+### What is about to change
+
+If you have been using this container image for a while, you might have seen that the output might contain some warnings, telling you that you are using a `deprecated` configuration. The message usually tries to suggest how to switch to a `recommended` configuration.  
+This is happening because this whole project started with the idea of supporting ALSA only (hence the name `mpd-alsa-docker`). Down the road, I added PulseAudio support, and eventually HTTPD outputs, SHOUTCAST outputs, also in multiple instances.  
+So now a few variables have a misleading name: the most misleading being `ALSA_DEVICE_NAME` which, despite the name, refers to the output name, and not to the device name.  
+So currently, `OUTPUT_MODE` still defaults to `ALSA` for compatibility and will yield the creation of a ALSA *main* player, but the default for this variable will eventually become `NONE` (no *main* player). At the end of the process, the variable `OUTPUT_MODE` will completely disappear.  
+You can still use `OUTPUT_MODE` set to `PULSE`, which creates a PulseAudio *main* output.  
+In both cases, I suggest you change the configuration as suggested, and use the variables from the appropriate sections below for [Alsa](#alsa-additional-outputs) and [PulseAudio](#pulseaudio-additional-outputs)), otherwise, in time, your configurations will not be functional anymore.  
+Feel free to contact me with an issue if you need support. I cannot guarantee a timing, but I will try to help if I can.  
+
 ### User mode
 
 See [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/user-mode.md) page.
@@ -74,14 +84,16 @@ VOLUME|DESCRIPTION
 
 Several files can be located in the user configuration (`/user/config`) volume. Here is a table of those files.
 
-FILE|OPTIONAL|DESCRIPTION
+FILE|DESCRIPTION
 :---|:---:|:---
-lastfm.txt|yes|LastFM Credentials
-librefm.txt|yes|LibreFM Credentials
-jamendo.txt|yes|Jamendo Credentials
-additional-alsa-presets.conf|yes|Additional alsa presets
-additional-outputs.txt|yes|Additional outputs, which will be added to the configuration file during the container startup phase
-asoundrc.txt|yes|Alsa configuration file: this will be copied to `/home/mpd-user/.asoundrc` or to `/root/.asoundrc`, depending on user mode to be enabled or not
+lastfm.txt|LastFM Credentials.
+librefm.txt|LibreFM Credentials
+jamendo.txt|Jamendo Credentials
+additional-alsa-presets.conf|Additional alsa presets
+additional-outputs.txt|Additional outputs, which will be added to the configuration file during the container startup phase
+asoundrc.txt|Alsa configuration file: this will be copied to `/home/mpd-user/.asoundrc` or to `/root/.asoundrc`, depending on user mode to be enabled or not
+
+For a reference for the structure of the credentials file, see the corresponding example file in the doc folder of the repository.
 
 ### Environment Variables
 
@@ -100,6 +112,28 @@ USER_MODE|Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#
 PUID|User id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
 PGID|Group id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
 AUDIO_GID|`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](#user-mode).
+INPUT_CACHE_SIZE|Sets the input cache size. Example value: `1 GB`
+NULL_OUTPUT_NAME|Name of the `null` output
+NULL_OUTPUT_SYNC|Sync mode for the `null` output, can be `yes` (default) or `no`
+SAMPLERATE_CONVERTER|Configure `samplerate_converter`. Example value: `soxr very high`. Note that this configuration cannot be used when `SOXR_PLUGIN_ENABLE` is set to enabled. There are some preset values for sox: `very_high` and `very-high` map to `soxr very high`, `high` maps to `soxr high`, `medium` maps to `soxr medium`, `low` maps to `soxr low` and `quick` maps to `soxr quick`. Refer to [this](https://mpd.readthedocs.io/en/stable/plugins.html#soxr) page for details.
+MPD_ENABLE_LOGGING|Defaults to `yes`, set to `no` to disable
+MPD_LOG_LEVEL|Can be `default` or `verbose`
+ZEROCONF_ENABLED|Set to `yes` to enable. Disabled by default.
+ZEROCONF_NAME|Set zeroconf name, used only if `ZEROCONF_ENABLED` is set to `yes`
+HYBRID_DSD_ENABLED|Hybrid dsd is enabled by default, set to `no` to disable. Disabled when using Pulse mode.
+MAX_OUTPUT_BUFFER_SIZE|The maximum size of the output buffer to a client (maximum response size). Default is 8192 (8 MiB). Value in KBytes.
+MAX_ADDITIONAL_OUTPUTS_BY_TYPE|The maximum number of outputs by type, defaults to `20`
+RESTORE_PAUSED|If set to `yes`, then MPD is put into pause mode instead of starting playback after startup. Default is `no`.
+STATE_FILE_INTERVAL|Auto-save the state file this number of seconds after each state change, defaults to `10` seconds
+ENFORCE_PLAYER_STATE|If set to `yes`, it will remove player state information from the state file, so the player state will only depend on the environment variables. Defaults to `yes`
+STARTUP_DELAY_SEC|Delay before starting the application in seconds, defaults to `0`.
+
+#### Main output as ALSA (**Deprecated**)
+
+Please find here the relevant (but *deprecated*) variables when OUTPUT_MODE is set to `ALSA`
+
+VARIABLE|DESCRIPTION
+:---|:---
 ALSA_PRESET|Use an alsa preset. See file [alsa-presets.conf](https://github.com/GioF71/mpd-alsa-docker/blob/main/app/assets/alsa-presets.conf) for the existing presets. Additional presets can be passed to the container through the file `/user/config/additional-alsa-presets.conf`
 ALSA_AUTO_FIND_MIXER|If set to `yes` and `MIXER_DEVICE` is still empty, the run script will try to find the hardware mixer using `amixer`. This is not guaranteed to work for every dac. Some experiments will be needed. Sharing the results will be **very** helpful. Defaults to `no`
 MPD_AUDIO_DEVICE|The audio device. Common examples: `hw:DAC` or `hw:x20` or `hw:X20` for usb dac based on XMOS chips. Defaults to `default`
@@ -114,21 +148,30 @@ ALSA_ALLOWED_FORMATS|Sets the `alsa` output allowed formats
 AUTO_RESAMPLE|If set to no, then libasound will not attempt to resample. In this case, the user is responsible for ensuring that the requested sample rate can be produced natively by the device, otherwise an error will occur.
 THESYCON_DSD_WORKAROUND|If enabled, enables a workaround for a bug in Thesycon USB audio receivers. On these devices, playing DSD512 or PCM causes all subsequent attempts to play other DSD rates to fail, which can be fixed by briefly playing PCM at 44.1 kHz.
 ALSA_ALLOWED_FORMATS_PRESET|Alternative to `ALSA_ALLOWED_FORMATS`. Possible values: `8x`, `4x`, `2x`, `8x-nodsd`, `4x-nodsd`, `2x-nodsd`
-INTEGER_UPSAMPLING|If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.
+INTEGER_UPSAMPLING|If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.  
+
+Avoid deprecated configurations and refer to [this](#alsa-additional-outputs) section.
+
+#### Main output as PULSE (**Deprecated**)
+
+Please find here the relevant (but *deprecated*) variables when OUTPUT_MODE is set to `PULSE`
+
+VARIABLE|DESCRIPTION
+:---|:---
 PULSEAUDIO_OUTPUT_NAME|PulseAudio output name, defaults to `PulseAudio`
 PULSEAUDIO_OUTPUT_ENABLED|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
 PULSEAUDIO_OUTPUT_SINK|Specifies the name of the PulseAudio sink MPD should play on
 PULSEAUDIO_OUTPUT_MEDIA_ROLE|Specifies a custom media role that MPD reports to PulseAudio, defaults to `music`
-PULSEAUDIO_OUTPUT_SCALE_FACTOR|Specifies a linear scaling coefficient (ranging from `0.5` to `5.0`) to apply when adjusting volume through MPD. For example, chosing a factor equal to `0.7` means that setting the volume to 100 in MPD will set the PulseAudio volume to 70%, and a factor equal to `3.5` means that volume 100 in MPD corresponds to a 350% PulseAudio volume.
-INPUT_CACHE_SIZE|Sets the input cache size. Example value: `1 GB`
-NULL_OUTPUT_NAME|Name of the `null` output
-NULL_OUTPUT_SYNC|Sync mode for the `null` output, can be `yes` (default) or `no`
-REPLAYGAIN_MODE|ReplayGain Mode, defaults to `off`
-REPLAYGAIN_PREAMP|ReplayGain Preamp, defaults to `0`
-REPLAYGAIN_MISSING_PREAMP|ReplayGain missing preamp, defaults to `0`
-REPLAYGAIN_LIMIT|ReplayGain Limit, defaults to `yes`
-VOLUME_NORMALIZATION|Volume normalization, defaults to `no`
-SAMPLERATE_CONVERTER|Configure `samplerate_converter`. Example value: `soxr very high`. Note that this configuration cannot be used when `SOXR_PLUGIN_ENABLE` is set to enabled. There are some preset values for sox: `very_high` and `very-high` map to `soxr very high`, `high` maps to `soxr high`, `medium` maps to `soxr medium`, `low` maps to `soxr low` and `quick` maps to `soxr quick`. Refer to [this](https://mpd.readthedocs.io/en/stable/plugins.html#soxr) page for details.
+PULSEAUDIO_OUTPUT_SCALE_FACTOR|Specifies a linear scaling coefficient (ranging from `0.5` to `5.0`) to apply when adjusting volume through MPD. For example, chosing a factor equal to `0.7` means that setting the volume to 100 in MPD will set the PulseAudio volume to 70%, and a factor equal to `3.5` means that volume 100 in MPD corresponds to a 350% PulseAudio volume.  
+
+Avoid deprecated configurations and refer to [this](#pulseaudio-additional-outputs) section.
+
+#### SOXR Plugin
+
+Please find here the variables used to configure the SOXR plugin.
+
+VARIABLE|DESCRIPTION
+:---|:---
 SOXR_PLUGIN_ENABLE|Enable the `soxr` plugin. Do not use in conjunction with variable `SAMPLERATE_CONVERTER`
 SOXR_PLUGIN_PRESET|Presets for SOXR_PLUGIN configuration. Available presets: `goldilocks` and `extremus`
 SOXR_PLUGIN_THREADS|The number of libsoxr threads. `0` means automatic. The default is `1` which disables multi-threading.
@@ -139,12 +182,39 @@ SOXR_PLUGIN_PASSBAND_END|The % of source bandwidth where to start filtering. Typ
 SOXR_PLUGIN_STOPBAND_BEGIN|The % of the source bandwidth Where the anti aliasing filter start. Value 100+.
 SOXR_PLUGIN_ATTENUATION|Reduction in dB’s to prevent clipping from the resampling process
 SOXR_PLUGIN_FLAGS|Bitmask with additional options, see soxr documentation for specific flags
+
+#### ReplayGain Settings
+
+Please find here the variables used to configure ReplayGain.
+
+VARIABLE|DESCRIPTION
+:---|:---
+REPLAYGAIN_MODE|ReplayGain Mode, defaults to `off`
+REPLAYGAIN_PREAMP|ReplayGain Preamp, defaults to `0`
+REPLAYGAIN_MISSING_PREAMP|ReplayGain missing preamp, defaults to `0`
+REPLAYGAIN_LIMIT|ReplayGain Limit, defaults to `yes`
+VOLUME_NORMALIZATION|Volume normalization, defaults to `no`
+
+#### Qobuz Plugin
+
+Please find here the variables used to configure the Qobuz plugin.
+
+VARIABLE|DESCRIPTION
+:---|:---
 QOBUZ_PLUGIN_ENABLED|Enables the Qobuz plugin, defaults to `no`
 QOBUZ_APP_ID|Qobuz application id
 QOBUZ_APP_SECRET|Your Qobuz application Secret
 QOBUZ_USERNAME|Qobuz account username
 QOBUZ_PASSWORD|Qobuz account password
 QOBUZ_FORMAT_ID|The Qobuz format identifier, i.e. a number which chooses the format and quality to be requested from Qobuz. The default is `5` (320 kbit/s MP3).
+
+#### Scrobbling
+
+Please find here the variables used to configure scrobbling. All of those are of course optional.  
+Credentials of course go in pairs, so in order to enable one serve, you must provide both username and password.
+
+VARIABLE|DESCRIPTION
+:---|:---
 LASTFM_USERNAME|Username for Last.fm.
 LASTFM_PASSWORD|Password for Last.fm
 LIBREFM_USERNAME|Username for Libre.fm
@@ -155,17 +225,6 @@ SCRIBBLE_VERBOSE|How verbose `mpdscribble`'s logging should be. Default is 1.
 SCROBBLER_MPD_HOSTNAME|Set when using host mode, defaults to `localhost`
 SCROBBLER_MPD_PORT|Set when using host mode, defaults to `6600`
 PROXY|Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:3128`
-MPD_ENABLE_LOGGING|Defaults to `yes`, set to `no` to disable
-MPD_LOG_LEVEL|Can be `default` or `verbose`
-ZEROCONF_ENABLED|Set to `yes` to enable. Disabled by default.
-ZEROCONF_NAME|Set zeroconf name, used only if `ZEROCONF_ENABLED` is set to `yes`
-HYBRID_DSD_ENABLED|Hybrid dsd is enabled by default, set to `no` to disable. Disabled when using Pulse mode.
-MAX_OUTPUT_BUFFER_SIZE|The maximum size of the output buffer to a client (maximum response size). Default is 8192 (8 MiB). Value in KBytes.
-MAX_ADDITIONAL_OUTPUTS_BY_TYPE|The maximum number of outputs by type, defaults to `20`
-RESTORE_PAUSED|If set to `yes`, then MPD is put into pause mode instead of starting playback after startup. Default is `no`.
-STATE_FILE_INTERVAL|Auto-save the state file this number of seconds after each state change, defaults to `10` seconds
-ENFORCE_PLAYER_STATE|If set to `yes`, it will remove player state information from the state file, so the player state will only depend on the environment variables. Defaults to `yes`
-STARTUP_DELAY_SEC|Delay before starting the application in seconds, defaults to `0`.
 
 #### ALSA additional outputs
 

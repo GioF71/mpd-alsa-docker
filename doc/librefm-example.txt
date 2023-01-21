@@ -1,0 +1,3 @@
+
+LIBREFM_USERNAME=librefm_username
+LIBREFM_PASSWORD=librefm_password
