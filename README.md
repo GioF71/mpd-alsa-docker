@@ -61,7 +61,7 @@ This is happening because this whole project started with the idea of supporting
 So now a few variables have a misleading name: the most misleading being `ALSA_DEVICE_NAME` which, despite the name, refers to the output name, and not to the device name.  
 So currently, `OUTPUT_MODE` still defaults to `ALSA` for compatibility and will yield the creation of a ALSA *main* player, but the default for this variable will eventually become `NONE` (no *main* player). At the end of the process, the variable `OUTPUT_MODE` will completely disappear.  
 You can still use `OUTPUT_MODE` set to `PULSE`, which creates a PulseAudio *main* output.  
-In both cases, I suggest you change the configuration as suggested, and use the variables from the appropriate sections below for [Alsa](#alsa-additional-outputs) and [PulseAudio](#pulseaudio-additional-outputs)), otherwise, in time, your configurations will not be functional anymore.  
+In both cases, I suggest you change the configuration as suggested, and use the variables from the appropriate sections below for [Alsa](https://github.com/GioF71/mpd-alsa-docker#alsa-additional-outputs) and [PulseAudio](https://github.com/GioF71/mpd-alsa-docker#pulseaudio-additional-outputs), otherwise, in time, your configurations will not be functional anymore.  
 Feel free to contact me with an issue if you need support. I cannot guarantee a timing, but I will try to help if I can.  
 
 ### User mode
