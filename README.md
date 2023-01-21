@@ -251,7 +251,7 @@ ALSA_OUTPUT_INTEGER_UPSAMPLING|yes|Enables integer upsampling
 ALSA_OUTPUT_DOP|yes|Enables Dsd-Over-Pcm. Possible values: `yes` or `no`. Empty by default: this it lets mpd handle dop setting.
 
 For the meaning, refer to the corresponding values in the first list of environment variables.  
-Note that you can add up to 5 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
+Note that you can add up to 20 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
 
 #### PulseAudio additional outputs
 
