@@ -122,6 +122,7 @@ ZEROCONF_ENABLED|Set to `yes` to enable. Disabled by default.
 ZEROCONF_NAME|Set zeroconf name, used only if `ZEROCONF_ENABLED` is set to `yes`
 HYBRID_DSD_ENABLED|Hybrid dsd is enabled by default, set to `no` to disable. Disabled when using Pulse mode.
 MAX_OUTPUT_BUFFER_SIZE|The maximum size of the output buffer to a client (maximum response size). Default is 8192 (8 MiB). Value in KBytes.
+AUDIO_BUFFER_SIZE|Adjust the size of the internal audio buffer. Default is `4 MB` (4 MiB).
 MAX_ADDITIONAL_OUTPUTS_BY_TYPE|The maximum number of outputs by type, defaults to `20`
 RESTORE_PAUSED|If set to `yes`, then MPD is put into pause mode instead of starting playback after startup. Default is `no`.
 STATE_FILE_INTERVAL|Auto-save the state file this number of seconds after each state change, defaults to `10` seconds
