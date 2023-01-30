@@ -64,7 +64,7 @@ echo "Base Image Tag: ["$selected_image_tag"]"
 echo "Build Tag: ["$tag"]"
 echo "Proxy: ["$proxy"]"
 
-docker build . \
+docker build . --no-cache \
     --build-arg BASE_IMAGE_TAG=${selected_image_tag} \
     --build-arg USE_APT_PROXY=${proxy} \
     -t giof71/mpd-alsa:$tag

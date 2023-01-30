@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-01-30|Add support for `AUDIO_BUFFER_SIZE`
 2023-01-20|Player state enforced by default
 2023-01-17|`HTTPD_OUTPUT_TAGS` had typo in name
 2023-01-17|Add `PULSE_AUDIO_OUTPUT_SINK` to PulseAudio output

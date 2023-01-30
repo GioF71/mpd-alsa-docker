@@ -668,6 +668,9 @@ fi
 if [ -n "${MAX_OUTPUT_BUFFER_SIZE}" ]; then
     echo "max_output_buffer_size \"${MAX_OUTPUT_BUFFER_SIZE}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
+if [ -n "${AUDIO_BUFFER_SIZE}" ]; then
+    echo "audio_buffer_size \"${AUDIO_BUFFER_SIZE}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
 echo "filesystem_charset \"UTF-8\"" >> $MPD_ALSA_CONFIG_FILE
 
 number_re="^[0-9]+$"
