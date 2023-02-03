@@ -31,7 +31,7 @@ The `version-0.23.12` tag is in-line with the GitHub [upstream repo](https://git
 The `version-0.23.12-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
 Two binaries are available in the container image:
 
-- /app/bin/compiled/mpd (stable version)
+- /app/bin/compiled/mpd (upstream version)
 - /app/bin/compiled/mpd-ups (patched version)
 
 The current mpd version is `v0.23.12`.
