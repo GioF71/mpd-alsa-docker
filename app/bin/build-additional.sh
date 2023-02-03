@@ -202,6 +202,19 @@ build_alsa() {
                 alsa_out_set_values[$alsa_set_key]="${c_allowed_formats}"
             fi
         fi
+
+        # integer upsampling allowed presets
+        c_integer_upsampling_allowed_preset=$(get_named_env ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED_PRESET $idx)
+        if [ -n "${c_integer_upsampling_allowed_preset}" ]; then
+            echo "Integer Upsampling Allowed set for alsa output [$idx] -> [${c_integer_upsampling_allowed_preset}]"
+            c_integer_upsampling_allowed="${integer_upsampling_allowed_presets[${c_integer_upsampling_allowed_preset}]}"
+            echo "  translates to [${c_integer_upsampling_allowed}]"
+            if [[ -n "${c_integer_upsampling_allowed}" ]]; then
+                alsa_set_key="integer_upsampling_allowed.${idx}"
+                alsa_out_set_values[$alsa_set_key]="${c_integer_upsampling_allowed}"
+            fi
+        fi
+
         # debug dump values
         ## sz=`echo "${#alsa_out_set_values[@]}"`
         ## echo "There are [$sz] available alsa_presets"
@@ -220,6 +233,7 @@ build_alsa() {
         add_output_parameter $out_file $idx ALSA_OUTPUT_AUTO_RESAMPLE auto_resample "" none
         add_output_parameter $out_file $idx ALSA_OUTPUT_THESYCON_DSD_WORKAROUND thesycon_dsd_workaround "" none
         add_output_parameter $out_file $idx ALSA_OUTPUT_INTEGER_UPSAMPLING integer_upsampling "" none
+        add_alsa_output_parameter $out_file $idx ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED integer_upsampling_allowed "" none "integer_upsampling_allowed"
         add_output_parameter $out_file $idx ALSA_OUTPUT_DOP dop "" none
         close_output $out_file
         # see if the ups version must be enforced

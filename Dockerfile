@@ -112,6 +112,8 @@ ENV ALSA_OUTPUT_OUTPUT_FORMAT ""
 ENV ALSA_OUTPUT_AUTO_RESAMPLE ""
 ENV ALSA_OUTPUT_THESYCON_DSD_WORKAROUND ""
 ENV ALSA_OUTPUT_INTEGER_UPSAMPLING ""
+ENV ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED ""
+ENV ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED_PRESET ""
 ENV ALSA_OUTPUT_DOP ""
 
 ENV PULSE_AUDIO_OUTPUT_CREATE ""
@@ -222,6 +224,7 @@ COPY app/bin/get-value.sh /app/bin/
 COPY app/bin/read-file.sh /app/bin/
 COPY app/bin/build-soxr-presets.sh /app/bin/
 COPY app/bin/build-allowed-formats-presets.sh /app/bin/
+COPY app/bin/build-integer-upsampling-allowed-presets.sh /app/bin/
 COPY app/bin/load-alsa-presets.sh /app/bin/
 COPY app/bin/build-additional.sh /app/bin/
 COPY app/bin/user-management.sh /app/bin/

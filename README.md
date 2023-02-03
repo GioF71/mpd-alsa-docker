@@ -27,14 +27,14 @@ Images: [DockerHub](https://hub.docker.com/r/giof71/mpd-alsa)
 ## MPD Source code
 
 The source code is in this GitHub [repo](https://github.com/GioF71/MPD).  
-The `v0.23.x` branch is kept in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD).  
-The `v0.23.x-ups` branch contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
+The `version-0.23.12` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.23.12.  
+The `version-0.23.12-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
 Two binaries are available in the container image:
 
 - /app/bin/compiled/mpd (stable version)
 - /app/bin/compiled/mpd-ups (patched version)
 
-The current mpd version is `v0.23.11`.
+The current mpd version is `v0.23.12`.
 
 ## Why
 
@@ -249,6 +249,8 @@ ALSA_OUTPUT_OUTPUT_FORMAT|yes|Sets output format
 ALSA_OUTPUT_AUTO_RESAMPLE|yes|Sets auto resample
 ALSA_OUTPUT_THESYCON_DSD_WORKAROUND|yes|Enables workaround
 ALSA_OUTPUT_INTEGER_UPSAMPLING|yes|Enables integer upsampling
+ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED|yes|Allows selection of sample rates to be upsampled. If set, only specified values are allowed. The values should respect the same format user for `ALSA_OUTPUT_ALLOWED_FORMATS`
+ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED_PRESET|yes|Preset for `ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED`. Allowed values are `base` (for 44.1kHz and 48.0kHz) and `44` for 44.1kHz only
 ALSA_OUTPUT_DOP|yes|Enables Dsd-Over-Pcm. Possible values: `yes` or `no`. Empty by default: this it lets mpd handle dop setting.
 
 For the meaning, refer to the corresponding values in the first list of environment variables.  

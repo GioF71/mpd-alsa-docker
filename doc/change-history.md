@@ -2,6 +2,8 @@
 
 Date|Major Changes
 :---|:---
+2023-02-03|Add support for `ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED`
+2023-02-03|Bump to mpd version `v0.23.12`
 2023-01-30|Add support for `AUDIO_BUFFER_SIZE`
 2023-01-20|Player state enforced by default
 2023-01-17|`HTTPD_OUTPUT_TAGS` had typo in name
