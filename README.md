@@ -2,7 +2,7 @@
 
 A Docker image for mpd with support for both Alsa (`alsa`) and PulseAudio (`pulse`).  
 It also includes `mpdscribble`. In alternative, you can use [mpd-scrobbler-docker](https://github.com/GioF71/mpd-scrobbler-docker) as the scrobbler for this image.  
-User mode is now possible with `alsa` mode, and of course it is mandatory (enforced) for `pulse` mode.  
+User mode is now possible when using `alsa` outputs, and of course it is mandatory (enforced) when using `pulse` outputs.  
 Upsampling (even in integer mode) is now available via a patched version of MPD (upstream version available as well).  
 Also, thanks to a [feature request](https://github.com/GioF71/mpd-alsa-docker/issues/158) by user [XxAcielxX](https://github.com/XxAcielxX), who also contributed with the necessary documentation, we have a certain degree of support for equalization.  
 
