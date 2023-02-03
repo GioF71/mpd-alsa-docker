@@ -37,6 +37,7 @@ declare -A file_dict
 
 source build-soxr-presets.sh
 source build-allowed-formats-presets.sh
+source build-integer-upsampling-allowed-presets.sh
 source read-file.sh
 source get-value.sh
 source load-alsa-presets.sh
