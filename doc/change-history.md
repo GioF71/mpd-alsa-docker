@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-02-04|Image name correction
 2023-02-04|Dropped support for `PULSE` as `OUTPUT_MODE`
 2023-02-03|Add support for `ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED`
 2023-02-03|Bump to mpd version `v0.23.12`
