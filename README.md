@@ -56,7 +56,7 @@ Getting the image from DockerHub is as simple as typing:
 
 ### Important changes
 
-Starting with release `2023-02-04`, you will not be able to use the deprecated `PULSE` as `OUTPUT_MODE`. Refer to the next chapter for more information about how to change the configuration. PulseAudio is still supported, it just needs to be configured a little differently.   
+Starting with release `2023-02-04`, you will not be able to use the deprecated `PULSE` as `OUTPUT_MODE`. Refer to the next chapter for more information about how to change the configuration. Please note that PulseAudio is still supported, it just needs to be configured a little differently.  
 In case of difficulties, you can fall back to any image before `2023-02-04`, as those will still work with this deprecated configuration.  
 
 ### What is about to change
