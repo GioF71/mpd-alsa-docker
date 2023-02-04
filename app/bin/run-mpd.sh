@@ -259,7 +259,6 @@ if [ -n "${ZEROCONF_NAME}" ]; then
     echo "zeroconf_name \"${ZEROCONF_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 
-
 ## disable wildmidi decoder
 echo "decoder {" >> $MPD_ALSA_CONFIG_FILE
 echo "  plugin \"wildmidi\"" >> $MPD_ALSA_CONFIG_FILE
@@ -460,40 +459,6 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
         echo "  dop \"${DOP}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     echo "  enabled \"yes\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "}" >> $MPD_ALSA_CONFIG_FILE
-elif [ "${OUTPUT_MODE^^}" == "PULSE" ]; then
-    echo "OUTPUT_MODE [$OUTPUT_MODE] is deprecated and will be removed in the future"
-    echo "You should use PULSE_AUDIO_OUTPUT_CREATE=yes instead"
-    echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
-    echo "  type \"pulse\"" >> $MPD_ALSA_CONFIG_FILE
-    if [ -z "${PULSEAUDIO_OUTPUT_NAME}" ]; then
-        PULSEAUDIO_OUTPUT_NAME="PulseAudio"
-    fi
-    echo "  name \"${PULSEAUDIO_OUTPUT_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
-    pulse_enabled=""
-    if [ -n "${PULSEAUDIO_OUTPUT_ENABLED}" ]; then
-        if [[ "${PULSEAUDIO_OUTPUT_ENABLED^^}" == "YES" || "${PULSEAUDIO_OUTPUT_ENABLED^^}" == "Y" ]]; then
-            pulse_enabled=yes
-        elif [[ "${PULSEAUDIO_OUTPUT_ENABLED^^}" == "NO" || "${PULSEAUDIO_OUTPUT_ENABLED^^}" == "N" ]]; then
-            pulse_enabled=no
-        else
-            echo "Invalid PULSEAUDIO_OUTPUT_ENABLED=[${PULSEAUDIO_OUTPUT_ENABLED}]"
-            exit 9
-        fi        
-    fi
-    if [ -n "${pulse_enabled}" ]; then
-        echo "  enabled \"${pulse_enabled}\"" >> $MPD_ALSA_CONFIG_FILE
-    fi
-    unset pulse_enabled
-    if [ -n "${PULSEAUDIO_OUTPUT_MEDIA_ROLE}" ]; then
-        echo "  media_role \"${PULSEAUDIO_OUTPUT_MEDIA_ROLE}\"" >> $MPD_ALSA_CONFIG_FILE
-    fi
-    if [ -n "${PULSEAUDIO_OUTPUT_SINK}" ]; then
-        echo "  sink \"${PULSEAUDIO_OUTPUT_SINK}\"" >> $MPD_ALSA_CONFIG_FILE
-    fi
-    if [ -n "${PULSEAUDIO_OUTPUT_SCALE_FACTOR}" ]; then
-        echo "  scale_factor \"${PULSEAUDIO_OUTPUT_SCALE_FACTOR}\"" >> $MPD_ALSA_CONFIG_FILE
-    fi
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 elif [ "${OUTPUT_MODE^^}" == "NULL" ]; then
     echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
