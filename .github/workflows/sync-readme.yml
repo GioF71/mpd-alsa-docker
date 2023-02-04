@@ -22,4 +22,4 @@ jobs:
           pass: ${{ secrets.DOCKER_PASSWORD }}
           slug: ${{ secrets.DOCKER_USERNAME }}/mpd-alsa
           readme: ./README.md
-          description: Easily run mpd with alsa output with Docker. Scrobbling support.
+          description: Easily run mpd with Alsa or PulseAudio output. Upsampling with Goldilocks settings by Archimago. Scrobbling support.
