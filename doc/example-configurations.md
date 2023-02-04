@@ -101,7 +101,7 @@ services:
 
 This configuration uses a custom soxr resampling configuration, inspired from this article: [Archimago - MUSINGS: More fun with digital filters!](https://archimago.blogspot.com/2018/01/musings-more-fun-with-digital-filters.html).  
 This particular configuration will upsample 44.1kHz, 88.2kHz, 176.4kHz streams to 352.8kHz and 48kHz, 96kHz, 192kHz to 384kHz, leaving dsd streams as they are.  
-AUDIO_GID here is 29, but you will need to find the gid of the `audio` group on your specific installation as described in [user mode](user-mode.md).
+AUDIO_GID here is 29, but you will need to find the gid of the `audio` group on your specific installation as described in [user mode](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/user-mode.md).
 
 ## Requirements for alsa mode
 

@@ -1,6 +1,6 @@
 # mpd-alsa-docker
 
-A Docker image for mpd with support for both Alsa (`alsa`) and PulseAudio (`pulse`).  
+A Docker image for mpd with support for both Alsa and PulseAudio.  
 It also includes `mpdscribble`. In alternative, you can use [mpd-scrobbler-docker](https://github.com/GioF71/mpd-scrobbler-docker) as the scrobbler for this image.  
 User mode is now possible when using `alsa` outputs, and of course it is mandatory (enforced) when using `pulse` outputs.  
 Upsampling (even in integer mode) is now available via a patched version of MPD (upstream version available as well).  
@@ -54,14 +54,18 @@ Getting the image from DockerHub is as simple as typing:
 
 ## Usage
 
+### Important changes
+
+Starting with release `2023-02-04`, you will not be able to use the deprecated `PULSE` as `OUTPUT_MODE`. Refer to the next chapter for more information about how to change the configuration.  
+In case of difficulties, you can fall back to any image before `2023-02-04`, as those will still work with this deprecated configuration.  
+
 ### What is about to change
 
 If you have been using this container image for a while, you might have seen that the output might contain some warnings, telling you that you are using a `deprecated` configuration. The message usually tries to suggest how to switch to a `recommended` configuration.  
 This is happening because this whole project started with the idea of supporting ALSA only (hence the name `mpd-alsa-docker`). Down the road, I added PulseAudio support, and eventually HTTPD outputs, SHOUTCAST outputs, also in multiple instances.  
 So now a few variables have a misleading name: the most misleading being `ALSA_DEVICE_NAME` which, despite the name, refers to the output name, and not to the device name.  
 So currently, `OUTPUT_MODE` still defaults to `ALSA` for compatibility and will yield the creation of a ALSA *main* player, but the default for this variable will eventually become `NONE` (no *main* player). At the end of the process, the variable `OUTPUT_MODE` will completely disappear.  
-You can still use `OUTPUT_MODE` set to `PULSE`, which creates a PulseAudio *main* output.  
-In both cases, I suggest you change the configuration as suggested, and use the variables from the appropriate sections below for [Alsa](https://github.com/GioF71/mpd-alsa-docker#alsa-additional-outputs) and [PulseAudio](https://github.com/GioF71/mpd-alsa-docker#pulseaudio-additional-outputs), otherwise, in time, your configurations will not be functional anymore.  
+In any case, I suggest you change the configuration as suggested, and use the variables from the appropriate sections below for [Alsa](https://github.com/GioF71/mpd-alsa-docker#alsa-additional-outputs) and [PulseAudio](https://github.com/GioF71/mpd-alsa-docker#pulseaudio-additional-outputs), otherwise, in time, your configurations will not be functional anymore.  
 Feel free to contact me with an issue if you need support. I cannot guarantee a timing, but I will try to help if I can.  
 
 ### User mode
@@ -105,13 +109,13 @@ DATABASE_MODE|Can be `simple` (default) or `proxy`
 DATABASE_PROXY_HOST|MPD server hostname, only used when `DATABASE_MODE` is set to `proxy`
 DATABASE_PROXY_PORT|MPD server port, only used when `DATABASE_MODE` is set to `proxy`
 MUSIC_DIRECTORY|Location of music files, defaults to `/music`
-OUTPUT_MODE|Output mode, can be `alsa` (still default but **deprecated**, you should use `ALSA_OUTPUT_CREATE` set to `yes`), `pulse` (**deprecated**, you should use `PULSE_AUDIO_OUTPUT_CREATE` set to `yes`), `null` or `none`. For `pulse` mode, running in `user` mode is required. Note that `none` does not create any output, leaving the task to the variables dedicated to additional outputs
+OUTPUT_MODE|Output mode, can be `alsa` (still default but **deprecated**, you should use `ALSA_OUTPUT_CREATE` set to `yes`), `null` or `none`.
 MPD_BIND_ADDRESS|The MPD listen address, defaults to `0.0.0.0`
 MPD_PORT|The MPD port, defaults to `6600`
-USER_MODE|Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode). Enforced when `OUTPUT_MODE` is set to `pulse` (**deprecated** value) or when `PULSE_AUDIO_OUTPUT_CREATE` is set to `yes`
-PUID|User id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
-PGID|Group id. Defaults to `1000`. The user/group will be created for `pulse` mode regardless of the `USER_MODE` variable.
-AUDIO_GID|`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](#user-mode).
+USER_MODE|Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode). Required when using any PulseAudio outputs (so when `PULSE_AUDIO_OUTPUT_CREATE` is set to `yes`)
+PUID|User id. Defaults to `1000`. The user/group will be created when a PulseAudio output is created regardless of the `USER_MODE` variable.
+PGID|Group id. Defaults to `1000`. The user/group will be created when a PulseAudio output is created regardless of the `USER_MODE` variable.
+AUDIO_GID|`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/user-mode.md).
 INPUT_CACHE_SIZE|Sets the input cache size. Example value: `1 GB`
 NULL_OUTPUT_NAME|Name of the `null` output
 NULL_OUTPUT_SYNC|Sync mode for the `null` output, can be `yes` (default) or `no`
@@ -120,7 +124,7 @@ MPD_ENABLE_LOGGING|Defaults to `yes`, set to `no` to disable
 MPD_LOG_LEVEL|Can be `default` or `verbose`
 ZEROCONF_ENABLED|Set to `yes` to enable. Disabled by default.
 ZEROCONF_NAME|Set zeroconf name, used only if `ZEROCONF_ENABLED` is set to `yes`
-HYBRID_DSD_ENABLED|Hybrid dsd is enabled by default, set to `no` to disable. Disabled when using Pulse mode.
+HYBRID_DSD_ENABLED|Hybrid dsd is enabled by default, set to `no` to disable. Disabled when at least one PulseAudio output is created.
 MAX_OUTPUT_BUFFER_SIZE|The maximum size of the output buffer to a client (maximum response size). Default is 8192 (8 MiB). Value in KBytes.
 AUDIO_BUFFER_SIZE|Adjust the size of the internal audio buffer. Default is `4 MB` (4 MiB).
 MAX_ADDITIONAL_OUTPUTS_BY_TYPE|The maximum number of outputs by type, defaults to `20`
@@ -151,21 +155,7 @@ THESYCON_DSD_WORKAROUND|If enabled, enables a workaround for a bug in Thesycon U
 ALSA_ALLOWED_FORMATS_PRESET|Alternative to `ALSA_ALLOWED_FORMATS`. Possible values: `8x`, `4x`, `2x`, `8x-nodsd`, `4x-nodsd`, `2x-nodsd`
 INTEGER_UPSAMPLING|If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.  
 
-Avoid deprecated configurations and refer to [this](#alsa-additional-outputs) section.
-
-#### Main output as PULSE (**Deprecated**)
-
-Please find here the relevant (but *deprecated*) variables when OUTPUT_MODE is set to `PULSE`
-
-VARIABLE|DESCRIPTION
-:---|:---
-PULSEAUDIO_OUTPUT_NAME|PulseAudio output name, defaults to `PulseAudio`
-PULSEAUDIO_OUTPUT_ENABLED|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
-PULSEAUDIO_OUTPUT_SINK|Specifies the name of the PulseAudio sink MPD should play on
-PULSEAUDIO_OUTPUT_MEDIA_ROLE|Specifies a custom media role that MPD reports to PulseAudio, defaults to `music`
-PULSEAUDIO_OUTPUT_SCALE_FACTOR|Specifies a linear scaling coefficient (ranging from `0.5` to `5.0`) to apply when adjusting volume through MPD. For example, chosing a factor equal to `0.7` means that setting the volume to 100 in MPD will set the PulseAudio volume to 70%, and a factor equal to `3.5` means that volume 100 in MPD corresponds to a 350% PulseAudio volume.  
-
-Avoid deprecated configurations and refer to [this](#pulseaudio-additional-outputs) section.
+Avoid deprecated configurations and refer to [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/README.md#alsa-additional-outputs) section.
 
 #### SOXR Plugin
 
@@ -258,6 +248,7 @@ Note that you can add up to 20 (or what is specified for the variable `MAX_ADDIT
 
 #### PulseAudio additional outputs
 
+Remember to setup [user mode](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/user-mode.md) when using PulseAudio outputs, otherwise they won't work.  
 Additional PulseAudio outputs can be configured using the following variables:
 
 VARIABLE|OPTIONAL|DESCRIPTION
