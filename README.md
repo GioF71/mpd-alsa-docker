@@ -52,6 +52,10 @@ Getting the image from DockerHub is as simple as typing:
 
 `docker pull giof71/mpd-alsa`
 
+Legacy support `OUTPUT_MODE`, is still available in the `legacy` branch, as well as on the images tagged with the `legacy` prefix.  
+You might want to use those releases as a stop-gap solution should you encounter issues migrating to the new configuration methods.  
+Keep in mind that the `legacy` branch will not be updated with new features. Only relevant bugfix changes will be ported there.  
+
 ## Usage
 
 ### Important changes
