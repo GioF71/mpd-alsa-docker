@@ -94,7 +94,7 @@ Several files can be located in the user configuration (`/user/config`) volume. 
 
 FILE|DESCRIPTION
 :---|:---
-lastfm.txt|LastFM Credentials.
+lastfm.txt|LastFM Credentials
 librefm.txt|LibreFM Credentials
 jamendo.txt|Jamendo Credentials
 additional-alsa-presets.conf|Additional alsa presets
@@ -210,7 +210,7 @@ Credentials of course go in pairs, so in order to enable one serve, you must pro
 
 VARIABLE|DESCRIPTION
 :---|:---
-LASTFM_USERNAME|Username for Last.fm.
+LASTFM_USERNAME|Username for Last.fm
 LASTFM_PASSWORD|Password for Last.fm
 LIBREFM_USERNAME|Username for Libre.fm
 LIBREFM_PASSWORD|Password for Libre.fm
