@@ -313,3 +313,19 @@ build_shout() {
         close_output $out_file
     fi
 }
+
+build_null() {
+    out_file=$1
+    idx=$2
+    create=$(get_named_env "NULL_OUTPUT_CREATE" $idx)
+    if [[ "${create^^}" == "YES" || "${create^^}" == "Y" ]]; then
+        echo "Creating Null output for output [$idx]"
+        open_output $out_file
+        set_output_type $out_file null
+        add_output_parameter $out_file $idx NULL_OUTPUT_NAME name null str
+        add_output_parameter $out_file $idx NULL_OUTPUT_ENABLED enabled "" none
+        add_output_parameter $out_file $idx NULL_OUTPUT_SYNC sync yes constant
+        close_output $out_file
+    fi
+}
+
