@@ -137,8 +137,6 @@ if [[ "${ANY_PULSE}" -eq 1 ]] ||
         if [ -n "${AUDIO_GID}" ]; then
             create_audio_gid
         fi
-    elif [ "${OUTPUT_MODE^^}" == "NULL" ]; then
-        echo "Null Mode - No actions"
     else
         echo "Invalid output mode [${OUTPUT_MODE}]";
         exit 2;
@@ -459,21 +457,6 @@ if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
         echo "  dop \"${DOP}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
     echo "  enabled \"yes\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "}" >> $MPD_ALSA_CONFIG_FILE
-elif [ "${OUTPUT_MODE^^}" == "NULL" ]; then
-    echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
-    echo "  enabled \"yes\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  type \"null\"" >> $MPD_ALSA_CONFIG_FILE
-    OUTPUT_NAME="Null Output"
-    if [ -n "${NULL_OUTPUT_NAME}" ]; then
-        OUTPUT_NAME=${NULL_OUTPUT_NAME}
-    fi
-    OUTPUT_SYNC="yes"
-    if [ -n "${NULL_OUTPUT_SYNC}" ]; then
-        OUTPUT_SYNC=${NULL_OUTPUT_SYNC}
-    fi
-    echo "  name \"${OUTPUT_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  sync \"${OUTPUT_SYNC}\"" >> $MPD_ALSA_CONFIG_FILE
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 elif [ "${OUTPUT_MODE^^}" == "NONE" ]; then
     echo "OUTPUT_MODE is ${OUTPUT_MODE}, so master output is not created"
