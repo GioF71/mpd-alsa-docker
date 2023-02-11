@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-02-11|Dropped `OUTPUT_MODE` (including *deprecated* `ALSA` mode)
 2023-02-11|Dropped `NULL` as `OUTPUT_MODE`
 2023-02-11|Support additional `NULL` outputs
 2023-02-09|Clarified `legacy` releases

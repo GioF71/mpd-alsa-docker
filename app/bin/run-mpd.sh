@@ -20,10 +20,6 @@ DEFAULT_OUTPUT_MODE=alsa
 DEFAULT_ALSA_DEVICE_NAME="Alsa-Device"
 DEFAULT_MPD_AUDIO_DEVICE="default"
 
-if [ -z "${OUTPUT_MODE}" ]; then
-    OUTPUT_MODE=${DEFAULT_OUTPUT_MODE}
-fi
-
 if [ -n "${MAX_ADDITIONAL_OUTPUTS_BY_TYPE}" ]; then
     max_outputs_by_type=$MAX_ADDITIONAL_OUTPUTS_BY_TYPE
 else
@@ -137,9 +133,6 @@ if [[ "${ANY_PULSE}" -eq 1 ]] ||
         if [ -n "${AUDIO_GID}" ]; then
             create_audio_gid
         fi
-    else
-        echo "Invalid output mode [${OUTPUT_MODE}]";
-        exit 2;
     fi
     chown -R $USER_NAME:$GROUP_NAME /log
     chown -R $USER_NAME:$GROUP_NAME /db
@@ -314,155 +307,6 @@ if [[ "${QOBUZ_PLUGIN_ENABLED^^}" == "Y" || "${QOBUZ_PLUGIN_ENABLED^^}" == "YES"
     echo "  password        \"${QOBUZ_PASSWORD}\"" >> $MPD_ALSA_CONFIG_FILE
     echo "  format_id       \"${QOBUZ_FORMAT_ID}\"" >> $MPD_ALSA_CONFIG_FILE
     echo "}" >> $MPD_ALSA_CONFIG_FILE
-fi
-
-if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
-    echo "OUTPUT_MODE [$OUTPUT_MODE] is deprecated and will be removed in the future"
-    echo "You should use ALSA_OUTPUT_CREATE=yes instead"
-    # see if user is using a preset
-    if [ -n "${ALSA_PRESET}" ]; then
-        echo "Using alsa preset ${ALSA_PRESET}"
-        # NAME
-        alsa_preset_key="${ALSA_PRESET}.name"
-        alsa_preset_value="${alsa_presets[${alsa_preset_key}]}"
-        if [[ -v alsa_preset_value ]]; then
-            if [ -z ${ALSA_DEVICE_NAME} ]; then
-                ALSA_DEVICE_NAME=${alsa_preset_value}
-            fi
-        fi
-        # DEVICE
-        alsa_preset_key="${ALSA_PRESET}.device"
-        alsa_preset_value="${alsa_presets[${alsa_preset_key}]}"
-        if [[ -v alsa_preset_value ]]; then
-            if [ -z ${MPD_AUDIO_DEVICE} ]; then
-                MPD_AUDIO_DEVICE=$alsa_preset_value
-            fi
-        fi
-        # MIXER TYPE
-        alsa_preset_key="${ALSA_PRESET}.mixer-type"
-        alsa_preset_value="${alsa_presets[${alsa_preset_key}]}"
-        if [[ -v alsa_preset_value ]]; then
-            MIXER_TYPE=$alsa_preset_value
-        fi
-        # MIXER DEVICE
-        alsa_preset_key="${ALSA_PRESET}.mixer-device"
-        alsa_preset_value="${alsa_presets[${alsa_preset_key}]}"
-        if [[ -v alsa_preset_value ]]; then
-            MIXER_DEVICE=$alsa_preset_value
-        fi
-        # MIXER CONTROL
-        alsa_preset_key="${ALSA_PRESET}.mixer-control"
-        alsa_preset_value="${alsa_presets[${alsa_preset_key}]}"
-        if [[ -v alsa_preset_value ]]; then
-            MIXER_CONTROL=$alsa_preset_value
-        fi
-        # MIXER INDEX
-        alsa_preset_key="${ALSA_PRESET}.mixer-index"
-        alsa_preset_value="${alsa_presets[${alsa_preset_key}]}"
-        if [[ -v alsa_preset_value ]]; then
-            MIXER_INDEX=$alsa_preset_value
-        fi
-    else
-        echo "Alsa preset has not been specified"
-    fi
-    # if allowed, try to find the mixer
-    echo "ALSA_AUTO_FIND_MIXER=[${ALSA_AUTO_FIND_MIXER}]"
-    if [[ "${ALSA_AUTO_FIND_MIXER^^}" == "YES" || "${ALSA_AUTO_FIND_MIXER^^}" == "Y" ]]; then
-        if [ -z "${MIXER_CONTROL}" ]; then
-            echo "Trying to find mixer ..."
-            MIXER_TYPE="hardware"
-            RAW_MIXER_DEVICE="$(amixer -D ${MPD_AUDIO_DEVICE} scontrols | head -n 1)"
-            echo "RAW_MIXER_DEVICE = [$RAW_MIXER_DEVICE]"
-            mixer=$(echo ${RAW_MIXER_DEVICE} | cut -d "'" -f 2)
-            echo "Mixer=[$mixer]"
-            MIXER_CONTROL=$mixer
-            # assuming mixer device to be same as audio device
-            MIXER_DEVICE=$MPD_AUDIO_DEVICE
-        else    
-            echo "MIXER_CONTROL already set to [${MIXER_CONTROL}]"
-        fi
-    elif [ -z "${ALSA_AUTO_FIND_MIXER}" ]; then
-        echo "ALSA_AUTO_FIND_MIXER not allowed"
-    elif [[ "${ALSA_AUTO_FIND_MIXER^^}" != "NO" && "${ALSA_AUTO_FIND_MIXER^^}" != "N" ]]; then
-        echo "Invalid ALSA_AUTO_FIND_MIXER=[${ALSA_AUTO_FIND_MIXER}]"
-        exit 9
-    fi
-    # fallback to software mixer if MIXER_TYPE is still empty
-    if [ -z "${MIXER_TYPE}" ]; then
-        MIXER_TYPE="software"
-        echo "Falling back to MIXER_TYPE=[$MIXER_TYPE]"
-    fi
-    ## Add alsa output
-    echo "audio_output {" >> $MPD_ALSA_CONFIG_FILE
-    echo "  type \"alsa\"" >> $MPD_ALSA_CONFIG_FILE
-    if [ -z "${ALSA_DEVICE_NAME}" ]; then
-        ALSA_DEVICE_NAME=$DEFAULT_ALSA_DEVICE_NAME
-    fi
-    echo "  name \"${ALSA_DEVICE_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
-    if [ -z "${MPD_AUDIO_DEVICE}" ]; then
-        MPD_AUDIO_DEVICE=$DEFAULT_MPD_AUDIO_DEVICE
-    fi
-    echo "  device \"${MPD_AUDIO_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
-    if [ -n "${AUTO_RESAMPLE}" ]; then
-        if [[ "${AUTO_RESAMPLE^^}" == "YES" || "${AUTO_RESAMPLE^^}" == "Y" ]]; then
-            AUTO_RESAMPLE=yes
-        elif [[ "${AUTO_RESAMPLE^^}" == "NO" || "${AUTO_RESAMPLE^^}" == "N" ]]; then
-            AUTO_RESAMPLE=no
-        else
-            echo "Invalid configuration for AUTO_RESAMPLE [${AUTO_RESAMPLE}]"
-            exit 6
-        fi
-        echo "  auto_resample \"${AUTO_RESAMPLE}\"" >> $MPD_ALSA_CONFIG_FILE
-    fi
-    if [ -n "${THESYCON_DSD_WORKAROUND}" ]; then
-        if [[ "${THESYCON_DSD_WORKAROUND^^}" == "YES" || "${THESYCON_DSD_WORKAROUND^^}" == "Y" ]]; then
-            THESYCON_DSD_WORKAROUND=yes
-        elif [[ "${THESYCON_DSD_WORKAROUND^^}" == "NO" || "${THESYCON_DSD_WORKAROUND^^}" == "N" ]]; then
-            THESYCON_DSD_WORKAROUND=no
-        else
-            echo "Invalid configuration for THESYCON_DSD_WORKAROUND [${THESYCON_DSD_WORKAROUND}]"
-            exit 7
-        fi
-        echo "  thesycon_dsd_workaround \"${THESYCON_DSD_WORKAROUND}\"" >> $MPD_ALSA_CONFIG_FILE
-    fi
-    if [ -n "${MIXER_TYPE}" ]; then
-        echo "  mixer_type \"${MIXER_TYPE}\"" >> $MPD_ALSA_CONFIG_FILE
-    fi
-    if [ -n "${MIXER_DEVICE}" ]; then
-        echo "  mixer_device \"${MIXER_DEVICE}\"" >> $MPD_ALSA_CONFIG_FILE
-    fi
-    if [ -n "${MIXER_CONTROL}" ]; then
-        echo "  mixer_control \"${MIXER_CONTROL}\"" >> $MPD_ALSA_CONFIG_FILE
-    fi
-    if [ -n "${MIXER_INDEX}" ]; then
-        echo "  mixer_index \"${MIXER_INDEX}\"" >> $MPD_ALSA_CONFIG_FILE
-    fi
-    if [ -n "${ALSA_OUTPUT_FORMAT}" ]; then
-        echo "  format \"${ALSA_OUTPUT_FORMAT}\"" >> $MPD_ALSA_CONFIG_FILE
-    fi
-    if [ -n "${ALSA_ALLOWED_FORMATS_PRESET}" ]; then
-        af_value="${allowed_formats_presets[${ALSA_ALLOWED_FORMATS_PRESET}]}"
-        if [[ -v af_value ]]; then
-            ALSA_ALLOWED_FORMATS=$af_value
-        fi
-    fi
-    if [ -n "${ALSA_ALLOWED_FORMATS}" ]; then
-        echo "  allowed_formats \"${ALSA_ALLOWED_FORMATS}\"" >> $MPD_ALSA_CONFIG_FILE
-    fi
-    if [ -n "${INTEGER_UPSAMPLING}" ]; then
-        echo "  integer_upsampling \"${INTEGER_UPSAMPLING}\"" >> $MPD_ALSA_CONFIG_FILE
-        mpd_binary=$UPSAMPLING_MPD_BINARY
-    fi
-    if [ -n "${DOP}" ]; then
-        echo "  dop \"${DOP}\"" >> $MPD_ALSA_CONFIG_FILE
-    fi
-    echo "  enabled \"yes\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "}" >> $MPD_ALSA_CONFIG_FILE
-elif [ "${OUTPUT_MODE^^}" == "NONE" ]; then
-    echo "OUTPUT_MODE is ${OUTPUT_MODE}, so master output is not created"
-else
-    echo "Invalid output mode [${OUTPUT_MODE}]";
-    exit 2;
 fi
 
 output_by_type_limit=$((${max_outputs_by_type}-1))

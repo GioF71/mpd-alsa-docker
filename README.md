@@ -60,15 +60,15 @@ Keep in mind that the `legacy` branch will not be updated with new features. Onl
 
 ### Important changes
 
-Starting with release `2023-02-04`, you will not be able to use the deprecated `PULSE` as `OUTPUT_MODE`. Refer to the next chapter for more information about how to change the configuration. Please note that PulseAudio is still supported, it just needs to be configured a little differently.  
-In case of difficulties, you can fall back to any image before `2023-02-04` or to the `legacy` versions, as those will still work with this deprecated configuration.  
+Starting with release `2023-02-04`, you will not be able to use the deprecated `PULSE` and `ALSA` as `OUTPUT_MODE`. Refer to the next chapter for more information about how to change the configuration. Please note that Alsa and PulseAudio are still supported: you just need to slightly modify your docker configurations.  
+In case of difficulties, you can fall back to the `legacy` image versions, as those will still work with these deprecated configurations.  
 
 ### What is about to change
 
 If you have been using this container image for a while, you might have seen that the output might contain some warnings, telling you that you are using a `deprecated` configuration. The message usually tries to suggest how to switch to a `recommended` configuration.  
 This is happening because this whole project started with the idea of supporting ALSA only (hence the name `mpd-alsa-docker`). Down the road, I added PulseAudio support, and eventually HTTPD outputs, SHOUTCAST outputs, also in multiple instances.  
 So now a few variables have a misleading name: the most misleading being `ALSA_DEVICE_NAME` which, despite the name, refers to the output name, and not to the device name.  
-So currently, `OUTPUT_MODE` still defaults to `ALSA` for compatibility and will yield the creation of a ALSA *main* player, but the default for this variable will eventually become `NONE` (no *main* player). At the end of the process, the variable `OUTPUT_MODE` will completely disappear.  
+So currently, `OUTPUT_MODE` is not available anymore.  
 In any case, I suggest you change the configuration as suggested, and use the variables from the appropriate sections below for [Alsa](https://github.com/GioF71/mpd-alsa-docker#alsa-additional-outputs) and [PulseAudio](https://github.com/GioF71/mpd-alsa-docker#pulseaudio-additional-outputs), otherwise, in time, your configurations will not be functional anymore.  
 Feel free to contact me with an issue if you need support. I cannot guarantee a timing, but I will try to help if I can.  
 
@@ -113,7 +113,6 @@ DATABASE_MODE|Can be `simple` (default) or `proxy`
 DATABASE_PROXY_HOST|MPD server hostname, only used when `DATABASE_MODE` is set to `proxy`
 DATABASE_PROXY_PORT|MPD server port, only used when `DATABASE_MODE` is set to `proxy`
 MUSIC_DIRECTORY|Location of music files, defaults to `/music`
-OUTPUT_MODE|Output mode, can be `alsa` (still default but **deprecated**, you should use `ALSA_OUTPUT_CREATE` set to `yes`) or `none`.
 MPD_BIND_ADDRESS|The MPD listen address, defaults to `0.0.0.0`
 MPD_PORT|The MPD port, defaults to `6600`
 USER_MODE|Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode). Required when using any PulseAudio outputs (so when `PULSE_AUDIO_OUTPUT_CREATE` is set to `yes`)
@@ -134,30 +133,6 @@ RESTORE_PAUSED|If set to `yes`, then MPD is put into pause mode instead of start
 STATE_FILE_INTERVAL|Auto-save the state file this number of seconds after each state change, defaults to `10` seconds
 ENFORCE_PLAYER_STATE|If set to `yes`, it will remove player state information from the state file, so the player state will only depend on the environment variables. Defaults to `yes`
 STARTUP_DELAY_SEC|Delay before starting the application in seconds, defaults to `0`.
-
-#### Main output as ALSA (**Deprecated**)
-
-Please find here the relevant (but *deprecated*) variables when OUTPUT_MODE is set to `ALSA`
-
-VARIABLE|DESCRIPTION
-:---|:---
-ALSA_PRESET|Use an alsa preset. See file [alsa-presets.conf](https://github.com/GioF71/mpd-alsa-docker/blob/main/app/assets/alsa-presets.conf) for the existing presets. Additional presets can be passed to the container through the file `/user/config/additional-alsa-presets.conf`
-ALSA_AUTO_FIND_MIXER|If set to `yes` and `MIXER_DEVICE` is still empty, the run script will try to find the hardware mixer using `amixer`. This is not guaranteed to work for every dac. Some experiments will be needed. Sharing the results will be **very** helpful. Defaults to `no`
-MPD_AUDIO_DEVICE|The audio device. Common examples: `hw:DAC` or `hw:x20` or `hw:X20` for usb dac based on XMOS chips. Defaults to `default`
-ALSA_DEVICE_NAME|Name of the Alsa Device, defaults to `Alsa Device`. The name if unfortunately misleading: this variable refers to the mpd output name.
-MIXER_TYPE|Mixer type, defaults to `hardware`
-MIXER_DEVICE|Mixer device, defaults to `default`
-MIXER_CONTROL|Mixer Control, defaults to `PCM`
-MIXER_INDEX|Mixer Index, defaults to `0`
-DOP|Enables Dsd-Over-Pcm. Possible values: `yes` or `no`. Empty by default: this it lets mpd handle dop setting.
-ALSA_OUTPUT_FORMAT|Sets `alsa` output format. Example value: `192000:24:2`
-ALSA_ALLOWED_FORMATS|Sets the `alsa` output allowed formats
-AUTO_RESAMPLE|If set to no, then libasound will not attempt to resample. In this case, the user is responsible for ensuring that the requested sample rate can be produced natively by the device, otherwise an error will occur.
-THESYCON_DSD_WORKAROUND|If enabled, enables a workaround for a bug in Thesycon USB audio receivers. On these devices, playing DSD512 or PCM causes all subsequent attempts to play other DSD rates to fail, which can be fixed by briefly playing PCM at 44.1 kHz.
-ALSA_ALLOWED_FORMATS_PRESET|Alternative to `ALSA_ALLOWED_FORMATS`. Possible values: `8x`, `4x`, `2x`, `8x-nodsd`, `4x-nodsd`, `2x-nodsd`
-INTEGER_UPSAMPLING|If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.  
-
-Avoid deprecated configurations and refer to [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/README.md#alsa-additional-outputs) section.
 
 #### SOXR Plugin
 

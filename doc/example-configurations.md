@@ -12,7 +12,6 @@ docker run -d \
     --rm \
     --device /dev/snd \
     -p 6600:6600 \
-    -e OUTPUT_MODE=none \
     -e ALSA_OUTPUT_CREATE=yes \
     -v ${HOME}/Music:/music:ro \
     -v ${HOME}/.mpd/playlists:/playlists \
@@ -48,7 +47,6 @@ services:
       - SOXR_PLUGIN_PASSBAND_END=95
       - SOXR_PLUGIN_STOPBAND_BEGIN=105
       - SOXR_PLUGIN_ATTENUATION=4
-      - OUTPUT_MODE=none
       - ALSA_OUTPUT_CREATE=yes
       - ALSA_OUTPUT_NAME=aune-s6
       - ALSA_OUTPUT_DEVICE=hw:DAC
@@ -84,7 +82,6 @@ services:
       - AUDIO_GID=29
       - SOXR_PLUGIN_ENABLE=Y
       - SOXR_PLUGIN_PRESET=goldilocks
-      - OUTPUT_MODE=none
       - ALSA_OUTPUT_CREATE=yes
       - ALSA_OUTPUT_NAME=aune-s6
       - ALSA_OUTPUT_DEVICE=hw:DAC
@@ -117,7 +114,6 @@ docker run -d \
     --rm \
     --device /dev/snd \
     -p 6600:6600 \
-    -e OUTPUT_MODE=none \
     -e PULSE_AUDIO_OUTPUT_CREATE=yes \
     -v ${HOME}/Music:/music:ro \
     -v ${HOME}/.mpd/playlists:/playlists \
