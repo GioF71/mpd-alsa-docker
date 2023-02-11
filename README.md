@@ -63,7 +63,7 @@ Keep in mind that the `legacy` branch will not be updated with new features. Onl
 Starting with release `2023-02-04`, you will not be able to use the deprecated `PULSE` and `ALSA` as `OUTPUT_MODE`. Refer to the next chapter for more information about how to change the configuration. Please note that Alsa and PulseAudio are still supported: you just need to slightly modify your docker configurations.  
 In case of difficulties, you can fall back to the `legacy` image versions, as those will still work with these deprecated configurations.  
 
-### What is about to change
+### What has changed
 
 If you have been using this container image for a while, you might have seen that the output might contain some warnings, telling you that you are using a `deprecated` configuration. The message usually tries to suggest how to switch to a `recommended` configuration.  
 This is happening because this whole project started with the idea of supporting ALSA only (hence the name `mpd-alsa-docker`). Down the road, I added PulseAudio support, and eventually HTTPD outputs, SHOUTCAST outputs, also in multiple instances.  
