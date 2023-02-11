@@ -200,7 +200,7 @@ You can define additional outputs of various types. Refer to the following parag
 For each type, that you can add up to 20 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) additional outputs for each type. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
 The output name of those outputs, if not explicitly set, is created by appending with `_1`, `_2`, ... to the defaut name, so in the case of PulseAudio, the names of output will be `PulseAudio_1`, `PulseAudio_2`, ...  
 
-##### ALSA additional outputs
+#### ALSA additional outputs
 
 Additional alsa outputs can be configured using the following variables:
 
@@ -228,7 +228,7 @@ ALSA_OUTPUT_DOP|Enables Dsd-Over-Pcm. Possible values: `yes` or `no`. Empty by d
 
 Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#alsa-plugin) for the meaning of the variables.  
 
-##### PulseAudio additional outputs
+#### PulseAudio additional outputs
 
 Remember to setup [user mode](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/user-mode.md) when using PulseAudio outputs, otherwise they won't work.  
 Additional PulseAudio outputs can be configured using the following variables:
@@ -244,7 +244,7 @@ PULSE_AUDIO_OUTPUT_SCALING_FACTOR|Scaling factor for the PulseAudio output
 
 Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#pulse) for the meaning of the variables.  
 
-##### HTTPD additional outputs
+#### HTTPD additional outputs
 
 Additional httpd outputs can be configured using the following variables:
 
@@ -267,7 +267,7 @@ HTTPD_MIXER_TYPE|Set to `software` if you want to be able to change the volume o
 The port number default is calculated for each index by incrementing the default (`8000`) value.  
 When using multiple httpd outputs, remember to open *all* the relevant ports, not only `8000`, otherwise only the first output will work.
 
-##### Shout additional outputs
+#### Shout additional outputs
 
 VARIABLE|DESCRIPTION
 :---|:---
@@ -288,7 +288,7 @@ SHOUT_OUTPUT_PASSWORD|Sets the password for submitting the stream to the server,
 SHOUT_OUTPUT_PUBLIC|Specifies whether the stream should be "public", defaults to `no`
 SHOUT_MIXER_TYPE|Set to `software` if you want to be able to change the volume of the output stream
 
-##### Null additional outputs
+#### Null additional outputs
 
 Additional Null can be configured using the following variables:
 
