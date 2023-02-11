@@ -13,9 +13,6 @@ any_pulse() {
 
 any_alsa() {
     result=0
-    if [ "${OUTPUT_MODE^^}" == "ALSA" ]; then
-        result=1
-    fi
     if [[ $result -eq 0 ]]; then
         # if at least one additional ALSA output is requested
         if [[ "${ALSA_OUTPUT_CREATE^^}" == "YES" ]]; then

@@ -13,7 +13,6 @@ ExecStart=/usr/bin/docker run -i \
             --network=mpd-pulse \
             -e PUID=%U \
             -e PGID=%G \
-            -e OUTPUT_MODE=none \
             -e PULSE_AUDIO_OUTPUT_CREATE=yes \
             -v /run/user/%U/pulse:/run/user/%U/pulse \
             -v %h/Music:/music:ro \
