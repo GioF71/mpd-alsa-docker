@@ -304,7 +304,7 @@ Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.ht
 
 ### Examples
 
-See some usage examples [here](doc/example-configurations.md).
+See some usage examples [here](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/example-configurations.md).
 
 ## Support for Scrobbling
 
