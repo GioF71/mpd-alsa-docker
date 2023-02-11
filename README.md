@@ -70,6 +70,7 @@ This is happening because this whole project started with the idea of supporting
 So now a few variables have a misleading name: the most misleading being `ALSA_DEVICE_NAME` which, despite the name, refers to the output name, and not to the device name.  
 So currently, `OUTPUT_MODE` is not available anymore.  
 In any case, I suggest you change the configuration as suggested, and use the variables from the appropriate sections below for [Alsa](https://github.com/GioF71/mpd-alsa-docker#alsa-additional-outputs) and [PulseAudio](https://github.com/GioF71/mpd-alsa-docker#pulseaudio-additional-outputs), otherwise, in time, your configurations will not be functional anymore.  
+Please refer to the `[legacy](https://github.com/GioF71/mpd-alsa-docker/tree/legacy)` branch for the old documentation.  
 Feel free to contact me with an issue if you need support. I cannot guarantee a timing, but I will try to help if I can.  
 
 ### User mode
