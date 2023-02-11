@@ -113,7 +113,7 @@ DATABASE_MODE|Can be `simple` (default) or `proxy`
 DATABASE_PROXY_HOST|MPD server hostname, only used when `DATABASE_MODE` is set to `proxy`
 DATABASE_PROXY_PORT|MPD server port, only used when `DATABASE_MODE` is set to `proxy`
 MUSIC_DIRECTORY|Location of music files, defaults to `/music`
-OUTPUT_MODE|Output mode, can be `alsa` (still default but **deprecated**, you should use `ALSA_OUTPUT_CREATE` set to `yes`), `null` or `none`.
+OUTPUT_MODE|Output mode, can be `alsa` (still default but **deprecated**, you should use `ALSA_OUTPUT_CREATE` set to `yes`) or `none`.
 MPD_BIND_ADDRESS|The MPD listen address, defaults to `0.0.0.0`
 MPD_PORT|The MPD port, defaults to `6600`
 USER_MODE|Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode). Required when using any PulseAudio outputs (so when `PULSE_AUDIO_OUTPUT_CREATE` is set to `yes`)
@@ -121,8 +121,6 @@ PUID|User id. Defaults to `1000`. The user/group will be created when a PulseAud
 PGID|Group id. Defaults to `1000`. The user/group will be created when a PulseAudio output is created regardless of the `USER_MODE` variable.
 AUDIO_GID|`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/user-mode.md).
 INPUT_CACHE_SIZE|Sets the input cache size. Example value: `1 GB`
-NULL_OUTPUT_NAME|Name of the `null` output
-NULL_OUTPUT_SYNC|Sync mode for the `null` output, can be `yes` (default) or `no`
 SAMPLERATE_CONVERTER|Configure `samplerate_converter`. Example value: `soxr very high`. Note that this configuration cannot be used when `SOXR_PLUGIN_ENABLE` is set to enabled. There are some preset values for sox: `very_high` and `very-high` map to `soxr very high`, `high` maps to `soxr high`, `medium` maps to `soxr medium`, `low` maps to `soxr low` and `quick` maps to `soxr quick`. Refer to [this](https://mpd.readthedocs.io/en/stable/plugins.html#soxr) page for details.
 MPD_ENABLE_LOGGING|Defaults to `yes`, set to `no` to disable
 MPD_LOG_LEVEL|Can be `default` or `verbose`
