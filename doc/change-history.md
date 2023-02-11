@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-02-11|Support additional `NULL` outputs
 2023-02-09|Clarified `legacy` releases
 2023-02-04|Image name correction
 2023-02-04|Dropped support for `PULSE` as `OUTPUT_MODE`

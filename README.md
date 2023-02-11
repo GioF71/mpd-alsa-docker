@@ -221,100 +221,112 @@ SCROBBLER_MPD_HOSTNAME|Set when using host mode, defaults to `localhost`
 SCROBBLER_MPD_PORT|Set when using host mode, defaults to `6600`
 PROXY|Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:3128`
 
-#### ALSA additional outputs
+#### Additional Outputs
+
+You can define additional outputs of various types. Refer to the following paragraphs.  
+For each type, that you can add up to 20 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) additional outputs for each type. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
+The output name of those outputs, if not explicitly set, is created by appending with `_1`, `_2`, ... to the defaut name, so in the case of PulseAudio, the names of output will be `PulseAudio_1`, `PulseAudio_2`, ...  
+
+##### ALSA additional outputs
 
 Additional alsa outputs can be configured using the following variables:
 
-VARIABLE|OPTIONAL|DESCRIPTION
-:---|:---:|:---
-ALSA_OUTPUT_CREATE|yes|Set to `yes` if you want to create and additional httpd output
-ALSA_OUTPUT_ENABLED|yes|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
-ALSA_OUTPUT_NAME|yes|The name of the httpd output, defaults to `alsa`
-ALSA_OUTPUT_PRESET|yes|Use an Alsa preset for easier configuration
-ALSA_OUTPUT_DEVICE|yes|Sets alsa device
-ALSA_OUTPUT_AUTO_FIND_MIXER|yes|Allows to auto-select the mixer for easy hardware volume configuration
-ALSA_OUTPUT_MIXER_TYPE|yes|Mixer type
-ALSA_OUTPUT_MIXER_DEVICE|yes|Mixer device
-ALSA_OUTPUT_MIXER_CONTROL|yes|Mixer Control
-ALSA_OUTPUT_MIXER_INDEX|yes|Mixer Index
-ALSA_OUTPUT_ALLOWED_FORMATS_PRESET|yes|Alternative to `ALSA_OUTPUT_ALLOWED_FORMATS`. Possible values: 8x, 4x, 2x, 8x-nodsd, 4x-nodsd, 2x-nodsd
-ALSA_OUTPUT_ALLOWED_FORMATS|yes|Sets allowed formats
-ALSA_OUTPUT_OUTPUT_FORMAT|yes|Sets output format
-ALSA_OUTPUT_AUTO_RESAMPLE|yes|Sets auto resample
-ALSA_OUTPUT_THESYCON_DSD_WORKAROUND|yes|Enables workaround
-ALSA_OUTPUT_INTEGER_UPSAMPLING|yes|Enables integer upsampling
-ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED|yes|Allows selection of sample rates to be upsampled. If set, only specified values are allowed. The values should respect the same format user for `ALSA_OUTPUT_ALLOWED_FORMATS`
-ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED_PRESET|yes|Preset for `ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED`. Allowed values are `base` (for 44.1kHz and 48.0kHz) and `44` for 44.1kHz only
-ALSA_OUTPUT_DOP|yes|Enables Dsd-Over-Pcm. Possible values: `yes` or `no`. Empty by default: this it lets mpd handle dop setting.
+VARIABLE|DESCRIPTION
+:---|:---
+ALSA_OUTPUT_CREATE|Set to `yes` if you want to create an additional alsa output
+ALSA_OUTPUT_ENABLED|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
+ALSA_OUTPUT_NAME|The name of the alsa output, defaults to `alsa`
+ALSA_OUTPUT_PRESET|Use an Alsa preset for easier configuration
+ALSA_OUTPUT_DEVICE|The audio device. Common examples: `hw:DAC` or `hw:x20` or `hw:X20` for usb dac based on XMOS chips. Defaults to `default`
+ALSA_OUTPUT_AUTO_FIND_MIXER|Allows to auto-select the mixer for easy hardware volume configuration
+ALSA_OUTPUT_MIXER_TYPE|Mixer type, defaults to `hardware`
+ALSA_OUTPUT_MIXER_DEVICE|Mixer device, defaults to `default`
+ALSA_OUTPUT_MIXER_CONTROL|Mixer Control, defaults to `PCM`
+ALSA_OUTPUT_MIXER_INDEX|Mixer Index, defaults to `0`
+ALSA_OUTPUT_ALLOWED_FORMATS_PRESET|Alternative to `ALSA_OUTPUT_ALLOWED_FORMATS`. Possible values: 8x, 4x, 2x, 8x-nodsd, 4x-nodsd, 2x-nodsd
+ALSA_OUTPUT_ALLOWED_FORMATS|Sets allowed formats
+ALSA_OUTPUT_OUTPUT_FORMAT|Sets output format
+ALSA_OUTPUT_AUTO_RESAMPLE|If set to no, then libasound will not attempt to resample. In this case, the user is responsible for ensuring that the requested sample rate can be produced natively by the device, otherwise an error will occur.
+ALSA_OUTPUT_THESYCON_DSD_WORKAROUND|If enabled, enables a workaround for a bug in Thesycon USB audio receivers. On these devices, playing DSD512 or PCM causes all subsequent attempts to play other DSD rates to fail, which can be fixed by briefly playing PCM at 44.1 kHz.
+ALSA_OUTPUT_INTEGER_UPSAMPLING|If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.
+ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED|Allows selection of sample rates to be upsampled. If set, only specified values are allowed. The values should respect the same format user for `ALSA_OUTPUT_ALLOWED_FORMATS`
+ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED_PRESET|Preset for `ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED`. Allowed values are `base` (for 44.1kHz and 48.0kHz) and `44` for 44.1kHz only
+ALSA_OUTPUT_DOP|Enables Dsd-Over-Pcm. Possible values: `yes` or `no`. Empty by default: this it lets mpd handle dop setting.
 
-For the meaning, refer to the corresponding values in the first list of environment variables.  
-Note that you can add up to 20 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
+Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#alsa-plugin) for the meaning of the variables.  
 
-#### PulseAudio additional outputs
+##### PulseAudio additional outputs
 
 Remember to setup [user mode](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/user-mode.md) when using PulseAudio outputs, otherwise they won't work.  
 Additional PulseAudio outputs can be configured using the following variables:
 
-VARIABLE|OPTIONAL|DESCRIPTION
-:---|:---:|:---
-PULSE_AUDIO_OUTPUT_CREATE|yes|Set to `yes` if you want to create and additional httpd output
-PULSE_AUDIO_OUTPUT_ENABLED|yes|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
-PULSE_AUDIO_OUTPUT_NAME|yes|The name of the httpd output, defaults to `httpd`
-PULSE_AUDIO_OUTPUT_SINK|yes|Specifies the name of the PulseAudio sink MPD should play on
-PULSE_AUDIO_OUTPUT_MEDIA_ROLE|yes|Media role for the PulseAudio output
-PULSE_AUDIO_OUTPUT_SCALING_FACTOR|yes|Scaling factor for the PulseAudio output
+VARIABLE|DESCRIPTION
+:---|:---
+PULSE_AUDIO_OUTPUT_CREATE|Set to `yes` if you want to create an additional PulseAudio output
+PULSE_AUDIO_OUTPUT_ENABLED|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
+PULSE_AUDIO_OUTPUT_NAME|The name of the PulseAudio output, defaults to `PulseAudio`
+PULSE_AUDIO_OUTPUT_SINK|Specifies the name of the PulseAudio sink MPD should play on
+PULSE_AUDIO_OUTPUT_MEDIA_ROLE|Media role for the PulseAudio output
+PULSE_AUDIO_OUTPUT_SCALING_FACTOR|Scaling factor for the PulseAudio output
 
 Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#pulse) for the meaning of the variables.  
-Note that you can add up to 20 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
-The port number default is calculated for each index, as well as the default output name which is appended with `_1`, `_2`, ... (so it becomes `PulseAudio_1`, `PulseAudio_2`, ...).  
 
-#### HTTPD additional outputs
+##### HTTPD additional outputs
 
 Additional httpd outputs can be configured using the following variables:
 
-VARIABLE|OPTIONAL|DESCRIPTION
-:---|:---:|:---
-HTTPD_OUTPUT_CREATE|yes|Set to `yes` if you want to create and additional httpd output
-HTTPD_OUTPUT_ENABLED|yes|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
-HTTPD_OUTPUT_NAME|yes|The name of the httpd output, defaults to `httpd`
-HTTPD_OUTPUT_PORT|yes|The port for the httpd output stream, defaults to `8000` if not specified
-HTTPD_OUTPUT_BIND_TO_ADDRESS|yes|Allows to specify the bind address
-HTTPD_OUTPUT_ENCODER|yes|The encoder defaults to `wave`, see [here](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins) for other options
-HTTPD_OUTPUT_ENCODER_BITRATE|yes|Encoder bitrate. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
-HTTPD_OUTPUT_ENCODER_QUALITY|yes|Encoder quality. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
-HTTPD_OUTPUT_MAX_CLIENTS|yes|Sets a limit, number of concurrent clients. When set to 0 no limit will apply. Defaults to `0`
-HTTPD_OUTPUT_ALWAYS_ON|yes|If set to `yes`, then MPD attempts to keep this audio output always open. This may be useful for streaming servers, when you don’t want to disconnect all listeners even when playback is accidentally stopped. Defaults to `yes`
-HTTPD_OUTPUT_TAGS|yes|If set to no, then MPD will not send tags to this output. This is only useful for output plugins that can receive tags, for example the httpd output plugin. Defaults to `yes`
-HTTPD_OUTPUT_FORMAT|yes|The output format, defaults to `44100:16:2`
-HTTPD_MIXER_TYPE|yes|Set to `software` if you want to be able to change the volume of the output stream
+VARIABLE|DESCRIPTION
+:---|:---
+HTTPD_OUTPUT_CREATE|Set to `yes` if you want to create an additional httpd output
+HTTPD_OUTPUT_ENABLED|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
+HTTPD_OUTPUT_NAME|The name of the httpd output, defaults to `httpd`
+HTTPD_OUTPUT_PORT|The port for the httpd output stream, defaults to `8000` if not specified
+HTTPD_OUTPUT_BIND_TO_ADDRESS|Allows to specify the bind address
+HTTPD_OUTPUT_ENCODER|The encoder defaults to `wave`, see [here](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins) for other options
+HTTPD_OUTPUT_ENCODER_BITRATE|Encoder bitrate. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
+HTTPD_OUTPUT_ENCODER_QUALITY|Encoder quality. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
+HTTPD_OUTPUT_MAX_CLIENTS|Sets a limit, number of concurrent clients. When set to 0 no limit will apply. Defaults to `0`
+HTTPD_OUTPUT_ALWAYS_ON|If set to `yes`, then MPD attempts to keep this audio output always open. This may be useful for streaming servers, when you don’t want to disconnect all listeners even when playback is accidentally stopped. Defaults to `yes`
+HTTPD_OUTPUT_TAGS|If set to no, then MPD will not send tags to this output. This is only useful for output plugins that can receive tags, for example the httpd output plugin. Defaults to `yes`
+HTTPD_OUTPUT_FORMAT|The output format, defaults to `44100:16:2`
+HTTPD_MIXER_TYPE|Set to `software` if you want to be able to change the volume of the output stream
 
-Note that you can add up to 20 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
-The port number default is calculated for each index, as well as the default output name which is appended with `_1`, `_2`, ... (so it becomes `httpd_1`, `httpd_2`, ...).  
+The port number default is calculated for each index by incrementing the default (`8000`) value.  
 When using multiple httpd outputs, remember to open *all* the relevant ports, not only `8000`, otherwise only the first output will work.
 
-#### Shout additional outputs
+##### Shout additional outputs
 
-VARIABLE|OPTIONAL|DESCRIPTION
-:---|:---:|:---
-SHOUT_OUTPUT_CREATE|yes|Set to `yes` if you want to create and additional httpd output
-SHOUT_OUTPUT_ENABLED|yes|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
-SHOUT_OUTPUT_NAME|yes|The name of the httpd output, defaults to `shout`
-SHOUT_OUTPUT_PROTOCOL|yes|Specifies the protocol that wil be used to connect to the server, can be `icecast2` (default), `icecast1`, `shoutcast`
-SHOUT_OUTPUT_TLS|yes|Specifies what kind of TLS to use, can be `disabled` (default), `auto`, `auto_no_plain`, `rfc2818`, `rfc2817`
-SHOUT_OUTPUT_FORMAT|yes|The output format, defaults to `44100:16:2`
-SHOUT_OUTPUT_ENCODER|yes|The encoder defaults to `vorbis`, see [here](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins) for other options. BITRATE and QUALITY are typically alternative, so do not specify both of them.
-SHOUT_OUTPUT_ENCODER_BITRATE|yes|Encoder bitrate. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
-SHOUT_OUTPUT_ENCODER_QUALITY|yes|Encoder quality. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
-SHOUT_OUTPUT_HOST|yes|Sets the host name of the ShoutCast / IceCast server, defaults to `icecast`, this seems a sensible default in a docker environment
-SHOUT_OUTPUT_PORT|yes|Connect to this port number on the specified host, defaults to `8000`
-SHOUT_OUTPUT_MOUNT|yes|Mounts the MPD stream in the specified URI
-SHOUT_OUTPUT_USER|yes|Sets the user name for submitting the stream to the server, defaults to `source`
-SHOUT_OUTPUT_PASSWORD|yes|Sets the password for submitting the stream to the server, defaults to `hackme`
-SHOUT_OUTPUT_PUBLIC|yes|Specifies whether the stream should be "public", defaults to `no`
-SHOUT_MIXER_TYPE|yes|Set to `software` if you want to be able to change the volume of the output stream
+VARIABLE|DESCRIPTION
+:---|:---
+SHOUT_OUTPUT_CREATE|Set to `yes` if you want to create an additional shout output
+SHOUT_OUTPUT_ENABLED|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
+SHOUT_OUTPUT_NAME|The name of the shout output, defaults to `shout`
+SHOUT_OUTPUT_PROTOCOL|Specifies the protocol that wil be used to connect to the server, can be `icecast2` (default), `icecast1`, `shoutcast`
+SHOUT_OUTPUT_TLS|Specifies what kind of TLS to use, can be `disabled` (default), `auto`, `auto_no_plain`, `rfc2818`, `rfc2817`
+SHOUT_OUTPUT_FORMAT|The output format, defaults to `44100:16:2`
+SHOUT_OUTPUT_ENCODER|The encoder defaults to `vorbis`, see [here](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins) for other options. BITRATE and QUALITY are typically alternative, so do not specify both of them.
+SHOUT_OUTPUT_ENCODER_BITRATE|Encoder bitrate. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
+SHOUT_OUTPUT_ENCODER_QUALITY|Encoder quality. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
+SHOUT_OUTPUT_HOST|Sets the host name of the ShoutCast / IceCast server, defaults to `icecast`, this seems a sensible default in a docker environment
+SHOUT_OUTPUT_PORT|Connect to this port number on the specified host, defaults to `8000`
+SHOUT_OUTPUT_MOUNT|Mounts the MPD stream in the specified URI
+SHOUT_OUTPUT_USER|Sets the user name for submitting the stream to the server, defaults to `source`
+SHOUT_OUTPUT_PASSWORD|Sets the password for submitting the stream to the server, defaults to `hackme`
+SHOUT_OUTPUT_PUBLIC|Specifies whether the stream should be "public", defaults to `no`
+SHOUT_MIXER_TYPE|Set to `software` if you want to be able to change the volume of the output stream
 
-Note that you can add up to 20 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) httpd outputs. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
-The port number default is calculated for each index, as well as the default output name which is appended with `_1`, `_2`, ... (so it becomes `shout_1`, `shout_2`, ...).  
+##### Null additional outputs
+
+Additional Null can be configured using the following variables:
+
+VARIABLE|DESCRIPTION
+:---|:---
+NULL_OUTPUT_CREATE|Set to `yes` if you want to create an additional null output
+NULL_OUTPUT_ENABLED|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
+NULL_OUTPUT_NAME|The name of the Null output, defaults to `null`
+NULL_OUTPUT_SYNC|Sync mode for the `null` output, can be `yes` (default) or `no`
+
+Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#null) for the meaning of the variables.  
 
 ### Examples
 
