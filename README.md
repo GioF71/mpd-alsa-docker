@@ -61,7 +61,7 @@ Keep in mind that the `legacy` branch will not be updated with new features. Onl
 ### Important changes
 
 Starting with release `2023-02-04`, you will not be able to use the deprecated `PULSE` and `ALSA` as `OUTPUT_MODE`. Refer to the next chapter for more information about how to change the configuration. Please note that Alsa and PulseAudio are still supported: you just need to slightly modify your docker configurations.  
-In case of difficulties, you can fall back to the `legacy` image versions, as those will still work with these deprecated configurations.  
+In case of difficulties, you can fall back to the `legacy` image versions (e.g.: `giof71/mpd-alsa:legacy-latest`), as those will still work with these deprecated configurations.  
 
 ### What has changed
 
