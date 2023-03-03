@@ -46,7 +46,7 @@ See [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/prerequisites
 
 ## Get the image
 
-Here is the [repository](https://hub.docker.com/repository/docker/giof71/mpd-alsa) on DockerHub.
+Here is the [repository](https://hub.docker.com/r/giof71/mpd-alsa) on DockerHub.
 
 Getting the image from DockerHub is as simple as typing:
 
