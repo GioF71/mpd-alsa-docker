@@ -34,7 +34,14 @@ Two binaries are available in the container image:
 - /app/bin/compiled/mpd (upstream version)
 - /app/bin/compiled/mpd-ups (patched version)
 
-The current mpd version is `v0.23.12`.
+The current mpd version is `v0.23.12`. I am building using [debian:bullseye-slim](https://hub.docker.com/_/debian/tags?page=1&name=bullseye-slim) (tags: `stable`, `bullseye`), [ubuntu:jammy](https://hub.docker.com/_/ubuntu/tags?page=1&name=jammy) (tags: `ubuntu-current-lts`, `jammy`) and [ubuntu:kinetic](https://hub.docker.com/_/ubuntu/tags?page=1&name=kinetic) (`latest`, `ubuntu-current`, `kinetic`) as base images.  
+The `mpdscribble` version depends on the base image. See the following table:
+
+Base Distro|Tags|MPD Version|MPDScribble Version
+:---|:---|:---|:---
+debian buster|**stable**, bullseye|0.23.12|0.22-6
+ubuntu jammy|jammy, ubuntu-current-lts|0.23.12|0.23.1
+ubuntu kinetic|**latest**, kinetic, ubuntu-current|0.23.12|0.24.2
 
 ## Why
 
