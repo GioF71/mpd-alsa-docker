@@ -2,6 +2,8 @@
 
 Date|Major Changes
 :---|:---
+2023-03-06|Mentioning mpdscribble version in `README.doc`
+2023-03-06|Add `kinetic` build and set to latest
 2023-02-11|Dropped `OUTPUT_MODE` (including *deprecated* `ALSA` mode)
 2023-02-11|Dropped `NULL` as `OUTPUT_MODE`
 2023-02-11|Support additional `NULL` outputs
