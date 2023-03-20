@@ -1,13 +1,20 @@
-ARG BASE_IMAGE_TAG="${BASE_IMAGE_TAG:-bullseye-slim}"
-FROM giof71/mpd-compiler:${BASE_IMAGE_TAG} AS BASE
+ARG BASE_IMAGE="${BASE_IMAGE}"
+#FROM giof71/mpd-compiler:${BASE_IMAGE_TAG} AS BASE
+FROM ${BASE_IMAGE} AS BASE
 
+ARG INTEGER_UPSAMPLING_SUPPORT="${INTEGER_UPSAMPLING_SUPPORT:-no}"
 ARG USE_APT_PROXY
+ARG LIBFMT_PACKAGE_NAME
 
 RUN mkdir -p /app/conf
 
-COPY app/conf/01-apt-proxy /app/conf/
-
 RUN echo "USE_APT_PROXY=["${USE_APT_PROXY}"]"
+RUN echo "INTEGER_UPSAMPLING_SUPPORT=["${INTEGER_UPSAMPLING_SUPPORT}"]"
+RUN echo "LIBFMT_PACKAGE_NAME=["${LIBFMT_PACKAGE_NAME}"]"
+
+RUN echo $INTEGER_UPSAMPLING_SUPPORT > /app/conf/integer_upsampling_support.txt
+
+COPY app/conf/01-apt-proxy /app/conf/
 
 RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
     echo "Builind using apt proxy"; \
@@ -25,7 +32,7 @@ RUN apt-get install -y --no-install-recommends alsa-utils
 RUN apt-get install -y --no-install-recommends libasound2-plugin-equal
 RUN apt-get install -y --no-install-recommends pulseaudio-utils
 RUN apt-get install -y --no-install-recommends mpdscribble
-RUN apt-get install -y --no-install-recommends libfmt7
+RUN apt-get install -y --no-install-recommends $LIBFMT_PACKAGE_NAME
 RUN apt-get install -y --no-install-recommends libsidplay2
 RUN apt-get install -y --no-install-recommends libsidutils0
 RUN apt-get install -y --no-install-recommends libresid-builder-dev

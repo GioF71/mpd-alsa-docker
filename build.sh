@@ -6,13 +6,19 @@
 
 declare -A base_image_tags
 
-base_image_tags[bookworm]=bookworm-slim
-base_image_tags[buster]=buster-slim
-base_image_tags[bullseye]=bullseye-slim
-base_image_tags[jammy]=jammy
-base_image_tags[kinetic]=kinetic
-base_image_tags[focal]=focal
-base_image_tags[bionic]=bionic
+base_image_tags[bullseye]=giof71/mpd-compiler:bullseye
+base_image_tags[jammy]=giof71/mpd-compiler:jammy
+base_image_tags[kinetic]=giof71/mpd-compiler:kinetic
+
+declare -A integer_upsampling_support_dict
+integer_upsampling_support_dict[bullseye]=yes
+integer_upsampling_support_dict[jammy]=yes
+integer_upsampling_support_dict[kinetic]=yes
+
+declare -A libfmt_dict
+libfmt_dict[bullseye]=libfmt7
+libfmt_dict[jammy]=libfmt-dev
+libfmt_dict[kinetic]=libfmt-dev
 
 DEFAULT_BASE_IMAGE=bullseye
 DEFAULT_TAG=local
@@ -44,6 +50,19 @@ if [ -z "${selected_image_tag}" ]; then
   exit 2
 fi
 
+integer_upsampling_support=${integer_upsampling_support_dict[$base_image_tag]}
+if [ -z "${integer_upsampling_support}" ]; then
+  echo "Integer upsampling support table entry missing for ["${base_image_tag}"]"
+  exit 2
+fi
+
+libfmt_package_name=${libfmt_dict[$base_image_tag]}
+if [ -z "${libfmt_package_name}" ]; then
+  echo "LibFmt package table entry missing for ["${base_image_tag}"]"
+  exit 2
+fi
+
+
 if [ -z "${proxy}" ]; then
   proxy="N"
 fi
@@ -60,11 +79,15 @@ if [ -z "${git_branch}" ]; then
   git_branch="${DEFAULT_GIT_VERSION}"
 fi
 
-echo "Base Image Tag: ["$selected_image_tag"]"
-echo "Build Tag: ["$tag"]"
-echo "Proxy: ["$proxy"]"
+echo "Base Image Tag: [$selected_image_tag]"
+echo "Integer Upsampling support: [$integer_upsampling_support]"
+echo "Package name libfmt: [$libfmt_package_name]"
+echo "Build Tag: [$tag]"
+echo "Proxy: [$proxy]"
 
 docker build . \
-    --build-arg BASE_IMAGE_TAG=${selected_image_tag} \
+    --build-arg BASE_IMAGE=${selected_image_tag} \
     --build-arg USE_APT_PROXY=${proxy} \
+    --build-arg INTEGER_UPSAMPLING_SUPPORT=${integer_upsampling_support} \
+    --build-arg LIBFMT_PACKAGE_NAME=${libfmt_package_name} \
     -t giof71/mpd-alsa:$tag
