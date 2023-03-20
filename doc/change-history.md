@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-03-20|Fixed build base image (see issue [#251](https://github.com/GioF71/mpd-alsa-docker/issues/251) issue)
 2023-03-06|Mentioning mpdscribble version in `README.doc`
 2023-03-06|Add `kinetic` build and set to latest
 2023-02-11|Dropped `OUTPUT_MODE` (including *deprecated* `ALSA` mode)
