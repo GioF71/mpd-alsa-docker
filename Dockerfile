@@ -36,6 +36,7 @@ RUN apt-get install -y --no-install-recommends $LIBFMT_PACKAGE_NAME
 RUN apt-get install -y --no-install-recommends libsidplay2
 RUN apt-get install -y --no-install-recommends libsidutils0
 RUN apt-get install -y --no-install-recommends libresid-builder-dev
+RUN apt-get install -y --no-install-recommends libaudiofile-dev
 
 RUN rm -rf /var/lib/apt/lists/*
 
