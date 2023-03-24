@@ -28,8 +28,8 @@ integer_upsampling_support_dict[kinetic]=yes
 declare -A libfmt_dict
 libfmt_dict[local-bullseye]=libfmt7
 libfmt_dict[bullseye]=libfmt7
-libfmt_dict[local-bookworm]=libfmt7
-libfmt_dict[bookworm]=libfmt7
+libfmt_dict[local-bookworm]=libfmt9
+libfmt_dict[bookworm]=libfmt9
 
 DEFAULT_BASE_IMAGE=bullseye
 DEFAULT_TAG=local-bullseye
