@@ -42,7 +42,7 @@ jobs:
 
           declare -A libfmt_dict
           libfmt_dict[bullseye]=libfmt7
-          libfmt_dict[bookworm]=libfmt7
+          libfmt_dict[bookworm]=libfmt9
 
           select_libfmt_package_name=${libfmt_dict[${{ matrix.base }}]}
 
