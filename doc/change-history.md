@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-03-24|Add armv6 support on debian-based images (see issue [#258](https://github.com/GioF71/mpd-alsa-docker/issues/258))
 2023-03-20|Missing libaudiofile-dev (see issue [#253](https://github.com/GioF71/mpd-alsa-docker/issues/253) issue)
 2023-03-20|Fixed build base image (see issue [#251](https://github.com/GioF71/mpd-alsa-docker/issues/251) issue)
 2023-03-06|Mentioning mpdscribble version in `README.doc`

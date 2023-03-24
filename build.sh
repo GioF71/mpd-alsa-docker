@@ -6,22 +6,33 @@
 
 declare -A base_image_tags
 
+base_image_tags[local-bullseye]=giof71/mpd-compiler:local-bullseye
+base_image_tags[local-bookworm]=giof71/mpd-compiler:local-bookworm
+base_image_tags[local-jammy]=giof71/mpd-compiler:local-jammy
+base_image_tags[local-kinetic]=giof71/mpd-compiler:local-kinetic
 base_image_tags[bullseye]=giof71/mpd-compiler:bullseye
+base_image_tags[bookworm]=giof71/mpd-compiler:bookworm
 base_image_tags[jammy]=giof71/mpd-compiler:jammy
 base_image_tags[kinetic]=giof71/mpd-compiler:kinetic
 
 declare -A integer_upsampling_support_dict
+integer_upsampling_support_dict[local-bookworm]=yes
+integer_upsampling_support_dict[local-bullseye]=yes
+integer_upsampling_support_dict[local-jammy]=yes
+integer_upsampling_support_dict[local-kinetic]=yes
+integer_upsampling_support_dict[bookworm]=yes
 integer_upsampling_support_dict[bullseye]=yes
 integer_upsampling_support_dict[jammy]=yes
 integer_upsampling_support_dict[kinetic]=yes
 
 declare -A libfmt_dict
+libfmt_dict[local-bullseye]=libfmt7
 libfmt_dict[bullseye]=libfmt7
-libfmt_dict[jammy]=libfmt-dev
-libfmt_dict[kinetic]=libfmt-dev
+libfmt_dict[local-bookworm]=libfmt7
+libfmt_dict[bookworm]=libfmt7
 
 DEFAULT_BASE_IMAGE=bullseye
-DEFAULT_TAG=local
+DEFAULT_TAG=local-bullseye
 DEFAULT_USE_PROXY=N
 
 tag=$DEFAULT_TAG
@@ -58,8 +69,8 @@ fi
 
 libfmt_package_name=${libfmt_dict[$base_image_tag]}
 if [ -z "${libfmt_package_name}" ]; then
-  echo "LibFmt package table entry missing for ["${base_image_tag}"]"
-  exit 2
+  echo "LibFmt package table entry missing for ["${base_image_tag}"], probably not needed"
+  #exit 2
 fi
 
 
