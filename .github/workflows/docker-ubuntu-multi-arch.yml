@@ -1,4 +1,4 @@
-name: Publish multi-arch Docker images
+name: Publish multi-arch ubuntu-based Docker images
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        base: ["bullseye", "jammy", "kinetic"]
+        base: ["jammy", "kinetic"]
 
     steps:
       - name: Checkout
@@ -49,22 +49,16 @@ jobs:
           select_libfmt_package_name=${libfmt_dict[${{ matrix.base }}]}
 
           declare -A base_image_from_matrix
-          base_image_from_matrix[bookworm]=debian:bookworm-slim
-          base_image_from_matrix[buster]=debian:buster-slim
-          base_image_from_matrix[bullseye]=debian:bullseye-slim
           base_image_from_matrix[bionic]=ubuntu:bionic
           base_image_from_matrix[focal]=ubuntu:focal
           base_image_from_matrix[jammy]=ubuntu:jammy
           base_image_from_matrix[kinetic]=ubuntu:kinetic
 
           declare -A special_tags
-          special_tags[bullseye]="${image_name}:stable"
-          special_tags[bookworm]="${image_name}:edge"
-          special_tags[buster]="${image_name}:legacy,${image_name}:old-stable"
           special_tags[bionic]="${image_name}:ubuntu-old-lts"
           special_tags[focal]="${image_name}:ubuntu-previous-lts"
           special_tags[jammy]="${image_name}:ubuntu-current-lts"
-          special_tags[kinetic]="${image_name}:ubuntu-current,${image_name}:latest"
+          special_tags[kinetic]="${image_name}:ubuntu-current"
 
           base_image=${base_image_from_matrix[${{ matrix.base }}]}
 

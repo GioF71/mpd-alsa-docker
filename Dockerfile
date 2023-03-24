@@ -11,8 +11,6 @@ RUN echo "USE_APT_PROXY=["${USE_APT_PROXY}"]"
 RUN echo "INTEGER_UPSAMPLING_SUPPORT=["${INTEGER_UPSAMPLING_SUPPORT}"]"
 RUN echo "LIBFMT_PACKAGE_NAME=["${LIBFMT_PACKAGE_NAME}"]"
 
-RUN echo $INTEGER_UPSAMPLING_SUPPORT > /app/conf/integer_upsampling_support.txt
-
 COPY app/conf/01-apt-proxy /app/conf/
 
 RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
@@ -25,13 +23,19 @@ RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
-RUN apt-get upgrade -y
+#RUN apt-get upgrade -y
+
+# upstream mpd is installed anyway
 RUN apt-get install -y mpd
+
+# required libraries: we are installing these for support of
+# the build scenario when base image is not giof71/mpd-compiler
 RUN apt-get install -y --no-install-recommends alsa-utils
-RUN apt-get install -y --no-install-recommends libasound2-plugin-equal
 RUN apt-get install -y --no-install-recommends pulseaudio-utils
+RUN apt-get install -y --no-install-recommends libasound2-plugin-equal
 RUN apt-get install -y --no-install-recommends mpdscribble
-RUN apt-get install -y --no-install-recommends $LIBFMT_PACKAGE_NAME
+
+RUN if [ -n "$LIBFMT_PACKAGE_NAME" ]; then apt-get install -y --no-install-recommends $LIBFMT_PACKAGE_NAME; fi
 RUN apt-get install -y --no-install-recommends libsidplay2
 RUN apt-get install -y --no-install-recommends libsidutils0
 RUN apt-get install -y --no-install-recommends libresid-builder-dev
