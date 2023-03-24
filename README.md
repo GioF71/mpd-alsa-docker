@@ -40,7 +40,7 @@ The `mpdscribble` version depends on the base image. See the following table:
 
 Base Distro|Tags|MPD Version|MPDScribble Version
 :---|:---|:---|:---
-debian bullseye|**latest**,**stable**, bullseye|0.23.12|0.24-2
+debian bullseye|**latest**, **stable**, bullseye|0.23.12|0.24-2
 debian bookworm|**edge**, bookworm|0.23.12|0.22-6
 ubuntu jammy|jammy, ubuntu-current-lts|0.23.12|0.23-1
 ubuntu kinetic|kinetic, ubuntu-current|0.23.12|0.24-2
