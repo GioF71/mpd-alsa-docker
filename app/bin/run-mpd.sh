@@ -10,10 +10,48 @@
 # 8 Invalid default type
 # 9 Invalid parameter
 # 10 Missing mandatory parameter
+# 11 Missing binaries
 
-STABLE_MPD_BINARY=/app/bin/compiled/mpd
-UPSAMPLING_MPD_BINARY=/app/bin/compiled/mpd-ups
-REPO_MPD_BINARY=/usr/bin/mpd
+CONF_INTEGER_UPSAMPLING_SUPPORT_FILE="/app/conf/integer_upsampling_support.txt"
+COMPILED_MPD_PATH="/app/conf/mpd-compiled-path.txt"
+COMPILED_UPS_MPD_PATH="/app/conf/mpd-compiled-ups-path.txt"
+INTEGER_UPSAMPLING_SUPPORTED="no"
+
+REPO_MPD_BINARY="/usr/bin/mpd"
+REPO_MPD_BINARY_AVAILABLE="no"
+COMPILED_MPD_BINARY=""
+COMPILED_UPS_MPD_BINARY=""
+
+if [ -f "$CONF_INTEGER_UPSAMPLING_SUPPORT_FILE" ]; then
+    INTEGER_UPSAMPLING_SUPPORTED=`cat $CONF_INTEGER_UPSAMPLING_SUPPORT_FILE`
+    if [ -f "$COMPILED_MPD_PATH" ]; then
+        COMPILED_MPD_BINARY=`cat $COMPILED_MPD_PATH`
+    fi
+    if [[ "${INTEGER_UPSAMPLING_SUPPORTED^^}" == "YES" ]]; then
+        if [ -f "$COMPILED_UPS_MPD_PATH" ]; then
+            COMPILED_UPS_MPD_BINARY=`cat $COMPILED_UPS_MPD_PATH`
+        fi
+    fi
+fi
+
+if [ -f "${REPO_MPD_BINARY}" ]; then
+    echo "MPD from repo is available at [${REPO_MPD_BINARY}]"
+    REPO_MPD_BINARY_AVAILABLE="yes"
+else
+    echo "MPD from repo is not available"
+fi
+
+echo "Integer upsampling supported: [${INTEGER_UPSAMPLING_SUPPORTED}]"
+echo "Compiled mpd binary: [${COMPILED_MPD_BINARY}]"
+echo "Compiled mpd ups binary: [${COMPILED_UPS_MPD_BINARY}]"
+
+if [[ -z "${REPO_MPD_BINARY}" && -z "${COMPILED_MPD_BINARY}" ]]; then
+    echo "NO BINARIES AVAILABLE, exiting"
+    exit 11
+fi
+
+STABLE_MPD_BINARY=${COMPILED_MPD_BINARY}
+UPSAMPLING_MPD_BINARY=${COMPILED_UPS_MPD_BINARY}
 
 DEFAULT_MAX_OUTPUTS_BY_TYPE=20
 DEFAULT_OUTPUT_MODE=alsa
@@ -27,7 +65,23 @@ else
 fi
 echo "MAX_OUTPUTS=[$max_outputs_by_type]"
 
-mpd_binary=$STABLE_MPD_BINARY
+if [[ ! "${FORCE_REPO_BINARY^^}" == "YES" ]]; then
+    if [ -n "${STABLE_MPD_BINARY}" ]; then
+        mpd_binary=$STABLE_MPD_BINARY
+    else
+        mpd_binary=$REPO_MPD_BINARY
+    fi
+else
+    # binary repo must be available
+    if [ "${REPO_MPD_BINARY_AVAILABLE^^}" == "YES" ]; then
+        mpd_binary=$REPO_MPD_BINARY
+    else
+        echo "Repo binary forced but not available!"
+        exit 11
+    fi
+fi
+
+echo "Selected binary: [${mpd_binary}]"
 
 declare -A file_dict
 
