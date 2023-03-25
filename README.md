@@ -142,6 +142,7 @@ MAX_ADDITIONAL_OUTPUTS_BY_TYPE|The maximum number of outputs by type, defaults t
 RESTORE_PAUSED|If set to `yes`, then MPD is put into pause mode instead of starting playback after startup. Default is `no`.
 STATE_FILE_INTERVAL|Auto-save the state file this number of seconds after each state change, defaults to `10` seconds
 ENFORCE_PLAYER_STATE|If set to `yes`, it will remove player state information from the state file, so the player state will only depend on the environment variables. Defaults to `yes`
+FORCE_REPO_BINARY|If set to `yes`, the binary from the distro repository will be used
 STARTUP_DELAY_SEC|Delay before starting the application in seconds, defaults to `0`.
 
 #### SOXR Plugin

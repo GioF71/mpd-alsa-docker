@@ -239,9 +239,17 @@ build_alsa() {
         # see if the ups version must be enforced
         c_integer_upsampling=$(get_named_env "ALSA_OUTPUT_INTEGER_UPSAMPLING" $idx)
         echo "ALSA OUTPUT [$idx] requires INTEGER_UPSAMPLING [${c_integer_upsampling}]"
-        if [[ "${c_integer_upsampling^^}" == "YES" || "${c_integer_upsampling^^}" == "Y" ]]; then
-            echo "Setting mpd_binary to [${UPSAMPLING_MPD_BINARY}]"
-            mpd_binary=$UPSAMPLING_MPD_BINARY
+        if [ ! "${FORCE_REPO_BINARY^^}" == "YES" ]; then
+            if [ -n "${UPSAMPLING_MPD_BINARY}" ]; then
+                if [[ "${c_integer_upsampling^^}" == "YES" || "${c_integer_upsampling^^}" == "Y" ]]; then
+                    echo "Setting mpd_binary to [${UPSAMPLING_MPD_BINARY}]"
+                    mpd_binary=$UPSAMPLING_MPD_BINARY
+                fi
+            else
+                echo "MPD binary with integer upsampling support is not available"
+            fi
+        else
+            echo "MPD binary forced to repo binary"
         fi
     fi
 }

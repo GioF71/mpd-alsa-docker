@@ -211,6 +211,8 @@ ENV AUDIO_BUFFER_SIZE ""
 
 ENV MAX_ADDITIONAL_OUTPUTS_BY_TYPE ""
 
+ENV FORCE_REPO_BINARY ""
+
 ENV STARTUP_DELAY_SEC ""
 
 COPY app/assets/pulse-client-template.conf /app/assets/pulse-client-template.conf
