@@ -25,30 +25,6 @@ First and foremost, the reference to the awesome projects:
 Source: [GitHub](https://github.com/giof71/mpd-alsa-docker)  
 Images: [DockerHub](https://hub.docker.com/r/giof71/mpd-alsa)
 
-## MPD Source code
-
-The source code is in this GitHub [repo](https://github.com/GioF71/MPD).  
-The `version-0.23.12` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.23.12.  
-The `version-0.23.12-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
-Two binaries are available in the container image:
-
-- /app/bin/compiled/mpd (upstream version)
-- /app/bin/compiled/mpd-ups (patched version)
-
-The current mpd version is `v0.23.12`. I am building using [debian:bullseye-slim](https://hub.docker.com/_/debian/tags?page=1&name=bullseye-slim) (tags: `stable`, `bullseye`), [ubuntu:jammy](https://hub.docker.com/_/ubuntu/tags?page=1&name=jammy) (tags: `ubuntu-current-lts`, `jammy`) and [ubuntu:kinetic](https://hub.docker.com/_/ubuntu/tags?page=1&name=kinetic) (`latest`, `ubuntu-current`, `kinetic`) as base images.  
-The `mpdscribble` version depends on the base image. See the following table:
-
-Base Image|Tags|Compiled MPD version|Repo MPD version|MPDScribble version
-:---|:---|:---|:---|:---
-giof71/mpd-compiler:bookworm|**edge**, bookworm|0.23.12|0.23.12|0.24
-giof71/mpd-compiler:bullseye|**latest**, **stable**, bullseye|0.23.12|0.22.6|0.22
-giof71/mpd-compiler:kinetic|kinetic, ubuntu-current|0.23.12|0.23.9|0.24
-giof71/mpd-compiler:jammy|jammy, ubuntu-current-lts|0.23.12|0.23.5|0.23
-debian:bookworm-slim|**vanilla-edge**, vanilla-bookworm|-|0.23.12|0.24
-debian:bullseye-slim|**vanilla-latest**, **vanilla-stable**, **vanilla**, vanilla-bullseye|-|0.22.6|0.22
-ubuntu:kinetic|vanilla-kinetic, vanilla-ubuntu-current|-|0.23.9|0.24
-ubuntu:jammy|vanilla-jammy, vanilla-ubuntu-current-lts|-|0.23.5|0.23
-
 ## Why
 
 I prepared this Dockerfile because I wanted to be able to install mpd easily on any machine (provided the architecture is amd64 or arm). Also I wanted to be able to configure and govern the parameters easily, allowing multiple output, also of different types.
@@ -68,6 +44,33 @@ Getting the image from DockerHub is as simple as typing:
 Legacy support `OUTPUT_MODE`, is still available in the `legacy` branch, as well as on the images tagged with the `legacy` prefix.  
 You might want to use those releases as a stop-gap solution should you encounter issues migrating to the new configuration methods.  
 Keep in mind that the `legacy` branch will not be updated with new features. Only relevant bugfix changes will be ported there.  
+
+## MPD Source code
+
+The source code for the patched MPD is in this GitHub [repo](https://github.com/GioF71/MPD).  
+The `version-0.23.12` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.23.12.  
+The `version-0.23.12-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
+Two binaries are available in the container image:
+
+- /app/bin/compiled/mpd (upstream version)
+- /app/bin/compiled/mpd-ups (patched version)
+
+The current mpd version is `v0.23.12` when using [giof71/mpd-compiler-docker](https://github.com/GioF71/mpd-compiler-docker) as the base image (Docker Repo [here](https://hub.docker.com/r/giof71/mpd-compiler)). The repo binary is installed also in this case.  
+Vanilla versions only have the repo binary.  
+The `mpdscribble` version depends on the base image. See the following table:
+
+### Image tags
+
+Base Image|Tags|Compiled MPD version|Repo MPD version|MPDScribble version
+:---|:---|:---|:---|:---
+giof71/mpd-compiler:bookworm|**edge**, bookworm|0.23.12|0.23.12|0.24
+giof71/mpd-compiler:bullseye|**latest**, **stable**, bullseye|0.23.12|0.22.6|0.22
+giof71/mpd-compiler:kinetic|kinetic, ubuntu-current|0.23.12|0.23.9|0.24
+giof71/mpd-compiler:jammy|jammy, ubuntu-current-lts|0.23.12|0.23.5|0.23
+debian:bookworm-slim|**vanilla-edge**, vanilla-bookworm|-|0.23.12|0.24
+debian:bullseye-slim|**vanilla-latest**, **vanilla-stable**, **vanilla**, vanilla-bullseye|-|0.22.6|0.22
+ubuntu:kinetic|vanilla-kinetic, vanilla-ubuntu-current|-|0.23.9|0.24
+ubuntu:jammy|vanilla-jammy, vanilla-ubuntu-current-lts|-|0.23.5|0.23
 
 ## Usage
 
