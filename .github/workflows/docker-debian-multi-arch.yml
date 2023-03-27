@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        base: ["bullseye", "bookworm"]
+        base: ["bookworm", "bullseye", "vanilla-bookworm", "vanilla-bullseye"]
 
     steps:
       - name: Checkout
@@ -34,32 +34,42 @@ jobs:
           distro_id=${{ matrix.base }}
           image_name=${{secrets.DOCKER_USERNAME}}/mpd-alsa
 
-          declare -A mpd_compiler_base_images
-          mpd_compiler_base_images[bullseye]="giof71/mpd-compiler:bullseye"
-          mpd_compiler_base_images[bookworm]="giof71/mpd-compiler:bookworm"
+          declare -A base_images_dict
+          base_images_dict[bookworm]="giof71/mpd-compiler:bookworm"
+          base_images_dict[bullseye]="giof71/mpd-compiler:bullseye"
+          base_images_dict[buster]="giof71/mpd-compiler:buster"
+          base_images_dict[vanilla-bookworm]="debian:bookworm-slim"
+          base_images_dict[vanilla-bullseye]="debian:bullseye-slim"
+          base_images_dict[vanilla-buster]="debian:buster-slim"
 
-          select_compiler_image=${mpd_compiler_base_images[${{ matrix.base }}]}
+          select_base_image=${base_images_dict[${{ matrix.base }}]}
 
-          declare -A libfmt_dict
-          libfmt_dict[bullseye]=libfmt7
-          libfmt_dict[bookworm]=libfmt9
-
-          select_libfmt_package_name=${libfmt_dict[${{ matrix.base }}]}
-
-          declare -A base_image_from_matrix
-          base_image_from_matrix[bookworm]=debian:bookworm-slim
-          base_image_from_matrix[bullseye]=debian:bullseye-slim
-          base_image_from_matrix[buster]=debian:buster-slim
+          declare -A upstream_image_from_matrix
+          upstream_image_from_matrix[bookworm]=debian:bookworm-slim
+          upstream_image_from_matrix[bullseye]=debian:bullseye-slim
+          upstream_image_from_matrix[buster]=debian:buster-slim
+          upstream_image_from_matrix[vanilla-bookworm]=debian:bookworm-slim
+          upstream_image_from_matrix[vanilla-bullseye]=debian:bullseye-slim
+          upstream_image_from_matrix[vanilla-buster]=debian:buster-slim
 
           declare -A special_tags
-          special_tags[bullseye]="${image_name}:stable,${image_name}:latest"
           special_tags[bookworm]="${image_name}:edge"
+          special_tags[bullseye]="${image_name}:stable,${image_name}:latest"
           special_tags[buster]="${image_name}:legacy,${image_name}:old-stable"
+          special_tags[vanilla-bookworm]="${image_name}:vanilla-edge"
+          special_tags[vanilla-bullseye]="${image_name}:vanilla-stable,${image_name}:vanila-latest,${image_name}:vanila"
+          special_tags[vanilla-buster]="${image_name}:vanilla-legacy,${image_name}:vanilla-old-stable"
 
-          base_image=${base_image_from_matrix[${{ matrix.base }}]}
+          declare -A mpd_version_dict
+          mpd_version_dict[bookworm]=0.23.12
+          mpd_version_dict[bullseye]=0.23.12
+          mpd_version_dict[buster]=0.23.12
+          mpd_version_dict[vanilla-bookworm]=0.23.12
+          mpd_version_dict[vanilla-bullseye]=0.22.6
+          mpd_version_dict[vanilla-buster]=0.21.5
 
-          # mpd version is 0.23.12 (compiled)
-          mpd_version=0.23.12
+          # select mpd version
+          mpd_version=${mpd_version_dict["${distro_id}"]};
 
           tags=""
           if [ "${ref_type}" = "branch" ]; then
@@ -112,9 +122,8 @@ jobs:
           fi
           echo "Building tags: ["${tags}"]"
           echo "RELEASE_TAGS=${tags}" >> $GITHUB_ENV
-          echo "BASE_IMAGE=${select_compiler_image}" >> $GITHUB_ENV
+          echo "BASE_IMAGE=${select_base_image}" >> $GITHUB_ENV
           echo "INTEGER_UPSAMPLING_SUPPORT=yes" >> $GITHUB_ENV
-          echo "LIBFMT_PACKAGE_NAME=${select_libfmt_package_name}" >> $GITHUB_ENV
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -138,7 +147,6 @@ jobs:
           build-args: |
             BASE_IMAGE=${{ env.BASE_IMAGE }}
             INTEGER_UPSAMPLING_SUPPORT=${{ env.INTEGER_UPSAMPLING_SUPPORT }}
-            LIBFMT_PACKAGE_NAME=${{ env.LIBFMT_PACKAGE_NAME }}
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8
           push: true
           tags: ${{ env.RELEASE_TAGS }}
