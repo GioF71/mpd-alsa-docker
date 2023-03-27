@@ -3,13 +3,11 @@ FROM ${BASE_IMAGE} AS BASE
 
 ARG INTEGER_UPSAMPLING_SUPPORT="${INTEGER_UPSAMPLING_SUPPORT:-no}"
 ARG USE_APT_PROXY
-ARG LIBFMT_PACKAGE_NAME
 
 RUN mkdir -p /app/conf
 
 RUN echo "USE_APT_PROXY=["${USE_APT_PROXY}"]"
 RUN echo "INTEGER_UPSAMPLING_SUPPORT=["${INTEGER_UPSAMPLING_SUPPORT}"]"
-RUN echo "LIBFMT_PACKAGE_NAME=["${LIBFMT_PACKAGE_NAME}"]"
 
 COPY app/conf/01-apt-proxy /app/conf/
 
@@ -25,21 +23,16 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 #RUN apt-get upgrade -y
 
-# upstream mpd is installed anyway
+# install mpd from repo
 RUN apt-get install -y mpd
 
-# required libraries: we are installing these for support of
-# the build scenario when base image is not giof71/mpd-compiler
+# install required libraries
 RUN apt-get install -y --no-install-recommends alsa-utils
 RUN apt-get install -y --no-install-recommends pulseaudio-utils
 RUN apt-get install -y --no-install-recommends libasound2-plugin-equal
-RUN apt-get install -y --no-install-recommends mpdscribble
 
-RUN if [ -n "$LIBFMT_PACKAGE_NAME" ]; then apt-get install -y --no-install-recommends $LIBFMT_PACKAGE_NAME; fi
-RUN apt-get install -y --no-install-recommends libsidplay2
-RUN apt-get install -y --no-install-recommends libsidutils0
-RUN apt-get install -y --no-install-recommends libresid-builder-dev
-RUN apt-get install -y --no-install-recommends libaudiofile-dev
+# install scrobbler (mpdscribbler)
+RUN apt-get install -y --no-install-recommends mpdscribble
 
 RUN rm -rf /var/lib/apt/lists/*
 
