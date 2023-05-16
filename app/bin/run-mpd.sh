@@ -304,6 +304,11 @@ if [ -n "${ZEROCONF_NAME}" ]; then
     echo "zeroconf_name \"${ZEROCONF_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 
+## permissions
+if [[ -n "${DEFAULT_PERMISSIONS}" ]]; then
+    echo "default_permissions \"${DEFAULT_PERMISSIONS}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+
 ## disable wildmidi decoder
 echo "decoder {" >> $MPD_ALSA_CONFIG_FILE
 echo "  plugin \"wildmidi\"" >> $MPD_ALSA_CONFIG_FILE
