@@ -208,6 +208,11 @@ ENV FORCE_REPO_BINARY ""
 
 ENV STARTUP_DELAY_SEC ""
 
+ENV DEFAULT_PERMISSIONS ""
+ENV HOST_PERMISSIONS ""
+ENV LOCAL_PERMISSIONS ""
+ENV PASSWORD ""
+
 COPY app/assets/pulse-client-template.conf /app/assets/pulse-client-template.conf
 COPY app/assets/alsa-presets.conf /app/assets/alsa-presets.conf
 COPY app/conf/mpd-sample.conf /app/conf/

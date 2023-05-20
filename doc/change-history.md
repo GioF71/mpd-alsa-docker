@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-05-20|Add support for permissions (see issue[#284](https://github.com/GioF71/mpd-alsa-docker/issues/284))
 2023-04-04|Alsa presets with `-sw` specify software volume (see issue[#281](https://github.com/GioF71/mpd-alsa-docker/issues/281))
 2023-03-27|Add `vanilla` images (see issue[#272](https://github.com/GioF71/mpd-alsa-docker/issues/272))
 2023-03-25|Add support for selection of repo binary (`FORCE_REPO_BINARY`)

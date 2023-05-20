@@ -12,6 +12,18 @@
 # 10 Missing mandatory parameter
 # 11 Missing binaries
 
+add_simple_parameter() {
+    out_file=$1
+    idx=$2
+    env_var_name=$3
+    param_name=$4
+    p_val=$(get_named_env $env_var_name $idx)
+    echo "${env_var_name} at index $i is set to ${p_val}"
+    if [ -n "${p_val}" ]; then
+        echo "${param_name} \"${p_val}\"" >> $out_file
+    fi
+}
+
 CONF_INTEGER_UPSAMPLING_SUPPORT_FILE="/app/conf/integer_upsampling_support.txt"
 COMPILED_MPD_PATH="/app/conf/mpd-compiled-path.txt"
 COMPILED_UPS_MPD_PATH="/app/conf/mpd-compiled-ups-path.txt"
@@ -21,6 +33,13 @@ REPO_MPD_BINARY="/usr/bin/mpd"
 REPO_MPD_BINARY_AVAILABLE="no"
 COMPILED_MPD_BINARY=""
 COMPILED_UPS_MPD_BINARY=""
+
+DEFAULT_MAX_PERMISSIONS=10
+max_permissions=$DEFAULT_MAX_PERMISSIONS
+
+if [[ -n "${MAX_PERMISSIONS}" ]]; then
+    max_permissions=${MAX_PERMISSIONS}
+fi
 
 if [ -f "$CONF_INTEGER_UPSAMPLING_SUPPORT_FILE" ]; then
     INTEGER_UPSAMPLING_SUPPORTED=`cat $CONF_INTEGER_UPSAMPLING_SUPPORT_FILE`
@@ -303,6 +322,30 @@ echo "zeroconf_enabled \"${ZEROCONF_ENABLED}\"" >> $MPD_ALSA_CONFIG_FILE
 if [ -n "${ZEROCONF_NAME}" ]; then
     echo "zeroconf_name \"${ZEROCONF_NAME}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
+
+## permissions
+if [[ -n "${DEFAULT_PERMISSIONS}" ]]; then
+    echo "default_permissions \"${DEFAULT_PERMISSIONS}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+
+# local_permissions
+if [[ -n "${LOCAL_PERMISSIONS}" ]]; then
+    echo "local_permissions \"${LOCAL_PERMISSIONS}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+
+# host_permissions
+for i in $( eval echo {0..$max_permissions} )
+do
+    echo "Processing HOST_PERMISSIONS index $i"
+    add_simple_parameter $MPD_ALSA_CONFIG_FILE $i "HOST_PERMISSIONS" "host_permissions" 
+done
+
+# passwords
+for i in $( eval echo {0..$max_permissions} )
+do
+    echo "Processing PASSWORD index $i"
+    add_simple_parameter $MPD_ALSA_CONFIG_FILE $i "PASSWORD" "password" 
+done
 
 ## disable wildmidi decoder
 echo "decoder {" >> $MPD_ALSA_CONFIG_FILE

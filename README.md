@@ -150,6 +150,11 @@ RESTORE_PAUSED|If set to `yes`, then MPD is put into pause mode instead of start
 STATE_FILE_INTERVAL|Auto-save the state file this number of seconds after each state change, defaults to `10` seconds
 ENFORCE_PLAYER_STATE|If set to `yes`, it will remove player state information from the state file, so the player state will only depend on the environment variables. Defaults to `yes`
 FORCE_REPO_BINARY|If set to `yes`, the binary from the distro repository will be used
+DEFAULT_PERMISSIONS|Sets `default_permissions`, see [here](https://mpd.readthedocs.io/en/stable/user.html#permissions-and-passwords)
+LOCAL_PERMISSIONS|Sets `local_permissions`, see [here](https://mpd.readthedocs.io/en/stable/user.html#permissions-and-passwords)
+HOST_PERMISSIONS|Adds a `host_permissions`, you can add multiple (up to `MAX_PERMISSIONS`), append `_1`, `_2`, etc to the variable name for additional entries, see [here](https://mpd.readthedocs.io/en/stable/user.html#permissions-and-passwords)
+PASSWORD|Adds a `password`, you can add multiple (up to `MAX_PERMISSIONS`), append `_1`, `_2`, etc to the variable name for additional entries, see [here](https://mpd.readthedocs.io/en/stable/user.html#permissions-and-passwords)
+MAX_PERMISSIONS|Specify the maximum number of host_permissions and passwords, defaults to `10`
 STARTUP_DELAY_SEC|Delay before starting the application in seconds, defaults to `0`.
 
 #### SOXR Plugin
