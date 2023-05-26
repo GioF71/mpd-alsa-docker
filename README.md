@@ -55,7 +55,7 @@ Two binaries are available in the container image:
 - /app/bin/compiled/mpd (upstream version)
 - /app/bin/compiled/mpd-ups (patched version)
 
-The current mpd version is `v0.23.12` when using [giof71/mpd-compiler-docker](https://github.com/GioF71/mpd-compiler-docker) as the base image (Docker Repo [here](https://hub.docker.com/r/giof71/mpd-compiler)). The repo binary is installed also in this case.  
+The current mpd version is `v0.23.13` when using [giof71/mpd-compiler-docker](https://github.com/GioF71/mpd-compiler-docker) as the base image (Docker Repo [here](https://hub.docker.com/r/giof71/mpd-compiler)). The repo binary is installed also in this case.  
 Vanilla versions only have the repo binary.  
 The `mpdscribble` version depends on the base image. See the following table:
 
