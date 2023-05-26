@@ -55,8 +55,8 @@ jobs:
           special_tags[vanilla-jammy]="${image_name}:vanilla-ubuntu-current-lts"
 
           declare -A mpd_version_dict
-          mpd_version_dict[kinetic]=0.23.12
-          mpd_version_dict[jammy]=0.23.12
+          mpd_version_dict[kinetic]=0.23.13
+          mpd_version_dict[jammy]=0.23.13
           mpd_version_dict[vanilla-kinetic]=0.23.9
           mpd_version_dict[vanilla-jammy]=0.23.5
 

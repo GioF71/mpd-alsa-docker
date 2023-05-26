@@ -61,9 +61,9 @@ jobs:
           special_tags[vanilla-buster]="${image_name}:vanilla-legacy,${image_name}:vanilla-old-stable"
 
           declare -A mpd_version_dict
-          mpd_version_dict[bookworm]=0.23.12
-          mpd_version_dict[bullseye]=0.23.12
-          mpd_version_dict[buster]=0.23.12
+          mpd_version_dict[bookworm]=0.23.13
+          mpd_version_dict[bullseye]=0.23.13
+          mpd_version_dict[buster]=0.23.13
           mpd_version_dict[vanilla-bookworm]=0.23.12
           mpd_version_dict[vanilla-bullseye]=0.22.6
           mpd_version_dict[vanilla-buster]=0.21.5

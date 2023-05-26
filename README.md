@@ -48,8 +48,8 @@ Keep in mind that the `legacy` branch will not be updated with new features. Onl
 ## MPD Source code
 
 The source code for the patched MPD is in this GitHub [repo](https://github.com/GioF71/MPD).  
-The `version-0.23.12` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.23.12.  
-The `version-0.23.12-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
+The `version-0.23.13` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.23.12.  
+The `version-0.23.13-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
 Two binaries are available in the container image:
 
 - /app/bin/compiled/mpd (upstream version)
@@ -63,10 +63,10 @@ The `mpdscribble` version depends on the base image. See the following table:
 
 Base Image|Tags|Compiled MPD version|Repo MPD version|MPDScribble version
 :---|:---|:---|:---|:---
-giof71/mpd-compiler:bookworm|**edge**, bookworm|0.23.12|0.23.12|0.24
-giof71/mpd-compiler:bullseye|**latest**, **stable**, bullseye|0.23.12|0.22.6|0.22
-giof71/mpd-compiler:kinetic|kinetic, ubuntu-current|0.23.12|0.23.9|0.24
-giof71/mpd-compiler:jammy|jammy, ubuntu-current-lts|0.23.12|0.23.5|0.23
+giof71/mpd-compiler:bookworm|**edge**, bookworm|0.23.13|0.23.12|0.24
+giof71/mpd-compiler:bullseye|**latest**, **stable**, bullseye|0.23.13|0.22.6|0.22
+giof71/mpd-compiler:kinetic|kinetic, ubuntu-current|0.23.13|0.23.9|0.24
+giof71/mpd-compiler:jammy|jammy, ubuntu-current-lts|0.23.13|0.23.5|0.23
 debian:bookworm-slim|**vanilla-edge**, vanilla-bookworm|-|0.23.12|0.24
 debian:bullseye-slim|**vanilla-latest**, **vanilla-stable**, **vanilla**, vanilla-bullseye|-|0.22.6|0.22
 ubuntu:kinetic|vanilla-kinetic, vanilla-ubuntu-current|-|0.23.9|0.24
