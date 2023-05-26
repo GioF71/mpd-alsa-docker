@@ -63,7 +63,7 @@ The `mpdscribble` version depends on the base image. See the following table:
 
 Base Image|Tags|Compiled MPD version|Repo MPD version|MPDScribble version
 :---|:---|:---|:---|:---
-giof71/mpd-compiler:bookworm|**edge**, bookworm|0.23.13|0.23.12|0.24
+giof71/mpd-compiler:bookworm|**edge**, bookworm|0.23.13|0.23.12 [but please check](https://packages.debian.org/bookworm/mpd)|0.24
 giof71/mpd-compiler:bullseye|**latest**, **stable**, bullseye|0.23.13|0.22.6|0.22
 giof71/mpd-compiler:kinetic|kinetic, ubuntu-current|0.23.13|0.23.9|0.24
 giof71/mpd-compiler:jammy|jammy, ubuntu-current-lts|0.23.13|0.23.5|0.23
