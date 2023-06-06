@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-06-06|Add support for ubuntu `lunar` (see issue [#289](https://github.com/GioF71/mpd-alsa-docker/issues/289))
 2023-05-26|Bump to mpd version `v0.23.13`
 2023-05-20|Add support for permissions (see issue [#284](https://github.com/GioF71/mpd-alsa-docker/issues/284))
 2023-04-04|Alsa presets with `-sw` specify software volume (see issue [#281](https://github.com/GioF71/mpd-alsa-docker/issues/281))

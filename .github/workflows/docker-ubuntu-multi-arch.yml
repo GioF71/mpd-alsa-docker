@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        base: ["kinetic", "jammy", "vanilla-kinetic", "vanilla-jammy"]
+        base: ["lunar", "jammy", "vanilla-lunar", "vanilla-jammy"]
 
     steps:
       - name: Checkout
@@ -35,29 +35,32 @@ jobs:
           image_name=${{secrets.DOCKER_USERNAME}}/mpd-alsa
 
           declare -A base_images_dict
+          base_images_dict[lunar]="giof71/mpd-compiler:lunar"
           base_images_dict[kinetic]="giof71/mpd-compiler:kinetic"
           base_images_dict[jammy]="giof71/mpd-compiler:jammy"
+          base_images_dict[vanilla-lunar]="ubuntu:lunar"
           base_images_dict[vanilla-kinetic]="ubuntu:kinetic"
           base_images_dict[vanilla-jammy]="ubuntu:jammy"
 
           select_base_image=${base_images_dict[${{ matrix.base }}]}
 
           declare -A upstream_image_from_matrix
+          upstream_image_from_matrix[lunar]=ubuntu:lunar
           upstream_image_from_matrix[kinetic]=ubuntu:kinetic
           upstream_image_from_matrix[jammy]=ubuntu:jammy
           upstream_image_from_matrix[vanilla-kinetic]=ubuntu:kinetic
           upstream_image_from_matrix[vanilla-jammy]=ubuntu:jammy
 
           declare -A special_tags
-          special_tags[kinetic]="${image_name}:ubuntu-current"
+          special_tags[lunar]="${image_name}:ubuntu-current"
           special_tags[jammy]="${image_name}:ubuntu-current-lts"
-          special_tags[vanilla-kinetic]="${image_name}:vanilla-ubuntu-current"
+          special_tags[vanilla-lunar]="${image_name}:vanilla-ubuntu-current"
           special_tags[vanilla-jammy]="${image_name}:vanilla-ubuntu-current-lts"
 
           declare -A mpd_version_dict
-          mpd_version_dict[kinetic]=0.23.13
+          mpd_version_dict[lunar]=0.23.13
           mpd_version_dict[jammy]=0.23.13
-          mpd_version_dict[vanilla-kinetic]=0.23.9
+          mpd_version_dict[vanilla-lunar]=0.23.12
           mpd_version_dict[vanilla-jammy]=0.23.5
 
           # select mpd version
