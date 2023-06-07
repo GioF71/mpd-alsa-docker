@@ -1,2 +1,2 @@
 Acquire::http::proxy "http://apt.homelab.local:3142";
-Acquire::HTTPS::proxy "DIRECT";
+Acquire::https::proxy "DIRECT";
