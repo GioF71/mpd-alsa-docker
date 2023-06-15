@@ -53,12 +53,12 @@ jobs:
           upstream_image_from_matrix[vanilla-buster]=debian:buster-slim
 
           declare -A special_tags
-          special_tags[bookworm]="${image_name}:edge"
-          special_tags[bullseye]="${image_name}:stable,${image_name}:latest"
-          special_tags[buster]="${image_name}:legacy,${image_name}:old-stable"
-          special_tags[vanilla-bookworm]="${image_name}:vanilla-edge"
-          special_tags[vanilla-bullseye]="${image_name}:vanilla-stable,${image_name}:vanilla-latest,${image_name}:vanilla"
-          special_tags[vanilla-buster]="${image_name}:vanilla-legacy,${image_name}:vanilla-old-stable"
+          special_tags[bookworm]="${image_name}:stable,${image_name}:latest"
+          special_tags[bullseye]="${image_name}:oldstable"
+          special_tags[buster]="${image_name}:legacy"
+          special_tags[vanilla-bookworm]="${image_name}:vanilla-stable,${image_name}:vanilla-latest,${image_name}:vanilla"
+          special_tags[vanilla-bullseye]="${image_name}:vanilla-oldstable"
+          special_tags[vanilla-buster]="${image_name}:vanilla-legacy"
 
           declare -A mpd_version_dict
           mpd_version_dict[bookworm]=0.23.13
