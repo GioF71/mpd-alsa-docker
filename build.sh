@@ -6,8 +6,8 @@
 
 declare -A base_image_tags
 
-base_image_tags[local-bullseye]=giof71/mpd-compiler:local-bullseye
 base_image_tags[local-bookworm]=giof71/mpd-compiler:local-bookworm
+base_image_tags[local-bullseye]=giof71/mpd-compiler:local-bullseye
 base_image_tags[local-lunar]=giof71/mpd-compiler:local-lunar
 base_image_tags[local-kinetic]=giof71/mpd-compiler:local-kinetic
 base_image_tags[local-jammy]=giof71/mpd-compiler:local-jammy
@@ -63,7 +63,7 @@ integer_upsampling_support_dict[lunar]=yes
 integer_upsampling_support_dict[kinetic]=yes
 integer_upsampling_support_dict[jammy]=yes
 
-DEFAULT_BASE_IMAGE=bullseye
+DEFAULT_BASE_IMAGE=bookworm
 DEFAULT_TAG=local
 DEFAULT_USE_PROXY=N
 
@@ -93,11 +93,16 @@ if [ -z "${selected_image_tag}" ]; then
   exit 2
 fi
 
-select_tag=${local_tag[$base_image_tag]}
-if [[ -n "$select_tag" ]]; then
-  tag=$select_tag
-else
-  tag=$DEFAULT_TAG
+if [[ -z "${tag}" ]]; then
+  echo "Selecting tag by base image ..."
+  select_tag=${local_tag[$base_image_tag]}
+  if [[ -n "$select_tag" ]]; then
+    echo "  using tag $select_tag"
+    tag=$select_tag
+  else
+    echo "  using default tag $DEFAULT_TAG"
+    tag=$DEFAULT_TAG
+  fi
 fi
 
 integer_upsampling_support=${integer_upsampling_support_dict[$base_image_tag]}
