@@ -691,7 +691,16 @@ elif [[ "${ENFORCE_PLAYER_STATE^^}" != "NO" && "${ENFORCE_PLAYER_STATE^^}" != "N
     exit 9
 fi
 
-CMD_LINE="$mpd_binary --no-daemon $MPD_ALSA_CONFIG_FILE"
+CMD_LINE="$mpd_binary"
+
+if [[ -z "${STDERR_ENABLED}" || "${STDERR_ENABLED}" == "YES" || "${STDERR_ENABLED}" == "Y" ]]; then
+    CMD_LINE="$CMD_LINE --stderr"
+elif [[ "${STDERR_ENABLED}" != "NO" && "${STDERR_ENABLED}" != "N" ]]; then
+    echo "Invalid STDERR_ENABLED=[$STDERR_ENABLED]"
+    exit 9
+fi
+
+CMD_LINE="$CMD_LINE --no-daemon $MPD_ALSA_CONFIG_FILE"
 echo "CMD_LINE=[$CMD_LINE]"
 if [ $USE_USER_MODE == "Y" ]; then
     if [ -f "/user/config/asoundrc.txt" ]; then
