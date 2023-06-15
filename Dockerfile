@@ -213,6 +213,14 @@ ENV HOST_PERMISSIONS ""
 ENV LOCAL_PERMISSIONS ""
 ENV PASSWORD ""
 
+ENV CURL_ENABLED ""
+ENV CURL_PROXY ""
+ENV CURL_PROXY_USER ""
+ENV CURL_PROXY_PASSWORD ""
+ENV CURL_VERIFY_PEER ""
+ENV CURL_VERIFY_HOST ""
+ENV CURL_CACERT ""
+
 COPY app/assets/pulse-client-template.conf /app/assets/pulse-client-template.conf
 COPY app/assets/alsa-presets.conf /app/assets/alsa-presets.conf
 COPY app/conf/mpd-sample.conf /app/conf/
