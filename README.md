@@ -162,6 +162,7 @@ LOCAL_PERMISSIONS|Sets `local_permissions`, see [here](https://mpd.readthedocs.i
 HOST_PERMISSIONS|Adds a `host_permissions`, you can add multiple (up to `MAX_PERMISSIONS`), append `_1`, `_2`, etc to the variable name for additional entries, see [here](https://mpd.readthedocs.io/en/stable/user.html#permissions-and-passwords)
 PASSWORD|Adds a `password`, you can add multiple (up to `MAX_PERMISSIONS`), append `_1`, `_2`, etc to the variable name for additional entries, see [here](https://mpd.readthedocs.io/en/stable/user.html#permissions-and-passwords)
 MAX_PERMISSIONS|Specify the maximum number of host_permissions and passwords, defaults to `10`
+STDERR_ENABLED|Print messages to the standard error, enabled by default. Set to `no` to disable
 STARTUP_DELAY_SEC|Delay before starting the application in seconds, defaults to `0`.
 
 #### SOXR Plugin
