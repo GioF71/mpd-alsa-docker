@@ -354,9 +354,43 @@ echo "  enabled \"no\"" >> $MPD_ALSA_CONFIG_FILE
 echo "}" >> $MPD_ALSA_CONFIG_FILE
 
 ## add input curl
-echo "input {" >> $MPD_ALSA_CONFIG_FILE
-echo "  plugin \"curl\"" >> $MPD_ALSA_CONFIG_FILE
-echo "}" >> $MPD_ALSA_CONFIG_FILE
+if [[ -z "${CURL_ENABLED}" || "${CURL_ENABLED^^}" == "YES" || "${CURL_ENABLED^^}" == "Y" ]]; then
+    echo "input {" >> $MPD_ALSA_CONFIG_FILE
+    echo "  plugin \"curl\"" >> $MPD_ALSA_CONFIG_FILE
+    if [[ "${CURL_PROXY^^}" == "YES" || "${CURL_PROXY^^}" == "Y" ]]; then
+        echo "  proxy \"${CURL_PROXY}\"" >> $MPD_ALSA_CONFIG_FILE
+        if [[ -n "${CURL_PROXY_USER^^}" ]]; then
+            echo "  proxy_user \"${CURL_PROXY_USER}\"" >> $MPD_ALSA_CONFIG_FILE
+        fi
+        if [[ -n "${CURL_PROXY_PASSWORD^^}" ]]; then
+            echo "  proxy_password \"${CURL_PROXY_PASSWORD}\"" >> $MPD_ALSA_CONFIG_FILE
+        fi
+    fi
+    if [[ -n "${CURL_VERIFY_PEER}" ]]; then
+        if [[ "${CURL_VERIFY_PEER^^}" == "YES" || "${CURL_VERIFY_PEER^^}" == "Y" ]]; then
+            echo "  verify_peer \"yes\"" >> $MPD_ALSA_CONFIG_FILE
+        elif [[ "${CURL_VERIFY_PEER^^}" == "NO" || "${CURL_VERIFY_PEER^^}" == "N" ]]; then
+            echo "  verify_peer \"no\"" >> $MPD_ALSA_CONFIG_FILE
+        else
+            echo "Invalid parameter CURL_VERIFY_PEER"
+            exit 9
+        fi
+    fi
+    if [[ -n "${CURL_VERIFY_HOST}" ]]; then
+        if [[ "${CURL_VERIFY_HOST^^}" == "YES" || "${CURL_VERIFY_HOST^^}" == "Y" ]]; then
+            echo "  verify_host \"yes\"" >> $MPD_ALSA_CONFIG_FILE
+        elif [[ "${CURL_VERIFY_HOST^^}" == "NO" || "${CURL_VERIFY_HOST^^}" == "N" ]]; then
+            echo "  verify_host \"no\"" >> $MPD_ALSA_CONFIG_FILE
+        else
+            echo "Invalid parameter CURL_VERIFY_HOST"
+            exit 9
+        fi
+    fi
+    if [[ -n "${CURL_CACERT}" ]]; then
+        echo "  cacert \"${CURL_CACERT}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+    echo "}" >> $MPD_ALSA_CONFIG_FILE
+fi
 
 if [ -n "${INPUT_CACHE_SIZE}" ]; then
     echo "input_cache {" >> $MPD_ALSA_CONFIG_FILE
