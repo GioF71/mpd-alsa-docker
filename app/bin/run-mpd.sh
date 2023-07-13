@@ -153,13 +153,22 @@ ANY_ALSA=$(any_alsa)
 echo "ANY_PULSE=[$ANY_PULSE]"
 echo "ANY_ALSA=[$ANY_ALSA]"
 
+DEFAULT_UID=1000
+DEFAULT_GID=1000
+
+DEFAULT_USER_NAME=mpd-user
+DEFAULT_GROUP_NAME=mpd-user
+DEFAULT_HOME_DIR=/home/$DEFAULT_USER_NAME
+
+USER_NAME=$DEFAULT_USER_NAME
+GROUP_NAME=$DEFAULT_GROUP_NAME
+HOME_DIR=$DEFAULT_HOME_DIR
+
 if [[ "${ANY_PULSE}" -eq 1 ]] || 
    [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" == "Y" ]]; then
     USE_USER_MODE="Y"
     echo "User mode enabled"
     echo "Creating user ...";
-    DEFAULT_UID=1000
-    DEFAULT_GID=1000
     if [ -z "${PUID}" ]; then
         PUID=$DEFAULT_UID;
         echo "Setting default value for PUID: ["$PUID"]"
@@ -168,33 +177,39 @@ if [[ "${ANY_PULSE}" -eq 1 ]] ||
         PGID=$DEFAULT_GID;
         echo "Setting default value for PGID: ["$PGID"]"
     fi
-    USER_NAME=mpd-user
-    GROUP_NAME=mpd-user
-    HOME_DIR=/home/$USER_NAME
-    ### create home directory and ancillary directories
+    echo "Ensuring user with uid:[$PUID] gid:[$PGID] exists ...";
+    ### create group if it does not exist
+    if [ ! $(getent group $PGID) ]; then
+        echo "Group with gid [$PGID] does not exist, creating..."
+        groupadd -g $PGID $GROUP_NAME
+        echo "Group [$GROUP_NAME] with gid [$PGID] created."
+    else
+        GROUP_NAME=$(getent group $PGID | cut -d: -f1)
+        echo "Group with gid [$PGID] name [$GROUP_NAME] already exists."
+    fi
+
+    ### create user if it does not exist
+    if [ ! $(getent passwd $PUID) ]; then
+        echo "User with uid [$PUID] does not exist, creating..."
+        useradd -g $PGID -u $PUID -M $USER_NAME
+        echo "User [$USER_NAME] with uid [$PUID] created."
+    else
+        USER_NAME=$(getent passwd $PUID | cut -d: -f1)
+        echo "user with uid [$PUID] name [$USER_NAME] already exists."
+        HOME_DIR="/home/$USER_NAME"
+    fi
+
+    ### create home directory
     if [ ! -d "$HOME_DIR" ]; then
-    echo "Home directory [$HOME_DIR] not found, creating."
-    mkdir -p $HOME_DIR
+        echo "Home directory [$HOME_DIR] not found, creating."
+        mkdir -p $HOME_DIR
+        echo ". done."
+    fi
+
     chown -R $PUID:$PGID $HOME_DIR
     ls -la $HOME_DIR -d
     ls -la $HOME_DIR
-    fi
-    ### create group
-    if [ ! $(getent group $GROUP_NAME) ]; then
-        echo "group $GROUP_NAME does not exist, creating..."
-        groupadd -g $PGID $GROUP_NAME
-    else
-        echo "group $GROUP_NAME already exists."
-    fi
-    ### create user
-    if [ ! $(getent passwd $USER_NAME) ]; then
-        echo "user $USER_NAME does not exist, creating..."
-        useradd -g $PGID -u $PUID -s /bin/bash -M -d $HOME_DIR $USER_NAME
-        id $USER_NAME
-        echo "user $USER_NAME created."
-    else
-        echo "user $USER_NAME already exists."
-    fi
+
     if [ "${ANY_ALSA}" -eq 1 ]; then
         if [ -z "${AUDIO_GID}" ]; then
             echo "AUDIO_GID is mandatory for user mode and alsa output"
