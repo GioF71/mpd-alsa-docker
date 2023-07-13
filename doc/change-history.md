@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-07-13|Review user and group creation (see issue [#301](https://github.com/GioF71/mpd-alsa-docker/issues/301))
 2023-06-15|Add support for messages on stderr (see issue [#298](https://github.com/GioF71/mpd-alsa-docker/issues/298))
 2023-06-15|Add support for curl parameters (see issue [#296](https://github.com/GioF71/mpd-alsa-docker/issues/296))
 2023-06-15|Set `bookworm` builds as `latest` and `stable` (see issue [#293](https://github.com/GioF71/mpd-alsa-docker/issues/293))
