@@ -277,60 +277,15 @@ Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.ht
 
 #### HTTPD additional outputs
 
-Additional httpd outputs can be configured using the following variables:
-
-VARIABLE|DESCRIPTION
-:---|:---
-HTTPD_OUTPUT_CREATE|Set to `yes` if you want to create an additional httpd output
-HTTPD_OUTPUT_ENABLED|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
-HTTPD_OUTPUT_NAME|The name of the httpd output, defaults to `httpd`
-HTTPD_OUTPUT_PORT|The port for the httpd output stream, defaults to `8000` if not specified
-HTTPD_OUTPUT_BIND_TO_ADDRESS|Allows to specify the bind address
-HTTPD_OUTPUT_ENCODER|The encoder defaults to `wave`, see [here](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins) for other options
-HTTPD_OUTPUT_ENCODER_BITRATE|Encoder bitrate. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
-HTTPD_OUTPUT_ENCODER_QUALITY|Encoder quality. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
-HTTPD_OUTPUT_MAX_CLIENTS|Sets a limit, number of concurrent clients. When set to 0 no limit will apply. Defaults to `0`
-HTTPD_OUTPUT_ALWAYS_ON|If set to `yes`, then MPD attempts to keep this audio output always open. This may be useful for streaming servers, when you don’t want to disconnect all listeners even when playback is accidentally stopped. Defaults to `yes`
-HTTPD_OUTPUT_TAGS|If set to no, then MPD will not send tags to this output. This is only useful for output plugins that can receive tags, for example the httpd output plugin. Defaults to `yes`
-HTTPD_OUTPUT_FORMAT|The output format, defaults to `44100:16:2`
-HTTPD_OUTPUT_MIXER_TYPE|Set to `software` if you want to be able to change the volume of the output stream
-
-The port number default is calculated for each index by incrementing the default (`8000`) value.  
-When using multiple httpd outputs, remember to open *all* the relevant ports, not only `8000`, otherwise only the first output will work.
+See [here](doc/httpd-additional-outputs.md).
 
 #### Shout additional outputs
 
-VARIABLE|DESCRIPTION
-:---|:---
-SHOUT_OUTPUT_CREATE|Set to `yes` if you want to create an additional shout output
-SHOUT_OUTPUT_ENABLED|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
-SHOUT_OUTPUT_NAME|The name of the shout output, defaults to `shout`
-SHOUT_OUTPUT_PROTOCOL|Specifies the protocol that wil be used to connect to the server, can be `icecast2` (default), `icecast1`, `shoutcast`
-SHOUT_OUTPUT_TLS|Specifies what kind of TLS to use, can be `disabled` (default), `auto`, `auto_no_plain`, `rfc2818`, `rfc2817`
-SHOUT_OUTPUT_FORMAT|The output format, defaults to `44100:16:2`
-SHOUT_OUTPUT_ENCODER|The encoder defaults to `vorbis`, see [here](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins) for other options. BITRATE and QUALITY are typically alternative, so do not specify both of them.
-SHOUT_OUTPUT_ENCODER_BITRATE|Encoder bitrate. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
-SHOUT_OUTPUT_ENCODER_QUALITY|Encoder quality. Refer to the encoder [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#encoder-plugins)
-SHOUT_OUTPUT_HOST|Sets the host name of the ShoutCast / IceCast server, defaults to `icecast`, this seems a sensible default in a docker environment
-SHOUT_OUTPUT_PORT|Connect to this port number on the specified host, defaults to `8000`
-SHOUT_OUTPUT_MOUNT|Mounts the MPD stream in the specified URI
-SHOUT_OUTPUT_USER|Sets the user name for submitting the stream to the server, defaults to `source`
-SHOUT_OUTPUT_PASSWORD|Sets the password for submitting the stream to the server, defaults to `hackme`
-SHOUT_OUTPUT_PUBLIC|Specifies whether the stream should be "public", defaults to `no`
-SHOUT_MIXER_TYPE|Set to `software` if you want to be able to change the volume of the output stream
+See [here](doc/shout-additional-outputs.md).
 
 #### Null additional outputs
 
-Additional Null can be configured using the following variables:
-
-VARIABLE|DESCRIPTION
-:---|:---
-NULL_OUTPUT_CREATE|Set to `yes` if you want to create an additional null output
-NULL_OUTPUT_ENABLED|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
-NULL_OUTPUT_NAME|The name of the Null output, defaults to `null`
-NULL_OUTPUT_SYNC|Sync mode for the `null` output, can be `yes` (default) or `no`
-
-Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#null) for the meaning of the variables.  
+See [here](doc/null-additional-outputs.md).
 
 ### Examples
 
