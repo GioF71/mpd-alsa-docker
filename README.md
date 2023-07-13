@@ -277,15 +277,15 @@ Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.ht
 
 #### HTTPD additional outputs
 
-See [here](doc/httpd-additional-outputs.md).
+See [here](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/httpd-additional-outputs.md).
 
 #### Shout additional outputs
 
-See [here](doc/shout-additional-outputs.md).
+See [here](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/shout-additional-outputs.md).
 
 #### Null additional outputs
 
-See [here](doc/null-additional-outputs.md).
+See [here](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/null-additional-outputs.md).
 
 ### Examples
 
