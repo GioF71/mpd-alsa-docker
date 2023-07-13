@@ -67,8 +67,8 @@ giof71/mpd-compiler:bookworm|**latest**, **stable**, bookworm|0.23.13|[0.23.12](
 giof71/mpd-compiler:bullseye|**oldstable**, bullseye|0.23.13|[0.22.6](https://packages.debian.org/bullseye/mpd)|0.22
 giof71/mpd-compiler:lunar|lunar, ubuntu-current|0.23.13|0.23.12|0.24
 giof71/mpd-compiler:jammy|jammy, ubuntu-current-lts|0.23.13|0.23.5|0.23
-debian:bookworm-slim|**vanilla-latest**, **vanilla-stable**, **vanilla**, vanilla-bookworm|-|0.23.12|0.24
-debian:bullseye-slim|**vanilla-oldstable**, vanilla-bullseye|-|0.22.6|0.22
+debian:bookworm-slim|**vanilla-latest**, **vanilla-stable**, **vanilla**, vanilla-bookworm|-|[0.23.12](https://packages.debian.org/bookworm/mpd)|0.24
+debian:bullseye-slim|**vanilla-oldstable**, vanilla-bullseye|-|[0.22.6](https://packages.debian.org/bullseye/mpd)|0.22
 ubuntu:lunar|vanilla-lunar, vanilla-ubuntu-current|-|0.23.12|0.24
 ubuntu:jammy|vanilla-jammy, vanilla-ubuntu-current-lts|-|0.23.5|0.23
 
