@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        base: ["bookworm", "bullseye", "vanilla-bookworm", "vanilla-bullseye"]
+        base: ["bookworm", "vanilla-bookworm"]
 
     steps:
       - name: Checkout

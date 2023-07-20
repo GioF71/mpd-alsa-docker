@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        base: ["lunar", "jammy", "vanilla-lunar", "vanilla-jammy"]
+        base: ["lunar", "vanilla-lunar"]
 
     steps:
       - name: Checkout
