@@ -3,11 +3,15 @@ FROM ${BASE_IMAGE} AS BASE
 
 ARG INTEGER_UPSAMPLING_SUPPORT="${INTEGER_UPSAMPLING_SUPPORT:-no}"
 ARG USE_APT_PROXY
+ARG BUILD_MODE=${BUILD_MODE:-full}
 
 RUN mkdir -p /app/conf
 
 RUN echo "USE_APT_PROXY=["${USE_APT_PROXY}"]"
 RUN echo "INTEGER_UPSAMPLING_SUPPORT=["${INTEGER_UPSAMPLING_SUPPORT}"]"
+RUN echo "BUILD_MODE=["${BUILD_MODE}"]"
+
+RUN echo $BUILD_MODE > /app/conf/build_mode.txt
 
 COPY app/conf/01-apt-proxy /app/conf/
 
@@ -31,8 +35,10 @@ RUN apt-get install -y --no-install-recommends alsa-utils
 RUN apt-get install -y --no-install-recommends pulseaudio-utils
 RUN apt-get install -y --no-install-recommends libasound2-plugin-equal
 
-# install scrobbler (mpdscribbler)
-RUN apt-get install -y --no-install-recommends mpdscribble
+# install scrobbler (mpdscribble)
+RUN if [ "${BUILD_MODE}" = "full" ]; then \
+        apt-get install -y --no-install-recommends mpdscribble; \
+    fi
 
 RUN rm -rf /var/lib/apt/lists/*
 
