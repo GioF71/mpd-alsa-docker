@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-07-20|Removed workflow warnings (see issue [#313](https://github.com/GioF71/mpd-alsa-docker/issues/313))
 2023-07-20|Dropped `bullseye` and `jammy` builds (see issue [#310](https://github.com/GioF71/mpd-alsa-docker/issues/310))
 2023-07-13|Review user and group creation (see issue [#301](https://github.com/GioF71/mpd-alsa-docker/issues/301))
 2023-06-15|Add support for messages on stderr (see issue [#298](https://github.com/GioF71/mpd-alsa-docker/issues/298))
