@@ -24,6 +24,10 @@ add_simple_parameter() {
     fi
 }
 
+build_mode=`cat /app/conf/build_mode.txt`
+
+echo "Build mode: [${build_mode}]"
+
 CONF_INTEGER_UPSAMPLING_SUPPORT_FILE="/app/conf/integer_upsampling_support.txt"
 COMPILED_MPD_PATH="/app/conf/mpd-compiled-path.txt"
 COMPILED_UPS_MPD_PATH="/app/conf/mpd-compiled-ups-path.txt"
@@ -33,6 +37,8 @@ REPO_MPD_BINARY="/usr/bin/mpd"
 REPO_MPD_BINARY_AVAILABLE="no"
 COMPILED_MPD_BINARY=""
 COMPILED_UPS_MPD_BINARY=""
+
+MPDSCRIBBLE_BINARY="/usr/bin/mpdscribble"
 
 DEFAULT_MAX_PERMISSIONS=10
 max_permissions=$DEFAULT_MAX_PERMISSIONS
@@ -639,6 +645,14 @@ if [[ -n "$LASTFM_USERNAME" && -n "$LASTFM_PASSWORD" ]] ||
    [[ -n "$LIBREFM_USERNAME" && -n "$LIBREFM_PASSWORD" ]] ||
    [[ -n "$JAMENDO_USERNAME" && -n "$JAMENDO_PASSWORD" ]]; then
     echo "At least one scrobbling service requested."
+
+    if [ ! -f $MPDSCRIBBLE_BINARY ]; then
+        echo "MPDScribble not installed, installing ..."
+        apt-get update
+        apt-get install -y mpdscribble
+        echo ". done"
+    fi
+
     SCR_MPD_HOSTNAME=localhost
     # set scrobbler mpd port to mpd port by default
     # use MPD_PORT as the initial value

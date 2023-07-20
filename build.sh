@@ -66,25 +66,32 @@ integer_upsampling_support_dict[jammy]=yes
 DEFAULT_BASE_IMAGE=bookworm
 DEFAULT_TAG=local
 DEFAULT_USE_PROXY=N
+DEFAULT_BUILD_MODE=full
 
 tag=""
 git_branch="$DEFAULT_GIT_VERSION"
 
-while getopts b:t:p: flag
+while getopts b:t:m:p: flag
 do
     case "${flag}" in
         b) base_image_tag=${OPTARG};;
         t) tag=${OPTARG};;
+        m) build_mode=${OPTARG};;
         p) proxy=${OPTARG};;
     esac
 done
 
 echo "base_image_tag: $base_image_tag";
 echo "tag: $tag";
+echo "build_mode: [$build_mode]";
 echo "proxy: [$proxy]";
 
 if [ -z "${base_image_tag}" ]; then
   base_image_tag=$DEFAULT_BASE_IMAGE
+fi
+
+if [ -z "${build_mode}" ]; then
+  build_mode=$DEFAULT_BUILD_MODE
 fi
 
 selected_image_tag=${base_image_tags[$base_image_tag]}
@@ -129,11 +136,13 @@ fi
 
 echo "Base Image Tag: [$selected_image_tag]"
 echo "Integer Upsampling support: [$integer_upsampling_support]"
+echo "Build Mode: [$build_mode]"
 echo "Build Tag: [$tag]"
 echo "Proxy: [$proxy]"
 
 docker build . \
     --build-arg BASE_IMAGE=${selected_image_tag} \
+    --build-arg BUILD_MODE=${build_mode} \
     --build-arg USE_APT_PROXY=${proxy} \
     --build-arg INTEGER_UPSAMPLING_SUPPORT=${integer_upsampling_support} \
     -t giof71/mpd-alsa:$tag
