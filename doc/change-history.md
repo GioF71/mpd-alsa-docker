@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-07-21|Build mode must default to `full` (see issue [#319](https://github.com/GioF71/mpd-alsa-docker/issues/319))
 2023-07-21|Install additional packages on if BUILD_MODE is full (see issue [#317](https://github.com/GioF71/mpd-alsa-docker/issues/317))
 2023-07-20|Install mpdscribble only if BUILD_MODE is full (see issue [#315](https://github.com/GioF71/mpd-alsa-docker/issues/315))
 2023-07-20|Removed workflow warnings (see issue [#313](https://github.com/GioF71/mpd-alsa-docker/issues/313))
