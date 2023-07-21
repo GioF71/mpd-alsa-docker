@@ -3,7 +3,8 @@ FROM ${BASE_IMAGE} AS BASE
 
 ARG INTEGER_UPSAMPLING_SUPPORT="${INTEGER_UPSAMPLING_SUPPORT:-no}"
 ARG USE_APT_PROXY
-ARG BUILD_MODE=${BUILD_MODE:-full}
+ARG IS_VANILLA
+ARG BUILD_MODE=${BUILD_MODE:-slim}
 
 RUN mkdir -p /app/conf
 
@@ -25,19 +26,48 @@ RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
+RUN apt-get install -y ca-certificates
 #RUN apt-get upgrade -y
 
 # install mpd from repo
-RUN apt-get install -y mpd
+RUN if [ "${IS_VANILLA}" = "yes" ]; then \
+        echo "Vanilla build, installing mpd ..."; \
+        apt-get install -y mpd --no-install-recommends; \
+        echo ". done"; \
+        echo "yes" > /app/conf/mpd_installed.txt; \
+    else \
+        echo "MPD should be already installed, but just to be safe ..."; \
+        apt-get install -y mpd --no-install-recommends; \
+        echo ". done"; \
+        echo "yes" > /app/conf/mpd_installed.txt; \
+    fi
 
 # install required libraries
-RUN apt-get install -y --no-install-recommends alsa-utils
-RUN apt-get install -y --no-install-recommends pulseaudio-utils
-RUN apt-get install -y --no-install-recommends libasound2-plugin-equal
+RUN if [ "${BUILD_MODE}" = "full" ]; then \
+        apt-get install -y --no-install-recommends alsa-utils libasound2-plugin-equal; \
+        echo "yes" > /app/conf/alsa_packages_installed.txt; \
+    else \
+        apt-get remove -y alsa-utils libasound2-plugin-equal; \
+        echo "no" > /app/conf/alsa_packages_installed.txt; \
+    fi
+
+RUN if [ "${BUILD_MODE}" = "full" ]; then \
+        apt-get install -y --no-install-recommends pulseaudio-utils; \
+        echo "yes" > /app/conf/pulse_packages_installed.txt; \
+    else \
+        apt-get remove -y pulseaudio-utils; \
+        echo "no" > /app/conf/pulse_packages_installed.txt; \
+    fi
 
 # install scrobbler (mpdscribble)
 RUN if [ "${BUILD_MODE}" = "full" ]; then \
         apt-get install -y --no-install-recommends mpdscribble; \
+    fi
+
+RUN apt-get autoremove -y
+
+RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
+        rm /etc/apt/apt.conf.d/01-apt-proxy; \
     fi
 
 RUN rm -rf /var/lib/apt/lists/*

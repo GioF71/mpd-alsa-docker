@@ -118,6 +118,14 @@ if [ -z "${integer_upsampling_support}" ]; then
   integer_upsampling_support="no"
 fi
 
+if [[ "base_image_tag" == *"vanilla"* ]]; then
+  is_vanilla="yes"
+else
+  is_vanilla="no"
+fi
+
+echo "Vanilla build: [$is_vanilla]"
+
 if [ -z "${proxy}" ]; then
   proxy="N"
 fi
@@ -143,6 +151,7 @@ echo "Proxy: [$proxy]"
 docker build . \
     --build-arg BASE_IMAGE=${selected_image_tag} \
     --build-arg BUILD_MODE=${build_mode} \
+    --build-arg IS_VANILLA=${is_vanilla} \
     --build-arg USE_APT_PROXY=${proxy} \
     --build-arg INTEGER_UPSAMPLING_SUPPORT=${integer_upsampling_support} \
     -t giof71/mpd-alsa:$tag
