@@ -25,6 +25,9 @@ add_simple_parameter() {
 }
 
 build_mode=`cat /app/conf/build_mode.txt`
+mpd_installed=`cat /app/conf/mpd_installed.txt`
+alsa_packages_installed=`cat /app/conf/alsa_packages_installed.txt`
+pulse_packages_installed=`cat /app/conf/pulse_packages_installed.txt`
 
 echo "Build mode: [${build_mode}]"
 
@@ -70,7 +73,7 @@ echo "Integer upsampling supported: [${INTEGER_UPSAMPLING_SUPPORTED}]"
 echo "Compiled mpd binary: [${COMPILED_MPD_BINARY}]"
 echo "Compiled mpd ups binary: [${COMPILED_UPS_MPD_BINARY}]"
 
-if [[ -z "${REPO_MPD_BINARY}" && -z "${COMPILED_MPD_BINARY}" ]]; then
+if [[ ! "${REPO_MPD_BINARY_AVAILABLE}" == "yes" && -z "${COMPILED_MPD_BINARY}" ]]; then
     echo "NO BINARIES AVAILABLE, exiting"
     exit 11
 fi
@@ -158,6 +161,30 @@ ANY_ALSA=$(any_alsa)
 
 echo "ANY_PULSE=[$ANY_PULSE]"
 echo "ANY_ALSA=[$ANY_ALSA]"
+
+if [ "${ANY_ALSA}" -eq 1 ]; then
+    if [ $alsa_packages_installed != "yes" ]; then
+        echo "Alsa packages installation ..."
+        apt-get update
+        apt-get install -y --no-install-recommends alsa-utils libasound2-plugin-equal
+        echo "yes" > /app/conf/alsa_packages_installed.txt
+        echo ". done."
+    fi
+else
+    echo "Alsa packages not needed."
+fi
+
+if [ "${ANY_PULSE}" -eq 1 ]; then
+    if [ $pulse_packages_installed != "yes" ]; then
+        echo "Pulse packages installation ..."
+        apt-get update
+        apt-get install -y --no-install-recommends pulseaudio-utils libasound2-plugin-equal
+        echo "yes" > /app/conf/pulse_packages_installed.txt
+        echo ". done."
+    fi
+else
+    echo "Pulse packages not needed."
+fi
 
 DEFAULT_UID=1000
 DEFAULT_GID=1000

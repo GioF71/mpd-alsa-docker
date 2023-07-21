@@ -35,6 +35,12 @@ jobs:
           distro_id=${{ matrix.base }}
           image_name=${{secrets.DOCKER_USERNAME}}/mpd-alsa
 
+          declare -A vanilla_dict
+          vanilla_dict[lunar]="no"
+          vanilla_dict[vanilla-lunar]="yes"
+
+          is_vanilla=${vanilla_dict[${{ matrix.base }}]}
+
           declare -A base_images_dict
           base_images_dict[lunar]="giof71/mpd-compiler:lunar"
           base_images_dict[kinetic]="giof71/mpd-compiler:kinetic"
@@ -119,6 +125,7 @@ jobs:
           echo "Building tags: ["${tags}"]"
           echo "RELEASE_TAGS=${tags}" >> $GITHUB_OUTPUT
           echo "BASE_IMAGE=${select_base_image}" >> $GITHUB_OUTPUT
+          echo "IS_VANILLA=${is_vanilla}" >> $GITHUB_OUTPUT
           echo "INTEGER_UPSAMPLING_SUPPORT=yes" >> $GITHUB_OUTPUT
 
       - name: Set up QEMU
@@ -143,6 +150,7 @@ jobs:
           build-args: |
             BASE_IMAGE=${{ steps.prepare.outputs.BASE_IMAGE }}
             INTEGER_UPSAMPLING_SUPPORT=${{ steps.prepare.outputs.INTEGER_UPSAMPLING_SUPPORT }}
+            IS_VANILLA=${{ steps.prepare.outputs.IS_VANILLA }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
           push: true
           tags: ${{ steps.prepare.outputs.RELEASE_TAGS }}
