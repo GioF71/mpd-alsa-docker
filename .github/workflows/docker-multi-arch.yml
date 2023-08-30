@@ -50,10 +50,10 @@ jobs:
           allows_amdv5_dict[lunar]="no"
           allows_amdv5_dict[vanilla-lunar]="no"
 
-          armv6_allowed=${allows_amdv5_dict[${{ matrix.base }}]}
+          armv5_allowed=${allows_amdv5_dict[${{ matrix.base }}]}
 
           build_platforms="linux/amd64,linux/arm64/v8,linux/arm/v7"
-          if [ "${armv6_allowed}" = "yes" ]; then
+          if [ "${armv5_allowed}" = "yes" ]; then
             build_platforms="${build_platforms},linux/arm/v5"
           fi
 
