@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-08-30|Unified github workflows, using arm/v5 instead of v6 (see issue [#321](https://github.com/GioF71/mpd-alsa-docker/issues/321))
 2023-07-21|Build mode must default to `full` (see issue [#319](https://github.com/GioF71/mpd-alsa-docker/issues/319))
 2023-07-21|Install additional packages on if BUILD_MODE is full (see issue [#317](https://github.com/GioF71/mpd-alsa-docker/issues/317))
 2023-07-20|Install mpdscribble only if BUILD_MODE is full (see issue [#315](https://github.com/GioF71/mpd-alsa-docker/issues/315))
