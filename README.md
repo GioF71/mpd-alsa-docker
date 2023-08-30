@@ -11,7 +11,7 @@ Also, thanks to a [feature request](https://github.com/GioF71/mpd-alsa-docker/is
 - linux/amd64
 - linux/arm/v7
 - linux/arm64/v8
-- linux/arm/v6 (for debian-based builds)
+- linux/arm/v5 (for debian-based builds)
 
 ## References
 
