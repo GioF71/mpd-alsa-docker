@@ -300,7 +300,7 @@ if [ "${DATABASE_MODE^^}" == "SIMPLE" ]; then
     echo "  path \"/db/tag_cache\"" >> $MPD_ALSA_CONFIG_FILE
 elif [ "${DATABASE_MODE^^}" == "PROXY" ]; then
     echo "  host \"${DATABASE_PROXY_HOST}\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  port \"${DATABASE_PROXY_PASSWORD}\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  port \"${DATABASE_PROXY_PORT}\"" >> $MPD_ALSA_CONFIG_FILE
     if [[ -n "${DATABASE_PROXY_PASSWORD}" ]]; then
         echo "  password \"${DATABASE_PROXY_PASSWORD}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
