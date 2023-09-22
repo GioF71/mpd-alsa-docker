@@ -59,9 +59,9 @@ add_alsa_output_parameter() {
     param_default=$5
     param_default_type=$6
     key_name=$7
-    c_var=$(alsa_get_stored_or_named $env_var_name $idx $key_name)
+    c_var="$(alsa_get_stored_or_named $env_var_name $idx $key_name)"
     if [ -n "${c_var}" ]; then
-        final_var=${c_var}
+        final_var="${c_var}"
     else
         if [ ${param_default_type} == "num" ]; then
             calc=$(get_indexed_default_num $param_default $idx)
@@ -76,7 +76,7 @@ add_alsa_output_parameter() {
             echo "Invalid default type [${param_default_type}]"
             exit 8
         fi
-        final_var=$calc
+        final_var="$calc"
     fi
     # only write non-empty values
     if [ -n "${final_var}" ]; then
@@ -92,10 +92,10 @@ get_alsa_preset_value() {
         alsa_preset_key="${preset_name}.${preset_key}"
         alsa_preset_value="${alsa_presets[${alsa_preset_key}]}"
         if [[ -v alsa_preset_value ]]; then
-            preset_value=$alsa_preset_value
+            preset_value="${alsa_preset_value}"
         fi
     fi
-    echo ${preset_value}
+    echo "${preset_value}"
 }
 
 declare -A alsa_out_set_values
@@ -115,7 +115,7 @@ load_preset_alsa_param() {
     preset_name=$3
     preset_key=$4
     echo "Searching alsa preset value for PresetName [${preset_name}] Key [${preset_key}]"
-    preset_value=$(get_alsa_preset_value ${preset_name} ${preset_key})
+    preset_value="$(get_alsa_preset_value ${preset_name} ${preset_key})"
     if [ -n "${preset_value}" ]; then
         echo "Found alsa preset value for PresetName [${preset_name}] Key [${preset_key}] = [${preset_value}]"
         track_alsa_out_set_value "${parameter_name}" $idx "${preset_value}"
@@ -129,15 +129,15 @@ alsa_get_stored_or_named() {
     VAR_INDEX=$2
     KEY_NAME=$3
     select_var=$(get_named_env $VAR_NAME $VAR_INDEX)
-    if [ -z ${select_var} ]; then
+    if [ -z "${select_var}" ]; then
         #look in stored values
         alsa_set_key="${KEY_NAME}.${VAR_INDEX}"
         stored="${alsa_out_set_values[${alsa_set_key}]}"
         if [ -n "${stored}" ]; then
-            select_var=${stored}
+            select_var="${stored}"
         fi
     fi
-    echo ${select_var}
+    echo "${select_var}"
 }
 
 build_alsa() {
@@ -150,7 +150,7 @@ build_alsa() {
         set_output_type $out_file alsa
         add_output_parameter $out_file $idx ALSA_OUTPUT_NAME name alsa str
         add_output_parameter $out_file $idx ALSA_OUTPUT_ENABLED enabled "" none
-        current_preset=$(get_named_env ALSA_OUTPUT_PRESET $idx)
+        current_preset=$(get_named_env "ALSA_OUTPUT_PRESET" $idx)
         if [ -n ${current_preset} ]; then
             echo "Alsa preset for ALSA Out [$idx] is [${current_preset}]"
             # alsa name preset is not used for additional outputs
@@ -161,38 +161,45 @@ build_alsa() {
             load_preset_alsa_param $idx "mixer_index" ${current_preset} "mixer-index"
         fi
         # try auto find if mixer is not already set
-        auto_find_mixer=$(get_named_env $ALSA_OUTPUT_AUTO_FIND_MIXER $idx)
+        auto_find_mixer=$(get_named_env "ALSA_OUTPUT_AUTO_FIND_MIXER" $idx)
+        echo "ALSA_OUTPUT_AUTO_FIND_MIXER for output [$idx] = [$auto_find_mixer]"
         mixer_device_key="mixer_device.${idx}"
-        c_mixer_device=$alsa_out_set_values[$mixer_device_key]
+        c_mixer_device="${alsa_out_set_values[$mixer_device_key]}"
+        echo "c_mixer_device for output [$idx] = [$c_mixer_device]"
         if [ -z "${c_mixer_device}" ]; then
             if [[ "${auto_find_mixer^^}" == "YES" || "${auto_find_mixer^^}" == "Y" ]]; then
                 echo "Trying to find mixer ..."
                 # find device
                 # tentative #1 explicitly declared?
-                c_device=$(get_named_env $ALSA_OUTPUT_DEVICE $idx)
+                c_device="$(get_named_env "ALSA_OUTPUT_DEVICE" $idx)"
+                echo "c_device for output [$idx] = [$c_device] (from config)"
                 if [ -z "${c_device}" ]; then
                     # tentative 2 - look from presets
                     alsa_set_key="device.${idx}"
-                    c_device=$alsa_out_set_values[$alsa_set_key]
+                    echo "Looking for c_device for output [$idx] in presets with key [${alsa_set_key}]..."
+                    c_device="${alsa_out_set_values[$alsa_set_key]}"
+                    echo "c_device for output [$idx] from presets is [${c_device}]"
                 fi
-                if [ -z "${c_device}" ]; then
+                if [ -n "${c_device}" ]; then
                     c_raw_mixer_device="$(amixer -D ${c_device} scontrols | head -n 1)"
+                    echo "c_raw_mixer_device for output [$idx] = [${c_raw_mixer_device}]"
                     c_mixer=$(echo ${c_raw_mixer_device} | cut -d "'" -f 2)
+                    echo "c_mixer for output [$idx] should be [${c_mixer}]"
                     # set mixer control
                     alsa_set_key="mixer_control.${idx}"
-                    alsa_out_set_values[$alsa_set_key]=$c_mixer
+                    alsa_out_set_values[$alsa_set_key]="${c_mixer}"
                     alsa_set_key="mixer_device.${idx}"
-                    alsa_out_set_values[$alsa_set_key]=$c_device
+                    alsa_out_set_values[$alsa_set_key]="${c_device}"
                     alsa_set_key="mixer_type.${idx}"
                     alsa_out_set_values[$alsa_set_key]="hardware"
                 fi
-            elif [[ "${auto_find_mixer^^}" != "NO" || "${auto_find_mixer^^}" != "N" ]]; then
+            elif [[ ! -z "${auto_find_mixer}" ]] && [[ "${auto_find_mixer^^}" != "NO" || "${auto_find_mixer^^}" != "N" ]]; then
                 echo "Invalid ALSA_OUTPUT_AUTO_FIND_MIXER=[${auto_find_mixer}] for index [{$idx}]"
                 exit 9
             fi
         fi
         # allowed format presets
-        c_allowed_formats_preset=$(get_named_env ALSA_OUTPUT_ALLOWED_FORMATS_PRESET $idx)
+        c_allowed_formats_preset=$(get_named_env "ALSA_OUTPUT_ALLOWED_FORMATS_PRESET" $idx)
         if [ -n "${c_allowed_formats_preset}" ]; then
             echo "Allowed formats preset set for alsa output [$idx] -> [${c_allowed_formats_preset}]"
             c_allowed_formats="${allowed_formats_presets[${c_allowed_formats_preset}]}"
@@ -204,7 +211,7 @@ build_alsa() {
         fi
 
         # integer upsampling allowed presets
-        c_integer_upsampling_allowed_preset=$(get_named_env ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED_PRESET $idx)
+        c_integer_upsampling_allowed_preset=$(get_named_env "ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED_PRESET" $idx)
         if [ -n "${c_integer_upsampling_allowed_preset}" ]; then
             echo "Integer Upsampling Allowed set for alsa output [$idx] -> [${c_integer_upsampling_allowed_preset}]"
             c_integer_upsampling_allowed="${integer_upsampling_allowed_presets[${c_integer_upsampling_allowed_preset}]}"

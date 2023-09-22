@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-09-22|Fixed processing of alsa-related strings with trailing spaces (see issue [#328](https://github.com/GioF71/mpd-alsa-docker/issues/328)) 
 2023-09-19|Extend support for proxy plugin (see issue [#324](https://github.com/GioF71/mpd-alsa-docker/issues/324))
 2023-08-30|Unified github workflows, using arm/v5 instead of v6 (see issue [#321](https://github.com/GioF71/mpd-alsa-docker/issues/321))
 2023-07-21|Build mode must default to `full` (see issue [#319](https://github.com/GioF71/mpd-alsa-docker/issues/319))
