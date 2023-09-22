@@ -40,14 +40,14 @@ get_named_env_name() {
         #appending index
         COMPOSED_NAME=${VAR_NAME}_${VAR_INDEX}
     fi
-    echo ${COMPOSED_NAME}
+    echo "${COMPOSED_NAME}"
 }
 
 get_named_env() {
     VAR_NAME=$1
     VAR_INDEX=$2
     SELECT_VAR=$(get_named_env_name $VAR_NAME $VAR_INDEX)
-    echo ${!SELECT_VAR}
+    echo "${!SELECT_VAR}"
 }
 
 get_indexed_default() {
