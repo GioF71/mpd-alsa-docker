@@ -193,7 +193,7 @@ build_alsa() {
                     alsa_set_key="mixer_type.${idx}"
                     alsa_out_set_values[$alsa_set_key]="hardware"
                 fi
-            elif [[ ! -z "${auto_find_mixer}" ]] && [[ "${auto_find_mixer^^}" != "NO" || "${auto_find_mixer^^}" != "N" ]]; then
+            elif [[ ! -z "${auto_find_mixer}" ]] && [[ "${auto_find_mixer^^}" != "NO" && "${auto_find_mixer^^}" != "N" ]]; then
                 echo "Invalid ALSA_OUTPUT_AUTO_FIND_MIXER=[${auto_find_mixer}] for index [{$idx}]"
                 exit 9
             fi

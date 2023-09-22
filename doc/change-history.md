@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-09-22|Fixed processing of ALSA_OUTPUT_AUTO_FIND_MIXER (see issue [#326](https://github.com/GioF71/mpd-alsa-docker/issues/326))
 2023-09-22|Fixed preset for Yulong D200 (see issue [#283](https://github.com/GioF71/mpd-alsa-docker/issues/283))
 2023-09-22|Add presets for Topping D10s and D10 Balanced (see issue [#327](https://github.com/GioF71/mpd-alsa-docker/issues/327))
 2023-09-22|Fixed processing of alsa-related strings with trailing spaces (see issue [#328](https://github.com/GioF71/mpd-alsa-docker/issues/328)) 
