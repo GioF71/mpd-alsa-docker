@@ -9,7 +9,9 @@ function load_preset_file() {
         if [[ -n "$line" && ! $line = \#* ]]; then
             key="$(cut -d '=' -f1 <<< ${line})"
             keyLen=`echo ${#key}`
-            value=${line#*=} 
+            value=${line#*=}
+            # strip quotes
+            value=`echo $value | sed "s/\"//g"`
             echo "Loading preset [$key]=[$value]"
             alsa_presets[$key]=$value
     fi
