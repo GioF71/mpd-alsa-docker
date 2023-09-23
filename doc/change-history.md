@@ -2,7 +2,7 @@
 
 Date|Major Changes
 :---|:---
-2023-09-22|Store preset values in enclosing quotes (see issue [#334](https://github.com/GioF71/mpd-alsa-docker/issues/334))
+2023-09-23|Store preset values in enclosing quotes (see issue [#334](https://github.com/GioF71/mpd-alsa-docker/issues/334))
 2023-09-22|Fixed processing of ALSA_OUTPUT_AUTO_FIND_MIXER (see issue [#326](https://github.com/GioF71/mpd-alsa-docker/issues/326))
 2023-09-22|Fixed preset for Yulong D200 (see issue [#283](https://github.com/GioF71/mpd-alsa-docker/issues/283))
 2023-09-22|Add presets for Topping D10s and D10 Balanced (see issue [#327](https://github.com/GioF71/mpd-alsa-docker/issues/327))
