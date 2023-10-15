@@ -118,7 +118,7 @@ if [ -z "${integer_upsampling_support}" ]; then
   integer_upsampling_support="no"
 fi
 
-if [[ "base_image_tag" == *"vanilla"* ]]; then
+if [[ "${base_image_tag}" == *"vanilla"* ]]; then
   is_vanilla="yes"
 else
   is_vanilla="no"
