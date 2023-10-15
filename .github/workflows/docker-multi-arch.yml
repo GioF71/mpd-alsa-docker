@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        base: ["bookworm", "vanilla-bookworm", "lunar", "vanilla-lunar"]
+        base: ["bookworm", "vanilla-bookworm", "mantic", "vanilla-mantic"]
 
     steps:
       - name: Checkout
@@ -39,16 +39,16 @@ jobs:
           declare -A vanilla_dict
           vanilla_dict[bookworm]="no"
           vanilla_dict[vanilla-bookworm]="yes"
-          vanilla_dict[lunar]="no"
-          vanilla_dict[vanilla-lunar]="yes"
+          vanilla_dict[mantic]="no"
+          vanilla_dict[vanilla-mantic]="yes"
 
           is_vanilla=${vanilla_dict[${{ matrix.base }}]}
 
           declare -A allows_amdv5_dict
           allows_amdv5_dict[bookworm]="yes"
           allows_amdv5_dict[vanilla-bookworm]="yes"
-          allows_amdv5_dict[lunar]="no"
-          allows_amdv5_dict[vanilla-lunar]="no"
+          allows_amdv5_dict[mantic]="no"
+          allows_amdv5_dict[vanilla-mantic]="no"
 
           armv5_allowed=${allows_amdv5_dict[${{ matrix.base }}]}
 
@@ -60,14 +60,14 @@ jobs:
           declare -A base_images_dict
           base_images_dict[bookworm]="giof71/mpd-compiler:bookworm"
           base_images_dict[vanilla-bookworm]="debian:bookworm-slim"
-          base_images_dict[lunar]="giof71/mpd-compiler:lunar"
-          base_images_dict[vanilla-lunar]="ubuntu:lunar"
+          base_images_dict[mantic]="giof71/mpd-compiler:mantic"
+          base_images_dict[vanilla-mantic]="ubuntu:mantic"
 
           declare -A integer_upsampling_dict
           integer_upsampling_dict[bookworm]="yes"
           integer_upsampling_dict[vanilla-bookworm]="no"
-          integer_upsampling_dict[lunar]="yes"
-          integer_upsampling_dict[vanilla-lunar]="no"
+          integer_upsampling_dict[mantic]="yes"
+          integer_upsampling_dict[vanilla-mantic]="no"
 
           integer_upsampling_support=${integer_upsampling_dict[${{ matrix.base }}]}
 
@@ -76,20 +76,20 @@ jobs:
           declare -A upstream_image_from_matrix
           upstream_image_from_matrix[bookworm]=debian:bookworm-slim
           upstream_image_from_matrix[vanilla-bookworm]=debian:bookworm-slim
-          upstream_image_from_matrix[lunar]=ubuntu:lunar
-          upstream_image_from_matrix[vanilla-lunar]=ubuntu:lunar
+          upstream_image_from_matrix[mantic]=ubuntu:mantic
+          upstream_image_from_matrix[vanilla-mantic]=ubuntu:mantic
 
           declare -A special_tags
           special_tags[bookworm]="${image_name}:stable,${image_name}:latest"
           special_tags[vanilla-bookworm]="${image_name}:vanilla-stable,${image_name}:vanilla-latest,${image_name}:vanilla"
-          special_tags[lunar]="${image_name}:ubuntu-current"
-          special_tags[vanilla-lunar]="${image_name}:vanilla-ubuntu-current"
+          special_tags[mantic]="${image_name}:ubuntu-current"
+          special_tags[vanilla-mantic]="${image_name}:vanilla-ubuntu-current"
 
           declare -A mpd_version_dict
-          mpd_version_dict[bookworm]=0.23.13
+          mpd_version_dict[bookworm]=0.23.14
           mpd_version_dict[vanilla-bookworm]=0.23.12
-          mpd_version_dict[lunar]=0.23.13
-          mpd_version_dict[vanilla-lunar]=0.23.12
+          mpd_version_dict[mantic]=0.23.14
+          mpd_version_dict[vanilla-mantic]=0.23.12
 
           # select mpd version
           mpd_version=${mpd_version_dict["${distro_id}"]};

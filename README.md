@@ -48,14 +48,14 @@ Keep in mind that the `legacy` branch will not be updated with new features. Onl
 ## MPD Source code
 
 The source code for the patched MPD is in this GitHub [repo](https://github.com/GioF71/MPD).  
-The `version-0.23.13` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.23.13.  
-The `version-0.23.13-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
+The `version-0.23.14` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.23.14.  
+The `version-0.23.14-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
 Two binaries are available in the container image:
 
 - /app/bin/compiled/mpd (upstream version)
 - /app/bin/compiled/mpd-ups (patched version)
 
-The current mpd version is `v0.23.13` when using [giof71/mpd-compiler-docker](https://github.com/GioF71/mpd-compiler-docker) as the base image (Docker Repo [here](https://hub.docker.com/r/giof71/mpd-compiler)). The repo binary is installed also in this case.  
+The current mpd version is `v0.23.14` when using [giof71/mpd-compiler-docker](https://github.com/GioF71/mpd-compiler-docker) as the base image (Docker Repo [here](https://hub.docker.com/r/giof71/mpd-compiler)). The repo binary is installed also in this case.  
 Vanilla versions only have the repo binary.  
 The `mpdscribble` version depends on the base image. See the following table:
 
@@ -63,10 +63,10 @@ The `mpdscribble` version depends on the base image. See the following table:
 
 Base Image|Tags|Compiled MPD version|Repo MPD version|MPDScribble version
 :---|:---|:---|:---|:---
-giof71/mpd-compiler:bookworm|**latest**, **stable**, bookworm|0.23.13|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
-giof71/mpd-compiler:lunar|lunar, ubuntu-current|0.23.13|[0.23.12](https://packages.ubuntu.com/lunar/mpd)|[0.24](https://packages.ubuntu.com/lunar/mpdscribble)
+giof71/mpd-compiler:bookworm|**latest**, **stable**, bookworm|0.23.14|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
+giof71/mpd-compiler:mantic|mantic, ubuntu-current|0.23.14|[0.23.12](https://packages.ubuntu.com/mantic/mpd)|[0.24](https://packages.ubuntu.com/mantic/mpdscribble)
 debian:bookworm-slim|**vanilla-latest**, **vanilla-stable**, **vanilla**, vanilla-bookworm|-|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
-ubuntu:lunar|vanilla-lunar, vanilla-ubuntu-current|-|[0.23.12](https://packages.ubuntu.com/lunar/mpd)|[0.24](https://packages.ubuntu.com/lunar/mpdscribble)
+ubuntu:mantic|vanilla-mantic, vanilla-ubuntu-current|-|[0.23.12](https://packages.ubuntu.com/mantic/mpd)|[0.24](https://packages.ubuntu.com/mantic/mpdscribble)
 
 ## Usage
 
