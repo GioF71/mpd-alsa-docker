@@ -293,12 +293,14 @@ if [ -z "${DATABASE_MODE}" ]; then
     DATABASE_MODE=${DEFAULT_DATABASE_MODE}
 fi
 
+NEED_STORAGE=1
 ## add database
 echo "database {" >> $MPD_ALSA_CONFIG_FILE
-echo "  plugin \"${DATABASE_MODE}\"" >> $MPD_ALSA_CONFIG_FILE
 if [ "${DATABASE_MODE^^}" == "SIMPLE" ]; then
+    echo "  plugin \"simple\"" >> $MPD_ALSA_CONFIG_FILE
     echo "  path \"/db/tag_cache\"" >> $MPD_ALSA_CONFIG_FILE
 elif [ "${DATABASE_MODE^^}" == "PROXY" ]; then
+    echo "  plugin \"proxy\"" >> $MPD_ALSA_CONFIG_FILE
     echo "  host \"${DATABASE_PROXY_HOST}\"" >> $MPD_ALSA_CONFIG_FILE
     echo "  port \"${DATABASE_PROXY_PORT}\"" >> $MPD_ALSA_CONFIG_FILE
     if [[ -n "${DATABASE_PROXY_PASSWORD}" ]]; then
@@ -307,6 +309,9 @@ elif [ "${DATABASE_MODE^^}" == "PROXY" ]; then
     if [[ -n "${DATABASE_PROXY_KEEPALIVE}" ]]; then
         echo "  keepalive \"${DATABASE_PROXY_KEEPALIVE}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
+elif [ "${DATABASE_MODE^^}" == "UPNP" ]; then
+    NEED_STORAGE=0
+    echo "  plugin \"upnp\"" >> $MPD_ALSA_CONFIG_FILE
 else
     echo "Invalid database mode [${DATABASE_MODE}]";
     exit 5;
@@ -319,7 +324,10 @@ if [ -z "${MUSIC_DIRECTORY}" ]; then
     MUSIC_DIRECTORY=${DEFAULT_MUSIC_DIRECTORY}
 fi
 
-echo "music_directory \"${MUSIC_DIRECTORY}\"" >> $MPD_ALSA_CONFIG_FILE
+if [[ $NEED_STORAGE -eq 1 ]]; then
+    echo "music_directory \"${MUSIC_DIRECTORY}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+
 echo "playlist_directory \"/playlists\"" >> $MPD_ALSA_CONFIG_FILE
 echo "state_file \"/db/state\"" >> $MPD_ALSA_CONFIG_FILE
 
