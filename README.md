@@ -122,7 +122,7 @@ The following tables lists all the currently supported environment variables:
 
 VARIABLE|DESCRIPTION
 :---|:---
-DATABASE_MODE|Can be `simple` (default) or `proxy`
+DATABASE_MODE|Can be `simple` (default), `proxy` or `upnp` (requires `host` networking)
 DATABASE_PROXY_HOST|MPD server hostname, only used when `DATABASE_MODE` is set to `proxy`
 DATABASE_PROXY_PORT|MPD server port, only used when `DATABASE_MODE` is set to `proxy`
 DATABASE_PROXY_PASSWORD|The password used to log in to the `master` MPD instance, only used when `DATABASE_MODE` is set to `proxy`
