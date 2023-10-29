@@ -1,6 +1,15 @@
 # mpd-alsa-docker
 
-A Docker image for mpd with support for both Alsa and PulseAudio.  
+## References
+
+First and foremost, the reference to the awesome projects:
+
+[Music Player Daemon](https://www.musicpd.org/)  
+[MPDScribble](https://www.musicpd.org/clients/mpdscribble/)
+
+## Description
+
+A docker image for mpd with support for both Alsa and PulseAudio.  
 The container image also includes `mpdscribble`. In alternative, you can use [mpd-scrobbler-docker](https://github.com/GioF71/mpd-scrobbler-docker) as the scrobbler for this image.  
 User mode is now possible when using `alsa` outputs, and of course it is mandatory (enforced) when using `pulse` outputs.  
 Upsampling (even in integer mode) is now available via a patched version of MPD (upstream version available as well).  
@@ -12,13 +21,6 @@ Also, thanks to a [feature request](https://github.com/GioF71/mpd-alsa-docker/is
 - linux/arm/v7
 - linux/arm64/v8
 - linux/arm/v5 (for debian-based builds)
-
-## References
-
-First and foremost, the reference to the awesome projects:
-
-[Music Player Daemon](https://www.musicpd.org/)  
-[MPDScribble](https://www.musicpd.org/clients/mpdscribble/)
 
 ## Links
 
