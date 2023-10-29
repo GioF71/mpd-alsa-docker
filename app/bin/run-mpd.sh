@@ -111,6 +111,16 @@ fi
 
 echo "Selected binary: [${mpd_binary}]"
 
+# install mpc if requested
+if [[ "${INSTALL_MPC^^}" == "YES" || "${INSTALL_MPC^^}" == "Y" ]]; then
+    echo "Installing MPC as requested ..."
+    apt-get update
+    apt-get install -y mpc
+    echo ". done"
+else
+    echo "MPC installation not requested."
+fi
+
 declare -A file_dict
 
 source build-soxr-presets.sh
