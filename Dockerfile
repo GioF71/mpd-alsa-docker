@@ -26,7 +26,7 @@ RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
-RUN apt-get install -y ca-certificates
+RUN apt-get install -y mpc ca-certificates
 #RUN apt-get upgrade -y
 
 # install mpd from repo
@@ -260,8 +260,6 @@ ENV CURL_VERIFY_HOST ""
 ENV CURL_CACERT ""
 
 ENV STDERR_ENABLED ""
-
-ENV INSTALL_MPC ""
 
 COPY app/assets/pulse-client-template.conf /app/assets/pulse-client-template.conf
 COPY app/assets/alsa-presets.conf /app/assets/alsa-presets.conf
