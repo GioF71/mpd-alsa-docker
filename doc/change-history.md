@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-10-29|Fixed alsa format (see issue [#343](https://github.com/GioF71/mpd-alsa-docker/issues/343))
 2023-10-26|Fixed database mode `upnp` (see issue [#6](https://github.com/GioF71/mpd-alsa-docker/issues/6))
 2023-10-15|Build for `mantic` instead of `lunar` (see issue [#339](https://github.com/GioF71/mpd-alsa-docker/issues/339))
 2023-10-15|Fix build support for vanilla images (see issue [#337](https://github.com/GioF71/mpd-alsa-docker/issues/337))
