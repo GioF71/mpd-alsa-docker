@@ -261,6 +261,8 @@ ENV CURL_CACERT ""
 
 ENV STDERR_ENABLED ""
 
+ENV INSTALL_MPC ""
+
 COPY app/assets/pulse-client-template.conf /app/assets/pulse-client-template.conf
 COPY app/assets/alsa-presets.conf /app/assets/alsa-presets.conf
 COPY app/conf/mpd-sample.conf /app/conf/
