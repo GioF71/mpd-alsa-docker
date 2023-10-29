@@ -247,7 +247,7 @@ ALSA_OUTPUT_MIXER_CONTROL|Mixer Control, defaults to `PCM`
 ALSA_OUTPUT_MIXER_INDEX|Mixer Index, defaults to `0`
 ALSA_OUTPUT_ALLOWED_FORMATS_PRESET|Alternative to `ALSA_OUTPUT_ALLOWED_FORMATS`. Possible values: 8x, 4x, 2x, 8x-nodsd, 4x-nodsd, 2x-nodsd
 ALSA_OUTPUT_ALLOWED_FORMATS|Sets allowed formats
-ALSA_OUTPUT_OUTPUT_FORMAT|Sets output format
+ALSA_OUTPUT_FORMAT|Sets output format
 ALSA_OUTPUT_AUTO_RESAMPLE|If set to no, then libasound will not attempt to resample. In this case, the user is responsible for ensuring that the requested sample rate can be produced natively by the device, otherwise an error will occur.
 ALSA_OUTPUT_THESYCON_DSD_WORKAROUND|If enabled, enables a workaround for a bug in Thesycon USB audio receivers. On these devices, playing DSD512 or PCM causes all subsequent attempts to play other DSD rates to fail, which can be fixed by briefly playing PCM at 44.1 kHz.
 ALSA_OUTPUT_INTEGER_UPSAMPLING|If one or more `ALSA_ALLOWED_FORMATS` are set and `INTEGER_UPSAMPLING` is set to `yes`, the formats which are evenly divided by the source sample rate are preferred. The `ALSA_ALLOWED_FORMATS` list is processed in order as provided to the container. So if you want to upsample, put higher sampling rates first. Using this feature causes a patched version of mpd to be run. Use at your own risk.

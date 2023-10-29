@@ -222,6 +222,13 @@ build_alsa() {
             fi
         fi
 
+        old_output_format=$(get_named_env "ALSA_OUTPUT_OUTPUT_FORMAT" $idx)
+        output_format=$(get_named_env "ALSA_OUTPUT_FORMAT" $idx)
+        # support for old variable ALSA_OUTPUT_OUTPUT_FORMAT
+        if [[ -n "${old_output_format}" && -z "${output_format}" ]]; then
+            echo "Using wrong variable ALSA_OUTPUT_OUTPUT_FORMAT with value [${old_output_format}] -> use ALSA_OUTPUT_FORMAT instead!"
+        fi
+
         # debug dump values
         ## sz=`echo "${#alsa_out_set_values[@]}"`
         ## echo "There are [$sz] available alsa_presets"
@@ -230,13 +237,18 @@ build_alsa() {
         ## done
         # end debug
         # write to config file!
+
         add_alsa_output_parameter $out_file $idx ALSA_OUTPUT_DEVICE device "" none "device"
         add_alsa_output_parameter $out_file $idx ALSA_OUTPUT_MIXER_TYPE mixer_type "" none "mixer_type"
         add_alsa_output_parameter $out_file $idx ALSA_OUTPUT_MIXER_DEVICE mixer_device "" none "mixer_device"
         add_alsa_output_parameter $out_file $idx ALSA_OUTPUT_MIXER_CONTROL mixer_control "" none "mixer_control"
         add_alsa_output_parameter $out_file $idx ALSA_OUTPUT_MIXER_INDEX mixer_index "" none "mixer_index"
         add_alsa_output_parameter $out_file $idx ALSA_OUTPUT_ALLOWED_FORMATS allowed_formats "" none "allowed_formats"
-        add_output_parameter $out_file $idx ALSA_OUTPUT_OUTPUT_FORMAT output_format "" none
+        if [[ -n "${old_output_format}" && -z "${output_format}" ]]; then
+            add_output_parameter $out_file $idx ALSA_OUTPUT_OUTPUT_FORMAT format "" none
+        else
+            add_output_parameter $out_file $idx ALSA_OUTPUT_FORMAT format "" none
+        fi
         add_output_parameter $out_file $idx ALSA_OUTPUT_AUTO_RESAMPLE auto_resample "" none
         add_output_parameter $out_file $idx ALSA_OUTPUT_THESYCON_DSD_WORKAROUND thesycon_dsd_workaround "" none
         add_output_parameter $out_file $idx ALSA_OUTPUT_INTEGER_UPSAMPLING integer_upsampling "" none
