@@ -132,7 +132,7 @@ DATABASE_PROXY_KEEPALIVE|Send TCP keepalive packets to the `master` MPD instance
 MUSIC_DIRECTORY|Location of music files, defaults to `/music`
 MPD_BIND_ADDRESS|The MPD listen address, defaults to `0.0.0.0`
 MPD_PORT|The MPD port, defaults to `6600`
-USER_MODE|Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode). Required when using any PulseAudio outputs (so when `PULSE_AUDIO_OUTPUT_CREATE` is set to `yes`)
+USER_MODE|Set to `y` or `yes` for user mode. Case insensitive. See [User mode](#user-mode). Required when using any PulseAudio outputs (so when `PULSE_AUDIO_OUTPUT_CREATE` is set to `yes`)
 PUID|User id. Defaults to `1000`. The user/group will be created when a PulseAudio output is created unless `USER_MODE` is set to `no`.
 PGID|Group id. Defaults to `1000`. The user/group will be created when a PulseAudio output is created unless `USER_MODE` is set to `no`.
 AUDIO_GID|`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/user-mode.md).
