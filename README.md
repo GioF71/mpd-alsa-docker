@@ -133,8 +133,8 @@ MUSIC_DIRECTORY|Location of music files, defaults to `/music`
 MPD_BIND_ADDRESS|The MPD listen address, defaults to `0.0.0.0`
 MPD_PORT|The MPD port, defaults to `6600`
 USER_MODE|Set to `Y` or `YES` for user mode. Case insensitive. See [User mode](#user-mode). Required when using any PulseAudio outputs (so when `PULSE_AUDIO_OUTPUT_CREATE` is set to `yes`)
-PUID|User id. Defaults to `1000`. The user/group will be created when a PulseAudio output is created regardless of the `USER_MODE` variable.
-PGID|Group id. Defaults to `1000`. The user/group will be created when a PulseAudio output is created regardless of the `USER_MODE` variable.
+PUID|User id. Defaults to `1000`. The user/group will be created when a PulseAudio output is created unless `USER_MODE` is set to `no`.
+PGID|Group id. Defaults to `1000`. The user/group will be created when a PulseAudio output is created unless `USER_MODE` is set to `no`.
 AUDIO_GID|`audio` group id from the host machine. Mandatory for `alsa` output in user mode. See [User mode](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/user-mode.md).
 INPUT_CACHE_SIZE|Sets the input cache size. Example value: `1 GB`
 SAMPLERATE_CONVERTER|Configure `samplerate_converter`. Example value: `soxr very high`. Note that this configuration cannot be used when `SOXR_PLUGIN_ENABLE` is set to enabled. There are some preset values for sox: `very_high` and `very-high` map to `soxr very high`, `high` maps to `soxr high`, `medium` maps to `soxr medium`, `low` maps to `soxr low` and `quick` maps to `soxr quick`. Refer to [this](https://mpd.readthedocs.io/en/stable/plugins.html#soxr) page for details.
