@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-12-05|Honor denied USER_MODE (see issue [#351](https://github.com/GioF71/mpd-alsa-docker/issues/351))
 2023-10-29|Add mpc to the images (see issue [#347](https://github.com/GioF71/mpd-alsa-docker/issues/347))
 2023-10-29|Offer automatic installation of mpc (see issue [#345](https://github.com/GioF71/mpd-alsa-docker/issues/345))
 2023-10-29|Fixed alsa format (see issue [#343](https://github.com/GioF71/mpd-alsa-docker/issues/343))

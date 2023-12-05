@@ -197,79 +197,83 @@ USER_NAME=$DEFAULT_USER_NAME
 GROUP_NAME=$DEFAULT_GROUP_NAME
 HOME_DIR=$DEFAULT_HOME_DIR
 
-if [[ "${ANY_PULSE}" -eq 1 ]] || 
-   [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" == "Y" ]]; then
-    USE_USER_MODE="Y"
-    echo "User mode enabled"
-    echo "Creating user ...";
-    if [ -z "${PUID}" ]; then
-        PUID=$DEFAULT_UID;
-        echo "Setting default value for PUID: ["$PUID"]"
-    fi
-    if [ -z "${PGID}" ]; then
-        PGID=$DEFAULT_GID;
-        echo "Setting default value for PGID: ["$PGID"]"
-    fi
-    echo "Ensuring user with uid:[$PUID] gid:[$PGID] exists ...";
-    ### create group if it does not exist
-    if [ ! $(getent group $PGID) ]; then
-        echo "Group with gid [$PGID] does not exist, creating..."
-        groupadd -g $PGID $GROUP_NAME
-        echo "Group [$GROUP_NAME] with gid [$PGID] created."
-    else
-        GROUP_NAME=$(getent group $PGID | cut -d: -f1)
-        echo "Group with gid [$PGID] name [$GROUP_NAME] already exists."
-    fi
+echo "USER_MODE=[${USER_MODE}]"
 
-    ### create user if it does not exist
-    if [ ! $(getent passwd $PUID) ]; then
-        echo "User with uid [$PUID] does not exist, creating..."
-        useradd -g $PGID -u $PUID -M $USER_NAME
-        echo "User [$USER_NAME] with uid [$PUID] created."
-    else
-        USER_NAME=$(getent passwd $PUID | cut -d: -f1)
-        echo "user with uid [$PUID] name [$USER_NAME] already exists."
-        HOME_DIR="/home/$USER_NAME"
-    fi
-
-    ### create home directory
-    if [ ! -d "$HOME_DIR" ]; then
-        echo "Home directory [$HOME_DIR] not found, creating."
-        mkdir -p $HOME_DIR
-        echo ". done."
-    fi
-
-    chown -R $PUID:$PGID $HOME_DIR
-    ls -la $HOME_DIR -d
-    ls -la $HOME_DIR
-
-    if [ "${ANY_ALSA}" -eq 1 ]; then
-        if [ -z "${AUDIO_GID}" ]; then
-            echo "AUDIO_GID is mandatory for user mode and alsa output"
-            exit 3
+if [[ ! (${USER_MODE^^} == "NO" || ${USER_MODE^^} == "N") ]]; then
+    if [[ "${ANY_PULSE}" -eq 1 ]] || 
+    [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" == "Y" ]]; then
+        USE_USER_MODE="Y"
+        echo "User mode enabled"
+        echo "Creating user ...";
+        if [ -z "${PUID}" ]; then
+            PUID=$DEFAULT_UID;
+            echo "Setting default value for PUID: ["$PUID"]"
+        fi
+        if [ -z "${PGID}" ]; then
+            PGID=$DEFAULT_GID;
+            echo "Setting default value for PGID: ["$PGID"]"
+        fi
+        echo "Ensuring user with uid:[$PUID] gid:[$PGID] exists ...";
+        ### create group if it does not exist
+        if [ ! $(getent group $PGID) ]; then
+            echo "Group with gid [$PGID] does not exist, creating..."
+            groupadd -g $PGID $GROUP_NAME
+            echo "Group [$GROUP_NAME] with gid [$PGID] created."
         else
-            create_audio_gid
+            GROUP_NAME=$(getent group $PGID | cut -d: -f1)
+            echo "Group with gid [$PGID] name [$GROUP_NAME] already exists."
         fi
-    elif [ "${ANY_PULSE}" -eq 1 ]; then
-        if [ -n "${AUDIO_GID}" ]; then
-            create_audio_gid
-        fi
-    fi
-    chown -R $USER_NAME:$GROUP_NAME /log
-    chown -R $USER_NAME:$GROUP_NAME /db
-    chown -R $USER_NAME:$GROUP_NAME /playlists
-    chown -R $USER_NAME:$GROUP_NAME /app/scribble
 
-    ## PulseAudio
-    if [ "${ANY_PULSE}" -eq 1 ]; then
-        PULSE_CLIENT_CONF="/etc/pulse/client.conf"
-        echo "Creating pulseaudio configuration file $PULSE_CLIENT_CONF..."
-        cp /app/assets/pulse-client-template.conf $PULSE_CLIENT_CONF
-        sed -i 's/PUID/'"$PUID"'/g' $PULSE_CLIENT_CONF
-        cat $PULSE_CLIENT_CONF
+        ### create user if it does not exist
+        if [ ! $(getent passwd $PUID) ]; then
+            echo "User with uid [$PUID] does not exist, creating..."
+            useradd -g $PGID -u $PUID -M $USER_NAME
+            echo "User [$USER_NAME] with uid [$PUID] created."
+        else
+            USER_NAME=$(getent passwd $PUID | cut -d: -f1)
+            echo "user with uid [$PUID] name [$USER_NAME] already exists."
+            HOME_DIR="/home/$USER_NAME"
+        fi
+
+        ### create home directory
+        if [ ! -d "$HOME_DIR" ]; then
+            echo "Home directory [$HOME_DIR] not found, creating."
+            mkdir -p $HOME_DIR
+            echo ". done."
+        fi
+
+        chown -R $PUID:$PGID $HOME_DIR
+        ls -la $HOME_DIR -d
+        ls -la $HOME_DIR
+
+        if [ "${ANY_ALSA}" -eq 1 ]; then
+            if [ -z "${AUDIO_GID}" ]; then
+                echo "AUDIO_GID is mandatory for user mode and alsa output"
+                exit 3
+            else
+                create_audio_gid
+            fi
+        elif [ "${ANY_PULSE}" -eq 1 ]; then
+            if [ -n "${AUDIO_GID}" ]; then
+                create_audio_gid
+            fi
+        fi
+        chown -R $USER_NAME:$GROUP_NAME /log
+        chown -R $USER_NAME:$GROUP_NAME /db
+        chown -R $USER_NAME:$GROUP_NAME /playlists
+        chown -R $USER_NAME:$GROUP_NAME /app/scribble
+
+        ## PulseAudio
+        if [ "${ANY_PULSE}" -eq 1 ]; then
+            PULSE_CLIENT_CONF="/etc/pulse/client.conf"
+            echo "Creating pulseaudio configuration file $PULSE_CLIENT_CONF..."
+            cp /app/assets/pulse-client-template.conf $PULSE_CLIENT_CONF
+            sed -i 's/PUID/'"$PUID"'/g' $PULSE_CLIENT_CONF
+            cat $PULSE_CLIENT_CONF
+        fi
+    else 
+        echo "User mode disabled"
     fi
-else 
-    echo "User mode disabled"
 fi
 
 MPD_ALSA_CONFIG_FILE=/app/conf/mpd.conf
