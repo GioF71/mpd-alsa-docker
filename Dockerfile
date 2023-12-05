@@ -281,4 +281,8 @@ COPY doc/* /app/doc/
 
 WORKDIR /app/bin
 
+# this must be world-writable if we want 
+# to user docker in user mode
+RUN chmod 777 -R /app/conf
+
 ENTRYPOINT ["/app/bin/run-mpd.sh"]
