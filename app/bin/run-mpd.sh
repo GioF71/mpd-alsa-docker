@@ -261,7 +261,6 @@ if [[ ! (${USER_MODE^^} == "NO" || ${USER_MODE^^} == "N") ]]; then
         chown -R $USER_NAME:$GROUP_NAME /log
         chown -R $USER_NAME:$GROUP_NAME /db
         chown -R $USER_NAME:$GROUP_NAME /playlists
-        chown -R $USER_NAME:$GROUP_NAME /app/scribble
 
         ## PulseAudio
         if [ "${ANY_PULSE}" -eq 1 ]; then
@@ -276,7 +275,7 @@ if [[ ! (${USER_MODE^^} == "NO" || ${USER_MODE^^} == "N") ]]; then
     fi
 fi
 
-MPD_ALSA_CONFIG_FILE=/app/conf/mpd.conf
+MPD_ALSA_CONFIG_FILE=/tmp/mpd.conf
 
 ## start from scratch
 echo "# mpd configuration file" > $MPD_ALSA_CONFIG_FILE
@@ -683,7 +682,7 @@ if [[ -n "$STARTUP_DELAY_SEC" ]]; then
 fi
 
 ## start from scratch
-SCRIBBLE_CONFIG_FILE=/app/conf/scribble.conf
+SCRIBBLE_CONFIG_FILE=/tmp/scribble.conf
 echo "# mpscribble configuration file" > $SCRIBBLE_CONFIG_FILE
 
 if [[ -n "$LASTFM_USERNAME" && -n "$LASTFM_PASSWORD" ]] || 

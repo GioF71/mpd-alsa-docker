@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-12-09|Write config files to /tmp (see issue [#359](https://github.com/GioF71/mpd-alsa-docker/issues/359))
 2023-12-08|Add support for always_on on shout (see issue [#355](https://github.com/GioF71/mpd-alsa-docker/issues/355))
 2023-12-05|Honor denied USER_MODE (see issue [#351](https://github.com/GioF71/mpd-alsa-docker/issues/351))
 2023-10-29|Add mpc to the images (see issue [#347](https://github.com/GioF71/mpd-alsa-docker/issues/347))
