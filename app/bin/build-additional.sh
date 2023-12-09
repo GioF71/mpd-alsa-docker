@@ -337,6 +337,7 @@ build_shout() {
         add_output_parameter $out_file $idx SHOUT_OUTPUT_USER user "" none
         add_output_parameter $out_file $idx SHOUT_OUTPUT_PASSWORD password hackme constant
         add_output_parameter $out_file $idx SHOUT_OUTPUT_PUBLIC public no constant
+        add_output_parameter $out_file $idx SHOUT_OUTPUT_ALWAYS_ON always_on yes constant
         close_output $out_file
     fi
 }
