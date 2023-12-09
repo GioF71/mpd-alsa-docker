@@ -93,7 +93,6 @@ RUN chmod 777 /app/run/conf
 VOLUME /db
 VOLUME /music
 VOLUME /playlists
-VOLUME /app/scribble
 VOLUME /log
 VOLUME /user/config
 
@@ -264,7 +263,6 @@ ENV STDERR_ENABLED ""
 
 COPY app/assets/pulse-client-template.conf /app/assets/pulse-client-template.conf
 COPY app/assets/alsa-presets.conf /app/assets/alsa-presets.conf
-COPY app/conf/mpd-sample.conf /app/conf/
 COPY app/bin/run-mpd.sh /app/bin/
 COPY app/bin/get-value.sh /app/bin/
 COPY app/bin/read-file.sh /app/bin/
@@ -281,9 +279,5 @@ COPY README.md /app/doc/
 COPY doc/* /app/doc/
 
 WORKDIR /app/bin
-
-# this must be world-writable if we want 
-# to user docker in user mode
-RUN chmod 777 -R /app/conf
 
 ENTRYPOINT ["/app/bin/run-mpd.sh"]
