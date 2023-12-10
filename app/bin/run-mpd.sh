@@ -784,6 +784,11 @@ elif [[ "${STDERR_ENABLED}" != "NO" && "${STDERR_ENABLED}" != "N" ]]; then
     exit 9
 fi
 
+if [ -f "/user/config/override.mpd.conf" ]; then
+    echo "Overriding generated mpd configuration file, use this feature at your own risk!"
+    MPD_ALSA_CONFIG_FILE=/user/config/override.mpd.conf
+fi
+
 CMD_LINE="$CMD_LINE --no-daemon $MPD_ALSA_CONFIG_FILE"
 echo "CMD_LINE=[$CMD_LINE]"
 if [ $USE_USER_MODE == "Y" ]; then
