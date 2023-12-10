@@ -115,6 +115,7 @@ jamendo.txt|Jamendo Credentials
 additional-alsa-presets.conf|Additional alsa presets
 additional-outputs.txt|Additional outputs, which will be added to the configuration file during the container startup phase
 asoundrc.txt|Alsa configuration file: this will be copied to `/home/mpd-user/.asoundrc` or to `/root/.asoundrc`, depending on user mode to be enabled or not
+override.mpd.conf|User provided mpd configuration file (see [#356](https://github.com/GioF71/mpd-alsa-docker/issues/356)). Use at your own risk. If this file is available, it will be used in the final phase of the run script instead of the generated file.
 
 For a reference for the structure of the credentials file, see the corresponding example file in the doc folder of the repository.
 
