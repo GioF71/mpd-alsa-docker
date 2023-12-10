@@ -46,6 +46,10 @@ MPDSCRIBBLE_BINARY="/usr/bin/mpdscribble"
 DEFAULT_MAX_PERMISSIONS=10
 max_permissions=$DEFAULT_MAX_PERMISSIONS
 
+DEFAULT_MAX_BIND_ADDRESSES=10
+max_bind_addresses=$DEFAULT_MAX_BIND_ADDRESSES
+
+
 if [[ -n "${MAX_PERMISSIONS}" ]]; then
     max_permissions=${MAX_PERMISSIONS}
 fi
@@ -352,7 +356,14 @@ fi
 echo "state_file_interval \"${state_file_interval}\"" >> $MPD_ALSA_CONFIG_FILE
 
 echo "sticker_file \"/db/sticker\"" >> $MPD_ALSA_CONFIG_FILE
-echo "bind_to_address \"${MPD_BIND_ADDRESS}\"" >> $MPD_ALSA_CONFIG_FILE
+
+#  multiple bind addresses (issue #357)
+for i in $( eval echo {0..$max_bind_addresses} )
+do
+    echo "Processing MPD_BIND_ADDRESS index $i"
+    add_simple_parameter $MPD_ALSA_CONFIG_FILE $i "MPD_BIND_ADDRESS" "bind_to_address" 
+done
+
 echo "port \"${MPD_PORT}\"" >> $MPD_ALSA_CONFIG_FILE
 
 logging_enabled=1
