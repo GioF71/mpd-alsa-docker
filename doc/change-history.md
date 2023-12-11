@@ -99,7 +99,7 @@ Date|Major Changes
 2022-11-23|`MPD_BIND_ADDRESS` defaults to `0.0.0.0`
 2022-11-23|Disabled `wildmidi` decoder plugin
 2022-11-23|Support for `bind_address` (`MPD_BIND_ADDRESS`) and for `port` (`MPD_PORT`)
-2022-11-22|Support for zeroconf configurations via `ZEROCONF_ENABLED` and `ZEROCONF_NAME`. Zeroconf is disabled by default.
+2022-11-22|Support for zeroconf configurations via `ZEROCONF_ENABLED` and `ZEROCONF_NAME`, disabled by default.
 2022-11-18|Preset names added
 2022-11-18|Preset for Topping E30
 2022-11-15|Add variable `ALSA_AUTO_FIND_MIXER` to enable automatic mixer search (experimental feature)
