@@ -108,10 +108,10 @@ Date|Major Changes
 2022-11-14|Support for alsa presets `ALSA_PRESET`.
 2022-11-14|Using `SOXR_PLUGIN_PRESET` instead of now deprecated `SOXR_PRESET`
 2022-11-14|DOP empty by default
-2022-11-14|Fix connection to mpd from the scrobbler. Add optional variables for forcing host and port in case of host mode (`SCROBBLER_MPD_HOST` and `SCROBBLER_MPD_PORT`)
+2022-11-14|Fix connection to mpd from the scrobbler<br>Add optional variables for forcing host/port in case of host mode,<br>(`SCROBBLER_MPD_HOST` and `SCROBBLER_MPD_PORT`)
 2022-11-12|Presets for ALSA_ALLOWED_FORMATS (ALSA_ALLOWED_FORMATS_PRESET)
 2022-11-12|Presets for SOXR_PLUGIN
-2022-11-12|Building mpd in docker images takes a long time, so only bullseye and jammy images are built. But you can build your own variants!
+2022-11-12|Building mpd in docker images takes a long time, so only bullseye and jammy images are built.<br>But you can build your own variants!
 2022-11-12|Patched version available, with support for upsampling
 2022-11-12|MPD built from source
 2022-11-01|Support for scrobbling service credentials in discrete files
