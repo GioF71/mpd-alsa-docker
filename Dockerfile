@@ -261,11 +261,11 @@ ENV CURL_CACERT ""
 
 ENV STDERR_ENABLED ""
 
+COPY README.md /app/doc/
+COPY doc/* /app/doc/
+
 COPY app/assets/pulse-client-template.conf /app/assets/pulse-client-template.conf
 COPY app/assets/alsa-presets.conf /app/assets/alsa-presets.conf
-COPY app/bin/run-mpd.sh /app/bin/
-COPY app/bin/get-value.sh /app/bin/
-COPY app/bin/read-file.sh /app/bin/
 COPY app/bin/build-soxr-presets.sh /app/bin/
 COPY app/bin/build-allowed-formats-presets.sh /app/bin/
 COPY app/bin/build-integer-upsampling-allowed-presets.sh /app/bin/
@@ -273,10 +273,11 @@ COPY app/bin/load-alsa-presets.sh /app/bin/
 COPY app/bin/build-additional.sh /app/bin/
 COPY app/bin/user-management.sh /app/bin/
 COPY app/bin/any-of.sh /app/bin/
+COPY app/bin/get-value.sh /app/bin/
+COPY app/bin/read-file.sh /app/bin/
+# most likely to change ...
+COPY app/bin/run-mpd.sh /app/bin/
 RUN chmod +x /app/bin/*.sh
-
-COPY README.md /app/doc/
-COPY doc/* /app/doc/
 
 WORKDIR /app/bin
 

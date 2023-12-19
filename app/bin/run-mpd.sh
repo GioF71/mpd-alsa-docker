@@ -12,6 +12,30 @@
 # 10 Missing mandatory parameter
 # 11 Missing binaries
 
+current_user_id=$(id -u)
+echo "Current user id is [$current_user_id]"
+
+if [[ "${current_user_id}" != "0" ]]; then
+    echo "Not running as root, will not be able to create users" 
+fi
+
+if [ -w "/log" ]; then
+    LOG_PATH=/log
+else
+    mkdir -p /tmp/log
+    LOG_PATH=/tmp/log
+fi
+
+if [ -w "/db" ]; then
+    DB_PATH=/db
+else
+    mkdir -p /tmp/db
+    DB_PATH=/tmp/db
+fi
+
+echo "DB_PATH=[${DB_PATH}]"
+echo "LOG_PATH=[${LOG_PATH}]"
+
 add_simple_parameter() {
     out_file=$1
     idx=$2
@@ -156,8 +180,6 @@ if [ -f "$JAMENDO_CREDENTIALS_FILE" ]; then
     JAMENDO_PASSWORD=$(get_value "JAMENDO_PASSWORD" $PARAMETER_PRIORITY)
 fi
 
-MPD_ALSA_CONFIG_FILE=/app/conf/mpd-alsa.conf
-
 USE_USER_MODE="N"
 
 ANY_PULSE=$(any_pulse)
@@ -203,7 +225,7 @@ HOME_DIR=$DEFAULT_HOME_DIR
 
 echo "USER_MODE=[${USER_MODE}]"
 
-if [[ ! (${USER_MODE^^} == "NO" || ${USER_MODE^^} == "N") ]]; then
+if [[ "${current_user_id}" == "0" && (! (${USER_MODE^^} == "NO" || ${USER_MODE^^} == "N")) ]]; then
     if [[ "${ANY_PULSE}" -eq 1 ]] || 
     [[ "${USER_MODE^^}" == "YES" || "${USER_MODE^^}" == "Y" ]]; then
         USE_USER_MODE="Y"
@@ -305,7 +327,7 @@ NEED_STORAGE=1
 echo "database {" >> $MPD_ALSA_CONFIG_FILE
 if [ "${DATABASE_MODE^^}" == "SIMPLE" ]; then
     echo "  plugin \"simple\"" >> $MPD_ALSA_CONFIG_FILE
-    echo "  path \"/db/tag_cache\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  path \"${DB_PATH}/tag_cache\"" >> $MPD_ALSA_CONFIG_FILE
 elif [ "${DATABASE_MODE^^}" == "PROXY" ]; then
     echo "  plugin \"proxy\"" >> $MPD_ALSA_CONFIG_FILE
     echo "  host \"${DATABASE_PROXY_HOST}\"" >> $MPD_ALSA_CONFIG_FILE
@@ -336,7 +358,7 @@ if [[ $NEED_STORAGE -eq 1 ]]; then
 fi
 
 echo "playlist_directory \"/playlists\"" >> $MPD_ALSA_CONFIG_FILE
-echo "state_file \"/db/state\"" >> $MPD_ALSA_CONFIG_FILE
+echo "state_file \"${DB_PATH}/state\"" >> $MPD_ALSA_CONFIG_FILE
 
 if [ -n "${RESTORE_PAUSED}" ]; then
     if [[ "${RESTORE_PAUSED^^}" == "YES" || "${RESTORE_PAUSED^^}" == "Y" ]]; then
@@ -355,7 +377,7 @@ if [ -n "${STATE_FILE_INTERVAL}" ]; then
 fi
 echo "state_file_interval \"${state_file_interval}\"" >> $MPD_ALSA_CONFIG_FILE
 
-echo "sticker_file \"/db/sticker\"" >> $MPD_ALSA_CONFIG_FILE
+echo "sticker_file \"${DB_PATH}/sticker\"" >> $MPD_ALSA_CONFIG_FILE
 
 #  multiple bind addresses (issue #357)
 for i in $( eval echo {0..$max_bind_addresses} )
@@ -379,7 +401,7 @@ if [ -n "${MPD_ENABLE_LOGGING}" ]; then
 fi
 
 if [ $logging_enabled -eq 1 ]; then
-    echo "log_file \"/log/mpd.log\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "log_file \"${LOG_PATH}/mpd.log\"" >> $MPD_ALSA_CONFIG_FILE
     if [ -n "${MPD_LOG_LEVEL}" ]; then
         echo "log_level \"${MPD_LOG_LEVEL}\"" >> $MPD_ALSA_CONFIG_FILE
     fi
@@ -721,7 +743,7 @@ if [[ -n "$LASTFM_USERNAME" && -n "$LASTFM_PASSWORD" ]] ||
     if [ -n "$PROXY" ]; then
         echo "proxy = $PROXY" >> $SCRIBBLE_CONFIG_FILE
     fi
-    echo "log = /log/scrobbler.log" >> $SCRIBBLE_CONFIG_FILE
+    echo "log = ${LOG_PATH}/scrobbler.log" >> $SCRIBBLE_CONFIG_FILE
     if [ -n "$SCRIBBLE_VERBOSE" ]; then
         echo "verbose = $SCRIBBLE_VERBOSE" >> $SCRIBBLE_CONFIG_FILE
     fi
@@ -732,24 +754,24 @@ if [[ -n "$LASTFM_USERNAME" && -n "$LASTFM_PASSWORD" ]] ||
         echo "url = https://post.audioscrobbler.com/" >> $SCRIBBLE_CONFIG_FILE 
         echo "username = ${LASTFM_USERNAME}" >> $SCRIBBLE_CONFIG_FILE
         echo "password = ${LASTFM_PASSWORD}" >> $SCRIBBLE_CONFIG_FILE
-        echo "journal = /log/mpdscribble-lastfm.journal" >> $SCRIBBLE_CONFIG_FILE
+        echo "journal = ${LOG_PATH}/mpdscribble-lastfm.journal" >> $SCRIBBLE_CONFIG_FILE
     fi
     if [ -n "$LIBREFM_USERNAME" ]; then
         echo "[libre.fm]" >> $SCRIBBLE_CONFIG_FILE
         echo "url = http://turtle.libre.fm/" >> $SCRIBBLE_CONFIG_FILE 
         echo "username = ${LIBREFM_USERNAME}" >> $SCRIBBLE_CONFIG_FILE
         echo "password = ${LIBREFM_PASSWORD}" >> $SCRIBBLE_CONFIG_FILE
-        echo "journal = /log/mpdscribble-librefm.journal" >> $SCRIBBLE_CONFIG_FILE
+        echo "journal = ${LOG_PATH}/mpdscribble-librefm.journal" >> $SCRIBBLE_CONFIG_FILE
     fi
     if [ -n "$JAMENDO_USERNAME" ]; then
         echo "[jamendo]" >> $SCRIBBLE_CONFIG_FILE
         echo "url = http://postaudioscrobbler.jamendo.com/" >> $SCRIBBLE_CONFIG_FILE 
         echo "username = ${JAMENDO_USERNAME}" >> $SCRIBBLE_CONFIG_FILE
         echo "password = ${JAMENDO_PASSWORD}" >> $SCRIBBLE_CONFIG_FILE
-        echo "journal = /log/mpdscribble-jamendo.journal" >> $SCRIBBLE_CONFIG_FILE
+        echo "journal = ${LOG_PATH}/mpdscribble-jamendo.journal" >> $SCRIBBLE_CONFIG_FILE
     fi
     echo "[file]" >> $SCRIBBLE_CONFIG_FILE
-    echo "file = /log/mpdscribble-file.log" >> $SCRIBBLE_CONFIG_FILE
+    echo "file = ${LOG_PATH}/mpdscribble-file.log" >> $SCRIBBLE_CONFIG_FILE
 
     cat $SCRIBBLE_CONFIG_FILE
     CMD_LINE="/usr/bin/mpdscribble --conf $SCRIBBLE_CONFIG_FILE &"
@@ -763,7 +785,7 @@ fi
 cat $MPD_ALSA_CONFIG_FILE
 
 if [[ -z "${ENFORCE_PLAYER_STATE}" || "${ENFORCE_PLAYER_STATE^^}" == "YES" || "${ENFORCE_PLAYER_STATE^^}" == "Y" ]]; then
-    STATE_FILE=/db/state
+    STATE_FILE=${DB_PATH}/state
     # remove player states
     if [ -f $STATE_FILE ]; then
         echo "Removing player state information from state file [$STATE_FILE]"
@@ -791,17 +813,23 @@ fi
 
 CMD_LINE="$CMD_LINE --no-daemon $MPD_ALSA_CONFIG_FILE"
 echo "CMD_LINE=[$CMD_LINE]"
-if [ $USE_USER_MODE == "Y" ]; then
-    if [ -f "/user/config/asoundrc.txt" ]; then
-        cp /user/config/asoundrc.txt /home/$USER_NAME/.asoundrc
-        chown $USER_NAME:$GROUP_NAME /home/$USER_NAME/.asoundrc
-        chmod 600 /home/$USER_NAME/.asoundrc
+if [[ $current_user_id -eq 0 ]]; then
+    echo "Container running as root"
+    if [ $USE_USER_MODE == "Y" ]; then
+        if [ -f "/user/config/asoundrc.txt" ]; then
+            cp /user/config/asoundrc.txt /home/$USER_NAME/.asoundrc
+            chown $USER_NAME:$GROUP_NAME /home/$USER_NAME/.asoundrc
+            chmod 600 /home/$USER_NAME/.asoundrc
+        fi
+        su - $USER_NAME -c "$CMD_LINE"
+    else
+        if [ -f "/user/config/asoundrc.txt" ]; then
+            cp /user/config/asoundrc.txt /root/.asoundrc
+            chmod 644 /root/.asoundrc
+        fi
+        eval "$CMD_LINE"
     fi
-    su - $USER_NAME -c "$CMD_LINE"
 else
-    if [ -f "/user/config/asoundrc.txt" ]; then
-        cp /user/config/asoundrc.txt /root/.asoundrc
-        chmod 644 /root/.asoundrc
-    fi
+    echo "Container running as ${current_user_id}"
     eval "$CMD_LINE"
 fi
