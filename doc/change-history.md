@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2023-12-22|Bump to version 0.23.15 (see issue [#374](https://github.com/GioF71/mpd-alsa-docker/issues/374))
 2023-12-19|Allow running in user mode (using docker `--user`) (see issue [#370](https://github.com/GioF71/mpd-alsa-docker/issues/370))
 2023-12-10|Support multiple bind addresses (see issue [#357](https://github.com/GioF71/mpd-alsa-docker/issues/357))
 2023-12-09|Write config files to /tmp (see issue [#359](https://github.com/GioF71/mpd-alsa-docker/issues/359))
