@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2024-02-02|Add support for MixRamp (see issue [#380](https://github.com/GioF71/mpd-alsa-docker/issues/380))
 2023-12-22|Bump to version 0.23.15 (see issue [#374](https://github.com/GioF71/mpd-alsa-docker/issues/374))
 2023-12-19|Allow running in user mode (using docker `--user`) (see issue [#370](https://github.com/GioF71/mpd-alsa-docker/issues/370))
 2023-12-10|Support multiple bind addresses (see issue [#357](https://github.com/GioF71/mpd-alsa-docker/issues/357))
