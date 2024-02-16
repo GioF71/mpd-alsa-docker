@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2024-02-16|Completed support for resource limitation (see issue [#381](https://github.com/GioF71/mpd-alsa-docker/issues/381))
 2023-12-22|Bump to version 0.23.15 (see issue [#374](https://github.com/GioF71/mpd-alsa-docker/issues/374))
 2023-12-19|Allow running in user mode (using docker `--user`) (see issue [#370](https://github.com/GioF71/mpd-alsa-docker/issues/370))
 2023-12-10|Support multiple bind addresses (see issue [#357](https://github.com/GioF71/mpd-alsa-docker/issues/357))
