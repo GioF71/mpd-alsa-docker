@@ -693,13 +693,27 @@ if [ -n "${SAMPLERATE_CONVERTER}" ]; then
     fi
     echo "samplerate_converter \"${SAMPLERATE_CONVERTER}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
-if [ -n "${MAX_OUTPUT_BUFFER_SIZE}" ]; then
-    echo "max_output_buffer_size \"${MAX_OUTPUT_BUFFER_SIZE}\"" >> $MPD_ALSA_CONFIG_FILE
-fi
 if [ -n "${AUDIO_BUFFER_SIZE}" ]; then
     echo "audio_buffer_size \"${AUDIO_BUFFER_SIZE}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 echo "filesystem_charset \"UTF-8\"" >> $MPD_ALSA_CONFIG_FILE
+
+# resource limitations
+if [ -n "${CONNECTION_TIMEOUT}" ]; then
+    echo "connection_timeout \"${CONNECTION_TIMEOUT}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [[ -n "${MAX_CONNECTIONS}" ]]; then
+    echo "max_connections \"${MAX_CONNECTIONS}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [[ -n "${MAX_PLAYLIST_LENGTH}" ]]; then
+    echo "max_playlist_length \"${MAX_PLAYLIST_LENGTH}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [[ -n "${MAX_COMMAND_LIST_SIZE}" ]]; then
+    echo "max_command_list_size \"${MAX_COMMAND_LIST_SIZE}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
+if [ -n "${MAX_OUTPUT_BUFFER_SIZE}" ]; then
+    echo "max_output_buffer_size \"${MAX_OUTPUT_BUFFER_SIZE}\"" >> $MPD_ALSA_CONFIG_FILE
+fi
 
 number_re="^[0-9]+$"
 if [[ -n "$STARTUP_DELAY_SEC" ]]; then

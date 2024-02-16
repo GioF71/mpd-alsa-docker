@@ -151,7 +151,6 @@ CURL_CACERT|Parameter for CURL input plugin
 ZEROCONF_ENABLED|Set to `yes` to enable, disabled by default.
 ZEROCONF_NAME|Set zeroconf name, used only if `ZEROCONF_ENABLED` is set to `yes`
 HYBRID_DSD_ENABLED|Hybrid dsd is enabled by default, set to `no` to disable. Disabled when at least one PulseAudio output is created.
-MAX_OUTPUT_BUFFER_SIZE|The maximum size of the output buffer to a client (maximum response size). Default is 8192 (8 MiB). Value in KBytes.
 AUDIO_BUFFER_SIZE|Adjust the size of the internal audio buffer. Default is `4 MB` (4 MiB).
 MAX_ADDITIONAL_OUTPUTS_BY_TYPE|The maximum number of outputs by type, defaults to `20`
 RESTORE_PAUSED|If set to `yes`, then MPD is put into pause mode instead of starting playback after startup. Default is `no`.
@@ -164,7 +163,12 @@ HOST_PERMISSIONS|Adds a `host_permissions`, you can add multiple (up to `MAX_PER
 PASSWORD|Adds a `password`, you can add multiple (up to `MAX_PERMISSIONS`), append `_1`, `_2`, etc to the variable name for additional entries, see [here](https://mpd.readthedocs.io/en/stable/user.html#permissions-and-passwords)
 MAX_PERMISSIONS|Specify the maximum number of host_permissions and passwords, defaults to `10`
 STDERR_ENABLED|Print messages to the standard error, enabled by default. Set to `no` to disable
-STARTUP_DELAY_SEC|Delay before starting the application in seconds, defaults to `0`.
+CONNECTION_TIMEOUT|If a client does not send any new data in this time period (seconds), the connection is closed. Clients waiting in “idle” mode are excluded from this. Default is `60`
+MAX_CONNECTIONS|This specifies the maximum number of clients that can be connected to MPD at the same time, default is `100`
+MAX_PLAYLIST_LENGTH|The maximum number of songs that can be in the playlist, default is `16384`
+MAX_COMMAND_LIST_SIZE|The maximum size a command list in KBYTES, default is `2048` (2 MiB)
+MAX_OUTPUT_BUFFER_SIZE|The maximum size of the output buffer to a client (maximum response size), in KBYTES, default is 8192 (8 MiB)
+STARTUP_DELAY_SEC|Delay before starting the application in seconds, defaults to `0`
 
 #### SOXR Plugin
 
