@@ -17,5 +17,5 @@ SHOUT_OUTPUT_MOUNT|Mounts the MPD stream in the specified URI
 SHOUT_OUTPUT_USER|Sets the user name for submitting the stream to the server, defaults to `source`
 SHOUT_OUTPUT_PASSWORD|Sets the password for submitting the stream to the server, defaults to `hackme`
 SHOUT_OUTPUT_PUBLIC|Specifies whether the stream should be "public", defaults to `no`
-SHOUT_MIXER_TYPE|Set to `software` if you want to be able to change the volume of the output stream
+SHOUT_OUTPUT_MIXER_TYPE|Set to `software` if you want to be able to change the volume of the output stream
 SHOUT_OUTPUT_ALWAYS_ON|If set to `yes`, then MPD attempts to keep this audio output always open. This may be useful for streaming servers, when you don’t want to disconnect all listeners even when playback is accidentally stopped. Defaults to `yes`
