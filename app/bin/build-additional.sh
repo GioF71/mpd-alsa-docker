@@ -353,6 +353,7 @@ build_null() {
         add_output_parameter $out_file $idx NULL_OUTPUT_NAME name null str
         add_output_parameter $out_file $idx NULL_OUTPUT_ENABLED enabled "" none
         add_output_parameter $out_file $idx NULL_OUTPUT_SYNC sync yes constant
+        add_output_parameter $out_file $idx NULL_OUTPUT_MIXER_TYPE mixer_type "" none
         close_output $out_file
     fi
 }
