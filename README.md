@@ -170,6 +170,14 @@ MAX_COMMAND_LIST_SIZE|The maximum size a command list in KBYTES, default is `204
 MAX_OUTPUT_BUFFER_SIZE|The maximum size of the output buffer to a client (maximum response size), in KBYTES, default is 8192 (8 MiB)
 STARTUP_DELAY_SEC|Delay before starting the application in seconds, defaults to `0`
 
+#### FFMPEG Decoder
+
+Please find here the variables used to configure FFMPEG.
+
+VARIABLE|DESCRIPTION
+:---|:---
+FFMPEG_MODE|Wether to enable FFMPEG decoder or `no`
+
 #### SOXR Plugin
 
 Please find here the variables used to configure the SOXR plugin.
