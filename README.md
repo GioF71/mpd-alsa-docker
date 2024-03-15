@@ -141,6 +141,7 @@ INPUT_CACHE_SIZE|Sets the input cache size. Example value: `1 GB`
 SAMPLERATE_CONVERTER|Configure `samplerate_converter`. Example value: `soxr very high`. Note that this configuration cannot be used when `SOXR_PLUGIN_ENABLE` is set to enabled. There are some preset values for sox: `very_high` and `very-high` map to `soxr very high`, `high` maps to `soxr high`, `medium` maps to `soxr medium`, `low` maps to `soxr low` and `quick` maps to `soxr quick`. Refer to [this](https://mpd.readthedocs.io/en/stable/plugins.html#soxr) page for details.
 MPD_ENABLE_LOGGING|Defaults to `yes`, set to `no` to disable
 MPD_LOG_LEVEL|Can be `default` or `verbose`
+FFMPEG_ENABLED|Enable ffmpeg decoder, defaults to `no`. Plugin documentation [here](https://mpd.readthedocs.io/en/stable/plugins.html#decoder-ffmpeg)
 CURL_ENABLED|Enable CURL input plugin, defaults to `yes`. This is required if you plan to use [upmpdcli](https://github.com/GioF71/upmpdcli-docker). Input plugin documentation [here](https://mpd.readthedocs.io/en/stable/plugins.html#id6)
 CURL_PROXY|Parameter for CURL input plugin
 CURL_PROXY_USER|Parameter for CURL input plugin
@@ -169,14 +170,6 @@ MAX_PLAYLIST_LENGTH|The maximum number of songs that can be in the playlist, def
 MAX_COMMAND_LIST_SIZE|The maximum size a command list in KBYTES, default is `2048` (2 MiB)
 MAX_OUTPUT_BUFFER_SIZE|The maximum size of the output buffer to a client (maximum response size), in KBYTES, default is 8192 (8 MiB)
 STARTUP_DELAY_SEC|Delay before starting the application in seconds, defaults to `0`
-
-#### FFMPEG Decoder
-
-Please find here the variables used to configure FFMPEG.
-
-VARIABLE|DESCRIPTION
-:---|:---
-FFMPEG_MODE|Wether to enable FFMPEG decoder or `no`
 
 #### SOXR Plugin
 
