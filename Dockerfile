@@ -26,7 +26,7 @@ RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
-RUN apt-get install -y mpc ca-certificates
+RUN apt-get install -y mpc ca-certificates ffmpeg
 #RUN apt-get upgrade -y
 
 # install mpd from repo
@@ -251,6 +251,8 @@ ENV DEFAULT_PERMISSIONS ""
 ENV HOST_PERMISSIONS ""
 ENV LOCAL_PERMISSIONS ""
 ENV PASSWORD ""
+
+ENV FFMPEG_ENABLED ""
 
 ENV CURL_ENABLED ""
 ENV CURL_PROXY ""

@@ -451,6 +451,17 @@ echo "  plugin \"wildmidi\"" >> $MPD_ALSA_CONFIG_FILE
 echo "  enabled \"no\"" >> $MPD_ALSA_CONFIG_FILE
 echo "}" >> $MPD_ALSA_CONFIG_FILE
 
+## use ffmpeg as a decoder
+if [[ "${FFMPEG_ENABLED^^}" == "YES" || "${FFMPEG_ENABLED^^}" == "Y" ]]; then
+    echo "decoder {" >> $MPD_ALSA_CONFIG_FILE
+    echo "  plugin \"ffmpeg\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  enabled \"yes\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "}" >> $MPD_ALSA_CONFIG_FILE
+elif [[ -n "${FFMPEG_ENABLED}" ]] && ! [[ "${FFMPEG_ENABLED^^}" == "NO" || "${FFMPEG_ENABLED^^}" == "N" ]]; then
+    echo "Invalid FFMPEG_ENABLED=[${FFMPEG_ENABLED}]"
+    exit 9
+fi
+
 ## add input curl
 if [[ -z "${CURL_ENABLED}" || "${CURL_ENABLED^^}" == "YES" || "${CURL_ENABLED^^}" == "Y" ]]; then
     echo "input {" >> $MPD_ALSA_CONFIG_FILE
