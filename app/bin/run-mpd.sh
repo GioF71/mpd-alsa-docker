@@ -726,7 +726,29 @@ if [ -n "${MAX_OUTPUT_BUFFER_SIZE}" ]; then
     echo "max_output_buffer_size \"${MAX_OUTPUT_BUFFER_SIZE}\"" >> $MPD_ALSA_CONFIG_FILE
 fi
 
+if [[ -n "${AUTO_UPDATE}" ]]; then
+    echo "AUTO_UPDATE=[{AUTO_UPDATE}]"
+    if [[ "${AUTO_UPDATE^^}" == "YES" ]] || [[ "${AUTO_UPDATE^^}" == "Y" ]]; then
+        echo "auto_update \"yes\"" >> $MPD_ALSA_CONFIG_FILE
+    elif [[ "${AUTO_UPDATE^^}" == "NO" ]] || [[ "${AUTO_UPDATE^^}" == "N" ]]; then
+        echo "auto_update \"no\"" >> $MPD_ALSA_CONFIG_FILE
+    else
+        echo "Invalid parameter AUTO_UPDATE [${AUTO_UPDATE}]"
+        exit 9
+    fi
+fi
+
 number_re="^[0-9]+$"
+if [[ -n "${AUTO_UPDATE_DEPTH}" ]]; then
+    echo "AUTO_UPDATE_DEPTH=[{AUTO_UPDATE_DEPTH}]"
+    if ! [[ $AUTO_UPDATE_DEPTH =~ $number_re ]]; then
+        echo "Invalid parameter AUTO_UPDATE_DEPTH=[${AUTO_UPDATE_DEPTH}]"
+        exit 9
+    else
+        echo "auto_update_depth \"${AUTO_UPDATE_DEPTH}\"" >> $MPD_ALSA_CONFIG_FILE
+    fi
+fi
+
 if [[ -n "$STARTUP_DELAY_SEC" ]]; then
     if ! [[ $STARTUP_DELAY_SEC =~ $number_re ]]; then
         echo "Invalid parameter STARTUP_DELAY_SEC"

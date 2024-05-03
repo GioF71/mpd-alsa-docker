@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2024-05-03|Add support for auto_update and auto_update_depth (see issue [#397](https://github.com/GioF71/mpd-alsa-docker/issues/397))
 2024-03-15|Add support for ffmpeg decoder using `FFMPEG_ENABLED` (see issue [#389](https://github.com/GioF71/mpd-alsa-docker/issues/389))
 2024-03-05|Add `NULL_OUTPUT_MIXER_TYPE` and doc updates (see issue [#385](https://github.com/GioF71/mpd-alsa-docker/issues/385))
 2024-02-16|Completed support for resource limitation (see issue [#381](https://github.com/GioF71/mpd-alsa-docker/issues/381))

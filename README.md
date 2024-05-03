@@ -169,6 +169,8 @@ MAX_CONNECTIONS|This specifies the maximum number of clients that can be connect
 MAX_PLAYLIST_LENGTH|The maximum number of songs that can be in the playlist, default is `16384`
 MAX_COMMAND_LIST_SIZE|The maximum size a command list in KBYTES, default is `2048` (2 MiB)
 MAX_OUTPUT_BUFFER_SIZE|The maximum size of the output buffer to a client (maximum response size), in KBYTES, default is 8192 (8 MiB)
+AUTO_UPDATE|Set to `yes` to enable autoupdate of database
+AUTO_UPDATE_DEPTH|Limit the depth of the directories being watched, `0` means only watch the music directory itself. There is no limit by default.
 STARTUP_DELAY_SEC|Delay before starting the application in seconds, defaults to `0`
 
 #### SOXR Plugin
