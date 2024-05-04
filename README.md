@@ -7,6 +7,12 @@ First and foremost, the reference to the awesome projects:
 [Music Player Daemon](https://www.musicpd.org/)  
 [MPDScribble](https://www.musicpd.org/clients/mpdscribble/)
 
+## Support
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/H2H7UIN5D)  
+Please see the [Goal](https://ko-fi.com/giof71/goal?g=0)  
+Please note that support goal is limited to cover running costs for subscriptions to music services.
+
 ## Description
 
 A docker image for mpd with support for both Alsa and PulseAudio.  
