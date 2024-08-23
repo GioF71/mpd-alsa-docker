@@ -41,8 +41,6 @@ jobs:
           vanilla_dict[vanilla-bookworm]="yes"
           vanilla_dict[noble]="no"
           vanilla_dict[vanilla-noble]="yes"
-          vanilla_dict[mantic]="no"
-          vanilla_dict[vanilla-mantic]="yes"
 
           is_vanilla=${vanilla_dict[${{ matrix.base }}]}
 
@@ -51,8 +49,6 @@ jobs:
           allows_amdv5_dict[vanilla-bookworm]="yes"
           allows_amdv5_dict[noble]="no"
           allows_amdv5_dict[vanilla-noble]="no"
-          allows_amdv5_dict[mantic]="no"
-          allows_amdv5_dict[vanilla-mantic]="no"
 
           armv5_allowed=${allows_amdv5_dict[${{ matrix.base }}]}
 
@@ -64,8 +60,6 @@ jobs:
           declare -A base_images_dict
           base_images_dict[bookworm]="giof71/mpd-compiler:bookworm"
           base_images_dict[vanilla-bookworm]="debian:bookworm-slim"
-          base_images_dict[mantic]="giof71/mpd-compiler:mantic"
-          base_images_dict[vanilla-mantic]="ubuntu:mantic"
           base_images_dict[noble]="giof71/mpd-compiler:noble"
           base_images_dict[vanilla-noble]="ubuntu:noble"
 
@@ -74,8 +68,6 @@ jobs:
           integer_upsampling_dict[vanilla-bookworm]="no"
           integer_upsampling_dict[noble]="yes"
           integer_upsampling_dict[vanilla-noble]="no"
-          integer_upsampling_dict[mantic]="yes"
-          integer_upsampling_dict[vanilla-mantic]="no"
 
           integer_upsampling_support=${integer_upsampling_dict[${{ matrix.base }}]}
 
@@ -86,8 +78,6 @@ jobs:
           upstream_image_from_matrix[vanilla-bookworm]=debian:bookworm-slim
           upstream_image_from_matrix[noble]=ubuntu:noble
           upstream_image_from_matrix[vanilla-noble]=ubuntu:noble
-          upstream_image_from_matrix[mantic]=ubuntu:mantic
-          upstream_image_from_matrix[vanilla-mantic]=ubuntu:mantic
 
           declare -A special_tags
           special_tags[bookworm]="${image_name}:stable,${image_name}:latest"
@@ -100,8 +90,6 @@ jobs:
           mpd_version_dict[vanilla-bookworm]=0.23.12
           mpd_version_dict[noble]=0.23.15
           mpd_version_dict[vanilla-noble]=0.23.14
-          mpd_version_dict[mantic]=0.23.15
-          mpd_version_dict[vanilla-mantic]=0.23.12
 
           # select mpd version
           mpd_version=${mpd_version_dict["${distro_id}"]};
