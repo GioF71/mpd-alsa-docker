@@ -72,9 +72,9 @@ The `mpdscribble` version depends on the base image. See the following table:
 Base Image|Tags|Compiled MPD version|Repo MPD version|MPDScribble version
 :---|:---|:---|:---|:---
 giof71/mpd-compiler:bookworm|**latest**, **stable**, bookworm|0.23.15|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
-giof71/mpd-compiler:mantic|mantic, ubuntu-current|0.23.15|[0.23.12](https://packages.ubuntu.com/mantic/mpd)|[0.24](https://packages.ubuntu.com/mantic/mpdscribble)
+giof71/mpd-compiler:noble|noble, ubuntu-current|0.23.15|[0.23.14](https://packages.ubuntu.com/noble/mpd)|[0.25](https://packages.ubuntu.com/noble/mpdscribble)
 debian:bookworm-slim|**vanilla-latest**, **vanilla-stable**, **vanilla**, vanilla-bookworm|-|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
-ubuntu:mantic|vanilla-mantic, vanilla-ubuntu-current|-|[0.23.12](https://packages.ubuntu.com/mantic/mpd)|[0.24](https://packages.ubuntu.com/mantic/mpdscribble)
+ubuntu:noble|vanilla-noblr, vanilla-ubuntu-current|-|[0.23.14](https://packages.ubuntu.com/noble/mpd)|[0.25](https://packages.ubuntu.com/noble/mpdscribble)
 
 ## Usage
 
