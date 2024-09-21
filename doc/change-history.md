@@ -2,6 +2,8 @@
 
 Date|Major Changes
 :---|:---
+2024-09-21|Fix CURL_PROXY interpretation (thank you [tantra35](https://github.com/tantra35))
+2024-09-21|Use exec instead of eval, avoid root process (thank you [tantra35](https://github.com/tantra35))
 2024-08-23|Use ubuntu noble instead of mantic (see issue [#405](https://github.com/GioF71/mpd-alsa-docker/issues/405))
 2024-03-15|Add support for ffmpeg decoder using `FFMPEG_ENABLED` (see issue [#389](https://github.com/GioF71/mpd-alsa-docker/issues/389))
 2024-03-05|Add `NULL_OUTPUT_MIXER_TYPE` and doc updates (see issue [#385](https://github.com/GioF71/mpd-alsa-docker/issues/385))
