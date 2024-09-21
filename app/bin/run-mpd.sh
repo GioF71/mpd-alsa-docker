@@ -466,7 +466,7 @@ fi
 if [[ -z "${CURL_ENABLED}" || "${CURL_ENABLED^^}" == "YES" || "${CURL_ENABLED^^}" == "Y" ]]; then
     echo "input {" >> $MPD_ALSA_CONFIG_FILE
     echo "  plugin \"curl\"" >> $MPD_ALSA_CONFIG_FILE
-    if [[ "${CURL_PROXY^^}" == "YES" || "${CURL_PROXY^^}" == "Y" ]]; then
+    if [ ! -z "${CURL_PROXY}" ]; then
         echo "  proxy \"${CURL_PROXY}\"" >> $MPD_ALSA_CONFIG_FILE
         if [[ -n "${CURL_PROXY_USER^^}" ]]; then
             echo "  proxy_user \"${CURL_PROXY_USER}\"" >> $MPD_ALSA_CONFIG_FILE
@@ -868,15 +868,15 @@ if [[ $current_user_id -eq 0 ]]; then
             chown $USER_NAME:$GROUP_NAME /home/$USER_NAME/.asoundrc
             chmod 600 /home/$USER_NAME/.asoundrc
         fi
-        su - $USER_NAME -c "$CMD_LINE"
+        exec su - $USER_NAME -c "$CMD_LINE"
     else
         if [ -f "/user/config/asoundrc.txt" ]; then
             cp /user/config/asoundrc.txt /root/.asoundrc
             chmod 644 /root/.asoundrc
         fi
-        eval "$CMD_LINE"
+        eval "exec $CMD_LINE"
     fi
 else
     echo "Container running as ${current_user_id}"
-    eval "$CMD_LINE"
+    eval "exec $CMD_LINE"
 fi
