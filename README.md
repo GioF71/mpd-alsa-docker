@@ -74,7 +74,7 @@ Base Image|Tags|Compiled MPD version|Repo MPD version|MPDScribble version
 giof71/mpd-compiler:bookworm|**latest**, **stable**, bookworm|0.23.15|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
 giof71/mpd-compiler:noble|noble, ubuntu-current|0.23.15|[0.23.14](https://packages.ubuntu.com/noble/mpd)|[0.25](https://packages.ubuntu.com/noble/mpdscribble)
 debian:bookworm-slim|**vanilla-latest**, **vanilla-stable**, **vanilla**, vanilla-bookworm|-|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
-ubuntu:noble|vanilla-noblr, vanilla-ubuntu-current|-|[0.23.14](https://packages.ubuntu.com/noble/mpd)|[0.25](https://packages.ubuntu.com/noble/mpdscribble)
+ubuntu:noble|vanilla-noble, vanilla-ubuntu-current|-|[0.23.14](https://packages.ubuntu.com/noble/mpd)|[0.25](https://packages.ubuntu.com/noble/mpdscribble)
 
 ## Usage
 
