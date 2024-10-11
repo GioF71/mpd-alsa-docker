@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2024-10-11|Support for `stop_dsd_silence` (see issue [#410](https://github.com/GioF71/mpd-alsa-docker/issues/410))
 2024-09-21|Fix CURL_PROXY interpretation (thank you [tantra35](https://github.com/tantra35))
 2024-09-21|Use exec instead of eval, avoid root process (thank you [tantra35](https://github.com/tantra35))
 2024-08-23|Use ubuntu noble instead of mantic (see issue [#405](https://github.com/GioF71/mpd-alsa-docker/issues/405))
@@ -24,7 +25,7 @@ Date|Major Changes
 2023-09-22|Fixed processing of ALSA_OUTPUT_AUTO_FIND_MIXER (see issue [#326](https://github.com/GioF71/mpd-alsa-docker/issues/326))
 2023-09-22|Fixed preset for Yulong D200 (see issue [#283](https://github.com/GioF71/mpd-alsa-docker/issues/283))
 2023-09-22|Add presets for Topping D10s and D10 Balanced (see issue [#327](https://github.com/GioF71/mpd-alsa-docker/issues/327))
-2023-09-22|Fixed processing of alsa-related strings with trailing spaces (see issue [#328](https://github.com/GioF71/mpd-alsa-docker/issues/328)) 
+2023-09-22|Fixed processing of alsa-related strings with trailing spaces (see issue [#328](https://github.com/GioF71/mpd-alsa-docker/issues/328))
 2023-09-19|Extend support for proxy plugin (see issue [#324](https://github.com/GioF71/mpd-alsa-docker/issues/324))
 2023-08-30|Unified github workflows, using arm/v5 instead of v6 (see issue [#321](https://github.com/GioF71/mpd-alsa-docker/issues/321))
 2023-07-21|Build mode must default to `full` (see issue [#319](https://github.com/GioF71/mpd-alsa-docker/issues/319))
