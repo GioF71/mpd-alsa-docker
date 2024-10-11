@@ -251,6 +251,7 @@ build_alsa() {
         fi
         add_output_parameter $out_file $idx ALSA_OUTPUT_AUTO_RESAMPLE auto_resample "" none
         add_output_parameter $out_file $idx ALSA_OUTPUT_THESYCON_DSD_WORKAROUND thesycon_dsd_workaround "" none
+        add_output_parameter $out_file $idx ALSA_OUTPUT_STOP_DSD_SILENCE stop_dsd_silence "" none
         add_output_parameter $out_file $idx ALSA_OUTPUT_INTEGER_UPSAMPLING integer_upsampling "" none
         add_alsa_output_parameter $out_file $idx ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED integer_upsampling_allowed "" none "integer_upsampling_allowed"
         add_output_parameter $out_file $idx ALSA_OUTPUT_DOP dop "" none

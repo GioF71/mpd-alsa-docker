@@ -11,6 +11,7 @@
 # 9 Invalid parameter
 # 10 Missing mandatory parameter
 # 11 Missing binaries
+# 12 Invalid stop_dsd_silence mode
 
 current_user_id=$(id -u)
 echo "Current user id is [$current_user_id]"
