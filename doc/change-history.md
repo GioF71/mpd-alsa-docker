@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2024-12-26|Bump to version 0.23.14 (see issue [#412](https://github.com/GioF71/mpd-alsa-docker/issues/412))
 2024-10-11|Support for `stop_dsd_silence` (see issue [#410](https://github.com/GioF71/mpd-alsa-docker/issues/410))
 2024-09-21|Fix CURL_PROXY interpretation (thank you [tantra35](https://github.com/tantra35))
 2024-09-21|Use exec instead of eval, avoid root process (thank you [tantra35](https://github.com/tantra35))
