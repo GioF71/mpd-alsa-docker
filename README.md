@@ -56,14 +56,14 @@ Keep in mind that the `legacy` branch will not be updated with new features. Onl
 ## MPD Source code
 
 The source code for the patched MPD is in this GitHub [repo](https://github.com/GioF71/MPD).  
-The `version-0.23.15` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.23.15.  
-The `version-0.23.15-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
+The `version-0.23.16` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.23.16.  
+The `version-0.23.16-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
 Two binaries are available in the container image:
 
 - /app/bin/compiled/mpd (upstream version)
 - /app/bin/compiled/mpd-ups (patched version)
 
-The current mpd version is `v0.23.15` when using [giof71/mpd-compiler-docker](https://github.com/GioF71/mpd-compiler-docker) as the base image (Docker Repo [here](https://hub.docker.com/r/giof71/mpd-compiler)). The repo binary is installed also in this case.  
+The current mpd version is `v0.23.16` when using [giof71/mpd-compiler-docker](https://github.com/GioF71/mpd-compiler-docker) as the base image (Docker Repo [here](https://hub.docker.com/r/giof71/mpd-compiler)). The repo binary is installed also in this case.  
 Vanilla versions only have the repo binary.  
 The `mpdscribble` version depends on the base image. See the following table:
 
@@ -71,8 +71,8 @@ The `mpdscribble` version depends on the base image. See the following table:
 
 Base Image|Tags|Compiled MPD version|Repo MPD version|MPDScribble version
 :---|:---|:---|:---|:---
-giof71/mpd-compiler:bookworm|**latest**, **stable**, bookworm|0.23.15|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
-giof71/mpd-compiler:noble|noble, ubuntu-current|0.23.15|[0.23.14](https://packages.ubuntu.com/noble/mpd)|[0.25](https://packages.ubuntu.com/noble/mpdscribble)
+giof71/mpd-compiler:bookworm|**latest**, **stable**, bookworm|0.23.16|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
+giof71/mpd-compiler:noble|noble, ubuntu-current|0.23.16|[0.23.14](https://packages.ubuntu.com/noble/mpd)|[0.25](https://packages.ubuntu.com/noble/mpdscribble)
 debian:bookworm-slim|**vanilla-latest**, **vanilla-stable**, **vanilla**, vanilla-bookworm|-|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
 ubuntu:noble|vanilla-noble, vanilla-ubuntu-current|-|[0.23.14](https://packages.ubuntu.com/noble/mpd)|[0.25](https://packages.ubuntu.com/noble/mpdscribble)
 
@@ -158,6 +158,7 @@ CURL_CACERT|Parameter for CURL input plugin
 ZEROCONF_ENABLED|Set to `yes` to enable, disabled by default.
 ZEROCONF_NAME|Set zeroconf name, used only if `ZEROCONF_ENABLED` is set to `yes`
 HYBRID_DSD_ENABLED|Hybrid dsd is enabled by default, set to `no` to disable. Disabled when at least one PulseAudio output is created.
+OPUS_DECODER_ENABLED|Defaults to `yes`, if set to `no`, the opus decoder will be disabled.
 AUDIO_BUFFER_SIZE|Adjust the size of the internal audio buffer. Default is `4 MB` (4 MiB).
 MAX_ADDITIONAL_OUTPUTS_BY_TYPE|The maximum number of outputs by type, defaults to `20`
 RESTORE_PAUSED|If set to `yes`, then MPD is put into pause mode instead of starting playback after startup. Default is `no`.

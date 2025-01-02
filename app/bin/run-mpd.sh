@@ -516,6 +516,14 @@ if [[ "${HYBRID_DSD_ENABLED^^}" == "NO" || "${ANY_PULSE}" -eq 1 ]]; then
     echo "}" >> $MPD_ALSA_CONFIG_FILE
 fi
 
+## Hybrid dsd plugin disabled when requested
+if [[ "${OPUS_DECODER_ENABLED^^}" == "NO" ]] || [[ "${OPUS_DECODER_ENABLED^^}" == "N" ]]; then
+    echo "decoder {" >> $MPD_ALSA_CONFIG_FILE
+    echo "  plugin \"opus\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "  enabled \"no\"" >> $MPD_ALSA_CONFIG_FILE
+    echo "}" >> $MPD_ALSA_CONFIG_FILE
+fi
+
 ## Add Qobuz plugin
 echo "Qobuz Plugin Enabled: [$QOBUZ_PLUGIN_ENABLED]"
 if [[ "${QOBUZ_PLUGIN_ENABLED^^}" == "Y" || "${QOBUZ_PLUGIN_ENABLED^^}" == "YES" ]]; then
