@@ -158,6 +158,7 @@ CURL_CACERT|Parameter for CURL input plugin
 ZEROCONF_ENABLED|Set to `yes` to enable, disabled by default.
 ZEROCONF_NAME|Set zeroconf name, used only if `ZEROCONF_ENABLED` is set to `yes`
 HYBRID_DSD_ENABLED|Hybrid dsd is enabled by default, set to `no` to disable. Disabled when at least one PulseAudio output is created.
+OPUS_DECODER_ENABLED|Defaults to `yes`, if set to `no`, the opus decoder will be disabled.
 AUDIO_BUFFER_SIZE|Adjust the size of the internal audio buffer. Default is `4 MB` (4 MiB).
 MAX_ADDITIONAL_OUTPUTS_BY_TYPE|The maximum number of outputs by type, defaults to `20`
 RESTORE_PAUSED|If set to `yes`, then MPD is put into pause mode instead of starting playback after startup. Default is `no`.
