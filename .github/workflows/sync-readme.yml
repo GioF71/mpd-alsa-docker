@@ -20,5 +20,5 @@ jobs:
           user: ${{ secrets.DOCKER_USERNAME }}
           pass: ${{ secrets.DOCKER_PASSWORD }}
           slug: ${{ secrets.DOCKER_USERNAME }}/mpd-alsa
-          readme: ./README.md
+          readme: ./README.dockerhub.md
           description: Easily run mpd with Alsa or PulseAudio output. Upsampling and scrobbling support.
