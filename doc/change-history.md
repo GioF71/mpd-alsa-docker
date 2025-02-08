@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2025-02-08|Dropped noble builds (see issue [#422](https://github.com/GioF71/mpd-alsa-docker/issues/422))
 2025-02-08|Bump to version 0.23.17 (see issue [#420](https://github.com/GioF71/mpd-alsa-docker/issues/420))
 2025-01-02|Support for disabling opus decoder (see issue [#414](https://github.com/GioF71/mpd-alsa-docker/issues/414))
 2024-12-26|Bump to version 0.23.14 (see issue [#412](https://github.com/GioF71/mpd-alsa-docker/issues/412))
@@ -120,10 +121,11 @@ Date|Major Changes
 2022-11-14|Support for alsa presets `ALSA_PRESET`.
 2022-11-14|Using `SOXR_PLUGIN_PRESET` instead of now deprecated `SOXR_PRESET`
 2022-11-14|DOP empty by default
-2022-11-14|Fix connection to mpd from the scrobbler<br>Add optional variables for forcing host/port in case of host mode,<br>(`SCROBBLER_MPD_HOST` and `SCROBBLER_MPD_PORT`)
+2022-11-14|Fix connection to mpd from the scrobbler
+2022-11-14|Add optional variables for forcing host/port in case of host mode, `SCROBBLER_MPD_HOST` and `SCROBBLER_MPD_PORT`
 2022-11-12|Presets for ALSA_ALLOWED_FORMATS (ALSA_ALLOWED_FORMATS_PRESET)
 2022-11-12|Presets for SOXR_PLUGIN
-2022-11-12|Building mpd in docker images takes a long time, so only bullseye and jammy images are built.<br>But you can build your own variants!
+2022-11-12|Building mpd in docker images takes a long time, restict to bullseye and jammy
 2022-11-12|Patched version available, with support for upsampling
 2022-11-12|MPD built from source
 2022-11-01|Support for scrobbling service credentials in discrete files
@@ -149,8 +151,12 @@ Date|Major Changes
 2022-03-12|Rebased to mpd-base-images built on 2022-03-12
 2022-02-26|Rebased to mpd-base-images built on 2022-02-26
 2022-02-25|Add README.md synchronization towards Docker Hub
-2022-02-13|File `/etc/mpd.conf` is not overwritten<br>Using file `/app/conf/mpd-alsa.conf`<br>Launcher script moved to `/app/bin` in the container.<br>Repository files reorganized
-2022-02-11|Automated builds thanks to [Der-Henning](https://github.com/Der-Henning/)<br>Builds for arm64 also thanks to [Der-Henning](https://github.com/Der-Henning/)
+2022-02-13|File `/etc/mpd.conf` is not overwritten
+2022-02-13|Using file `/app/conf/mpd-alsa.conf`
+2022-02-13|Launcher script moved to `/app/bin` in the container
+2022-02-13|Repository files reorganized
+2022-02-11|Automated builds thanks to [Der-Henning](https://github.com/Der-Henning/)
+2022-02-11|Builds for arm64 also thanks to [Der-Henning](https://github.com/Der-Henning/)
 2022-02-11|README.md is copied to the image under path `/app/doc/README.md`
 2022-02-11|Building from debian bullseye, debian buster and ubuntu focal
 2022-02-11|Created convenience script for local builds
