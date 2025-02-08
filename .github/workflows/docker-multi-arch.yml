@@ -86,9 +86,9 @@ jobs:
           special_tags[vanilla-noble]="${image_name}:vanilla-ubuntu-current"
 
           declare -A mpd_version_dict
-          mpd_version_dict[bookworm]=0.23.16
+          mpd_version_dict[bookworm]=0.23.17
           mpd_version_dict[vanilla-bookworm]=0.23.12
-          mpd_version_dict[noble]=0.23.16
+          mpd_version_dict[noble]=0.23.17
           mpd_version_dict[vanilla-noble]=0.23.14
 
           # select mpd version
