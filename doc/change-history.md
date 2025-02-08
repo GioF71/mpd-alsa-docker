@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2025-02-08|Bump to version 0.23.17 (see issue [#420](https://github.com/GioF71/mpd-alsa-docker/issues/420))
 2025-01-02|Support for disabling opus decoder (see issue [#414](https://github.com/GioF71/mpd-alsa-docker/issues/414))
 2024-12-26|Bump to version 0.23.14 (see issue [#412](https://github.com/GioF71/mpd-alsa-docker/issues/412))
 2024-10-11|Support for `stop_dsd_silence` (see issue [#410](https://github.com/GioF71/mpd-alsa-docker/issues/410))

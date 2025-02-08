@@ -56,14 +56,14 @@ Keep in mind that the `legacy` branch will not be updated with new features. Onl
 ## MPD Source code
 
 The source code for the patched MPD is in this GitHub [repo](https://github.com/GioF71/MPD).  
-The `version-0.23.16` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.23.16.  
-The `version-0.23.16-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
+The `version-0.23.17` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.23.17.  
+The `version-0.23.17-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
 Two binaries are available in the container image:
 
 - /app/bin/compiled/mpd (upstream version)
 - /app/bin/compiled/mpd-ups (patched version)
 
-The current mpd version is `v0.23.16` when using [giof71/mpd-compiler-docker](https://github.com/GioF71/mpd-compiler-docker) as the base image (Docker Repo [here](https://hub.docker.com/r/giof71/mpd-compiler)). The repo binary is installed also in this case.  
+The current mpd version is `v0.23.17` when using [giof71/mpd-compiler-docker](https://github.com/GioF71/mpd-compiler-docker) as the base image (Docker Repo [here](https://hub.docker.com/r/giof71/mpd-compiler)). The repo binary is installed also in this case.  
 Vanilla versions only have the repo binary.  
 The `mpdscribble` version depends on the base image. See the following table:
 
@@ -71,8 +71,8 @@ The `mpdscribble` version depends on the base image. See the following table:
 
 Base Image|Tags|Compiled MPD version|Repo MPD version|MPDScribble version
 :---|:---|:---|:---|:---
-giof71/mpd-compiler:bookworm|**latest**, **stable**, bookworm|0.23.16|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
-giof71/mpd-compiler:noble|noble, ubuntu-current|0.23.16|[0.23.14](https://packages.ubuntu.com/noble/mpd)|[0.25](https://packages.ubuntu.com/noble/mpdscribble)
+giof71/mpd-compiler:bookworm|**latest**, **stable**, bookworm|0.23.17|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
+giof71/mpd-compiler:noble|noble, ubuntu-current|0.23.17|[0.23.14](https://packages.ubuntu.com/noble/mpd)|[0.25](https://packages.ubuntu.com/noble/mpdscribble)
 debian:bookworm-slim|**vanilla-latest**, **vanilla-stable**, **vanilla**, vanilla-bookworm|-|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
 ubuntu:noble|vanilla-noble, vanilla-ubuntu-current|-|[0.23.14](https://packages.ubuntu.com/noble/mpd)|[0.25](https://packages.ubuntu.com/noble/mpdscribble)
 
