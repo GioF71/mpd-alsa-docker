@@ -1,5 +1,5 @@
 ARG BASE_IMAGE="${BASE_IMAGE}"
-FROM ${BASE_IMAGE} AS BASE
+FROM ${BASE_IMAGE} AS base
 
 ARG INTEGER_UPSAMPLING_SUPPORT="${INTEGER_UPSAMPLING_SUPPORT:-no}"
 ARG USE_APT_PROXY
@@ -73,7 +73,7 @@ RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
 RUN rm -rf /var/lib/apt/lists/*
 
 FROM scratch
-COPY --from=BASE / /
+COPY --from=base / /
 
 LABEL maintainer="GioF71"
 LABEL source="https://github.com/GioF71/mpd-alsa-docker"
