@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2025-02-08|Resolved docker warning (see issue [#424](https://github.com/GioF71/mpd-alsa-docker/issues/424))
 2025-02-08|Dropped noble builds (see issue [#422](https://github.com/GioF71/mpd-alsa-docker/issues/422))
 2025-02-08|Bump to version 0.23.17 (see issue [#420](https://github.com/GioF71/mpd-alsa-docker/issues/420))
 2025-01-02|Support for disabling opus decoder (see issue [#414](https://github.com/GioF71/mpd-alsa-docker/issues/414))
