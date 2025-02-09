@@ -359,3 +359,22 @@ build_null() {
     fi
 }
 
+build_snapcast() {
+    out_file=$1
+    idx=$2
+    create=$(get_named_env "SNAPCAST_OUTPUT_CREATE" $idx)
+    if [[ "${create^^}" == "YES" || "${create^^}" == "Y" ]]; then
+        echo "Creating Snapcast output for output [$idx]"
+        open_output $out_file
+        set_output_type $out_file snapcast
+        add_output_parameter $out_file $idx SNAPCAST_OUTPUT_NAME name snapcast str
+        add_output_parameter $out_file $idx SNAPCAST_OUTPUT_ENABLED enabled "" none
+        add_output_parameter $out_file $idx SNAPCAST_OUTPUT_PORT port 1704 constant
+        add_output_parameter $out_file $idx SNAPCAST_OUTPUT_BIND_TO_ADDRESS bind_to_address "" constant
+        add_output_parameter $out_file $idx SNAPCAST_OUTPUT_ZEROCONF zeroconf yes constant
+        add_output_parameter $out_file $idx SNAPCAST_OUTPUT_MIXER_TYPE mixer_type "software" constant
+        add_output_parameter $out_file $idx SNAPCAST_OUTPUT_OUTPUT_FORMAT format "44100:16:2" constant
+        close_output $out_file
+    fi
+}
+
