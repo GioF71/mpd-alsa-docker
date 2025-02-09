@@ -348,6 +348,23 @@ NULL_OUTPUT_MIXER_TYPE|Set to `software` if you want to be able to change the vo
 
 Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#null) for the meaning of the variables.  
 
+#### Snapcast additional outputs
+
+Additional snapcast outputs can be configured using the following variables:
+
+VARIABLE|DESCRIPTION
+:---|:---
+SNAPCAST_OUTPUT_CREATE|Set to `yes` if you want to create an additional Snapcast output
+SNAPCAST_OUTPUT_ENABLED|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
+SNAPCAST_OUTPUT_NAME|The name of the Snapcast output, defaults to `snapcast`
+SNAPCAST_OUTPUT_FORMAT|Snapcast audio format
+SNAPCAST_OUTPUT_MIXER_TYPE|Snapcast mixer type, defaults to `software`
+SNAPCAST_OUTPUT_PORT|Binds the Snapcast server to the specified port, defaults to 1704
+SNAPCAST_OUTPUT_BIND_TO_ADDRESS|Binds the Snapcast server to the specified address
+SNAPCAST_OUTPUT_ZEROCONF|Publish the Snapcast server, default is yes.
+
+Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#snapcast) for the meaning of the variables.  
+
 ### Examples
 
 See some usage examples [here](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/example-configurations.md).
