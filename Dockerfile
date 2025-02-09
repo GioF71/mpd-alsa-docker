@@ -2,75 +2,47 @@ ARG BASE_IMAGE=${BASE_IMAGE:-giof71/mpd-compiler:bookworm}
 FROM ${BASE_IMAGE} AS base
 
 ARG INTEGER_UPSAMPLING_SUPPORT=${INTEGER_UPSAMPLING_SUPPORT:-yes}
-ARG USE_APT_PROXY=${USE_APT_PROXY:-no}
 ARG IS_VANILLA=${IS_VANILLA:-no}
 ARG BUILD_MODE=${BUILD_MODE:-full}
 
 RUN mkdir -p /app/conf
 
-RUN echo "USE_APT_PROXY=["${USE_APT_PROXY}"]"
 RUN echo "INTEGER_UPSAMPLING_SUPPORT=["${INTEGER_UPSAMPLING_SUPPORT}"]"
 RUN echo "BUILD_MODE=["${BUILD_MODE}"]"
 
 RUN echo $BUILD_MODE > /app/conf/build_mode.txt
 
-COPY app/conf/01-apt-proxy /app/conf/
-
-RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
-    echo "Builind using apt proxy"; \
-    cp /app/conf/01-apt-proxy /etc/apt/apt.conf.d/01-apt-proxy; \
-    cat /etc/apt/apt.conf.d/01-apt-proxy; \
-    else \
-    echo "Building without apt proxy"; \
-    fi
-
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update
-RUN apt-get install -y mpc ca-certificates ffmpeg
-#RUN apt-get upgrade -y
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y mpc ca-certificates ffmpeg
 
 # install mpd from repo
 RUN if [ "${IS_VANILLA}" = "yes" ]; then \
         echo "Vanilla build, installing mpd ..."; \
-        apt-get install -y mpd --no-install-recommends; \
+        DEBIAN_FRONTEND=noninteractive apt-get install -y mpd --no-install-recommends; \
         echo ". done"; \
         echo "yes" > /app/conf/mpd_installed.txt; \
     else \
         echo "MPD should be already installed, but just to be safe ..."; \
-        apt-get install -y mpd --no-install-recommends; \
+        DEBIAN_FRONTEND=noninteractive apt-get install -y mpd --no-install-recommends; \
         echo ". done"; \
         echo "yes" > /app/conf/mpd_installed.txt; \
     fi
 
 # install required libraries
 RUN if [ "${BUILD_MODE}" = "full" ]; then \
-        apt-get install -y --no-install-recommends alsa-utils libasound2-plugin-equal; \
+        DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends alsa-utils libasound2-plugin-equal; \
         echo "yes" > /app/conf/alsa_packages_installed.txt; \
-    else \
-        apt-get remove -y alsa-utils libasound2-plugin-equal; \
-        echo "no" > /app/conf/alsa_packages_installed.txt; \
-    fi
-
-RUN if [ "${BUILD_MODE}" = "full" ]; then \
-        apt-get install -y --no-install-recommends pulseaudio-utils; \
+        DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends pulseaudio-utils; \
         echo "yes" > /app/conf/pulse_packages_installed.txt; \
+        DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends mpdscribble; \
     else \
-        apt-get remove -y pulseaudio-utils; \
+        DEBIAN_FRONTEND=noninteractive apt-get remove -y alsa-utils libasound2-plugin-equal; \
+        echo "no" > /app/conf/alsa_packages_installed.txt; \
+        DEBIAN_FRONTEND=noninteractive apt-get remove -y pulseaudio-utils; \
         echo "no" > /app/conf/pulse_packages_installed.txt; \
     fi
 
-# install scrobbler (mpdscribble)
-RUN if [ "${BUILD_MODE}" = "full" ]; then \
-        apt-get install -y --no-install-recommends mpdscribble; \
-    fi
-
-RUN apt-get autoremove -y
-
-RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
-        rm /etc/apt/apt.conf.d/01-apt-proxy; \
-    fi
-
-RUN rm -rf /var/lib/apt/lists/*
+RUN DEBIAN_FRONTEND=noninteractive apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
 FROM scratch
 COPY --from=base / /
@@ -78,17 +50,7 @@ COPY --from=base / /
 LABEL maintainer="GioF71"
 LABEL source="https://github.com/GioF71/mpd-alsa-docker"
 
-RUN mkdir -p /app
-RUN mkdir -p /app/assets
-RUN mkdir -p /app/bin
-RUN mkdir -p /app/conf
-RUN mkdir -p /app/doc
-RUN mkdir -p /app/log
-RUN mkdir -p /app/log/mpd
-RUN mkdir -p /app/assets
-
-RUN mkdir -p /app/run/conf
-RUN chmod 777 /app/run/conf
+RUN mkdir -p /app/{assets,bin,conf,log} /app/log/mpd /app/run/conf && chmod 777 /app/run/conf
 
 VOLUME /db
 VOLUME /music
@@ -279,22 +241,9 @@ ENV MAX_OUTPUT_BUFFER_SIZE ""
 
 ENV STDERR_ENABLED ""
 
-COPY README.md /app/doc/
-COPY doc/* /app/doc/
+COPY app/assets/* /app/assets/
+COPY app/bin/* /app/bin/
 
-COPY app/assets/pulse-client-template.conf /app/assets/pulse-client-template.conf
-COPY app/assets/alsa-presets.conf /app/assets/alsa-presets.conf
-COPY app/bin/build-soxr-presets.sh /app/bin/
-COPY app/bin/build-allowed-formats-presets.sh /app/bin/
-COPY app/bin/build-integer-upsampling-allowed-presets.sh /app/bin/
-COPY app/bin/load-alsa-presets.sh /app/bin/
-COPY app/bin/build-additional.sh /app/bin/
-COPY app/bin/user-management.sh /app/bin/
-COPY app/bin/any-of.sh /app/bin/
-COPY app/bin/get-value.sh /app/bin/
-COPY app/bin/read-file.sh /app/bin/
-# most likely to change ...
-COPY app/bin/run-mpd.sh /app/bin/
 RUN chmod +x /app/bin/*.sh
 
 WORKDIR /app/bin
