@@ -378,3 +378,19 @@ build_snapcast() {
     fi
 }
 
+build_fifo() {
+    out_file=$1
+    idx=$2
+    create=$(get_named_env "FIFO_OUTPUT_CREATE" $idx)
+    if [[ "${create^^}" == "YES" || "${create^^}" == "Y" ]]; then
+        echo "Creating Fifo output for output [$idx]"
+        open_output $out_file
+        set_output_type $out_file fifo
+        add_output_parameter $out_file $idx FIFO_OUTPUT_NAME name fifo str
+        add_output_parameter $out_file $idx FIFO_OUTPUT_ENABLED enabled "" none
+        add_output_parameter $out_file $idx FIFO_OUTPUT_PATH path "" none
+        add_output_parameter $out_file $idx FIFO_OUTPUT_MIXER_TYPE mixer_type "software" constant
+        add_output_parameter $out_file $idx FIFO_OUTPUT_OUTPUT_FORMAT format "44100:16:2" constant
+        close_output $out_file
+    fi
+}
