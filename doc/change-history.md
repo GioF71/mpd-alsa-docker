@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2025-02-19|Add initial support for snapcast (see issue [#430](https://github.com/GioF71/mpd-alsa-docker/issues/430))
 2025-02-09|Dockerfile optimizations (see issue [#428](https://github.com/GioF71/mpd-alsa-docker/issues/428))
 2025-02-09|Add initial support for snapcast (see issue [#404](https://github.com/GioF71/mpd-alsa-docker/issues/404))
 2025-02-08|Resolved docker warning (see issue [#424](https://github.com/GioF71/mpd-alsa-docker/issues/424))

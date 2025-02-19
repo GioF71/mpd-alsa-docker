@@ -365,6 +365,22 @@ SNAPCAST_OUTPUT_ZEROCONF|Publish the Snapcast server, default is yes.
 
 Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#snapcast) for the meaning of the variables.  
 
+#### Fifo additional outputs
+
+Additional snapcast outputs can be configured using the following variables:
+
+VARIABLE|DESCRIPTION
+:---|:---
+FIFO_OUTPUT_CREATE|Set to `yes` if you want to create an additional Fifo output
+FIFO_OUTPUT_ENABLED|Sets the output as enabled if set to `yes`, otherwise mpd's default behavior applies
+FIFO_OUTPUT_NAME|The name of the Fifo output, defaults to `fifo`
+FIFO_OUTPUT_FORMAT|Fifo audio format
+FIFO_OUTPUT_MIXER_TYPE|Fifo mixer type, defaults to `software`
+FIFO_OUTPUT_PATH|Path of the fifo file
+
+Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#snapcast) for the meaning of the variables.  
+
+
 ### Examples
 
 See some usage examples [here](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/example-configurations.md).
