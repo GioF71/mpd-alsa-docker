@@ -373,7 +373,7 @@ build_snapcast() {
         add_output_parameter $out_file $idx SNAPCAST_OUTPUT_BIND_TO_ADDRESS bind_to_address "" constant
         add_output_parameter $out_file $idx SNAPCAST_OUTPUT_ZEROCONF zeroconf yes constant
         add_output_parameter $out_file $idx SNAPCAST_OUTPUT_MIXER_TYPE mixer_type "software" constant
-        add_output_parameter $out_file $idx SNAPCAST_OUTPUT_OUTPUT_FORMAT format "44100:16:2" constant
+        add_output_parameter $out_file $idx SNAPCAST_OUTPUT_FORMAT format "44100:16:2" constant
         close_output $out_file
     fi
 }
@@ -390,7 +390,7 @@ build_fifo() {
         add_output_parameter $out_file $idx FIFO_OUTPUT_ENABLED enabled "" none
         add_output_parameter $out_file $idx FIFO_OUTPUT_PATH path "" none
         add_output_parameter $out_file $idx FIFO_OUTPUT_MIXER_TYPE mixer_type "software" constant
-        add_output_parameter $out_file $idx FIFO_OUTPUT_OUTPUT_FORMAT format "44100:16:2" constant
+        add_output_parameter $out_file $idx FIFO_OUTPUT_FORMAT format "44100:16:2" constant
         close_output $out_file
     fi
 }
