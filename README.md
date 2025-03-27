@@ -56,8 +56,8 @@ Keep in mind that the `legacy` branch will not be updated with new features. Onl
 ## MPD Source code
 
 The source code for the patched MPD is in this GitHub [repo](https://github.com/GioF71/MPD).  
-The `version-0.23.17` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.23.17.  
-The `version-0.23.17-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
+The `version-0.24.2` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.24.2.  
+The `version-0.24.2-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
 Two binaries are available in the container image:
 
 - /app/bin/compiled/mpd (upstream version)
@@ -157,6 +157,7 @@ ZEROCONF_ENABLED|Set to `yes` to enable, disabled by default.
 ZEROCONF_NAME|Set zeroconf name, used only if `ZEROCONF_ENABLED` is set to `yes`
 HYBRID_DSD_ENABLED|Hybrid dsd is enabled by default, set to `no` to disable. Disabled when at least one PulseAudio output is created.
 OPUS_DECODER_ENABLED|Defaults to `yes`, if set to `no`, the opus decoder will be disabled.
+MIXRAMP_ANALYZER_ENABLED|Enable MixRamp support. Set to `yes` to enable
 AUDIO_BUFFER_SIZE|Adjust the size of the internal audio buffer. Default is `4 MB` (4 MiB).
 MAX_ADDITIONAL_OUTPUTS_BY_TYPE|The maximum number of outputs by type, defaults to `20`
 RESTORE_PAUSED|If set to `yes`, then MPD is put into pause mode instead of starting playback after startup. Default is `no`.
@@ -379,7 +380,6 @@ FIFO_OUTPUT_MIXER_TYPE|Fifo mixer type, defaults to `software`
 FIFO_OUTPUT_PATH|Path of the fifo file
 
 Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#snapcast) for the meaning of the variables.  
-
 
 ### Examples
 

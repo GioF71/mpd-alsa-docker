@@ -717,6 +717,14 @@ echo "replaygain_missing_preamp \"${REPLAYGAIN_MISSING_PREAMP}\"" >> $MPD_ALSA_C
 echo "replaygain_limit \"${REPLAYGAIN_LIMIT}\"" >> $MPD_ALSA_CONFIG_FILE
 echo "volume_normalization \"${VOLUME_NORMALIZATION}\"" >> $MPD_ALSA_CONFIG_FILE
 
+## Enable MixRamp analyzer when requested
+if [[ "${MIXRAMP_ANALYZER_ENABLED^^}" == "YES" || "${MIXRAMP_ANALYZER_ENABLED^^}" == "Y" ]]; then
+    echo "mixramp_analyzer \"yes\"" >> $MPD_ALSA_CONFIG_FILE
+elif [[ -n "${MIXRAMP_ANALYZER_ENABLED^^}" ]] && ([[ "${MIXRAMP_ANALYZER_ENABLED^^}" != "NO" || "${MIXRAMP_ANALYZER_ENABLED^^}" != "N" ]]); then
+    echo "Invalid parameter MIXRAMP_ANALYZER_ENABLED=[${MIXRAMP_ANALYZER_ENABLED}]"
+    exit 9
+fi
+
 if [ -n "${SAMPLERATE_CONVERTER}" ]; then
     # try lookup
     sr_lookup="${samplerate_converters[${SAMPLERATE_CONVERTER}]}"
