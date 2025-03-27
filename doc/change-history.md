@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2025-03-27|Add support for MixRamp (see issue [#380](https://github.com/GioF71/mpd-alsa-docker/issues/380))
 2025-03-27|Bump to version 0.24.2 (see issue [#436](https://github.com/GioF71/mpd-alsa-docker/issues/436))
 2025-03-24|Bump to version 0.24.1 (see issue [#434](https://github.com/GioF71/mpd-alsa-docker/issues/434))
 2025-02-21|Corrected wrong variables (see issue [#432](https://github.com/GioF71/mpd-alsa-docker/issues/432))
