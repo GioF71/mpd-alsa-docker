@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TODAY=$(date '+%Y-%m-%d')
-MPD_VERSION=0.24.2
+MPD_VERSION=0.24.3
 
 echo "TODAY=${TODAY}"
 
