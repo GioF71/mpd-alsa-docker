@@ -20,6 +20,7 @@ The container image also includes `mpdscribble`. In alternative, you can use [mp
 User mode is now possible when using `alsa` outputs, and of course it is mandatory (enforced) when using `pulse` outputs.  
 Upsampling (even in integer mode) is now available via a patched version of MPD (an unmodified version is available as well).  
 Also, thanks to a [feature request](https://github.com/GioF71/mpd-alsa-docker/issues/158) by user [XxAcielxX](https://github.com/XxAcielxX), who also contributed with the necessary documentation, we have a certain degree of support for equalization.  
+As an alternative, if you don't want to use docker for an audio player, and still would prefer to run mpd using environment variables instead of maintaining your mpd.conf files and bothering with creating the directory structure, take a look at my new project [player-launchers](https://github.com/GioF71/player-launchers). It is still in the initial development phases, but the mpd launcher has quite some options already in place.
 
 ## Available Archs on Docker Hub
 
