@@ -27,6 +27,7 @@ As an alternative, if you don't want to use docker for an audio player, and stil
 - linux/amd64
 - linux/arm/v7
 - linux/arm64/v8
+- linux/arm/v6 (for debian-based builds)
 - linux/arm/v5 (for debian-based builds)
 
 ## Links
