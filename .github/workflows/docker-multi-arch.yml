@@ -54,7 +54,7 @@ jobs:
 
           build_platforms="linux/amd64,linux/arm64/v8,linux/arm/v7"
           if [ "${armv5_allowed}" = "yes" ]; then
-            build_platforms="${build_platforms},linux/arm/v5"
+            build_platforms="${build_platforms},linux/arm/v6,linux/arm/v5"
           fi
 
           declare -A base_images_dict
