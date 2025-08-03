@@ -1,13 +1,13 @@
 #!/bin/bash
 
 TODAY=$(date '+%Y-%m-%d')
-MPD_VERSION=0.24.4
+MPD_VERSION=0.24.5
 
 echo "TODAY=${TODAY}"
 
 # regular (using mpd-compiler)
 docker buildx build . \
-    --platform linux/amd64,linux/arm64/v8,linux/arm/v7,linux/arm/v5 \
+    --platform linux/amd64,linux/arm64/v8,linux/arm/v7,linux/arm/v6,linux/arm/v5 \
     --build-arg BASE_IMAGE=giof71/mpd-compiler:bookworm-${MPD_VERSION} \
     --build-arg IS_VANILLA=no \
     --build-arg INTEGER_UPSAMPLING_SUPPORT=yes \
@@ -20,7 +20,7 @@ docker buildx build . \
 
 # vanilla
 docker buildx build . \
-    --platform linux/amd64,linux/arm64/v8,linux/arm/v7,linux/arm/v5 \
+    --platform linux/amd64,linux/arm64/v8,linux/arm/v7,linux/arm/v6,linux/arm/v5 \
     --build-arg BASE_IMAGE=debian:bookworm-slim \
     --build-arg IS_VANILLA=yes \
     --build-arg INTEGER_UPSAMPLING_SUPPORT=no \
