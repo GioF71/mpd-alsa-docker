@@ -58,8 +58,8 @@ Keep in mind that the `legacy` branch will not be updated with new features. Onl
 ## MPD Source code
 
 The source code for the patched MPD is in this GitHub [repo](https://github.com/GioF71/MPD).  
-The `version-0.24.4` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.24.4.  
-The `version-0.24.4-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
+The `version-0.24.5` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.24.5.  
+The `version-0.24.5-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
 Two binaries are available in the container image:
 
 - /app/bin/compiled/mpd (upstream version)
