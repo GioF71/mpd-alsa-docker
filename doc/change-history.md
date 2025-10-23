@@ -2,7 +2,7 @@
 
 Date|Major Changes
 :---|:---
-2025-10-23|Bump to version 0.24.6
+2025-10-23|Bump to version 0.24.6 (see issue [#451](https://github.com/GioF71/mpd-alsa-docker/issues/451))
 2025-08-03|Bump to version 0.24.5 (see issue [#448](https://github.com/GioF71/mpd-alsa-docker/issues/448))
 2025-06-15|Add support for linux/arm/v6 (see issue [#446](https://github.com/GioF71/mpd-alsa-docker/issues/446))
 2025-05-28|Bump to version 0.24.4 (see issue [#439](https://github.com/GioF71/mpd-alsa-docker/issues/439))
