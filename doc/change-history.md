@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2026-04-11|Allow overriding sox parameters when a preset is selected (see issue [#458](https://github.com/GioF71/mpd-alsa-docker/issues/458))
 2026-04-11|Bump to version 0.24.9 (see issue [#456](https://github.com/GioF71/mpd-alsa-docker/issues/456))
 2026-02-24|Bump to version 0.24.8 (see issue [#453](https://github.com/GioF71/mpd-alsa-docker/issues/453))
 2025-10-23|Bump to version 0.24.6 (see issue [#451](https://github.com/GioF71/mpd-alsa-docker/issues/451))
