@@ -625,45 +625,62 @@ if [[ "${SOXR_PLUGIN_ENABLE^^}" == "YES" || "${SOXR_PLUGIN_ENABLE^^}" == "Y" ]];
     fi
     if [ -n "${SOXR_PLUGIN_PRESET}" ]; then
         echo "Using soxr_preset: [${SOXR_PLUGIN_PRESET}]"
-        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_QUALITY}"
-        sox_value="${soxr_plugin_presets[${sox_key}]}"
-        if [[ -v sox_value ]]; then
-            SOXR_PLUGIN_QUALITY=$sox_value
+        # we don't want to override explicitly set values
+        if [ -z "${SOXR_PLUGIN_QUALITY}" ]; then
+            sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_QUALITY}"
+            sox_value="${soxr_plugin_presets[${sox_key}]}"
+            if [[ -v sox_value ]]; then
+                SOXR_PLUGIN_QUALITY=$sox_value
+            fi
         fi
-        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_PRECISION}"
-        sox_value="${soxr_plugin_presets[${sox_key}]}"
-        if [[ -v sox_value ]]; then
-            SOXR_PLUGIN_PRECISION=$sox_value
+        if [ -z "${SOXR_PLUGIN_PRECISION}" ]; then
+            sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_PRECISION}"
+            sox_value="${soxr_plugin_presets[${sox_key}]}"
+            if [[ -v sox_value ]]; then
+                SOXR_PLUGIN_PRECISION=$sox_value
+            fi
         fi
-        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_PHASE_RESPONSE}"
-        sox_value="${soxr_plugin_presets[${sox_key}]}"
-        if [[ -v sox_value ]]; then
-            SOXR_PLUGIN_PHASE_RESPONSE=$sox_value
+        if [ -z "${SOXR_PLUGIN_PHASE_RESPONSE}" ]; then
+            sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_PHASE_RESPONSE}"
+            sox_value="${soxr_plugin_presets[${sox_key}]}"
+            if [[ -v sox_value ]]; then
+                SOXR_PLUGIN_PHASE_RESPONSE=$sox_value
+            fi
         fi
-        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_PASSBAND_END}"
-        sox_value="${soxr_plugin_presets[${sox_key}]}"
-        if [[ -v sox_value ]]; then
-            SOXR_PLUGIN_PASSBAND_END=$sox_value
+        if [ -z "${SOXR_PLUGIN_PASSBAND_END}" ]; then
+            sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_PASSBAND_END}"
+            sox_value="${soxr_plugin_presets[${sox_key}]}"
+            if [[ -v sox_value ]]; then
+                SOXR_PLUGIN_PASSBAND_END=$sox_value
+            fi
         fi
-        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_STOPBAND_BEGIN}"
-        sox_value="${soxr_plugin_presets[${sox_key}]}"
-        if [[ -v sox_value ]]; then
-            SOXR_PLUGIN_STOPBAND_BEGIN=$sox_value
+        if [ -z "${SOXR_PLUGIN_STOPBAND_BEGIN}" ]; then
+            sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_STOPBAND_BEGIN}"
+            sox_value="${soxr_plugin_presets[${sox_key}]}"
+            if [[ -v sox_value ]]; then
+                SOXR_PLUGIN_STOPBAND_BEGIN=$sox_value
+            fi
         fi
-        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_ATTENUATION}"
-        sox_value="${soxr_plugin_presets[${sox_key}]}"
-        if [[ -v sox_value ]]; then
-            SOXR_PLUGIN_ATTENUATION=$sox_value
+        if [ -z "${SOXR_PLUGIN_ATTENUATION}" ]; then
+            sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_ATTENUATION}"
+            sox_value="${soxr_plugin_presets[${sox_key}]}"
+            if [[ -v sox_value ]]; then
+                SOXR_PLUGIN_ATTENUATION=$sox_value
+            fi
         fi
-        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_FLAGS}"
-        sox_value="${soxr_plugin_presets[${sox_key}]}"
-        if [[ -v sox_value ]]; then
-            SOXR_PLUGIN_FLAGS=$sox_value
+        if [ -z "${SOXR_PLUGIN_FLAGS}" ]; then
+            sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_FLAGS}"
+            sox_value="${soxr_plugin_presets[${sox_key}]}"
+            if [[ -v sox_value ]]; then
+                SOXR_PLUGIN_FLAGS=$sox_value
+            fi
         fi
-        sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_THREADS}"
-        sox_value="${soxr_plugin_presets[${sox_key}]}"
-        if [[ -v sox_value ]]; then
-            SOXR_PLUGIN_THREADS=$sox_value
+        if [ -z "${SOXR_PLUGIN_THREADS}" ]; then
+            sox_key="${SOXR_PLUGIN_PRESET}.${SOXR_PRESET_KEY_THREADS}"
+            sox_value="${soxr_plugin_presets[${sox_key}]}"
+            if [[ -v sox_value ]]; then
+                SOXR_PLUGIN_THREADS=$sox_value
+            fi
         fi
     fi
 
