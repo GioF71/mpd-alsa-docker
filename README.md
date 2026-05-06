@@ -188,7 +188,7 @@ Please find here the variables used to configure the SOXR plugin.
 VARIABLE|DESCRIPTION
 :---|:---
 SOXR_PLUGIN_ENABLE|Enable the `soxr` plugin. Do not use in conjunction with variable `SAMPLERATE_CONVERTER`
-SOXR_PLUGIN_PRESET|Presets for SOXR_PLUGIN configuration. Available presets: `goldilocks` and `extremus`
+SOXR_PLUGIN_PRESET|Presets for SOXR_PLUGIN configuration. Available presets: `goldilocks`, `extremus`, `max32`
 SOXR_PLUGIN_THREADS|The number of libsoxr threads. `0` means automatic. The default is `1` which disables multi-threading.
 SOXR_PLUGIN_QUALITY|The quality of `soxr` resampler. Possible values: `very high`, `high` (the default), `medium`, `low`, `quick`, `custom`. When set to `custom`, the additional `soxr` parameters can be set.
 SOXR_PLUGIN_PRECISION|The precision in bits. Valid values `16`,`20`,`24`,`28` and `32` bits.
@@ -263,7 +263,7 @@ ALSA_OUTPUT_MIXER_TYPE|Mixer type, defaults to `hardware`
 ALSA_OUTPUT_MIXER_DEVICE|Mixer device, defaults to `default`
 ALSA_OUTPUT_MIXER_CONTROL|Mixer Control, defaults to `PCM`
 ALSA_OUTPUT_MIXER_INDEX|Mixer Index, defaults to `0`
-ALSA_OUTPUT_ALLOWED_FORMATS_PRESET|Alternative to `ALSA_OUTPUT_ALLOWED_FORMATS`. Possible values: 8x, 4x, 2x, 8x-nodsd, 4x-nodsd, 2x-nodsd
+ALSA_OUTPUT_ALLOWED_FORMATS_PRESET|Alternative to `ALSA_OUTPUT_ALLOWED_FORMATS`. Possible values: `16x`, `8x`, `4x`, `2x`, `16x-nodsd`, `8x-nodsd`, `4x-nodsd`, `2x-nodsd`
 ALSA_OUTPUT_ALLOWED_FORMATS|Sets allowed formats
 ALSA_OUTPUT_FORMAT|Sets output format
 ALSA_OUTPUT_AUTO_RESAMPLE|If set to no, then libasound will not attempt to resample. In this case, the user is responsible for ensuring that the requested sample rate can be produced natively by the device, otherwise an error will occur.
