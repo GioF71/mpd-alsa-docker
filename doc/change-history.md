@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2026-05-06|Add `32bit` variants of all available upsampling allowed format presets (e.g. `16x-nodsd` -> `16x-nodsd-32bit`)
 2026-05-06|Add `max32` soxr preset
 2026-05-06|Add `16x` and `16x-nodsd` upsampling allowed format presets
 2026-04-11|Allow overriding sox parameters when a preset is selected (see issue [#458](https://github.com/GioF71/mpd-alsa-docker/issues/458))
