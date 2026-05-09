@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2026-05-19|Bump to version 0.24.10 (see issue [#464](https://github.com/GioF71/mpd-alsa-docker/issues/464))
 2026-05-06|Add `32bit` variants of all available upsampling allowed format presets (e.g. `16x-nodsd` -> `16x-nodsd-32bit`)
 2026-05-06|Add `max32` soxr preset
 2026-05-06|Add `16x` and `16x-nodsd` upsampling allowed format presets
