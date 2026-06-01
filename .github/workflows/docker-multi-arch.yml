@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        base: ["bookworm", "vanilla-bookworm"]
+        base: ["trixie", "vanilla-trixie"]
 
     steps:
       - name: Checkout
@@ -37,6 +37,8 @@ jobs:
           image_name=${{secrets.DOCKER_USERNAME}}/mpd-alsa
 
           declare -A vanilla_dict
+          vanilla_dict[trixie]="no"
+          vanilla_dict[vanilla-trixie]="yes"
           vanilla_dict[bookworm]="no"
           vanilla_dict[vanilla-bookworm]="yes"
           vanilla_dict[noble]="no"
@@ -45,6 +47,8 @@ jobs:
           is_vanilla=${vanilla_dict[${{ matrix.base }}]}
 
           declare -A allows_amdv5_dict
+          allows_amdv5_dict[trixie]="yes"
+          allows_amdv5_dict[vanilla-trixie]="yes"
           allows_amdv5_dict[bookworm]="yes"
           allows_amdv5_dict[vanilla-bookworm]="yes"
           allows_amdv5_dict[noble]="no"
@@ -58,12 +62,14 @@ jobs:
           fi
 
           declare -A base_images_dict
-          base_images_dict[bookworm]="giof71/mpd-compiler:bookworm"
-          base_images_dict[vanilla-bookworm]="debian:bookworm-slim"
+          base_images_dict[trixie]="giof71/mpd-compiler:trixie"
+          base_images_dict[vanilla-trixie]="debian:trixie-slim"
           base_images_dict[noble]="giof71/mpd-compiler:noble"
           base_images_dict[vanilla-noble]="ubuntu:noble"
 
           declare -A integer_upsampling_dict
+          integer_upsampling_dict[trixie]="yes"
+          integer_upsampling_dict[vanilla-trixie]="no"
           integer_upsampling_dict[bookworm]="yes"
           integer_upsampling_dict[vanilla-bookworm]="no"
           integer_upsampling_dict[noble]="yes"
@@ -74,18 +80,24 @@ jobs:
           select_base_image=${base_images_dict[${{ matrix.base }}]}
 
           declare -A upstream_image_from_matrix
+          upstream_image_from_matrix[trixie]=debian:trixie-slim
+          upstream_image_from_matrix[vanilla-trixie]=debian:trixie-slim
           upstream_image_from_matrix[bookworm]=debian:bookworm-slim
           upstream_image_from_matrix[vanilla-bookworm]=debian:bookworm-slim
           upstream_image_from_matrix[noble]=ubuntu:noble
           upstream_image_from_matrix[vanilla-noble]=ubuntu:noble
 
           declare -A special_tags
+          special_tags[trixie]="${image_name}:stable,${image_name}:latest"
+          special_tags[vanilla-trixie]="${image_name}:vanilla-stable,${image_name}:vanilla-latest,${image_name}:vanilla"
           special_tags[bookworm]="${image_name}:stable,${image_name}:latest"
           special_tags[vanilla-bookworm]="${image_name}:vanilla-stable,${image_name}:vanilla-latest,${image_name}:vanilla"
           special_tags[noble]="${image_name}:ubuntu-current"
           special_tags[vanilla-noble]="${image_name}:vanilla-ubuntu-current"
 
           declare -A mpd_version_dict
+          mpd_version_dict[trixie]=0.24.12
+          mpd_version_dict[vanilla-trixie]=0.24.4
           mpd_version_dict[bookworm]=0.24.12
           mpd_version_dict[vanilla-bookworm]=0.23.12
           mpd_version_dict[noble]=0.24.12

@@ -73,8 +73,8 @@ The `mpdscribble` version depends on the base image. See the following table:
 
 Base Image|Tags|Compiled MPD version|Repo MPD version|MPDScribble version
 :---|:---|:---|:---|:---
-giof71/mpd-compiler:bookworm|**latest**, **stable**, bookworm|0.24.12|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
-debian:bookworm-slim|**vanilla-latest**, **vanilla-stable**, **vanilla**, vanilla-bookworm|-|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
+giof71/mpd-compiler:trixie|**latest**, **stable**, trixie|0.24.12|[0.24.4](https://packages.debian.org/trixie/mpd)|[0.24](https://packages.debian.org/trixie/mpdscribble)
+debian:trixie-slim|**vanilla-latest**, **vanilla-stable**, **vanilla**, vanilla-trixie|-|[0.24.4](https://packages.debian.org/trixie/mpd)|[0.24](https://packages.debian.org/trixie/mpdscribble)
 
 ## Usage
 
