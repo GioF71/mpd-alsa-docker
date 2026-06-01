@@ -58,14 +58,14 @@ Keep in mind that the `legacy` branch will not be updated with new features. Onl
 ## MPD Source code
 
 The source code for the patched MPD is in this GitHub [repo](https://github.com/GioF71/MPD).  
-The `version-0.24.9` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.24.9.  
-The `version-0.24.9-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
+The `version-0.24.12` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.24.12.  
+The `version-0.24.12-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
 Two binaries are available in the container image:
 
 - /app/bin/compiled/mpd (upstream version)
 - /app/bin/compiled/mpd-ups (patched version)
 
-The current mpd version is `v0.24.9` when using [giof71/mpd-compiler-docker](https://github.com/GioF71/mpd-compiler-docker) as the base image ([Docker repo here](https://hub.docker.com/r/giof71/mpd-compiler)). The repo binary is installed also in this case.  
+The current mpd version is `v0.24.12` when using [giof71/mpd-compiler-docker](https://github.com/GioF71/mpd-compiler-docker) as the base image ([Docker repo here](https://hub.docker.com/r/giof71/mpd-compiler)). The repo binary is installed also in this case.  
 Vanilla versions only have the repo binary.  
 The `mpdscribble` version depends on the base image. See the following table:
 
@@ -73,7 +73,7 @@ The `mpdscribble` version depends on the base image. See the following table:
 
 Base Image|Tags|Compiled MPD version|Repo MPD version|MPDScribble version
 :---|:---|:---|:---|:---
-giof71/mpd-compiler:bookworm|**latest**, **stable**, bookworm|0.24.9|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
+giof71/mpd-compiler:bookworm|**latest**, **stable**, bookworm|0.24.12|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
 debian:bookworm-slim|**vanilla-latest**, **vanilla-stable**, **vanilla**, vanilla-bookworm|-|[0.23.12](https://packages.debian.org/bookworm/mpd)|[0.24](https://packages.debian.org/bookworm/mpdscribble)
 
 ## Usage
@@ -263,7 +263,7 @@ ALSA_OUTPUT_MIXER_TYPE|Mixer type, defaults to `hardware`
 ALSA_OUTPUT_MIXER_DEVICE|Mixer device, defaults to `default`
 ALSA_OUTPUT_MIXER_CONTROL|Mixer Control, defaults to `PCM`
 ALSA_OUTPUT_MIXER_INDEX|Mixer Index, defaults to `0`
-ALSA_OUTPUT_ALLOWED_FORMATS_PRESET|Alternative to `ALSA_OUTPUT_ALLOWED_FORMATS`. Possible values: `16x`, `8x`, `4x`, `2x`, `16x-nodsd`, `8x-nodsd`, `4x-nodsd`, `2x-nodsd`
+ALSA_OUTPUT_ALLOWED_FORMATS_PRESET|Alternative to `ALSA_OUTPUT_ALLOWED_FORMATS`. Possible values: `16x`, `8x`, `4x`, `2x`, `16x-nodsd`, `8x-nodsd`, `4x-nodsd`, `2x-nodsd`, plus additional presets with trailing `-32bit` are available
 ALSA_OUTPUT_ALLOWED_FORMATS|Sets allowed formats
 ALSA_OUTPUT_FORMAT|Sets output format
 ALSA_OUTPUT_AUTO_RESAMPLE|If set to no, then libasound will not attempt to resample. In this case, the user is responsible for ensuring that the requested sample rate can be produced natively by the device, otherwise an error will occur.
