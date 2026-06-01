@@ -5,64 +5,55 @@
 
 declare -A base_image_tags
 
+base_image_tags[local-trixie]=giof71/mpd-compiler:local-trixie
 base_image_tags[local-bookworm]=giof71/mpd-compiler:local-bookworm
 base_image_tags[local-bullseye]=giof71/mpd-compiler:local-bullseye
+base_image_tags[local-resolute]=giof71/mpd-compiler:local-resolute
 base_image_tags[local-noble]=giof71/mpd-compiler:local-noble
-base_image_tags[local-lunar]=giof71/mpd-compiler:local-lunar
-base_image_tags[local-jammy]=giof71/mpd-compiler:local-jammy
-base_image_tags[bullseye]=giof71/mpd-compiler:bullseye
+base_image_tags[trixie]=giof71/mpd-compiler:trixie
 base_image_tags[bookworm]=giof71/mpd-compiler:bookworm
+base_image_tags[bullseye]=giof71/mpd-compiler:bullseye
+base_image_tags[resolute]=giof71/mpd-compiler:resolute
 base_image_tags[noble]=giof71/mpd-compiler:noble
-base_image_tags[lunar]=giof71/mpd-compiler:lunar
-base_image_tags[jammy]=giof71/mpd-compiler:jammy
 base_image_tags[vanilla-sid]=debian:sid-slim
 base_image_tags[vanilla-trixie]=debian:trixie-slim
 base_image_tags[vanilla-bookworm]=debian:bookworm-slim
 base_image_tags[vanilla-bullseye]=debian:bullseye-slim
+base_image_tags[vanilla-resolute]=ubuntu:resolute
 base_image_tags[vanilla-noble]=ubuntu:noble
-base_image_tags[vanilla-lunar]=ubuntu:lunar
-base_image_tags[vanilla-jammy]=ubuntu:jammy
-base_image_tags[vanilla-focal]=ubuntu:focal
-base_image_tags[vanilla-bionic]=ubuntu:bionic
 
 declare -A local_tag
+local_tag[trixie]=local-trixie
 local_tag[bookworm]=local-bookworm
 local_tag[bullseye]=local-bullseye
+local_tag[resolute]=local-resolute
 local_tag[noble]=local-noble
-local_tag[lunar]=local-lunar
-local_tag[jammy]=local-jammy
-local_tag[focal]=local-focal
-local_tag[bionic]=local-bionic
+local_tag[local-trixie]=local-trixie
 local_tag[local-bookworm]=local-bookworm
 local_tag[local-bullseye]=local-bullseye
+local_tag[local-resolute]=local-resolute
 local_tag[local-noble]=local-noble
-local_tag[local-lunar]=local-lunar
-local_tag[local-jammy]=local-jammy
-local_tag[local-focal]=local-focal
-local_tag[local-bionic]=local-bionic
 local_tag[vanilla-sid]=local-vanilla-sid
 local_tag[vanilla-trixie]=local-vanilla-trixie
 local_tag[vanilla-bookworm]=local-vanilla-bookworm
 local_tag[vanilla-bullseye]=local-vanilla-bullseye
+local_tag[vanilla-resolute]=local-vanilla-resolute
 local_tag[vanilla-noble]=local-vanilla-noble
-local_tag[vanilla-lunar]=local-vanilla-lunar
-local_tag[vanilla-jammy]=local-vanilla-jammy
-local_tag[vanilla-focal]=local-vanilla-focal
-local_tag[vanilla-bionic]=local-vanilla-bionic
 
 declare -A integer_upsampling_support_dict
+integer_upsampling_support_dict[local-trixie]=yes
 integer_upsampling_support_dict[local-bookworm]=yes
 integer_upsampling_support_dict[local-bullseye]=yes
+integer_upsampling_support_dict[local-resolute]=yes
 integer_upsampling_support_dict[local-noble]=yes
 integer_upsampling_support_dict[local-lunar]=yes
-integer_upsampling_support_dict[local-jammy]=yes
+integer_upsampling_support_dict[trixie]=yes
 integer_upsampling_support_dict[bookworm]=yes
 integer_upsampling_support_dict[bullseye]=yes
+integer_upsampling_support_dict[resolute]=yes
 integer_upsampling_support_dict[noble]=yes
-integer_upsampling_support_dict[lunar]=yes
-integer_upsampling_support_dict[jammy]=yes
 
-DEFAULT_BASE_IMAGE=bookworm
+DEFAULT_BASE_IMAGE=trixie
 DEFAULT_TAG=local
 DEFAULT_USE_PROXY=N
 DEFAULT_BUILD_MODE=full
