@@ -161,7 +161,7 @@ Date|Major Changes
 2022-10-26|Build mpd.conf at container runtime
 2022-10-22|Support for daily builds
 2022-10-22|Add builds for kinetic along with the current lts versions of ubuntu
-2022-10-22|Fixed `AUDIO-GID` now effectively defaulting to `995`
+2022-10-22|Fixed `AUDIO_GID` now effectively defaulting to `995`
 2022-10-21|User mode support
 2022-10-21|Add logging support
 2022-10-20|Included `mpdscribble` for scrobbling support
