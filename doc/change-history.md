@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2026-07-21|Bump to version 0.24.13 (see issue [#477](https://github.com/GioF71/mpd-alsa-docker/issues/477))
 2026-06-01|Bump to debian trixie (see issue [#469](https://github.com/GioF71/mpd-alsa-docker/issues/469))
 2026-05-19|Bump to version 0.24.12 (see issue [#466](https://github.com/GioF71/mpd-alsa-docker/issues/466))
 2026-05-09|Bump to version 0.24.10 (see issue [#464](https://github.com/GioF71/mpd-alsa-docker/issues/464))
