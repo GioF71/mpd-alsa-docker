@@ -2,6 +2,9 @@
 
 Date|Major Changes
 :---|:---
+2026-09-09|Bump to version 0.24.13 (see issue [#477](https://github.com/GioF71/mpd-alsa-docker/issues/477))
+2026-07-21|Bump to version 0.24.13 (see issue [#477](https://github.com/GioF71/mpd-alsa-docker/issues/477))
+2026-06-01|Bump to debian trixie (see issue [#469](https://github.com/GioF71/mpd-alsa-docker/issues/469))
 2026-05-19|Bump to version 0.24.12 (see issue [#466](https://github.com/GioF71/mpd-alsa-docker/issues/466))
 2026-05-09|Bump to version 0.24.10 (see issue [#464](https://github.com/GioF71/mpd-alsa-docker/issues/464))
 2026-05-06|Add `32bit` variants of all available upsampling allowed format presets (e.g. `16x-nodsd` -> `16x-nodsd-32bit`)
@@ -161,7 +164,7 @@ Date|Major Changes
 2022-10-26|Build mpd.conf at container runtime
 2022-10-22|Support for daily builds
 2022-10-22|Add builds for kinetic along with the current lts versions of ubuntu
-2022-10-22|Fixed `AUDIO-GID` now effectively defaulting to `995`
+2022-10-22|Fixed `AUDIO_GID` now effectively defaulting to `995`
 2022-10-21|User mode support
 2022-10-21|Add logging support
 2022-10-20|Included `mpdscribble` for scrobbling support
