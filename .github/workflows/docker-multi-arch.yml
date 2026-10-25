@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-        
+
       - name: Prepare for docker build
         id: prepare
         run: |
@@ -96,11 +96,11 @@ jobs:
           special_tags[vanilla-noble]="${image_name}:vanilla-ubuntu-current"
 
           declare -A mpd_version_dict
-          mpd_version_dict[trixie]=0.24.15
+          mpd_version_dict[trixie]=0.24.17
           mpd_version_dict[vanilla-trixie]=0.24.4
-          mpd_version_dict[bookworm]=0.24.15
+          mpd_version_dict[bookworm]=0.24.17
           mpd_version_dict[vanilla-bookworm]=0.23.12
-          mpd_version_dict[noble]=0.24.15
+          mpd_version_dict[noble]=0.24.17
           mpd_version_dict[vanilla-noble]=0.23.14
 
           # select mpd version
@@ -125,14 +125,14 @@ jobs:
             echo "tag is ["${ref_name}"]";
 
             tag_type=$(echo ${ref_name} | cut -d '/' -f 1)
-            tag_name=$(echo ${ref_name} | cut -d '/' -f 2) 
+            tag_name=$(echo ${ref_name} | cut -d '/' -f 2)
 
             if [ "${tag_type}" = "release" ]; then
               echo "release tag";
               echo "Building now: ["$distro_id"]";
               tags="${tags},$image_name:${distro_id}";
               tags="${tags},$image_name:${distro_id}-${mpd_version}"
-              tags="$tags,$image_name:${distro_id}-${mpd_version}-${tag_name}"              
+              tags="$tags,$image_name:${distro_id}-${mpd_version}-${tag_name}"
               select_special_tags=${special_tags["${distro_id}"]};
               if [[ -n "${select_special_tags}" ]]; then
                 echo "Found special tags for ["${distro_id}"]=["${select_special_tags}"]";
@@ -163,22 +163,22 @@ jobs:
           echo "BUILD_PLATFORMS=${build_platforms}" >> $GITHUB_OUTPUT
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
         with:
           platforms: all
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Login to DockerHub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           build-args: |
