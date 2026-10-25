@@ -4,22 +4,22 @@
 
 First and foremost, the reference to the awesome projects:
 
-[Music Player Daemon](https://www.musicpd.org/)  
+[Music Player Daemon](https://www.musicpd.org/)
 [MPDScribble](https://www.musicpd.org/clients/mpdscribble/)
 
 ## Support
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/H2H7UIN5D)  
-Please see the [Goal](https://ko-fi.com/giof71/goal?g=0).  
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/H2H7UIN5D)
+Please see the [Goal](https://ko-fi.com/giof71/goal?g=0).
 Please note that support goal is limited to cover running costs for subscriptions to music services.
 
 ## Description
 
-A docker image for mpd with support for both Alsa and PulseAudio.  
-The container image also includes `mpdscribble`. In alternative, you can use [mpd-scrobbler-docker](https://github.com/GioF71/mpd-scrobbler-docker) as the scrobbler for this image.  
-User mode is now possible when using `alsa` outputs, and of course it is mandatory (enforced) when using `pulse` outputs.  
-Upsampling (even in integer mode) is now available via a patched version of MPD (an unmodified version is available as well).  
-Also, thanks to a [feature request](https://github.com/GioF71/mpd-alsa-docker/issues/158) by user [XxAcielxX](https://github.com/XxAcielxX), who also contributed with the necessary documentation, we have a certain degree of support for equalization.  
+A docker image for mpd with support for both Alsa and PulseAudio.
+The container image also includes `mpdscribble`. In alternative, you can use [mpd-scrobbler-docker](https://github.com/GioF71/mpd-scrobbler-docker) as the scrobbler for this image.
+User mode is now possible when using `alsa` outputs, and of course it is mandatory (enforced) when using `pulse` outputs.
+Upsampling (even in integer mode) is now available via a patched version of MPD (an unmodified version is available as well).
+Also, thanks to a [feature request](https://github.com/GioF71/mpd-alsa-docker/issues/158) by user [XxAcielxX](https://github.com/XxAcielxX), who also contributed with the necessary documentation, we have a certain degree of support for equalization.
 As an alternative, if you don't want to use docker for an audio player, and still would prefer to run mpd using environment variables instead of maintaining your mpd.conf files and bothering with creating the directory structure, take a look at my new project [player-launchers](https://github.com/GioF71/player-launchers). It is still in the initial development phases, but the mpd launcher has quite some options already in place.
 
 ## Available Archs on Docker Hub
@@ -32,7 +32,7 @@ As an alternative, if you don't want to use docker for an audio player, and stil
 
 ## Links
 
-Source: [GitHub](https://github.com/giof71/mpd-alsa-docker)  
+Source: [GitHub](https://github.com/giof71/mpd-alsa-docker)
 Images: [DockerHub](https://hub.docker.com/r/giof71/mpd-alsa)
 
 ## Why
@@ -51,47 +51,47 @@ Getting the image from DockerHub is as simple as typing:
 
 `docker pull giof71/mpd-alsa`
 
-Legacy support `OUTPUT_MODE`, is still available in the `legacy` branch, as well as on the images tagged with the `legacy` prefix.  
-You might want to use those releases as a stop-gap solution should you encounter issues migrating to the new configuration methods.  
-Keep in mind that the `legacy` branch will not be updated with new features. Only relevant bugfix changes will be ported there.  
+Legacy support `OUTPUT_MODE`, is still available in the `legacy` branch, as well as on the images tagged with the `legacy` prefix.
+You might want to use those releases as a stop-gap solution should you encounter issues migrating to the new configuration methods.
+Keep in mind that the `legacy` branch will not be updated with new features. Only relevant bugfix changes will be ported there.
 
 ## MPD Source code
 
-The source code for the patched MPD is in this GitHub [repo](https://github.com/GioF71/MPD).  
-The `v0.24.15` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.24.15.  
-The `v0.24.15-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.  
+The source code for the patched MPD is in this GitHub [repo](https://github.com/GioF71/MPD).
+The `v0.24.17` tag is in-line with the GitHub [upstream repo](https://github.com/MusicPlayerDaemon/MPD) at version 0.24.17.
+The `v0.24.17-ups` tag contains a patch which is used when `INTEGER_UPSAMPLING` is set to `yes`. Use at your own risk.
 Two binaries are available in the container image:
 
 - /app/bin/compiled/mpd (upstream version)
 - /app/bin/compiled/mpd-ups (patched version)
 
-The current mpd version is `v0.24.15` when using [giof71/mpd-compiler-docker](https://github.com/GioF71/mpd-compiler-docker) as the base image ([Docker repo here](https://hub.docker.com/r/giof71/mpd-compiler)). The repo binary is installed also in this case.  
-Vanilla versions only have the repo binary.  
+The current mpd version is `v0.24.17` when using [giof71/mpd-compiler-docker](https://github.com/GioF71/mpd-compiler-docker) as the base image ([Docker repo here](https://hub.docker.com/r/giof71/mpd-compiler)). The repo binary is installed also in this case.
+Vanilla versions only have the repo binary.
 The `mpdscribble` version depends on the base image. See the following table:
 
 ### Image tags
 
 Base Image|Tags|Compiled MPD version|Repo MPD version|MPDScribble version
 :---|:---|:---|:---|:---
-giof71/mpd-compiler:trixie|**latest**, **stable**, trixie|0.24.15|[0.24.4](https://packages.debian.org/trixie/mpd)|[0.24](https://packages.debian.org/trixie/mpdscribble)
+giof71/mpd-compiler:trixie|**latest**, **stable**, trixie|0.24.17|[0.24.4](https://packages.debian.org/trixie/mpd)|[0.24](https://packages.debian.org/trixie/mpdscribble)
 debian:trixie-slim|**vanilla-latest**, **vanilla-stable**, **vanilla**, vanilla-trixie|-|[0.24.4](https://packages.debian.org/trixie/mpd)|[0.24](https://packages.debian.org/trixie/mpdscribble)
 
 ## Usage
 
 ### Important changes
 
-Starting with release `2023-02-04`, you will not be able to use the deprecated `PULSE` and `ALSA` as `OUTPUT_MODE`. Refer to the next chapter for more information about how to change the configuration. Please note that Alsa and PulseAudio are still supported: you just need to slightly modify your docker configurations.  
-In case of difficulties, you can fall back to the `legacy` image versions (e.g.: `giof71/mpd-alsa:legacy-latest`), as those will still work with these deprecated configurations.  
+Starting with release `2023-02-04`, you will not be able to use the deprecated `PULSE` and `ALSA` as `OUTPUT_MODE`. Refer to the next chapter for more information about how to change the configuration. Please note that Alsa and PulseAudio are still supported: you just need to slightly modify your docker configurations.
+In case of difficulties, you can fall back to the `legacy` image versions (e.g.: `giof71/mpd-alsa:legacy-latest`), as those will still work with these deprecated configurations.
 
 ### What has changed
 
-If you have been using this container image for a while, you might have seen that the output might contain some warnings, telling you that you are using a `deprecated` configuration. The message usually tries to suggest how to switch to a `recommended` configuration.  
-This is happening because this whole project started with the idea of supporting ALSA only (hence the name `mpd-alsa-docker`). Down the road, I added PulseAudio support, and eventually HTTPD outputs, SHOUTCAST outputs, also in multiple instances.  
-So now a few variables have a misleading name: the most misleading being `ALSA_DEVICE_NAME` which, despite the name, refers to the output name, and not to the device name.  
-So currently, `OUTPUT_MODE` is not available anymore.  
-In any case, I suggest you change the configuration as suggested, and use the variables from the appropriate sections below for [Alsa](https://github.com/GioF71/mpd-alsa-docker#alsa-additional-outputs) and [PulseAudio](https://github.com/GioF71/mpd-alsa-docker#pulseaudio-additional-outputs), otherwise, in time, your configurations will not be functional anymore.  
-Please refer to the [legacy branch](https://github.com/GioF71/mpd-alsa-docker/tree/legacy) for the old documentation.  
-Feel free to contact me with an issue if you need support. I cannot guarantee a timing, but I will try to help if I can.  
+If you have been using this container image for a while, you might have seen that the output might contain some warnings, telling you that you are using a `deprecated` configuration. The message usually tries to suggest how to switch to a `recommended` configuration.
+This is happening because this whole project started with the idea of supporting ALSA only (hence the name `mpd-alsa-docker`). Down the road, I added PulseAudio support, and eventually HTTPD outputs, SHOUTCAST outputs, also in multiple instances.
+So now a few variables have a misleading name: the most misleading being `ALSA_DEVICE_NAME` which, despite the name, refers to the output name, and not to the device name.
+So currently, `OUTPUT_MODE` is not available anymore.
+In any case, I suggest you change the configuration as suggested, and use the variables from the appropriate sections below for [Alsa](https://github.com/GioF71/mpd-alsa-docker#alsa-additional-outputs) and [PulseAudio](https://github.com/GioF71/mpd-alsa-docker#pulseaudio-additional-outputs), otherwise, in time, your configurations will not be functional anymore.
+Please refer to the [legacy branch](https://github.com/GioF71/mpd-alsa-docker/tree/legacy) for the old documentation.
+Feel free to contact me with an issue if you need support. I cannot guarantee a timing, but I will try to help if I can.
 
 ### User mode
 
@@ -225,7 +225,7 @@ QOBUZ_FORMAT_ID|The Qobuz format identifier, i.e. a number which chooses the for
 
 #### Scrobbling
 
-Please find here the variables used to configure scrobbling. All of those are of course optional.  
+Please find here the variables used to configure scrobbling. All of those are of course optional.
 Credentials of course go in pairs, so in order to enable one serve, you must provide both username and password.
 
 VARIABLE|DESCRIPTION
@@ -243,9 +243,9 @@ PROXY|Proxy support for `mpdscribble`. Example value: `http://the.proxy.server:3
 
 #### Additional Outputs
 
-You can define additional outputs of various types. Refer to the following paragraphs.  
-For each type, that you can add up to 20 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) additional outputs for each type. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.  
-The output name of those outputs, if not explicitly set, is created by appending with `_1`, `_2`, ... to the defaut name, so in the case of PulseAudio, the names of output will be `PulseAudio_1`, `PulseAudio_2`, ...  
+You can define additional outputs of various types. Refer to the following paragraphs.
+For each type, that you can add up to 20 (or what is specified for the variable `MAX_ADDITIONAL_OUTPUTS_BY_TYPE`) additional outputs for each type. In order to specify distinct values, you can add `_1`, `_2` to every variable names in this set. The first output does *not* require to specify `_0`, that index is implicit.
+The output name of those outputs, if not explicitly set, is created by appending with `_1`, `_2`, ... to the defaut name, so in the case of PulseAudio, the names of output will be `PulseAudio_1`, `PulseAudio_2`, ...
 
 #### ALSA additional outputs
 
@@ -274,11 +274,11 @@ ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED|Allows selection of sample rates to be up
 ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED_PRESET|Preset for `ALSA_OUTPUT_INTEGER_UPSAMPLING_ALLOWED`. Allowed values are `base` (for 44.1kHz and 48.0kHz) and `44` for 44.1kHz only
 ALSA_OUTPUT_DOP|Enables Dsd-Over-Pcm. Possible values: `yes` or `no`. Empty by default: this it lets mpd handle dop setting.
 
-Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#alsa-plugin) for the meaning of the variables.  
+Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#alsa-plugin) for the meaning of the variables.
 
 #### PulseAudio additional outputs
 
-Remember to setup [user mode](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/user-mode.md) when using PulseAudio outputs, otherwise they won't work.  
+Remember to setup [user mode](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/user-mode.md) when using PulseAudio outputs, otherwise they won't work.
 Additional PulseAudio outputs can be configured using the following variables:
 
 VARIABLE|DESCRIPTION
@@ -290,7 +290,7 @@ PULSE_AUDIO_OUTPUT_SINK|Specifies the name of the PulseAudio sink MPD should pla
 PULSE_AUDIO_OUTPUT_MEDIA_ROLE|Media role for the PulseAudio output
 PULSE_AUDIO_OUTPUT_SCALING_FACTOR|Scaling factor for the PulseAudio output
 
-Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#pulse) for the meaning of the variables.  
+Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#pulse) for the meaning of the variables.
 
 #### HTTPD additional outputs
 
@@ -312,7 +312,7 @@ HTTPD_OUTPUT_TAGS|If set to no, then MPD will not send tags to this output. This
 HTTPD_OUTPUT_FORMAT|The output format, defaults to `44100:16:2`
 HTTPD_OUTPUT_MIXER_TYPE|Set to `software` if you want to be able to change the volume of the output stream
 
-The port number default is calculated for each index by incrementing the default (`8000`) value.  
+The port number default is calculated for each index by incrementing the default (`8000`) value.
 When using multiple httpd outputs, remember to open *all* the relevant ports, not only `8000`, otherwise only the first output will work.
 
 #### Shout additional outputs
@@ -349,7 +349,7 @@ NULL_OUTPUT_NAME|The name of the Null output, defaults to `null`
 NULL_OUTPUT_SYNC|Sync mode for the `null` output, can be `yes` (default) or `no`
 NULL_OUTPUT_MIXER_TYPE|Set to `software` if you want to be able to change the volume of the output stream
 
-Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#null) for the meaning of the variables.  
+Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#null) for the meaning of the variables.
 
 #### Snapcast additional outputs
 
@@ -366,7 +366,7 @@ SNAPCAST_OUTPUT_PORT|Binds the Snapcast server to the specified port, defaults t
 SNAPCAST_OUTPUT_BIND_TO_ADDRESS|Binds the Snapcast server to the specified address
 SNAPCAST_OUTPUT_ZEROCONF|Publish the Snapcast server, default is yes.
 
-Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#snapcast) for the meaning of the variables.  
+Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#snapcast) for the meaning of the variables.
 
 #### Fifo additional outputs
 
@@ -381,7 +381,7 @@ FIFO_OUTPUT_FORMAT|Fifo audio format
 FIFO_OUTPUT_MIXER_TYPE|Fifo mixer type, defaults to `software`
 FIFO_OUTPUT_PATH|Path of the fifo file
 
-Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#snapcast) for the meaning of the variables.  
+Refer to the MPD [documentation](https://mpd.readthedocs.io/en/stable/plugins.html#snapcast) for the meaning of the variables.
 
 ### Examples
 
@@ -389,8 +389,8 @@ See some usage examples [here](https://github.com/GioF71/mpd-alsa-docker/blob/ma
 
 ## Support for Scrobbling
 
-If at least one set of credentials for `Last.fm`, `Libre.fm` or `Jamendo` are provided, `mpdscribble` will be started and it will scrobble the songs you play.  
-You can provide credential using the environment variables or using credential files stored in the volume `/user/config`.  
+If at least one set of credentials for `Last.fm`, `Libre.fm` or `Jamendo` are provided, `mpdscribble` will be started and it will scrobble the songs you play.
+You can provide credential using the environment variables or using credential files stored in the volume `/user/config`.
 The relevant files are:
 
 - lastfm.txt
@@ -399,14 +399,14 @@ The relevant files are:
 
 ## Run as a user-level systemd
 
-When using a desktop system with PulseAudio, running a docker-compose with a `restart=unless-stopped` is likely to cause issues to the entire PulseAudio. At least that is what is systematically happening to me on my desktop systems.  
+When using a desktop system with PulseAudio, running a docker-compose with a `restart=unless-stopped` is likely to cause issues to the entire PulseAudio. At least that is what is systematically happening to me on my desktop systems.
 You might want to create a user-level systemd unit. In order to do that, move to the `pulse` directory of this repo, then run the following to install the service:
 
 ```code
 ./install.sh
 ```
 
-After that, the service can be controlled using `./start.sh`, `./stop.sh`, `./restart.sh`.  
+After that, the service can be controlled using `./start.sh`, `./stop.sh`, `./restart.sh`.
 You can completely uninstall the service by running:
 
 ```code
