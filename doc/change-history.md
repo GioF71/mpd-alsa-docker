@@ -2,6 +2,7 @@
 
 Date|Major Changes
 :---|:---
+2026-11-05|Bump to version 0.24.18 (see issue [#486](https://github.com/GioF71/mpd-alsa-docker/issues/486))
 2026-10-25|Bump to version 0.24.17 (see issue [#480](https://github.com/GioF71/mpd-alsa-docker/issues/480))
 2026-09-09|Bump to version 0.24.15 (see issue [#477](https://github.com/GioF71/mpd-alsa-docker/issues/477))
 2026-07-21|Bump to version 0.24.13 (see issue [#477](https://github.com/GioF71/mpd-alsa-docker/issues/477))
