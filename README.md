@@ -41,7 +41,7 @@ I prepared this Dockerfile because I wanted to be able to install mpd easily on 
 
 ## Prerequisites
 
-See [this](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/prerequisites.md) page.
+See [the prerequisites](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/prerequisites.md) page.
 
 ## Get the image
 
